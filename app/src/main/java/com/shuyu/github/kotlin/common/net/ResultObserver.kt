@@ -9,27 +9,32 @@ import java.util.concurrent.TimeoutException
 
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import retrofit2.Response
 
-abstract class ResultObserver<T>(cxt: Context) : Observer<ResultEntity<T>> {
+abstract class ResultObserver<T>() : Observer<Response<T>> {
 
-    protected var mContext: Context? = cxt
+    protected var mContext: Context? = null
+
+    constructor(cxt: Context) : this() {
+        mContext = cxt
+    }
 
     override fun onSubscribe(d: Disposable) {
         onRequestStart()
     }
 
-    override fun onNext(tBaseEntity: ResultEntity<T>) {
+    override fun onNext(reposnse: Response<T>) {
         onRequestEnd()
-        if (tBaseEntity.isSuccess) {
+        if (reposnse.code() == 200) {
             try {
-                onSuccess(tBaseEntity)
+                onSuccess(reposnse.body())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
         } else {
             try {
-                onCodeError(tBaseEntity)
+                onCodeError(reposnse)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -63,7 +68,7 @@ abstract class ResultObserver<T>(cxt: Context) : Observer<ResultEntity<T>> {
      * @throws Exception
      */
     @Throws(Exception::class)
-    protected abstract fun onSuccess(t: ResultEntity<T>)
+    protected abstract fun onSuccess(t: T?)
 
     /**
      * 返回成功了,但是code错误
@@ -72,7 +77,7 @@ abstract class ResultObserver<T>(cxt: Context) : Observer<ResultEntity<T>> {
      * @throws Exception
      */
     @Throws(Exception::class)
-    protected fun onCodeError(t: ResultEntity<T>) {
+    protected fun onCodeError(t: Response<T>) {
     }
 
     /**

@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'realm-android'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -14,12 +16,23 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
+        buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    kapt {
+        generateStubs = true
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -35,12 +48,13 @@ dependencies {
     //dagger
     implementation "com.google.dagger:dagger-android:${dagger_version}"
     implementation "com.google.dagger:dagger-android-support:${dagger_version}"
-    annotationProcessor "com.google.dagger:dagger-android-processor:${dagger_version}"
+    kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
 
     //HTTP retrofit2
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation ("com.squareup.retrofit2:converter-simplexml:${rx_version}"){
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
@@ -56,7 +70,7 @@ dependencies {
 
     //glide
     implementation "com.github.bumptech.glide:glide:${glide_version}"
-    annotationProcessor "com.github.bumptech.glide:compiler:${glide_version}"
+    kapt "com.github.bumptech.glide:compiler:${glide_version}"
 
     ///webview
     implementation "com.just.agentweb:agentweb:${agentweb_version}"
