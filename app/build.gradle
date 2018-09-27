@@ -32,6 +32,11 @@ dependencies {
     implementation "com.android.support:design:${android_support}"
     implementation "com.android.support:cardview-v7:${android_support}"
 
+    //dagger
+    implementation "com.google.dagger:dagger-android:${dagger_version}"
+    implementation "com.google.dagger:dagger-android-support:${dagger_version}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${dagger_version}"
+
     //HTTP retrofit2
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
