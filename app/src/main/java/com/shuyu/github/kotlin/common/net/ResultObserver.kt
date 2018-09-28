@@ -11,13 +11,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import retrofit2.Response
 
-abstract class ResultObserver<T>() : Observer<Response<T>> {
-
-    protected var mContext: Context? = null
-
-    constructor(cxt: Context) : this() {
-        mContext = cxt
-    }
+abstract class ResultObserver<T> : Observer<Response<T>> {
 
     override fun onSubscribe(d: Disposable) {
         onRequestStart()
@@ -93,13 +87,7 @@ abstract class ResultObserver<T>() : Observer<Response<T>> {
     protected fun onRequestStart() {}
 
     protected fun onRequestEnd() {
-        closeProgressDialog()
-    }
 
-    fun showProgressDialog() {
-    }
-
-    fun closeProgressDialog() {
     }
 
 }

@@ -2,6 +2,9 @@ package com.shuyu.github.kotlin.common.net
 
 import android.text.TextUtils
 import com.shuyu.github.kotlin.common.config.AppConfig
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 import java.util.concurrent.TimeUnit
 
@@ -11,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.logging.HttpLoggingInterceptor
-
+import retrofit2.Response
 
 
 /**
@@ -40,12 +43,33 @@ class RetrofitFactory private constructor() {
                 .build()
     }
 
+
+    private fun headerInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            var request = chain.request()
+
+            //add access token
+            val token = "Basic MzU5MzY5OTgyQHFxLmNvbTpndW9zaHV5dTU4Nzg5NDk="
+            val url = request.url().toString()
+            if (!TextUtils.isEmpty(token)) {
+                val auth = if (token.startsWith("Basic")) token else "token $token"
+                request = request.newBuilder()
+                        .addHeader("Authorization", auth)
+                        .url(url)
+                        .build()
+            }
+
+            chain.proceed(request)
+        }
+
+    }
+
     companion object {
 
         @Volatile
         private var mRetrofitFactory: RetrofitFactory? = null
 
-        val instence: RetrofitFactory?
+        val instance: RetrofitFactory?
             get() {
                 if (mRetrofitFactory == null) {
                     synchronized(RetrofitFactory::class.java) {
@@ -57,25 +81,15 @@ class RetrofitFactory private constructor() {
                 return mRetrofitFactory
             }
 
-
-        private fun headerInterceptor(): Interceptor {
-            return Interceptor { chain ->
-                var request = chain.request()
-
-                //add access token
-                val token = "Basic MzU5MzY5OTgyQHFxLmNvbTpndW9zaHV5dTU4Nzg5NDk="
-                val url = request.url().toString()
-                if (!TextUtils.isEmpty(token)) {
-                    val auth = if (token.startsWith("Basic")) token else "token $token"
-                    request = request.newBuilder()
-                            .addHeader("Authorization", auth)
-                            .url(url)
-                            .build()
-                }
-
-                chain.proceed(request)
-            }
-
+        fun <T> createService(service: Class<T>): T {
+           return instance!!.retrofit.create(service)
         }
+
+        fun <T> executeResult(observable: Observable<Response<T>>, subscriber: ResultObserver<T>) {
+                observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(subscriber)
+        }
+
     }
 }
