@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.ui.fragment
+package com.shuyu.github.kotlin.module.main.dynamic
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

@@ -1,31 +1,30 @@
-package com.shuyu.github.kotlin.ui
+package com.shuyu.github.kotlin.module.main
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.net.ResultObserver
-import com.shuyu.github.kotlin.common.net.RetrofitFactory
-import com.shuyu.github.kotlin.model.AccessToken
-import com.shuyu.github.kotlin.model.LoginRequestModel
-import com.shuyu.github.kotlin.service.LoginService
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
-import com.shuyu.github.kotlin.ui.fragment.DynamicFragment
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var mainFragmentList:MutableList<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-        val list = listOf(DynamicFragment(), DynamicFragment(), DynamicFragment())
+        DaggerMainAcitivityComponent.create().inject(this)
 
-        home_view_pager.adapter = FragmentPagerViewAdapter(list, supportFragmentManager)
+        home_view_pager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
 
 
         val colors = resources.getStringArray(R.array.default_preview)
