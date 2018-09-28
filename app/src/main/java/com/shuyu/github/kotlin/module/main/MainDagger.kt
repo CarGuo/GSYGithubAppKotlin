@@ -41,24 +41,24 @@ class MainProviderModule() {
                         IconicsDrawable(context)
                                 .icon(GSYIconfont.Icon.MAIN_DT)
                                 .color(Color.RED)
-                                .sizeDp(24),
-                        Color.parseColor("#FF00FF"))
+                                .sizeDp(20),
+                        Color.parseColor("#00000000"))
                         .title(context.getString(R.string.tabDynamic))
                         .build(),
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(context)
                                 .icon(GSYIconfont.Icon.MAIN_QS)
                                 .color(Color.RED)
-                                .sizeDp(24),
-                        Color.parseColor("#FF00FF"))
+                                .sizeDp(20),
+                        Color.parseColor("#00000000"))
                         .title(context.getString(R.string.tabRecommended))
                         .build(),
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(context)
                                 .icon(GSYIconfont.Icon.MAIN_MY)
                                 .color(Color.RED)
-                                .sizeDp(24),
-                        Color.parseColor("#FF00FF"))
+                                .sizeDp(20),
+                        Color.parseColor("#00000000"))
                         .title(context.getString(R.string.tabMy))
                         .build()
         )

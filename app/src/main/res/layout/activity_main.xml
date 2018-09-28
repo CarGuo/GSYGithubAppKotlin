@@ -20,10 +20,13 @@
         app:ntb_badge_gravity="top"
         app:ntb_badge_position="right"
         app:ntb_badged="true"
+        app:ntb_bg_color="@color/colorPrimary"
+        app:ntb_icon_size_fraction="0.4"
         app:ntb_scaled="true"
         app:ntb_swiped="true"
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
+        app:ntb_title_size="13sp"
         app:ntb_titled="true" />
 
 </LinearLayout>
