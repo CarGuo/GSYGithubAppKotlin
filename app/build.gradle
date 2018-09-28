@@ -81,6 +81,7 @@ dependencies {
     implementation "devlight.io:navigationtabbar:${tabbar_version}"
 
     //iconics 3.1.0开始使用了androidx
+    implementation "com.mikepenz:iconics-core:3.0.4@aar"
     implementation "com.mikepenz:iconics-views:3.0.4@aar"
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.5@aar'
     implementation 'com.mikepenz:fontawesome-typeface:5.3.1.1@aar'
