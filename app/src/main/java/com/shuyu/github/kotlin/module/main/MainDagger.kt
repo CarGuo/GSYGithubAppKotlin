@@ -39,7 +39,7 @@ class MainProviderModule() {
         return listOf(
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(context)
-                                .icon(GSYIconfont.Icon.MAIN_DT)
+                                .icon(GSYIconfont.Icon.GSY_MAIN_DT)
                                 .color(Color.RED)
                                 .sizeDp(20),
                         Color.parseColor("#00000000"))
@@ -47,7 +47,7 @@ class MainProviderModule() {
                         .build(),
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(context)
-                                .icon(GSYIconfont.Icon.MAIN_QS)
+                                .icon(GSYIconfont.Icon.GSY_MAIN_QS)
                                 .color(Color.RED)
                                 .sizeDp(20),
                         Color.parseColor("#00000000"))
@@ -55,7 +55,7 @@ class MainProviderModule() {
                         .build(),
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(context)
-                                .icon(GSYIconfont.Icon.MAIN_MY)
+                                .icon(GSYIconfont.Icon.GSY_MAIN_MY)
                                 .color(Color.RED)
                                 .sizeDp(20),
                         Color.parseColor("#00000000"))

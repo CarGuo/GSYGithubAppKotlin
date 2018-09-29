@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StateButton">
+
+        <!--text color-->
+        <attr name="normalTextColor" format="color|reference" />
+        <attr name="pressedTextColor" format="color|reference" />
+        <attr name="unableTextColor" format="color|reference" />
+
+        <!--stroke width and color, dash width, dash gap-->
+        <attr name="strokeDashWidth" format="dimension|reference" />
+        <attr name="strokeDashGap" format="dimension|reference" />
+        <attr name="normalStrokeWidth" format="dimension|reference" />
+        <attr name="pressedStrokeWidth" format="dimension|reference" />
+        <attr name="unableStrokeWidth" format="dimension|reference" />
+        <attr name="normalStrokeColor" format="color|reference" />
+        <attr name="pressedStrokeColor" format="color|reference" />
+        <attr name="unableStrokeColor" format="color|reference" />
+
+        <!--background color-->
+        <attr name="normalBackgroundColor" format="color|reference" />
+        <attr name="pressedBackgroundColor" format="color|reference" />
+        <attr name="unableBackgroundColor" format="color|reference" />
+
+        <!--background radius-->
+        <attr name="radius" format="dimension|reference" />
+        <attr name="round" format="boolean|reference" />
+
+        <!--animation duration-->
+        <attr name="animationDuration" format="integer|reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="StateImageView">
+        <attr name="normalBackground" format="color|reference" />
+        <attr name="pressedBackground" format="color|reference" />
+        <attr name="unableBackground" format="color|reference" />
+
+        <!--animation duration-->
+        <attr name="AnimationDuration" format="integer|reference" />
+    </declare-styleable>
+</resources>

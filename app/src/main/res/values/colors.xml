@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#313335</color>
+    <color name="colorPrimaryDark">#2b2b2b</color>
+    <color name="colorAccent">#4093ff</color>
+
+    <color name="colorPrimaryLight">#42464b</color>
+    <color name="miWhite">#ececec</color>
+    <color name="actionBlue">#267aff</color>
+    <color name="webDraculaBackgroundColor">#282a36</color>
+    <color name="cardWhite">#FFFFFF</color>
+    <color name="textWhite">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="subTextColor">#959595</color>
+    <color name="subLightTextColor">#c4c4c4</color>
+    <color name="mainBackgroundColor">@color/miWhite</color>
+    <color name="mainTextColor">@color/colorPrimaryDark</color>
+    <color name="textColorWhite">@color/white</color>
+
 </resources>

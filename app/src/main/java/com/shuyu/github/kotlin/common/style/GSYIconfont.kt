@@ -37,7 +37,7 @@ class GSYIconfont : ITypeface {
     }
 
     override fun getMappingPrefix(): String {
-        return "gsy"
+        return "GSY"
     }
 
     override fun getFontName(): String {
@@ -97,39 +97,39 @@ class GSYIconfont : ITypeface {
 
     enum class Icon constructor(internal var character: Char) : IIcon {
 
-        HOME('\ue624'),
-        MORE('\ue674'),
-        SEARCH('\ue61c'),
+        GSY_HOME('\ue624'),
+        GSY_MORE('\ue674'),
+        GSY_SEARCH('\ue61c'),
 
-        MAIN_DT('\ue684'),
-        MAIN_QS('\ue818'),
-        MAIN_MY('\ue6d0'),
-        MAIN_SEARCH('\ue61c'),
+        GSY_MAIN_DT('\ue684'),
+        GSY_MAIN_QS('\ue818'),
+        GSY_MAIN_MY('\ue6d0'),
+        GSY_MAIN_SEARCH('\ue61c'),
 
-        LOGIN_USER('\ue666'),
-        LOGIN_PW('\ue60e'),
+        GSY_LOGIN_USER('\ue666'),
+        GSY_LOGIN_PW('\ue60e'),
 
-        REPOS_ITEM_USER('\ue63e'),
-        REPOS_ITEM_STAR('\ue643'),
-        REPOS_ITEM_FORK('\ue67e'),
-        REPOS_ITEM_ISSUE('\ue661'),
+        GSY_REPOS_ITEM_USER('\ue63e'),
+        GSY_REPOS_ITEM_STAR('\ue643'),
+        GSY_REPOS_ITEM_FORK('\ue67e'),
+        GSY_REPOS_ITEM_ISSUE('\ue661'),
 
-        REPOS_ITEM_STARED('\ue698'),
-        REPOS_ITEM_WATCH('\ue681'),
-        REPOS_ITEM_WATCHED('\ue629'),
-        REPOS_ITEM_FILE('\uea77'),
-        REPOS_ITEM_NEXT('\ue610'),
+        GSY_REPOS_ITEM_STARED('\ue698'),
+        GSY_REPOS_ITEM_WATCH('\ue681'),
+        GSY_REPOS_ITEM_WATCHED('\ue629'),
+        GSY_REPOS_ITEM_FILE('\uea77'),
+        GSY_REPOS_ITEM_NEXT('\ue610'),
 
-        USER_ITEM_COMPANY('\ue63e'),
-        USER_ITEM_LOCATION('\ue7e6'),
-        USER_ITEM_LINK('\ue670'),
-        USER_NOTIFY('\ue600'),
+        GSY_USER_ITEM_COMPANY('\ue63e'),
+        GSY_USER_ITEM_LOCATION('\ue7e6'),
+        GSY_USER_ITEM_LINK('\ue670'),
+        GSY_USER_NOTIFY('\ue600'),
 
-        ISSUE_ITEM_ISSUE('\ue661'),
-        ISSUE_ITEM_COMMENT('\ue6ba'),
-        ISSUE_ITEM_ADD('\ue662'),
+        GSY_ISSUE_ITEM_ISSUE('\ue661'),
+        GSY_ISSUE_ITEM_COMMENT('\ue6ba'),
+        GSY_ISSUE_ITEM_ADD('\ue662'),
 
-        NOTIFY_ALL_READ('\ue62f');
+        GSY_NOTIFY_ALL_READ('\ue62f');
 
 
         override fun getFormattedName(): String {
