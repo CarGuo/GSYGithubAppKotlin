@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     /**
      * fragment列表
@@ -27,11 +32,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        DaggerMainActivityComponent.builder()
-                .mainProviderModule(MainProviderModule(applicationContext))
-                .build()
-                .inject(this)
-
         home_view_pager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
         home_navigation_tab_bar.models = mainTabModel
         home_navigation_tab_bar.setViewPager(home_view_pager, 0)
@@ -49,4 +49,6 @@ class MainActivity : AppCompatActivity() {
             })
         }*/
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 }

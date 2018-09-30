@@ -11,7 +11,7 @@
 数据仓库，持有 `AppDatabase`  和 `MediatorLiveData`Products
 
 * ProductListFragment
- 
+
 1、 创建 `DataBinding`  mBinding 。
 2、通过 `ProductListViewModel.Factory`  创建 `ProductListViewModel`。
 3、订阅 vm 内的 `LiveData`、用于更新 DataBinding 的 `ObservableField` 和手动更新数据。
@@ -46,19 +46,22 @@
 
 1、AndroidInjectionModule 
 
-This module should be installed in the component that is used to inject the {android.app.Application} class.
+*This module should be installed in the component that is used to inject the {android.app.Application} class.*
+
+你还可以用 AndroidSupportInjectionModule
 
 2、MainActivityModule
 
+*@ContributesAndroidInjector(modules = [FragmentBuildersModule::class])*
 
 3、AppModule
 
-提供 Service、Db、Dao的单例注入，依赖 `ViewModelModule`，
-ViewModelModule 是 VM相关的
+*提供 Service、Db、Dao的单例注入，依赖 `ViewModelModule`，
+ViewModelModule 是 VM相关的*
 
 4、AppComponent 
 
-通过 @Component.Builder 增加builder方法，提供Application 注入方法。
+*通过 @Component.Builder 增加builder方法，提供Application 注入方法。*
 
 
 

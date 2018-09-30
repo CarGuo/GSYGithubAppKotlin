@@ -69,7 +69,7 @@ class RetrofitFactory private constructor() {
         @Volatile
         private var mRetrofitFactory: RetrofitFactory? = null
 
-        val instance: RetrofitFactory?
+        val instance: RetrofitFactory
             get() {
                 if (mRetrofitFactory == null) {
                     synchronized(RetrofitFactory::class.java) {
@@ -78,11 +78,11 @@ class RetrofitFactory private constructor() {
                     }
 
                 }
-                return mRetrofitFactory
+                return mRetrofitFactory!!
             }
 
         fun <T> createService(service: Class<T>): T {
-           return instance!!.retrofit.create(service)
+           return instance.retrofit.create(service)
         }
 
         fun <T> executeResult(observable: Observable<Response<T>>, subscriber: ResultObserver<T>) {
