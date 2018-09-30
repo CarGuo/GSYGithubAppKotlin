@@ -79,6 +79,10 @@ ViewModelModule 是 VM相关的*
 
 # Naviagiton：
 
+
+
+目前需要NavHostFragment，配置后可以Fragment 、Activity之间跳转。不过Fragment - Activity 是跳出了 graph，在新的Activity内可以设置新的graph
+
 https://blog.csdn.net/cekiasoo/article/details/80739805
 
 https://blog.csdn.net/weixin_42215792/article/details/80326637

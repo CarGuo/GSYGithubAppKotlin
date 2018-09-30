@@ -34,7 +34,7 @@ interface AppComponent {
     fun inject(gsyGithubApplication: GSYGithubApplication)
 }
 
-@Module
+@Module(includes = [ViewModelModule::class])
 class AppModule {
     @Singleton
     @Provides
