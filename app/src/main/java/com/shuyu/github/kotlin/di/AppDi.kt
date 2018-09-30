@@ -3,13 +3,10 @@ package com.shuyu.github.kotlin.di
 import android.app.Application
 import com.shuyu.github.kotlin.GSYGithubApplication
 import com.shuyu.github.kotlin.common.net.RetrofitFactory
-import com.shuyu.github.kotlin.di.annotation.ActivityScope
-import com.shuyu.github.kotlin.module.main.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import dagger.android.ContributesAndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -47,12 +44,4 @@ class AppModule {
 }
 
 
-@Module
-abstract class ActivityBindModule {
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [MainActivityModule::class])
-    abstract fun mainActivityInjector(): MainActivity
-
-}
 

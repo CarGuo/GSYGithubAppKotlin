@@ -1,15 +1,13 @@
 package com.shuyu.github.kotlin.di
 
 import android.app.Application
-import android.content.Context
 import android.graphics.Color
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import com.mikepenz.iconics.IconicsDrawable
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.GSYIconfont
-import com.shuyu.github.kotlin.module.main.MainActivity
-import com.shuyu.github.kotlin.module.main.dynamic.DynamicFragment
-import dagger.Component
+import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import dagger.Module
 import dagger.Provides
 import devlight.io.library.ntb.NavigationTabBar
@@ -34,7 +32,7 @@ class MainActivityModule {
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_MAIN_DT)
-                                .color(Color.RED)
+                                .color(ContextCompat.getColor(application, R.color.subTextColor))
                                 .sizeDp(20),
                         Color.parseColor("#00000000"))
                         .title(application.getString(R.string.tabDynamic))
@@ -42,7 +40,7 @@ class MainActivityModule {
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_MAIN_QS)
-                                .color(Color.RED)
+                                .color(ContextCompat.getColor(application, R.color.subTextColor))
                                 .sizeDp(20),
                         Color.parseColor("#00000000"))
                         .title(application.getString(R.string.tabRecommended))
@@ -50,7 +48,7 @@ class MainActivityModule {
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_MAIN_MY)
-                                .color(Color.RED)
+                                .color(ContextCompat.getColor(application, R.color.subTextColor))
                                 .sizeDp(20),
                         Color.parseColor("#00000000"))
                         .title(application.getString(R.string.tabMy))
