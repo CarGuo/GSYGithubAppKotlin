@@ -128,7 +128,8 @@
                 app:radius="5dp"
                 app:round="false"
                 app:unableBackgroundColor="@color/colorPrimaryDark"
-                app:unableTextColor="@android:color/white" />
+                app:unableTextColor="@android:color/white"
+                app:navGraph="@navigation/gsy_navigation" />
 
         </LinearLayout>
 

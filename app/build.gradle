@@ -43,13 +43,26 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //kotlin plugin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //kotlin ktx (used 0.3 now , 1.0.0 need api28)
+    implementation "androidx.core:core-ktx:$ktx_version"
+
+    //support
     implementation "com.android.support:appcompat-v7:$android_support"
     implementation "com.android.support:support-v4:${android_support}"
     implementation "com.android.support:recyclerview-v7:${android_support}"
     implementation "com.android.support:design:${android_support}"
     implementation "com.android.support:cardview-v7:${android_support}"
-    implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
+
+    //constraint
+    implementation "com.android.support.constraint:constraint-layout:${constraint_version}"
+
+    //navigation
+    implementation "android.arch.navigation:navigation-fragment:${navigation_version}"
+    implementation "android.arch.navigation:navigation-ui:${navigation_version}"
+
 
     //dagger
     implementation "com.google.dagger:dagger:${dagger_version}"
@@ -58,10 +71,10 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
 
     //HTTP retrofit2
+    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp3_version}"
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation ("com.squareup.retrofit2:converter-simplexml:${rx_version}"){
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
@@ -87,8 +100,8 @@ dependencies {
     implementation "devlight.io:navigationtabbar:${tabbar_version}"
 
     //iconics 3.1.0开始使用了androidx
-    implementation "com.mikepenz:iconics-core:3.0.4@aar"
-    implementation "com.mikepenz:iconics-views:3.0.4@aar"
+    implementation "com.mikepenz:iconics-core:${iconics_version}"
+    implementation "com.mikepenz:iconics-views:${iconics_version}"
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.5@aar'
     implementation 'com.mikepenz:fontawesome-typeface:5.3.1.1@aar'
     implementation 'com.mikepenz:octicons-typeface:3.2.0.5@aar'
@@ -97,5 +110,5 @@ dependencies {
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.5@aar'
 
     //EDIT TEXT
-    implementation 'com.github.HITGIF:TextFieldBoxes:1.4.4'
+    implementation "com.github.HITGIF:TextFieldBoxes:${textfiled_box_version}"
 }

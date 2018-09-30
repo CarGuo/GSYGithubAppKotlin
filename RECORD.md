@@ -48,11 +48,13 @@
 
 *This module should be installed in the component that is used to inject the {android.app.Application} class.*
 
-你还可以用 AndroidSupportInjectionModule
+你还可以用 `AndroidSupportInjectionModule` 可以额外支持V4包下的`Fragment`
 
 2、MainActivityModule
 
 *@ContributesAndroidInjector(modules = [FragmentBuildersModule::class])*
+
+理解上是替换了原本 MainActivity注入需要的Component，在 MainActivityModule 中通过 `ContributesAndroidInjector` 并增加需要的其他Module(对Activity内的Fragmentmodule提供注入)，实现MainActivity的注入：`AndroidInjection.inject(activity)`。
 
 3、AppModule
 
@@ -63,6 +65,20 @@ ViewModelModule 是 VM相关的*
 
 *通过 @Component.Builder 增加builder方法，提供Application 注入方法。*
 
+引用上述所有Module
 
 
 
+
+
+
+
+
+
+
+
+# Naviagiton：
+
+https://blog.csdn.net/cekiasoo/article/details/80739805
+
+https://blog.csdn.net/weixin_42215792/article/details/80326637

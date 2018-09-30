@@ -2,7 +2,10 @@
 
 buildscript {
     ext.kotlin_version = '1.2.50'
+    ext.ktx_version = '0.3'
     ext.android_support = '27.1.1'
+    ext.navigation_version = '1.0.0-alpha06'
+    ext.constraint_version = '2.0.0-alpha2'
     ext.retrofit_version = '2.4.0'
     ext.rx_version = '2.1.0'
     ext.event_bus = '3.1.1'
@@ -11,6 +14,9 @@ buildscript {
     ext.agentweb_version = '4.0.2'
     ext.tabbar_version = '1.2.5'
     ext.dagger_version = '2.17'
+    ext.iconics_version = '3.0.4@aar'
+    ext.okhttp3_version = '3.10.0'
+    ext.textfiled_box_version = '1.4.4'
 
     repositories {
         google()
