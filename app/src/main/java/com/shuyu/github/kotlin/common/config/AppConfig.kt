@@ -16,4 +16,12 @@ object AppConfig {
 
     const val CACHE_MAX_AGE = 7 * 24 * 60 * 60L
 
+
+    const val ACCESS_TOKEN = "accessToken"
+
+    const val USER_NAME = "user_name"
+
+    const val PASSWORD = "password"
+
+
 }
