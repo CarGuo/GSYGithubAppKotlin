@@ -12,6 +12,12 @@ import kotlinx.android.synthetic.main.fragment_login.*
  */
 class LoginFragment : BaseFragment() {
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        exitFull()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(mainView: View) {
     }
 

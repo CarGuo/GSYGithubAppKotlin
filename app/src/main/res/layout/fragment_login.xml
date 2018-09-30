@@ -117,10 +117,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/Login"
                 android:textSize="@dimen/normalTextSize"
                 app:animationDuration="1000"
+                app:navGraph="@navigation/gsy_navigation"
                 app:normalBackgroundColor="@color/colorPrimaryDark"
                 app:normalTextColor="@android:color/white"
                 app:pressedBackgroundColor="@color/colorPrimaryDark"
@@ -128,8 +131,7 @@
                 app:radius="5dp"
                 app:round="false"
                 app:unableBackgroundColor="@color/colorPrimaryDark"
-                app:unableTextColor="@android:color/white"
-                app:navGraph="@navigation/gsy_navigation" />
+                app:unableTextColor="@android:color/white" />
 
         </LinearLayout>
 
