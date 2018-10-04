@@ -2,7 +2,10 @@ package com.shuyu.github.kotlin.module.login
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableField
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AccessToken
 import com.shuyu.github.kotlin.repository.LoginRepository
 import javax.inject.Inject
@@ -13,9 +16,22 @@ import javax.inject.Inject
  */
 class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) : ViewModel() {
 
+    private var usernameStorage: String by GSYPreference(AppConfig.USER_NAME, "")
+
+    private var passwordStorage: String by GSYPreference(AppConfig.PASSWORD, "")
+
+    val username =  ObservableField<String>()
+
+    val password = ObservableField<String>()
+
     val token = MutableLiveData<AccessToken>()
 
-    fun login(username: String, password: String) {
-        loginRepository.login(username, password, token)
+    init {
+        username.set(usernameStorage)
+        password.set(passwordStorage)
+    }
+
+    fun login() {
+        loginRepository.login(username.get()!!.trim(), password.get()!!.trim(), token)
     }
 }

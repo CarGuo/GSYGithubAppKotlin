@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="loginViewModel"
+            type="com.shuyu.github.kotlin.module.login.LoginViewModel" />
 
     </data>
 
@@ -74,7 +77,8 @@
                         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                             android:id="@+id/login_username_input"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@={loginViewModel.username}" />
 
                     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -110,7 +114,8 @@
                             android:id="@+id/login_password_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            android:text="@={loginViewModel.password}" />
 
                     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
                 </LinearLayout>

@@ -29,6 +29,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
     }
 
     override fun onCreateView(mainView: View) {
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +43,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
             if (password.isEmpty()) {
                 return@setOnClickListener
             }
-            loginViewModel.login(username.toString().trim(), password.toString().trim())
+            loginViewModel.login()
             ///去主页需要finish
             ///navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
         }
@@ -50,7 +51,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
         loginViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(LoginViewModel::class.java)
 
-
+        binding.loginViewModel = loginViewModel
 
         loginViewModel.token.observe(this, Observer { result ->
             result?.apply {
