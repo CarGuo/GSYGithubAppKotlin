@@ -35,14 +35,14 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
         super.onViewCreated(view, savedInstanceState)
         login_submit_btn.setOnClickListener {
             val username = binding.loginUsernameInput.text
-            val password = binding.loginUsernameInput.text
+            val password = binding.loginPasswordInput.text
             if(username.isEmpty()) {
                 return@setOnClickListener
             }
             if (password.isEmpty()) {
                 return@setOnClickListener
             }
-            loginViewModel.login(username.toString(), password.toString())
+            loginViewModel.login(username.toString().trim(), password.toString().trim())
             ///去主页需要finish
             ///navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
         }

@@ -38,7 +38,8 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
         } else {
             ///去主页
-            navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
+            //navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
+            navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
         }
 
 

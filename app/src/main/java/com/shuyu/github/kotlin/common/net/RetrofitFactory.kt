@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.common.net
 
 import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,6 +47,7 @@ class RetrofitFactory private constructor() {
 
             //add access token
             if (!accessTokenStorage.isEmpty()) {
+                Debuger.printfLog(accessTokenStorage)
                 val url = request.url().toString()
                 request = request.newBuilder()
                         .addHeader("Authorization", accessTokenStorage)
