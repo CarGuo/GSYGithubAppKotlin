@@ -74,8 +74,7 @@
                         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                             android:id="@+id/login_username_input"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
+                            android:layout_height="wrap_content" />
 
                     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -110,7 +109,8 @@
                         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                             android:id="@+id/login_password_input"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword" />
 
                     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
                 </LinearLayout>

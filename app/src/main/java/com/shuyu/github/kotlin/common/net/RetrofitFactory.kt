@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.common.net
 
-import android.text.TextUtils
 import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.utils.GSYPreference
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,13 +17,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 
 
-/**
- * @author yemao
- * @date 2017/4/9
- * @description 写自己的代码, 让别人说去吧!
- */
-
 class RetrofitFactory private constructor() {
+
+    private var accessTokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
 
     val retrofit: Retrofit
 
@@ -49,12 +45,10 @@ class RetrofitFactory private constructor() {
             var request = chain.request()
 
             //add access token
-            val token = "Basic MzU5MzY5OTgyQHFxLmNvbTpndW9zaHV5dTU4Nzg5NDk="
-            val url = request.url().toString()
-            if (!TextUtils.isEmpty(token)) {
-                val auth = if (token.startsWith("Basic")) token else "token $token"
+            if (!accessTokenStorage.isEmpty()) {
+                val url = request.url().toString()
                 request = request.newBuilder()
-                        .addHeader("Authorization", auth)
+                        .addHeader("Authorization", accessTokenStorage)
                         .url(url)
                         .build()
             }
@@ -82,13 +76,13 @@ class RetrofitFactory private constructor() {
             }
 
         fun <T> createService(service: Class<T>): T {
-           return instance.retrofit.create(service)
+            return instance.retrofit.create(service)
         }
 
         fun <T> executeResult(observable: Observable<Response<T>>, subscriber: ResultObserver<T>) {
-                observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(subscriber)
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(subscriber)
         }
 
     }

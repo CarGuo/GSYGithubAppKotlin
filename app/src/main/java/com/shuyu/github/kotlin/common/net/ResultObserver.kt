@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.common.net
 
 import android.accounts.NetworkErrorException
-import android.content.Context
 
 import java.net.ConnectException
 import java.net.UnknownHostException
