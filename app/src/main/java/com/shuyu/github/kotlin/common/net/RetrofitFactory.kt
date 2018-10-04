@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.common.net
 
+import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
@@ -26,7 +27,11 @@ class RetrofitFactory private constructor() {
 
     init {
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
         val mOkHttpClient = OkHttpClient.Builder()
                 .connectTimeout(AppConfig.HTTP_TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(logging)
