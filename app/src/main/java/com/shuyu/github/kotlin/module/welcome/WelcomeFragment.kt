@@ -5,6 +5,7 @@ import android.view.View
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
+import com.shuyu.github.kotlin.databinding.FragmentWelcomeBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
 
 /**
@@ -12,7 +13,7 @@ import com.shuyu.github.kotlin.module.base.BaseFragment
  * Created by guoshuyu
  * Date: 2018-09-30
  */
-class WelcomeFragment : BaseFragment() {
+class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     /***
      * 委托属性，GSYPreference 把取值和存值的操作代理给 accessTokenStorage

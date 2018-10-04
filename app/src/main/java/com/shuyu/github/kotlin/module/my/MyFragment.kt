@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.my
 
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.view.View
 import com.shuyu.github.kotlin.R
@@ -11,7 +12,7 @@ import com.shuyu.github.kotlin.module.base.BaseFragment
  * Date: 2018-09-28
  */
 
-class MyFragment : BaseFragment() {
+class MyFragment : BaseFragment<ViewDataBinding>() {
 
     override fun onCreateView(mainView: View) {
 

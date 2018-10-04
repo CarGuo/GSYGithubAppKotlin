@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.module.dynamic
 import android.os.Bundle
 import android.view.View
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
 
 /**
@@ -11,7 +12,7 @@ import com.shuyu.github.kotlin.module.base.BaseFragment
  * Date: 2018-09-28
  */
 
-class DynamicFragment : BaseFragment() {
+class DynamicFragment : BaseFragment<FragmentListBinding>() {
 
     override fun onCreateView(mainView: View) {
 

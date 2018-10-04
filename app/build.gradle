@@ -49,6 +49,9 @@ dependencies {
     //kotlin ktx (used 0.3 now , 1.0.0 need api28)
     implementation "androidx.core:core-ktx:$ktx_version"
 
+    ///databinding
+    kapt "com.android.databinding:compiler:$gradle_version"
+
     //support
     implementation "com.android.support:appcompat-v7:$android_support"
     implementation "com.android.support:support-v4:${android_support}"

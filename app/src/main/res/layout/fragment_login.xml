@@ -1,142 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:gravity="center"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
 
 
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="4dp"
-        app:contentPadding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintWidth_percent=".8">
+    </data>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical">
 
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:src="@mipmap/ic_launcher" />
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="4dp"
+            app:contentPadding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_percent=".8">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    app:iiv_color="@color/colorPrimary"
-                    app:iiv_icon="GSY-LOGIN_USER" />
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:src="@mipmap/ic_launcher" />
 
-                <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hasClearButton="true"
-                    app:labelText="@string/UserName"
-                    app:panelBackgroundColor="#FFFFFF"
-                    app:primaryColor="@color/colorPrimary"
-                    app:secondaryColor="@color/subLightTextColor"
-                    app:useDenseSpacing="true">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
 
-                    <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                        android:id="@+id/login_username_input"
-                        android:layout_width="wrap_content"
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        app:iiv_color="@color/colorPrimary"
+                        app:iiv_icon="GSY-LOGIN_USER" />
+
+                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
+                        app:hasClearButton="true"
+                        app:labelText="@string/UserName"
+                        app:panelBackgroundColor="#FFFFFF"
+                        app:primaryColor="@color/colorPrimary"
+                        app:secondaryColor="@color/subLightTextColor"
+                        app:useDenseSpacing="true">
 
-                </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                            android:id="@+id/login_username_input"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword" />
 
-            </LinearLayout>
+                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
+                </LinearLayout>
 
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    app:iiv_color="@color/colorPrimary"
-                    app:iiv_icon="GSY-LOGIN_PW" />
-
-                <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                    android:id="@+id/text_field_boxes"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hasClearButton="true"
-                    app:labelText="@string/Password"
-                    app:panelBackgroundColor="#FFFFFF"
-                    app:primaryColor="@color/colorPrimary"
-                    app:secondaryColor="@color/subLightTextColor"
-                    app:useDenseSpacing="true">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
 
-                    <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                        android:id="@+id/login_password_input"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        app:iiv_color="@color/colorPrimary"
+                        app:iiv_icon="GSY-LOGIN_PW" />
 
-                </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                        android:id="@+id/text_field_boxes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hasClearButton="true"
+                        app:labelText="@string/Password"
+                        app:panelBackgroundColor="#FFFFFF"
+                        app:primaryColor="@color/colorPrimary"
+                        app:secondaryColor="@color/subLightTextColor"
+                        app:useDenseSpacing="true">
+
+                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                            android:id="@+id/login_password_input"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.shuyu.github.kotlin.ui.view.StateButton
+                    android:id="@+id/login_submit_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/Login"
+                    android:textSize="@dimen/normalTextSize"
+                    app:animationDuration="1000"
+                    app:navGraph="@navigation/gsy_navigation"
+                    app:normalBackgroundColor="@color/colorPrimaryDark"
+                    app:normalTextColor="@android:color/white"
+                    app:pressedBackgroundColor="@color/colorPrimaryDark"
+                    app:pressedTextColor="@android:color/white"
+                    app:radius="5dp"
+                    app:round="false"
+                    app:unableBackgroundColor="@color/colorPrimaryDark"
+                    app:unableTextColor="@android:color/white" />
+
             </LinearLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
-            <com.shuyu.github.kotlin.ui.view.StateButton
-                android:id="@+id/login_submit_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/Login"
-                android:textSize="@dimen/normalTextSize"
-                app:animationDuration="1000"
-                app:navGraph="@navigation/gsy_navigation"
-                app:normalBackgroundColor="@color/colorPrimaryDark"
-                app:normalTextColor="@android:color/white"
-                app:pressedBackgroundColor="@color/colorPrimaryDark"
-                app:pressedTextColor="@android:color/white"
-                app:radius="5dp"
-                app:round="false"
-                app:unableBackgroundColor="@color/colorPrimaryDark"
-                app:unableTextColor="@android:color/white" />
-
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
 
-    </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
 
-
-</android.support.constraint.ConstraintLayout>
+</layout>

@@ -1,5 +1,7 @@
 package com.shuyu.github.kotlin.module.base
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -13,18 +15,23 @@ import androidx.navigation.Navigation
  * Created by guoshuyu
  * Date: 2018-09-30
  */
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
+
+    var binding by autoCleared<T>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(getLayoutId(), container, false)
-        onCreateView(mainView)
-        return mainView
+        binding = DataBindingUtil.inflate(
+                inflater,
+                getLayoutId(),
+                container,
+                false)
+        onCreateView(binding.root)
+        return binding.root
     }
 
     abstract fun onCreateView(mainView: View)
 
     abstract fun getLayoutId(): Int
-
 
     fun navigationPopUpTo(view: View, args: Bundle?, actionId: Int, finishStack: Boolean) {
         val controller = Navigation.findNavController(view)

@@ -71,6 +71,9 @@ ViewModelModule 是 VM相关的*
 
 
 
+### ViewModel + Dagger2
+
+https://blog.csdn.net/qq_30889373/article/details/81806129
 
 
 
