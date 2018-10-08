@@ -27,6 +27,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * ViewModel的注入
+ */
 @Suppress("unused")
 @Module
 abstract class ViewModelModule {

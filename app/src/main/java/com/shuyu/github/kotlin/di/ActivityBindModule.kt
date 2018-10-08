@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 /**
+ * Activity 注入，并且提供Fragment注入绑定
  * Created by guoshuyu
  * Date: 2018-09-30
  */

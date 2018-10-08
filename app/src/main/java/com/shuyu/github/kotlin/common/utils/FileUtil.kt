@@ -7,6 +7,9 @@ import android.util.Base64
 import java.io.File
 import java.io.FileInputStream
 
+/**
+ * 文件管理
+ */
 object FileUtil {
 
     private const val IMAGE_CACHE_DIR_NAME = "image_cache"

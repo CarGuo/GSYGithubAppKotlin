@@ -7,7 +7,8 @@ import android.widget.Toast
 import com.shuyu.github.kotlin.BuildConfig
 
 /**
- * Created by shuyu on 2016/11/23.
+ * debug输出
+ * Created by shuyu on 2018/10/08.
  */
 
 object Debuger {

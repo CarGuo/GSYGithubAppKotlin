@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.R
 import kotlinx.android.synthetic.main.layout_loading_dialog.*
 
 /**
+ * Loading状态弹框
  * Created by guoshuyu
  * Date: 2018-10-08
  */

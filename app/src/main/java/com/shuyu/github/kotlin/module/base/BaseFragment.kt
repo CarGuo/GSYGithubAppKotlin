@@ -12,11 +12,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 
 /**
+ * 基类Fragment
  * Created by guoshuyu
  * Date: 2018-09-30
  */
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
+    /**
+     * 根据Fragment动态清理和获取binding对象
+     */
     var binding by autoCleared<T>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,6 +37,9 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     abstract fun getLayoutId(): Int
 
+    /**
+     * Navigation 的页面跳转
+     */
     fun navigationPopUpTo(view: View, args: Bundle?, actionId: Int, finishStack: Boolean) {
         val controller = Navigation.findNavController(view)
         controller.navigate(actionId,

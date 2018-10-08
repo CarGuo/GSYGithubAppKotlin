@@ -16,7 +16,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * 网络请求
+ */
 class RetrofitFactory private constructor() {
 
     private var accessTokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
@@ -26,6 +28,7 @@ class RetrofitFactory private constructor() {
     val retrofit: Retrofit
 
     init {
+        //打印请求log
         val logging = HttpLoggingInterceptor()
         logging.level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
@@ -45,7 +48,9 @@ class RetrofitFactory private constructor() {
                 .build()
     }
 
-
+    /**
+     * 拦截头部增加token
+     */
     private fun headerInterceptor(): Interceptor {
         return Interceptor { chain ->
             var request = chain.request()
@@ -66,7 +71,9 @@ class RetrofitFactory private constructor() {
 
     }
 
-
+    /**
+     * 获取token
+     */
     fun getAuthorization(): String {
         val token = accessTokenStorage
         if (token.isBlank()) {
@@ -82,6 +89,9 @@ class RetrofitFactory private constructor() {
         return token
     }
 
+    /**
+     * 清除token
+     */
     fun clearAuthorization() {
         accessTokenStorage = ""
         userBasicCodeStorage = ""
@@ -108,6 +118,9 @@ class RetrofitFactory private constructor() {
             return instance.retrofit.create(service)
         }
 
+        /**
+         * 执行请求返回结果
+         */
         fun <T> executeResult(observable: Observable<Response<T>>, subscriber: ResultObserver<T>) {
             observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -6,7 +6,7 @@ import com.shuyu.github.kotlin.GSYGithubApplication
 import kotlin.reflect.KProperty
 
 /**
- * SharedPreferences
+ * SharedPreferences对象
  * Created by guoshuyu
  * Date: 2018-09-30
  */

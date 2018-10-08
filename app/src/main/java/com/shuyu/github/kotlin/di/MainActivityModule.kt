@@ -13,6 +13,7 @@ import dagger.Provides
 import devlight.io.library.ntb.NavigationTabBar
 
 /**
+ * MainActivity注入需要的Module
  * Created by guoshuyu
  * Date: 2018-09-28
  */

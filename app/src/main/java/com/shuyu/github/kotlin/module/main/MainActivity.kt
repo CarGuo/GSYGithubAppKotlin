@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.module.main
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import dagger.android.DispatchingAndroidInjector
@@ -10,6 +10,9 @@ import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+/**
+ * 主页
+ */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject

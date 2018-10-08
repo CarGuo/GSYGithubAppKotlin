@@ -2,13 +2,10 @@ package com.shuyu.github.kotlin.model
 
 import com.google.gson.annotations.SerializedName
 import com.shuyu.github.kotlin.BuildConfig
-
-import java.util.Arrays
+import java.util.*
 
 /**
- * Created on 2017/8/1.
- *
- * @author ThirtyDegreesRay
+ * 请求登录的model对象
  */
 
 class LoginRequestModel {

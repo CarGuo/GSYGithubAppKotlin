@@ -12,7 +12,9 @@ import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import com.shuyu.github.kotlin.R
 
-
+/**
+ * 自带Shape按键
+ */
 class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.support.v7.appcompat.R.attr.buttonStyle) : AppCompatButton(context, attrs, defStyleAttr) {
 
     //text color

@@ -12,6 +12,7 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
 /**
+ * Application注入，并且对Activity和Fragment提供动态注入
  * Created by guoshuyu
  * Date: 2018-09-30
  */

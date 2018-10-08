@@ -13,6 +13,7 @@ import com.shuyu.github.kotlin.module.base.BaseFragment
 import javax.inject.Inject
 
 /**
+ * 登录页
  * Created by guoshuyu
  * Date: 2018-09-28
  */
@@ -41,6 +42,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
         binding.loginViewModel = loginViewModel
 
         loginViewModel.loginResult.observe(this, Observer { result ->
+            //根据结果返回，跳转主页
             if (result != null && result == true) {
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
             } else {

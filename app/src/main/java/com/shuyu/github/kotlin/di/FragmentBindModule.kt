@@ -8,9 +8,12 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 /**
+ * Fragment注入
  * Created by guoshuyu
  * Date: 2018-09-30
  */
+
+
 @Module
 abstract class MainFragmentBindModule {
     @ContributesAndroidInjector

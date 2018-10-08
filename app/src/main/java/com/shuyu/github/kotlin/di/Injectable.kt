@@ -17,6 +17,7 @@
 package com.shuyu.github.kotlin.di
 
 /**
+ * 注入检测接口
  * Marks an activity / fragment injectable.
  */
 interface Injectable

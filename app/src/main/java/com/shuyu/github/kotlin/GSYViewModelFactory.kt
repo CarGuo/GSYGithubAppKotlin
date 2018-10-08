@@ -23,6 +23,9 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
+/**
+ * 继承 ViewModelProvider.Factory 实现注入
+ */
 @Singleton
 class GSYViewModelFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>

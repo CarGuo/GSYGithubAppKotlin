@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 /**
+ * App级别注入
  * Created by guoshuyu
  * Date: 2018-09-30
  */

@@ -1,5 +1,8 @@
 package com.shuyu.github.kotlin.common.config
 
+/**
+ * App 配置
+ */
 object AppConfig {
 
     const val GITHUB_BASE_URL = "https://github.com/"

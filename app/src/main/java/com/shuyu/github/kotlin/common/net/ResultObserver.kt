@@ -8,7 +8,9 @@ import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException
 
-
+/**
+ * 网络请求返回处理
+ */
 abstract class ResultObserver<T> : Observer<Response<T>> {
 
     override fun onSubscribe(d: Disposable) {
@@ -71,7 +73,9 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
      * @throws Exception
      */
     @Throws(Exception::class)
-    abstract fun onCodeError(code: Int, message: String)
+    open fun onCodeError(code: Int, message: String) {
+
+    }
 
     /**
      * 返回失败

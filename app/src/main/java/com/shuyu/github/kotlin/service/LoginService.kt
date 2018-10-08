@@ -9,6 +9,9 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
+/**
+ * 登录服务
+ */
 interface LoginService {
 
     @POST("authorizations")

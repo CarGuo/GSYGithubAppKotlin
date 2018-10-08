@@ -19,7 +19,9 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         var instance: GSYGithubApplication by Delegates.notNull()
     }
 
-
+    /**
+     * 分发Activity的注入
+     */
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
@@ -31,7 +33,10 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         super.onCreate()
 
         instance = this
+
+        //Application级别注入
         AppInjector.init(this)
+
         ///初始化图标库
         Iconics.init(applicationContext)
         Iconics.registerFont(GSYIconfont())
