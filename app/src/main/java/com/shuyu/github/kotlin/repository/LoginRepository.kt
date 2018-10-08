@@ -26,19 +26,21 @@ class LoginRepository @Inject constructor(val retrofit: Retrofit) {
 
         val type = "$username:$password"
 
-        val base64 = Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP).replace("\\+", "%2B");
+        val base64 = Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP).replace("\\+", "%2B")
 
         Debuger.printfLog("base64Str login $base64")
 
         usernameStorage = username
 
+        accessTokenStorage = "Basic $base64"
+
         val authorizations = retrofit.create(LoginService::class.java)
                 .authorizations(LoginRequestModel.generate())
+
         RetrofitFactory.executeResult(authorizations, object : ResultObserver<AccessToken>() {
             override fun onSuccess(t: AccessToken?) {
                 Debuger.printfLog(t.toString())
                 passwordStorage = password
-                accessTokenStorage = "Basic $base64"
                 token.value = t
             }
 

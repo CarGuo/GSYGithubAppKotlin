@@ -5,11 +5,11 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.toast
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentLoginBinding
 import com.shuyu.github.kotlin.di.Injectable
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
 
 /**
@@ -34,19 +34,6 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        login_submit_btn.setOnClickListener {
-            val username = binding.loginUsernameInput.text
-            val password = binding.loginPasswordInput.text
-            if(username.isEmpty()) {
-                return@setOnClickListener
-            }
-            if (password.isEmpty()) {
-                return@setOnClickListener
-            }
-            loginViewModel.login()
-            ///去主页需要finish
-            ///navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
-        }
 
         loginViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(LoginViewModel::class.java)
@@ -54,8 +41,10 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
         binding.loginViewModel = loginViewModel
 
         loginViewModel.token.observe(this, Observer { result ->
-            result?.apply {
+            if (result != null) {
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
+            } else {
+                activity?.toast(R.string.LoginFailTip)
             }
         })
     }

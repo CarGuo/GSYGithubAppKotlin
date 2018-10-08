@@ -33,6 +33,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //todo 判断是否有用户信息
         if (accessTokenStorage.isEmpty()) {
             ///去登录页
             navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)

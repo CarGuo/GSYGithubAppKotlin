@@ -3,6 +3,8 @@ package com.shuyu.github.kotlin.module.login
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
+import android.view.View
+import androidx.core.widget.toast
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
@@ -33,5 +35,28 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
 
     fun login() {
         loginRepository.login(username.get()!!.trim(), password.get()!!.trim(), token)
+    }
+
+    fun onSubmitClick(view: View) {
+        val username = this.username.get()
+        val password = this.password.get()
+
+        username?.apply {
+            if(this.isEmpty()) {
+                view.context.toast(R.string.LoginNameTip)
+                return
+            }
+        }
+
+        password?.apply {
+            if(this.isEmpty()) {
+                view.context.toast(R.string.LoginPWTip)
+                return
+            }
+        }
+
+        login()
+        ///去主页需要finish
+        ///navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
     }
 }
