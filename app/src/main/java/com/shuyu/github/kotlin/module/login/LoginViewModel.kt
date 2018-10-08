@@ -2,13 +2,13 @@ package com.shuyu.github.kotlin.module.login
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
 import androidx.core.widget.toast
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
-import com.shuyu.github.kotlin.model.AccessToken
 import com.shuyu.github.kotlin.repository.LoginRepository
 import javax.inject.Inject
 
@@ -26,15 +26,15 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
 
     val password = ObservableField<String>()
 
-    val token = MutableLiveData<AccessToken>()
+    val loginResult = MutableLiveData<Boolean>()
 
     init {
         username.set(usernameStorage)
         password.set(passwordStorage)
     }
 
-    fun login() {
-        loginRepository.login(username.get()!!.trim(), password.get()!!.trim(), token)
+    fun login(context: Context) {
+        loginRepository.login(context, username.get()!!.trim(), password.get()!!.trim(), loginResult)
     }
 
     fun onSubmitClick(view: View) {
@@ -55,8 +55,6 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
             }
         }
 
-        login()
-        ///去主页需要finish
-        ///navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
+        login(view.context)
     }
 }

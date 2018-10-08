@@ -121,4 +121,8 @@ dependencies {
 
     //EDIT TEXT
     implementation "com.github.HITGIF:TextFieldBoxes:${textfiled_box_version}"
+
+
+    ///loading spinkit
+    implementation "com.github.ybq:Android-SpinKit:${spinkit_version}"
 }

@@ -1,19 +1,20 @@
 package com.shuyu.github.kotlin.common.net
 
 import android.accounts.NetworkErrorException
-
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
+import retrofit2.Response
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException
 
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
-import retrofit2.Response
 
 abstract class ResultObserver<T> : Observer<Response<T>> {
 
     override fun onSubscribe(d: Disposable) {
-        onRequestStart()
+        if (!d.isDisposed) {
+            onRequestStart()
+        }
     }
 
     override fun onNext(reposnse: Response<T>) {
@@ -27,7 +28,7 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
 
         } else {
             try {
-                onCodeError(reposnse)
+                onCodeError(reposnse.code(), reposnse.message())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -61,7 +62,7 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
      * @throws Exception
      */
     @Throws(Exception::class)
-    protected abstract fun onSuccess(t: T?)
+    abstract fun onSuccess(t: T?)
 
     /**
      * 返回成功了,但是code错误
@@ -70,8 +71,7 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
      * @throws Exception
      */
     @Throws(Exception::class)
-    protected fun onCodeError(t: Response<T>) {
-    }
+    abstract fun onCodeError(code: Int, message: String)
 
     /**
      * 返回失败
@@ -81,11 +81,13 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
      * @throws Exception
      */
     @Throws(Exception::class)
-    protected abstract fun onFailure(e: Throwable, isNetWorkError: Boolean)
+    abstract fun onFailure(e: Throwable, isNetWorkError: Boolean)
 
-    protected fun onRequestStart() {}
+    open fun onRequestStart() {
 
-    protected fun onRequestEnd() {
+    }
+
+    open fun onRequestEnd() {
 
     }
 

@@ -19,6 +19,8 @@ object AppConfig {
 
     const val ACCESS_TOKEN = "accessToken"
 
+    const val USER_BASIC_CODE = "userBasicCode"
+
     const val USER_NAME = "user_name"
 
     const val PASSWORD = "password"

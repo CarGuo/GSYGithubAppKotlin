@@ -40,8 +40,8 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
 
         binding.loginViewModel = loginViewModel
 
-        loginViewModel.token.observe(this, Observer { result ->
-            if (result != null) {
+        loginViewModel.loginResult.observe(this, Observer { result ->
+            if (result != null && result == true) {
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
             } else {
                 activity?.toast(R.string.LoginFailTip)

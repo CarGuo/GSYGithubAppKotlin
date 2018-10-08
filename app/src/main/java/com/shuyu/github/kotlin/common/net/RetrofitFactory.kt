@@ -7,21 +7,21 @@ import com.shuyu.github.kotlin.common.utils.GSYPreference
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
-import java.util.concurrent.TimeUnit
-
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 
 class RetrofitFactory private constructor() {
 
     private var accessTokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
+
+    private var userBasicCodeStorage: String by GSYPreference(AppConfig.USER_BASIC_CODE, "")
 
     val retrofit: Retrofit
 
@@ -51,11 +51,12 @@ class RetrofitFactory private constructor() {
             var request = chain.request()
 
             //add access token
-            if (!accessTokenStorage.isEmpty()) {
-                Debuger.printfLog(accessTokenStorage)
+            val accessToken = getAuthorization()
+            if (!accessToken.isEmpty()) {
+                Debuger.printfLog(accessToken)
                 val url = request.url().toString()
                 request = request.newBuilder()
-                        .addHeader("Authorization", accessTokenStorage)
+                        .addHeader("Authorization", accessToken)
                         .url(url)
                         .build()
             }
@@ -63,6 +64,27 @@ class RetrofitFactory private constructor() {
             chain.proceed(request)
         }
 
+    }
+
+
+    fun getAuthorization(): String {
+        val token = accessTokenStorage
+        if (token.isBlank()) {
+            val basic = userBasicCodeStorage
+            return if (basic.isBlank()) {
+                //提示输入账号密码
+                ""
+            } else {
+                //通过 basic 去获取token，获取到设置，返回token
+                "Basic $basic"
+            }
+        }
+        return token
+    }
+
+    fun clearAuthorization() {
+        accessTokenStorage = ""
+        userBasicCodeStorage = ""
     }
 
     companion object {
