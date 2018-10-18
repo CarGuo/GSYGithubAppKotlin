@@ -7,6 +7,8 @@ import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.databinding.FragmentWelcomeBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
+import com.shuyu.github.kotlin.repository.UserRepository
+import javax.inject.Inject
 
 /**
  * 欢迎页
@@ -14,6 +16,10 @@ import com.shuyu.github.kotlin.module.base.BaseFragment
  * Date: 2018-09-30
  */
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
+
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     /***
      * 委托属性，GSYPreference 把取值和存值的操作代理给 accessTokenStorage
@@ -33,14 +39,14 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //todo 判断是否有用户信息
         if (accessTokenStorage.isEmpty()) {
             ///去登录页
             navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
         } else {
             ///去主页
-            navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
-            //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+            //todo 判断是否有用户信息
+            //navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
+            navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
         }
 
 

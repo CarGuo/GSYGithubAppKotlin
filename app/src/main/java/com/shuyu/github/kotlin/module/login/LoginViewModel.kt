@@ -9,7 +9,9 @@ import androidx.core.widget.toast
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
+import com.shuyu.github.kotlin.model.User
 import com.shuyu.github.kotlin.repository.LoginRepository
+import com.shuyu.github.kotlin.repository.UserRepository
 import javax.inject.Inject
 
 /**
@@ -17,7 +19,7 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-09-29
  */
-class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository, private val userRepository: UserRepository) : ViewModel() {
 
     private var usernameStorage: String by GSYPreference(AppConfig.USER_NAME, "")
 
@@ -26,7 +28,7 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
     /**
      * 用户名
      */
-    val username =  ObservableField<String>()
+    val username = ObservableField<String>()
 
     /**
      * 密码
@@ -37,6 +39,9 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
      * 登录结果
      */
     val loginResult = MutableLiveData<Boolean>()
+
+
+    val userInfo = MutableLiveData<User>()
 
     init {
         //读取本地存储的用户名和密码
@@ -52,6 +57,13 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
     }
 
     /**
+     * 获取当前用户信息
+     */
+    fun getCurrentUserInfo() {
+        userRepository.getPersonInfo(userInfo)
+    }
+
+    /**
      * 通过DataBinding在XML绑定的点击方法
      */
     fun onSubmitClick(view: View) {
@@ -59,14 +71,14 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
         val password = this.password.get()
 
         username?.apply {
-            if(this.isEmpty()) {
+            if (this.isEmpty()) {
                 view.context.toast(R.string.LoginNameTip)
                 return
             }
         }
 
         password?.apply {
-            if(this.isEmpty()) {
+            if (this.isEmpty()) {
                 view.context.toast(R.string.LoginPWTip)
                 return
             }
