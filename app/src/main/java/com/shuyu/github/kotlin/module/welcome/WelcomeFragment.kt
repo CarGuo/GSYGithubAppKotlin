@@ -17,6 +17,7 @@ import javax.inject.Inject
  */
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
+    private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -43,10 +44,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             ///去登录页
             navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
         } else {
-            ///去主页
-            //todo 判断是否有用户信息
-            //navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
-            navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+            if (userInfoStorage.isEmpty()) {
+                ///去登录页
+                navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+            } else {
+                //去主页
+                //navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
+                navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+            }
+
         }
 
 

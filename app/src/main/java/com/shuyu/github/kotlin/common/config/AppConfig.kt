@@ -28,5 +28,7 @@ object AppConfig {
 
     const val PASSWORD = "password"
 
+    const val USER_INFO = "userInfo"
+
 
 }

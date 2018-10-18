@@ -57,6 +57,9 @@ class RetrofitFactory private constructor() {
 
             //add access token
             val accessToken = getAuthorization()
+
+            Debuger.printfLog("headerInterceptor", accessToken)
+
             if (!accessToken.isEmpty()) {
                 Debuger.printfLog(accessToken)
                 val url = request.url().toString()
@@ -75,7 +78,6 @@ class RetrofitFactory private constructor() {
      * 获取token
      */
     fun getAuthorization(): String {
-        val token: String
         if (accessTokenStorage.isBlank()) {
             val basic = userBasicCodeStorage
             return if (basic.isBlank()) {
@@ -85,10 +87,9 @@ class RetrofitFactory private constructor() {
                 //通过 basic 去获取token，获取到设置，返回token
                 "Basic $basic"
             }
-        } else {
-            token = "token $accessTokenStorage"
         }
-        return token
+        return "token $accessTokenStorage"
+
     }
 
     /**
