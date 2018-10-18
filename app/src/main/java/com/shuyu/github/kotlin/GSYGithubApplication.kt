@@ -7,6 +7,8 @@ import com.mikepenz.iconics.Iconics
 import com.mikepenz.iconics.context.IconicsContextWrapper
 import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.di.AppInjector
+import com.shuyu.gsygiideloader.GSYGlideImageLoader
+import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
@@ -40,6 +42,8 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         ///初始化图标库
         Iconics.init(applicationContext)
         Iconics.registerFont(GSYIconfont())
+
+        GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
     }
 
     override fun activityInjector() = dispatchingAndroidInjector

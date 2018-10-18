@@ -99,8 +99,9 @@ dependencies {
     implementation "org.greenrobot:eventbus:${event_bus}"
 
     //glide
-    implementation "com.github.bumptech.glide:glide:${glide_version}"
-    kapt "com.github.bumptech.glide:compiler:${glide_version}"
+    implementation "com.github.CarGuo.GSYImageLoader:GSYGlideLoader:${gsy_image_load}"
+    implementation "com.github.CarGuo.GSYImageLoader:GSYImageLoader:${gsy_image_load}"
+
 
     ///webview
     implementation "com.just.agentweb:agentweb:${agentweb_version}"
@@ -125,4 +126,7 @@ dependencies {
 
     ///loading spinkit
     implementation "com.github.ybq:Android-SpinKit:${spinkit_version}"
+
+    implementation "com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:${recycler_common_version}"
+
 }
