@@ -16,6 +16,7 @@
             android:id="@+id/action_nav_wel_to_login"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.shuyu.github.kotlin.module.login.LoginFragment"
@@ -25,6 +26,7 @@
             android:id="@+id/action_nav_login_to_main"
             app:destination="@id/mainActivity" />
     </fragment>
+
     <activity
         android:id="@+id/mainActivity"
         android:name="com.shuyu.github.kotlin.module.main.MainActivity"
