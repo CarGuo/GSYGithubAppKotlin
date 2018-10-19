@@ -19,7 +19,6 @@ import javax.inject.Inject
  */
 class LoginRepository @Inject constructor(val retrofit: Retrofit) {
 
-
     private var usernameStorage: String by GSYPreference(AppConfig.USER_NAME, "")
 
     private var passwordStorage: String by GSYPreference(AppConfig.PASSWORD, "")
@@ -44,9 +43,9 @@ class LoginRepository @Inject constructor(val retrofit: Retrofit) {
                 .authorizations(LoginRequestModel.generate())
 
         RetrofitFactory.executeResult(authorizations, object : ResultProgressObserver<AccessToken>(context) {
-            override fun onSuccess(t: AccessToken?) {
-                Debuger.printfLog(t.toString())
-                t?.apply {
+            override fun onSuccess(result: AccessToken?) {
+                Debuger.printfLog(result.toString())
+                result?.apply {
                     accessTokenStorage = this.token!!
                 }
                 passwordStorage = password

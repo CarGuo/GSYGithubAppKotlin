@@ -1,13 +1,9 @@
 package com.shuyu.github.kotlin.common.net
 
-import java.util.ArrayList
-
 import android.text.TextUtils
-
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonParser
+import java.util.*
 
 
 object GsonUtils {
@@ -54,7 +50,7 @@ object GsonUtils {
     }
 
 
-    fun <T> parserJsonToArrayBean(jsonString: String, clazzBean: Class<T>): T {
+    fun <T> parserJsonToBean(jsonString: String, clazzBean: Class<T>): T {
         if (TextUtils.isEmpty(jsonString)) {
             throw RuntimeException("parserJsonToArrayBean jsonString empty")
         }
@@ -69,9 +65,9 @@ object GsonUtils {
     }
 
 
-    fun <T> parserJsonToArrayBean(jsonString: String, note: String, clazzBean: Class<T>): T {
+    fun <T> parserJsonToBean(jsonString: String, note: String, clazzBean: Class<T>): T {
         val noteJsonString = getNoteJsonString(jsonString, note)
-        return parserJsonToArrayBean(noteJsonString, clazzBean)
+        return parserJsonToBean(noteJsonString, clazzBean)
     }
 
 

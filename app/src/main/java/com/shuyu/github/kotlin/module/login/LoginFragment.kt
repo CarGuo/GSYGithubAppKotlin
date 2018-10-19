@@ -8,7 +8,6 @@ import android.view.View
 import androidx.core.widget.toast
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentLoginBinding
-import com.shuyu.github.kotlin.di.Injectable
 import com.shuyu.github.kotlin.module.base.BaseFragment
 import javax.inject.Inject
 
@@ -17,7 +16,7 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-09-28
  */
-class LoginFragment: BaseFragment<FragmentLoginBinding> (), Injectable {
+class LoginFragment: BaseFragment<FragmentLoginBinding> () {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

@@ -1,12 +1,14 @@
 package com.shuyu.github.kotlin.module.my
 
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.databinding.FragmentMyBinding
+import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import javax.inject.Inject
 
 /**
  * 我的
@@ -14,18 +16,22 @@ import com.shuyu.github.kotlin.module.base.BaseListFragment
  * Date: 2018-09-28
  */
 
-class MyFragment : BaseListFragment<ViewDataBinding>() {
+class MyFragment : BaseListFragment<FragmentMyBinding>() {
+
+    @Inject
+    lateinit var appGlobalModel: AppGlobalModel
 
     override fun onCreateView(mainView: View) {
 
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_list
+        return R.layout.fragment_my
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.globalModel = appGlobalModel
     }
 
 

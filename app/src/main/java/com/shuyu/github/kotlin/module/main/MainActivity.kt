@@ -1,8 +1,11 @@
 package com.shuyu.github.kotlin.module.main
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.model.User
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -14,6 +17,9 @@ import javax.inject.Inject
  * 主页
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var globalModel: AppGlobalModel
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -40,6 +46,22 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         home_navigation_tab_bar.setViewPager(home_view_pager, 0)
         home_view_pager.offscreenPageLimit = mainFragmentList.size
 
+        home_view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 1) {
+                    val user = User()
+                    globalModel.userObservable.set(user)
+                }
+            }
+        })
         /*test.setOnClickListener {
             val authorization = RetrofitFactory.createService(LoginService::class.java).authorizations(LoginRequestModel.generate())
             RetrofitFactory.executeResult(authorization, object : ResultObserver<AccessToken>() {

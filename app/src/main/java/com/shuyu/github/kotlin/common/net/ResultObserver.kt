@@ -60,11 +60,11 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
     /**
      * 返回成功
      *
-     * @param t
+     * @param result
      * @throws Exception
      */
     @Throws(Exception::class)
-    abstract fun onSuccess(t: T?)
+    abstract fun onSuccess(result: T?)
 
     /**
      * 返回成功了,但是code错误

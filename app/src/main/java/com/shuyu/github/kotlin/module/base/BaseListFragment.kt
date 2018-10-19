@@ -1,14 +1,11 @@
 package com.shuyu.github.kotlin.module.base
 
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.shuyu.commonrecycler.BindSuperAdapter
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.commonrecycler.listener.OnItemClickListener
@@ -22,16 +19,6 @@ abstract class BaseListFragment<T : ViewDataBinding> : BaseFragment<T>(), OnItem
 
 
     var adapter by autoCleared<BindSuperAdapter>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(
-                inflater,
-                getLayoutId(),
-                container,
-                false)
-        onCreateView(binding.root)
-        return binding.root
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

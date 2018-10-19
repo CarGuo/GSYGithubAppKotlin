@@ -4,6 +4,7 @@ import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.login.LoginFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.trend.TrendFragment
+import com.shuyu.github.kotlin.module.welcome.WelcomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -28,6 +29,10 @@ abstract class MainFragmentBindModule {
 
 @Module
 abstract class StartFragmentBindModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributeWelcomeFragment(): WelcomeFragment
+
     @ContributesAndroidInjector
     abstract fun contributeLoginFragment(): LoginFragment
 

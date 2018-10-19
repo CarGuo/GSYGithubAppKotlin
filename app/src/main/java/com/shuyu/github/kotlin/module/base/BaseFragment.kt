@@ -10,13 +10,15 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import com.shuyu.github.kotlin.di.Injectable
+import com.shuyu.github.kotlin.holder.base.GSYDataBindingComponent
 
 /**
  * 基类Fragment
  * Created by guoshuyu
  * Date: 2018-09-30
  */
-abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment(), Injectable {
 
     /**
      * 根据Fragment动态清理和获取binding对象
@@ -28,7 +30,8 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
                 inflater,
                 getLayoutId(),
                 container,
-                false)
+                false,
+                GSYDataBindingComponent())
         onCreateView(binding.root)
         return binding.root
     }
