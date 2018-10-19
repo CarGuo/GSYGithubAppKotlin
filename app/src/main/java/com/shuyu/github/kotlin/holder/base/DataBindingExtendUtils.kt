@@ -1,10 +1,14 @@
-package com.shuyu.github.kotlin.ui.adapter
+package com.shuyu.github.kotlin.holder.base
 
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
 import android.widget.ImageView
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 
+
+/**
+ * DataBinding 的拓展适配器
+ */
 class DataBindingExtendUtils {
 
     companion object {
@@ -16,7 +20,9 @@ class DataBindingExtendUtils {
 
 }
 
-
+/**
+ * 加载 DataBinding 的拓展适配器
+ */
 class GSYDataBindingComponent : DataBindingComponent {
     override fun getCompanion(): DataBindingExtendUtils.Companion = DataBindingExtendUtils
 }

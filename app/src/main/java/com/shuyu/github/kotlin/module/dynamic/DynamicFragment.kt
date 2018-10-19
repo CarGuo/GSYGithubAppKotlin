@@ -5,15 +5,14 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapter
-import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.commonrecycler.listener.OnItemClickListener
 import com.shuyu.commonrecycler.listener.OnLoadingListener
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.holder.EventHolder
 import com.shuyu.github.kotlin.holder.EventUIModel
+import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import com.shuyu.github.kotlin.ui.adapter.BindingDataRecyclerManager
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**

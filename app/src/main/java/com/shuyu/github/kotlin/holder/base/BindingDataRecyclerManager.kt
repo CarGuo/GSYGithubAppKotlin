@@ -1,20 +1,24 @@
-package com.shuyu.github.kotlin.ui.adapter
+package com.shuyu.github.kotlin.holder.base
 
 import android.content.Context
-import android.view.ViewGroup
-import com.shuyu.commonrecycler.BindRecyclerBaseHolder
-import com.shuyu.commonrecycler.BindSuperAdapterManager
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import com.shuyu.commonrecycler.BindRecyclerBaseHolder
+import com.shuyu.commonrecycler.BindSuperAdapterManager
 import java.lang.reflect.Constructor
 
-
+/**
+ * 增加对DataBinding的支持
+ */
 class BindingDataRecyclerManager : BindSuperAdapterManager() {
+
     /**
      * 根据参数构造
      */
+    @Suppress("UNCHECKED_CAST")
     override fun <T> contructorHolder(context: Context, parent: ViewGroup, classType: Class<out BindRecyclerBaseHolder>?, layoutId: Int): T? {
         var `object`: Constructor<*>? = null
         var constructorFirst = true
