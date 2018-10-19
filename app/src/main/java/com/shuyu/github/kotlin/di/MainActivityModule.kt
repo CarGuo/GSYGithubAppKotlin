@@ -8,6 +8,8 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
+import com.shuyu.github.kotlin.module.my.MyFragment
+import com.shuyu.github.kotlin.module.trend.TrendFragment
 import dagger.Module
 import dagger.Provides
 import devlight.io.library.ntb.NavigationTabBar
@@ -24,7 +26,7 @@ class MainActivityModule {
 
     @Provides
     fun providerMainFragmentList(): List<Fragment> {
-        return listOf(DynamicFragment(), DynamicFragment(), DynamicFragment())
+        return listOf(DynamicFragment(), TrendFragment(), MyFragment())
     }
 
     @Provides

@@ -2,9 +2,11 @@ package com.shuyu.github.kotlin.module.trend
 
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.module.base.BaseFragment
+import com.shuyu.github.kotlin.module.base.BaseListFragment
 
 /**
  * 趋势
@@ -12,7 +14,7 @@ import com.shuyu.github.kotlin.module.base.BaseFragment
  * Date: 2018-09-28
  */
 
-class TrendFragment : BaseFragment<ViewDataBinding>() {
+class TrendFragment : BaseListFragment<ViewDataBinding>() {
 
     override fun onCreateView(mainView: View) {
 
@@ -24,5 +26,14 @@ class TrendFragment : BaseFragment<ViewDataBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun getAdapterManager(): BindSuperAdapterManager? = null
+
+    override fun getRecyclerView(): RecyclerView? = null
+
+    override fun getDataList(): ArrayList<Any> = ArrayList()
+
+    override fun bindHolder(manager: BindSuperAdapterManager) {
     }
 }

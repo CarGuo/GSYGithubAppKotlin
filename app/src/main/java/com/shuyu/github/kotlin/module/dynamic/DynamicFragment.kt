@@ -2,17 +2,16 @@ package com.shuyu.github.kotlin.module.dynamic
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.shuyu.commonrecycler.BindSuperAdapter
-import com.shuyu.commonrecycler.listener.OnItemClickListener
-import com.shuyu.commonrecycler.listener.OnLoadingListener
+import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.holder.EventHolder
 import com.shuyu.github.kotlin.holder.EventUIModel
 import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
-import com.shuyu.github.kotlin.module.base.BaseFragment
+import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.base.autoCleared
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
@@ -21,12 +20,12 @@ import kotlinx.android.synthetic.main.fragment_list.*
  * Date: 2018-09-28
  */
 
-class DynamicFragment : BaseFragment<FragmentListBinding>() {
+class DynamicFragment : BaseListFragment<FragmentListBinding>() {
 
-    private val normalAdapterManager = BindingDataRecyclerManager()
+    private var normalAdapterManager by autoCleared<BindingDataRecyclerManager>()
 
     override fun onCreateView(mainView: View) {
-
+        normalAdapterManager = BindingDataRecyclerManager()
     }
 
     override fun getLayoutId(): Int {
@@ -35,31 +34,31 @@ class DynamicFragment : BaseFragment<FragmentListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onItemClick(context: Context, position: Int) {
+        super.onItemClick(context, position)
+    }
 
-        normalAdapterManager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setOnItemClickListener(object : OnItemClickListener {
-                    override fun onItemClick(context: Context, position: Int) {
+    override fun onRefresh() {
+        super.onRefresh()
+    }
 
-                    }
-                }).setLoadingListener(object : OnLoadingListener {
-                    override fun onRefresh() {
+    override fun onLoadMore() {
+        super.onLoadMore()
+    }
 
-                    }
+    override fun enableRefresh(): Boolean = true
 
-                    override fun onLoadMore() {
+    override fun enableLoadMore(): Boolean = true
 
-                    }
-                })
+    override fun getAdapterManager(): BindSuperAdapterManager? = normalAdapterManager
 
-        val adapter = BindSuperAdapter(activity!!, normalAdapterManager, arrayListOf(EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel()))
+    override fun getRecyclerView(): RecyclerView? = baseRecycler
 
-        baseRecycler.layoutManager = LinearLayoutManager(activity!!)
+    override fun getDataList(): ArrayList<Any> = arrayListOf(EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel())
 
-        baseRecycler.adapter = adapter
-
-
+    override fun bindHolder(manager: BindSuperAdapterManager) {
+        manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
     }
 }

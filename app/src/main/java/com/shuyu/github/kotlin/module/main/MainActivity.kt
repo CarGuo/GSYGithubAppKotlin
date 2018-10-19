@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         home_view_pager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
         home_navigation_tab_bar.models = mainTabModel
         home_navigation_tab_bar.setViewPager(home_view_pager, 0)
+        home_view_pager.offscreenPageLimit = mainFragmentList.size
 
         /*test.setOnClickListener {
             val authorization = RetrofitFactory.createService(LoginService::class.java).authorizations(LoginRequestModel.generate())
