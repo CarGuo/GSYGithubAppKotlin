@@ -13,6 +13,7 @@ import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.holder.EventHolder
 import com.shuyu.github.kotlin.holder.EventUIModel
 import com.shuyu.github.kotlin.module.base.BaseFragment
+import com.shuyu.github.kotlin.ui.adapter.BindingDataRecyclerManager
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 class DynamicFragment : BaseFragment<FragmentListBinding>() {
 
-    private val normalAdapterManager = BindSuperAdapterManager()
+    private val normalAdapterManager = BindingDataRecyclerManager()
 
     override fun onCreateView(mainView: View) {
 

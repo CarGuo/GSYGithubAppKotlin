@@ -2,15 +2,16 @@ package com.shuyu.github.kotlin.holder
 
 import android.animation.AnimatorSet
 import android.content.Context
+import android.databinding.ViewDataBinding
 import android.view.View
 import com.shuyu.commonrecycler.BindRecyclerBaseHolder
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.CommonUtils
-import com.shuyu.gsyimageloader.GSYImageLoaderManager
+import com.shuyu.github.kotlin.databinding.LayoutEventItemBinding
 import kotlinx.android.synthetic.main.layout_event_item.view.*
 
 
-class EventHolder(context: Context, private val v: View) : BindRecyclerBaseHolder(context, v) {
+class EventHolder(context: Context, private val v: View, private val dataBing: ViewDataBinding) : BindRecyclerBaseHolder(context, v) {
 
 
     /**
@@ -29,10 +30,7 @@ class EventHolder(context: Context, private val v: View) : BindRecyclerBaseHolde
      */
     override fun onBind(model: Any, position: Int) {
         val eventModel = model as EventUIModel
-        v.event_time.text = eventModel.username
-        v.event_action.text = eventModel.action
-        v.event_des.text = eventModel.des
-        CommonUtils.loadUserHeaderImage(v.event_user_img, eventModel.image)
+        (dataBing as LayoutEventItemBinding).eventUIModel = eventModel
     }
 
     /**
@@ -47,5 +45,5 @@ class EventHolder(context: Context, private val v: View) : BindRecyclerBaseHolde
     }
 }
 
-data class EventUIModel(var username: String = "", var image: String = "",
-                        var action: String = "", var des: String = "")
+data class EventUIModel(var username: String = "User", var image: String = "",
+                        var action: String = "Test", var des: String = "Test", var time:String="---")
