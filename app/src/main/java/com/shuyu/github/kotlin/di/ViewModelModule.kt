@@ -20,6 +20,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.shuyu.github.kotlin.GSYViewModelFactory
 import com.shuyu.github.kotlin.di.annotation.ViewModelKey
+import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 
 
@@ -37,7 +38,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
-    abstract fun bindSearchViewModel(loginViewModel: LoginViewModel): ViewModel
+    abstract fun bindLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DynamicViewModel::class)
+    abstract fun bindDynamicViewModel(dynamicViewModel: DynamicViewModel): ViewModel
 
 
     @Binds

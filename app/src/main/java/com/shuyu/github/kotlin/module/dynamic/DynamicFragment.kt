@@ -1,5 +1,8 @@
 package com.shuyu.github.kotlin.module.dynamic
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -13,6 +16,7 @@ import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.base.autoCleared
 import kotlinx.android.synthetic.main.fragment_list.*
+import javax.inject.Inject
 
 /**
  * 动态
@@ -21,6 +25,12 @@ import kotlinx.android.synthetic.main.fragment_list.*
  */
 
 class DynamicFragment : BaseListFragment<FragmentListBinding>() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+
+    lateinit var dynamicViewModel: DynamicViewModel
 
     private var normalAdapterManager by autoCleared<BindingDataRecyclerManager>()
 
@@ -34,6 +44,14 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dynamicViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(DynamicViewModel::class.java)
+
+        dynamicViewModel.eventDataList.observe(this, Observer { items->
+            adapter.dataList = items
+            adapter.notifyDataSetChanged()
+        })
+
     }
 
     override fun onItemClick(context: Context, position: Int) {

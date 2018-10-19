@@ -8,6 +8,7 @@ import com.shuyu.github.kotlin.common.net.RetrofitFactory
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.model.Event
 import com.shuyu.github.kotlin.model.User
 import com.shuyu.github.kotlin.service.UserService
 import retrofit2.Retrofit
@@ -40,6 +41,29 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             }
 
         })
+    }
+
+    fun getReceivedEvent(dataList : MutableLiveData<ArrayList<Any>>) {
+        appGlobalModel.userObservable.get()?.apply {
+            val userName = this.login!!
+            val receivedEvent = retrofit.create(UserService::class.java).getNewsEvent(true, userName, 0)
+            RetrofitFactory.executeResult(receivedEvent, object : ResultObserver<ArrayList<Event>>() {
+                override fun onSuccess(result: ArrayList<Event>?) {
+                    result?.forEach {
+                        dataList.value?.add(Event())
+                    }
+                }
+
+                override fun onCodeError(code: Int, message: String) {
+
+                }
+
+                override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+
+                }
+
+            })
+        }
     }
 
 }
