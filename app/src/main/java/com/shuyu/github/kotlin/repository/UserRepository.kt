@@ -31,6 +31,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
                     ///拦截错误
                     //userInfoStorage = ""
+                    Debuger.printfLog("userInfo onErrorResumeNext ")
                     Observable.error(t)
                 })
     }

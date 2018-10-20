@@ -41,6 +41,7 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
                     Debuger.printfLog("token $it")
                     accessTokenStorage = it
                 }.onErrorResumeNext(Function<Throwable, Observable<String>> { t ->
+                    Debuger.printfLog("token onErrorResumeNext ")
                     clearTokenStorage()
                     Observable.error(t)
                 })
