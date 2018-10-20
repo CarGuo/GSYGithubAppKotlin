@@ -15,6 +15,10 @@ class DynamicViewModel @Inject constructor(private val userRepository: UserRepos
 
     val eventDataList =  MutableLiveData<ArrayList<Any>>()
 
+    val loading = MutableLiveData<Boolean>()
 
+    init {
+        userRepository.getReceivedEvent(eventDataList, loading)
+    }
 
 }

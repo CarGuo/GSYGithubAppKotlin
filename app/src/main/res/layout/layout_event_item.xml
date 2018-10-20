@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="eventUIModel"
             type="com.shuyu.github.kotlin.model.ui.EventUIModel" />
@@ -26,8 +28,8 @@
             <ImageView
                 android:id="@+id/event_user_img"
                 android:layout_width="20dp"
-                app:userHeaderUrl="@{eventUIModel.image}"
-                android:layout_height="20dp"/>
+                android:layout_height="20dp"
+                app:userHeaderUrl="@{eventUIModel.image}" />
 
             <TextView
                 android:id="@+id/event_user_name"
@@ -68,9 +70,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_action"
                 android:layout_margin="5dp"
+                android:maxLines="3"
                 android:text="@{eventUIModel.des}"
                 android:textColor="@color/subTextColor"
-                android:textSize="@dimen/smallTextSize" />
+                android:textSize="@dimen/smallTextSize"
+                android:visibility="@{eventUIModel.des.length() > 0 ? View.VISIBLE : View.GONE}" />
 
         </RelativeLayout>
 

@@ -29,8 +29,7 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-
-    lateinit var dynamicViewModel: DynamicViewModel
+    private lateinit var dynamicViewModel: DynamicViewModel
 
     private var normalAdapterManager by autoCleared<BindingDataRecyclerManager>()
 
@@ -51,6 +50,8 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
             adapter.dataList = items
             adapter.notifyDataSetChanged()
         })
+
+
 
     }
 
@@ -74,7 +75,7 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
 
     override fun getRecyclerView(): RecyclerView? = baseRecycler
 
-    override fun getDataList(): ArrayList<Any> = arrayListOf(EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel(), EventUIModel())
+    override fun getDataList(): ArrayList<Any> = arrayListOf()
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
