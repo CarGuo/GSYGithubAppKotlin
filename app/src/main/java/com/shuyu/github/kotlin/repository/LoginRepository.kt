@@ -4,10 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.util.Base64
 import com.shuyu.github.kotlin.common.config.AppConfig
-import com.shuyu.github.kotlin.common.net.GsonUtils
-import com.shuyu.github.kotlin.common.net.ResultObserver
-import com.shuyu.github.kotlin.common.net.ResultProgressObserver
-import com.shuyu.github.kotlin.common.net.RetrofitFactory
+import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AccessToken
@@ -54,51 +51,45 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit) {
         val loginService = retrofit.create(LoginService::class.java)
         val userService = retrofit.create(UserService::class.java)
 
-        loginService.authorizations(LoginRequestModel.generate())
-                .flatMap { response ->
-                    if (response.isSuccessful) {
-                        ObservableSource<AccessToken?> {
-                            it.onNext(response.body())
-                        }
-                    } else {
-                        ObservableSource {
-                            it.onError(Throwable(response.errorBody().toString()))
-                        }
-                    }
-                }.doOnNext {
-                    if (it != null) {
-                        Debuger.printfLog(it.toString())
-                        accessTokenStorage = it.token!!
-                        passwordStorage = password
-                    }
-                }.flatMap {
+        val authorizations = loginService
+                .authorizations(LoginRequestModel.generate())
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }
+                .doOnNext {
+                    accessTokenStorage = it.token!!
+                    passwordStorage = password
+                    Debuger.printfLog("token $accessTokenStorage")
+                }
+                .flatMap {
                     userService.getPersonInfo(true)
-                }.doOnNext { response ->
-                    if (response.isSuccessful) {
-                        //保存用户信息
-                        userInfoStorage = GsonUtils.toJsonString(response.body())
-                    }
-                }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : ResultProgressObserver<User>(context) {
-                    override fun onSuccess(result: User?) {
-                        Debuger.printfLog("********************")
-                        Debuger.printfLog(result?.login!!)
-                        Debuger.printfLog("********************")
-                        token.value = true
-                    }
+                }
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }
+                .doOnNext {
+                    userInfoStorage = GsonUtils.toJsonString(it)
+                    Debuger.printfLog("userInfo $userInfoStorage")
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
 
-                    override fun onCodeError(code: Int, message: String) {
-                        clearTokenStorage()
-                        token.value = false
-                    }
+        RetrofitFactory.executeResult(authorizations, object : ResultProgressObserver<User>(context) {
+            override fun onSuccess(result: User?) {
+                token.value = true
+            }
 
-                    override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
-                        clearTokenStorage()
-                        token.value = false
-                    }
+            override fun onCodeError(code: Int, message: String) {
+                clearTokenStorage()
+                token.value = false
+            }
 
-                })
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                clearTokenStorage()
+                token.value = false
+            }
+
+        })
 
     }
 

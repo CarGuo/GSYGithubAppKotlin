@@ -21,7 +21,7 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
 
     override fun onNext(reposnse: Response<T>) {
         onRequestEnd()
-        if (reposnse.code() / 100 == 2) {
+        if (reposnse.isSuccessful) {
             try {
                 onSuccess(reposnse.body())
             } catch (e: Exception) {
