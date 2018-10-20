@@ -43,16 +43,6 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> () {
         loginViewModel.loginResult.observe(this, Observer { result ->
             //根据结果返回，跳转主页
             if (result != null && result == true) {
-                loginViewModel.getCurrentUserInfo()
-                //navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
-            } else {
-                activity?.toast(R.string.LoginFailTip)
-            }
-        })
-
-        loginViewModel.userInfo.observe(this, Observer { result ->
-            //根据结果返回，跳转主页
-            if (result != null) {
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
             } else {
                 activity?.toast(R.string.LoginFailTip)

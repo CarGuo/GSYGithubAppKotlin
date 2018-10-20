@@ -11,7 +11,6 @@ import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.User
 import com.shuyu.github.kotlin.repository.LoginRepository
-import com.shuyu.github.kotlin.repository.UserRepository
 import javax.inject.Inject
 
 /**
@@ -19,7 +18,7 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-09-29
  */
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository, private val userRepository: UserRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
 
     private var usernameStorage: String by GSYPreference(AppConfig.USER_NAME, "")
 
@@ -40,9 +39,6 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
      */
     val loginResult = MutableLiveData<Boolean>()
 
-
-    val userInfo = MutableLiveData<User>()
-
     init {
         //读取本地存储的用户名和密码
         username.set(usernameStorage)
@@ -54,13 +50,6 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
      */
     fun login(context: Context) {
         loginRepository.login(context, username.get()!!.trim(), password.get()!!.trim(), loginResult)
-    }
-
-    /**
-     * 获取当前用户信息
-     */
-    fun getCurrentUserInfo() {
-        userRepository.getPersonInfo(userInfo)
     }
 
     /**

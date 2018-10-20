@@ -54,8 +54,8 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                 val user = GsonUtils.parserJsonToBean(userInfoStorage, User::class.java)
                 appGlobalModel.userObservable.set(user)
                 //去主页
-                navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
-                //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+                //navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
+                navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
             }
 
         }

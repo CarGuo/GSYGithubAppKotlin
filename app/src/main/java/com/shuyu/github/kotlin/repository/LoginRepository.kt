@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.util.Base64
 import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.net.GsonUtils
 import com.shuyu.github.kotlin.common.net.ResultObserver
 import com.shuyu.github.kotlin.common.net.ResultProgressObserver
 import com.shuyu.github.kotlin.common.net.RetrofitFactory
@@ -23,7 +24,7 @@ import javax.inject.Inject
 /**
  * 登录数据仓库对象
  */
-class LoginRepository @Inject constructor(val retrofit: Retrofit) {
+class LoginRepository @Inject constructor(private val retrofit: Retrofit) {
 
     private var usernameStorage: String by GSYPreference(AppConfig.USER_NAME, "")
 
@@ -32,6 +33,8 @@ class LoginRepository @Inject constructor(val retrofit: Retrofit) {
     private var accessTokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
 
     private var userBasicCodeStorage: String by GSYPreference(AppConfig.USER_BASIC_CODE, "")
+
+    private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
     fun login(context: Context, username: String, password: String, token: MutableLiveData<Boolean>) {
 
@@ -70,17 +73,13 @@ class LoginRepository @Inject constructor(val retrofit: Retrofit) {
                     }
                 }.flatMap {
                     userService.getPersonInfo(true)
-                }.subscribeOn(Schedulers.io()).doOnNext { response ->
+                }.doOnNext { response ->
                     if (response.isSuccessful) {
-                        ObservableSource<User?> {
-                            it.onNext(response.body())
-                        }
-                    } else {
-                        ObservableSource {
-                            it.onError(Throwable(response.errorBody().toString()))
-                        }
+                        //保存用户信息
+                        userInfoStorage = GsonUtils.toJsonString(response.body())
                     }
-                }.observeOn(AndroidSchedulers.mainThread())
+                }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : ResultProgressObserver<User>(context) {
                     override fun onSuccess(result: User?) {
                         Debuger.printfLog("********************")
