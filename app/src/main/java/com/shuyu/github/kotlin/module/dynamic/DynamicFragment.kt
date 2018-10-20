@@ -11,8 +11,8 @@ import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.holder.EventHolder
-import com.shuyu.github.kotlin.holder.EventUIModel
 import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
+import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.base.autoCleared
 import kotlinx.android.synthetic.main.fragment_list.*

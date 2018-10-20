@@ -1,9 +1,9 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.Issue
-import com.shuyu.github.kotlin.model.Repository
-import com.shuyu.github.kotlin.model.SearchResult
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.Issue
+import com.shuyu.github.kotlin.model.bean.Repository
+import com.shuyu.github.kotlin.model.bean.SearchResult
+import com.shuyu.github.kotlin.model.bean.User
 
 import io.reactivex.Observable
 import retrofit2.Response

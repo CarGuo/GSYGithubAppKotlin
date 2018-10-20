@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.model
+package com.shuyu.github.kotlin.model.bean
 
 
 class CommitStats {

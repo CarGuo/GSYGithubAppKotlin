@@ -6,8 +6,8 @@ import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AppGlobalModel
-import com.shuyu.github.kotlin.model.Event
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.Function
@@ -54,27 +54,48 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         })
     }
 
-    fun getReceivedEvent(dataList: MutableLiveData<ArrayList<Any>>) {
-        appGlobalModel.userObservable.get()?.apply {
-            val userName = this.login!!
-            val receivedEvent = retrofit.create(UserService::class.java).getNewsEvent(true, userName, 0)
-            RetrofitFactory.executeResult(receivedEvent, object : ResultObserver<ArrayList<Event>>() {
-                override fun onSuccess(result: ArrayList<Event>?) {
-                    result?.forEach {
-                        dataList.value?.add(Event())
-                    }
-                }
-
-                override fun onCodeError(code: Int, message: String) {
-
-                }
-
-                override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
-
-                }
-
-            })
+    fun getReceivedEvent(dataList: MutableLiveData<ArrayList<Any>>, loading: MutableLiveData<Boolean>, page: Int = 0) {
+        loading.value = true
+        val login = appGlobalModel.userObservable.get()?.login
+        val username = login ?: ""
+        if (username.isEmpty()) {
+            return
         }
+        val receivedEvent = retrofit.create(UserService::class.java)
+                .getNewsEvent(true, username, page)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }
+                .map {
+                    val eventUIList = ArrayList<Any>()
+                    for (event in it) {
+                        eventUIList.add(EventConversion.EventToEventUIModel(event))
+                    }
+                    eventUIList
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+
+        RetrofitFactory.executeResult(receivedEvent, object : ResultObserver<ArrayList<Any>>() {
+            override fun onSuccess(result: ArrayList<Any>?) {
+                result?.apply {
+                    val preview = dataList.value
+                    preview?.addAll(this.toArray())
+                    dataList.value = result
+                }
+                loading.value = false
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                loading.value = false
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                loading.value = false
+            }
+
+        })
+
     }
 
 }

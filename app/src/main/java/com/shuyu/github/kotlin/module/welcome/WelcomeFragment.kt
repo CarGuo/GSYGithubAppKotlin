@@ -8,7 +8,7 @@ import com.shuyu.github.kotlin.common.net.GsonUtils
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.databinding.FragmentWelcomeBinding
 import com.shuyu.github.kotlin.model.AppGlobalModel
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.module.base.BaseFragment
 import javax.inject.Inject
 

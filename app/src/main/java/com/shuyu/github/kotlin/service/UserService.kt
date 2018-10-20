@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.Event
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.bean.User
 
 import java.util.ArrayList
 

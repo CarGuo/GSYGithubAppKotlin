@@ -1,11 +1,11 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.Branch
-import com.shuyu.github.kotlin.model.Event
-import com.shuyu.github.kotlin.model.FileModel
-import com.shuyu.github.kotlin.model.Release
-import com.shuyu.github.kotlin.model.Repository
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.Branch
+import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.bean.FileModel
+import com.shuyu.github.kotlin.model.bean.Release
+import com.shuyu.github.kotlin.model.bean.Repository
+import com.shuyu.github.kotlin.model.bean.User
 
 import java.util.ArrayList
 

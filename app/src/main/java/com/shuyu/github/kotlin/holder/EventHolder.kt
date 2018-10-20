@@ -6,6 +6,7 @@ import android.view.View
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.LayoutEventItemBinding
 import com.shuyu.github.kotlin.holder.base.DataBindingHolder
+import com.shuyu.github.kotlin.model.ui.EventUIModel
 
 /**
  * 事件item
@@ -21,6 +22,3 @@ class EventHolder(context: Context, v: View, dataBing: ViewDataBinding) : DataBi
         const val ID = R.layout.layout_event_item
     }
 }
-
-data class EventUIModel(var username: String = "User", var image: String = "",
-                        var action: String = "Test", var des: String = "Test", var time: String = "---")

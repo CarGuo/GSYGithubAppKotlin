@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.CommentRequestModel
-import com.shuyu.github.kotlin.model.Issue
-import com.shuyu.github.kotlin.model.IssueEvent
+import com.shuyu.github.kotlin.model.bean.CommentRequestModel
+import com.shuyu.github.kotlin.model.bean.Issue
+import com.shuyu.github.kotlin.model.bean.IssueEvent
 
 import java.util.ArrayList
 

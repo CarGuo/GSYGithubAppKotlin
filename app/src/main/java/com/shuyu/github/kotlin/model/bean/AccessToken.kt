@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.model
+package com.shuyu.github.kotlin.model.bean
 
 /**
  * 登录成功的token返回对象

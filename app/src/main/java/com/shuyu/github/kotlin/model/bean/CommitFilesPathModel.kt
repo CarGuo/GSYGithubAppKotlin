@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.model
+package com.shuyu.github.kotlin.model.bean
 
 import android.os.Parcel
 import android.os.Parcelable

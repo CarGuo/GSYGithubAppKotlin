@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.model
 
 import android.databinding.ObservableField
+import com.shuyu.github.kotlin.model.bean.User
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -9,7 +9,6 @@ import androidx.core.widget.toast
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
-import com.shuyu.github.kotlin.model.User
 import com.shuyu.github.kotlin.repository.LoginRepository
 import javax.inject.Inject
 

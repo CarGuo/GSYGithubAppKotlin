@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.CommitsComparison
-import com.shuyu.github.kotlin.model.RepoCommit
-import com.shuyu.github.kotlin.model.RepoCommitExt
+import com.shuyu.github.kotlin.model.bean.CommitsComparison
+import com.shuyu.github.kotlin.model.bean.RepoCommit
+import com.shuyu.github.kotlin.model.bean.RepoCommitExt
 
 import java.util.ArrayList
 

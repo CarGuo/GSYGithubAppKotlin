@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.AccessToken
-import com.shuyu.github.kotlin.model.LoginRequestModel
+import com.shuyu.github.kotlin.model.bean.AccessToken
+import com.shuyu.github.kotlin.model.bean.LoginRequestModel
 
 import io.reactivex.Observable
 import retrofit2.Response

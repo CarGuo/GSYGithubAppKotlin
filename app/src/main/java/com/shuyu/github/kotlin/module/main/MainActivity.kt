@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.model.AppGlobalModel
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector

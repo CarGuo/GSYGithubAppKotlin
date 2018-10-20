@@ -5,7 +5,7 @@ import android.databinding.DataBindingComponent
 import android.widget.ImageView
 import android.widget.TextView
 import com.shuyu.github.kotlin.common.utils.CommonUtils
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.User
 
 
 /**

@@ -7,8 +7,8 @@ import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
-import com.shuyu.github.kotlin.model.LoginRequestModel
-import com.shuyu.github.kotlin.model.User
+import com.shuyu.github.kotlin.model.bean.LoginRequestModel
+import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.service.LoginService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction

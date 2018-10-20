@@ -7,7 +7,7 @@
 
         <variable
             name="eventUIModel"
-            type="com.shuyu.github.kotlin.holder.EventUIModel" />
+            type="com.shuyu.github.kotlin.model.ui.EventUIModel" />
 
     </data>
 
