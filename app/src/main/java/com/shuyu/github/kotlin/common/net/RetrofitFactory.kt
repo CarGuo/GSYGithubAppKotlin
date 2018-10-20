@@ -92,14 +92,6 @@ class RetrofitFactory private constructor() {
 
     }
 
-    /**
-     * 清除token
-     */
-    fun clearAuthorization() {
-        accessTokenStorage = ""
-        userBasicCodeStorage = ""
-    }
-
     companion object {
 
         @Volatile
