@@ -6,13 +6,16 @@ import android.arch.lifecycle.ViewModel
 
 abstract class BaseViewModel : ViewModel() {
 
+    val dataList = MutableLiveData<ArrayList<Any>>()
+
     val loading = MutableLiveData<LoadState>()
+
+    var page = 1
 
     init {
         loading.value = LoadState.NONE
+        dataList.value = arrayListOf()
     }
-
-    var page = 1
 
     open fun refresh() {
         if (isLoading()) {

@@ -14,16 +14,10 @@ import javax.inject.Inject
  * Date: 2018-10-19
  */
 
-class DynamicViewModel @Inject constructor(private val userRepository: UserRepository, private val globalModel: AppGlobalModel) : BaseViewModel() {
-
-    val eventDataList = MutableLiveData<ArrayList<Any>>()
-
-    init {
-        eventDataList.value = arrayListOf()
-    }
+class DynamicViewModel @Inject constructor(private val userRepository: UserRepository) : BaseViewModel() {
 
     override fun refresh() {
-        if (isLoading()){
+        if (isLoading()) {
             return
         }
         super.refresh()
@@ -31,14 +25,14 @@ class DynamicViewModel @Inject constructor(private val userRepository: UserRepos
 
     override fun loadData() {
         if (page <= 1) {
-            eventDataList.value?.clear()
+            dataList.value?.clear()
         }
         userRepository.getReceivedEvent(object : ResultCallBack<ArrayList<Any>> {
             override fun onSuccess(result: ArrayList<Any>?) {
                 result?.apply {
-                    val dataList = eventDataList.value
-                    dataList?.addAll(result.toArray())
-                    eventDataList.value = dataList
+                    val value = dataList.value
+                    value?.addAll(this.toArray())
+                    dataList.value = value
                 }
                 completeLoadData()
             }

@@ -57,9 +57,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
             override fun onPageSelected(position: Int) {
                 if (position == 1) {
-                    val user = User()
+                    /*val user = User()
                     user.login = "test"
-                    globalModel.userObservable.set(user)
+                    globalModel.userObservable.set(user)*/
                 }
             }
         })

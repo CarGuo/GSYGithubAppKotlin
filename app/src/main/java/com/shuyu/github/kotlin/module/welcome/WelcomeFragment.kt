@@ -32,7 +32,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     private var accessTokenStorage by GSYPreference(AppConfig.ACCESS_TOKEN, "")
 
 
-    override fun onCreateView(mainView: View) {
+    override fun onCreateView(mainView: View?) {
 
     }
 

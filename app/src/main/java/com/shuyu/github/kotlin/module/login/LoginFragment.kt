@@ -28,7 +28,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> () {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(mainView: View) {
+    override fun onCreateView(mainView: View?) {
 
     }
 
@@ -38,7 +38,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> () {
         loginViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(LoginViewModel::class.java)
 
-        binding.loginViewModel = loginViewModel
+        binding?.loginViewModel = loginViewModel
 
         loginViewModel.loginResult.observe(this, Observer { result ->
             //根据结果返回，跳转主页

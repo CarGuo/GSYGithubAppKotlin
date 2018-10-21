@@ -26,21 +26,7 @@ import javax.inject.Inject
  * Date: 2018-09-28
  */
 
-class TrendFragment : BaseListFragment<FragmentListBinding>() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var trendViewModel: TrendViewModel
-
-    private var normalAdapterManager by autoCleared<BindingDataRecyclerManager>()
-
-    override fun onCreateView(mainView: View) {
-        normalAdapterManager = BindingDataRecyclerManager()
-        trendViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(TrendViewModel::class.java)
-    }
-
+class TrendFragment : BaseListFragment<FragmentListBinding, TrendViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_list
@@ -48,32 +34,19 @@ class TrendFragment : BaseListFragment<FragmentListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        trendViewModel.dataList.observe(this, Observer { items ->
-            adapter.dataList = items
-            adapter.notifyDataSetChanged()
-        })
-
-        showRefresh()
     }
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
     }
 
-    override fun getViewModel(): BaseViewModel? {
-        return trendViewModel
-    }
+    override fun getViewModelClass(): Class<TrendViewModel> = TrendViewModel::class.java
 
     override fun enableRefresh(): Boolean = true
 
     override fun enableLoadMore(): Boolean = false
 
-    override fun getAdapterManager(): BindSuperAdapterManager? = normalAdapterManager
-
     override fun getRecyclerView(): RecyclerView? = baseRecycler
-
-    override fun getDataList(): ArrayList<Any> = arrayListOf()
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(ReposUIModel::class.java, ReposHolder.ID, ReposHolder::class.java)

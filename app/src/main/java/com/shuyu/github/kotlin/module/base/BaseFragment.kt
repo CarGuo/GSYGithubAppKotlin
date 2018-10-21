@@ -32,11 +32,11 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), Injectable {
                 container,
                 false,
                 GSYDataBindingComponent())
-        onCreateView(binding.root)
-        return binding.root
+        onCreateView(binding?.root)
+        return binding?.root
     }
 
-    abstract fun onCreateView(mainView: View)
+    abstract fun onCreateView(mainView: View?)
 
     abstract fun getLayoutId(): Int
 
