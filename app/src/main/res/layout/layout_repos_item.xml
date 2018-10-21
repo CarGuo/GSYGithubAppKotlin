@@ -78,6 +78,48 @@
                 android:textColor="@color/subTextColor"
                 android:textSize="@dimen/smallTextSize" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/repos_des"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:singleLine="true"
+                    android:text="{GSY-LOGIN_PW}\nxxx"
+                    android:textColor="@color/subLightTextColor"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="{GSY-LOGIN_PW}\nxxx"
+                    android:textColor="@color/subLightTextColor"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="{GSY-LOGIN_PW} \nxxx"
+                    android:textColor="@color/subLightTextColor"
+                    android:textSize="@dimen/smallTextSize" />
+
+
+            </LinearLayout>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
