@@ -22,6 +22,7 @@ import com.shuyu.github.kotlin.GSYViewModelFactory
 import com.shuyu.github.kotlin.di.annotation.ViewModelKey
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
+import com.shuyu.github.kotlin.module.trend.TrendViewModel
 
 
 import dagger.Binds
@@ -44,6 +45,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DynamicViewModel::class)
     abstract fun bindDynamicViewModel(dynamicViewModel: DynamicViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TrendViewModel::class)
+    abstract fun bindTrendViewModel(trendViewModel: TrendViewModel): ViewModel
 
 
     @Binds

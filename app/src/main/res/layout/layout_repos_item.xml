@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="reposUIModel"
+            type="com.shuyu.github.kotlin.model.ui.ReposUIModel" />
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+
+            <ImageView
+                android:id="@+id/repos_user_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:userHeaderUrl="@{reposUIModel.ownerPic}" />
+
+            <TextView
+                android:id="@+id/repos_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/repos_user_img"
+                android:singleLine="true"
+                android:text="@{reposUIModel.repositoryName}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/middleTextWhiteSize"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/repos_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/repos_name"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/repos_user_img"
+                android:singleLine="true"
+                android:text="@{reposUIModel.ownerName}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+            <TextView
+                android:id="@+id/repos_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{reposUIModel.repositoryType}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+            <TextView
+                android:id="@+id/repos_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/repos_user_img"
+                android:layout_margin="5dp"
+                android:maxLines="3"
+                android:text="@{reposUIModel.repositoryDes}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>
