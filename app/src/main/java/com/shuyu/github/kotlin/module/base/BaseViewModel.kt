@@ -12,34 +12,45 @@ abstract class BaseViewModel : ViewModel() {
         loading.value = LoadState.NONE
     }
 
-    var page = 0
+    var page = 1
 
     open fun refresh() {
-        page = 0
-        loadData(LoadState.Refresh)
+        if (isLoading()) {
+            return
+        }
+        page = 1
+        loading.value = LoadState.Refresh
+        loadData()
     }
 
     open fun loadMore() {
+        if (isLoading()) {
+            return
+        }
         page++
-        loadData(LoadState.LoadMoreDone)
+        loading.value = LoadState.LoadMore
+        loadData()
     }
 
 
-    fun completeLoadData(loadState: LoadState) {
-        when (loadState) {
+    open fun completeLoadData() {
+        when (loading.value) {
             LoadState.Refresh -> {
                 loading.value = LoadState.RefreshDone
             }
             LoadState.LoadMore -> {
                 loading.value = LoadState.LoadMoreDone
             }
-            else -> {
+            LoadState.NONE -> {
                 loading.value = LoadState.NONE
             }
         }
     }
 
+    open fun isLoading(): Boolean =
+            loading.value == LoadState.Refresh && loading.value == LoadState.LoadMore
 
-    abstract fun loadData(loadState: LoadState)
+
+    abstract fun loadData()
 
 }

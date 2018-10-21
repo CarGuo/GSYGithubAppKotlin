@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.module.welcome
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
@@ -42,6 +43,14 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Handler().postDelayed({
+            goNext(view)
+        }, 2000)
+
+
+    }
+
+    private fun goNext(view: View) {
         if (accessTokenStorage.isEmpty()) {
             ///去登录页
             navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
@@ -54,13 +63,11 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                 val user = GsonUtils.parserJsonToBean(userInfoStorage, User::class.java)
                 appGlobalModel.userObservable.set(user)
                 //去主页
-                //navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
-                navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+                navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
+                //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
             }
 
         }
-
-
     }
 
 }

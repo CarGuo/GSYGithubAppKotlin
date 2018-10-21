@@ -22,7 +22,17 @@ class DynamicViewModel @Inject constructor(private val userRepository: UserRepos
         eventDataList.value = arrayListOf()
     }
 
-    override fun loadData(loadState: LoadState) {
+    override fun refresh() {
+        if (isLoading()){
+            return
+        }
+        super.refresh()
+    }
+
+    override fun loadData() {
+        if (page <= 1) {
+            eventDataList.value?.clear()
+        }
         userRepository.getReceivedEvent(object : ResultCallBack<ArrayList<Any>> {
             override fun onSuccess(result: ArrayList<Any>?) {
                 result?.apply {
@@ -30,11 +40,11 @@ class DynamicViewModel @Inject constructor(private val userRepository: UserRepos
                     dataList?.addAll(result.toArray())
                     eventDataList.value = dataList
                 }
-                completeLoadData(loadState)
+                completeLoadData()
             }
 
             override fun onFailure() {
-                completeLoadData(loadState)
+                completeLoadData()
             }
         }, page)
     }
