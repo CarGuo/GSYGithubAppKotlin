@@ -68,7 +68,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 .map {
                     val eventUIList = ArrayList<Any>()
                     for (event in it) {
-                        eventUIList.add(EventConversion.EventToEventUIModel(event))
+                        eventUIList.add(EventConversion.eventToEventUIModel(event))
                     }
                     eventUIList
                 }.flatMap {

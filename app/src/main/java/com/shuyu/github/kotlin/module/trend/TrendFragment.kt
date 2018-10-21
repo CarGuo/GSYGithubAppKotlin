@@ -1,7 +1,9 @@
 package com.shuyu.github.kotlin.module.trend
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -13,6 +15,7 @@ import com.shuyu.github.kotlin.holder.ReposHolder
 import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.module.base.autoCleared
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
@@ -45,16 +48,32 @@ class TrendFragment : BaseListFragment<FragmentListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        trendViewModel.dataList.observe(this, Observer { items ->
+            adapter.dataList = items
+            adapter.notifyDataSetChanged()
+        })
+
+        showRefresh()
+    }
+
+    override fun onItemClick(context: Context, position: Int) {
+        super.onItemClick(context, position)
+    }
+
+    override fun getViewModel(): BaseViewModel? {
+        return trendViewModel
     }
 
     override fun enableRefresh(): Boolean = true
+
+    override fun enableLoadMore(): Boolean = false
 
     override fun getAdapterManager(): BindSuperAdapterManager? = normalAdapterManager
 
     override fun getRecyclerView(): RecyclerView? = baseRecycler
 
-    override fun getDataList(): ArrayList<Any> = arrayListOf(ReposUIModel(), ReposUIModel(), ReposUIModel(), ReposUIModel(), ReposUIModel(), ReposUIModel(), ReposUIModel(), ReposUIModel(), ReposUIModel())
-
+    override fun getDataList(): ArrayList<Any> = arrayListOf()
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(ReposUIModel::class.java, ReposHolder.ID, ReposHolder::class.java)

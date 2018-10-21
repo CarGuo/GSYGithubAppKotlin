@@ -9,7 +9,7 @@ import com.shuyu.github.kotlin.model.ui.EventUIModel
 object EventConversion {
 
 
-    fun EventToEventUIModel(event: Event): EventUIModel {
+    fun eventToEventUIModel(event: Event): EventUIModel {
         var actionStr: String? = ""
         var des: String? = ""
         when (event.type) {

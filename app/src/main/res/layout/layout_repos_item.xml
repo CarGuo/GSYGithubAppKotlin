@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="android.text.Html" />
+
         <variable
             name="reposUIModel"
             type="com.shuyu.github.kotlin.model.ui.ReposUIModel" />
@@ -45,7 +47,7 @@
                 android:textStyle="bold" />
 
 
-            <TextView
+            <com.mikepenz.iconics.view.IconicsTextView
                 android:id="@+id/repos_owner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +55,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/repos_user_img"
                 android:singleLine="true"
-                android:text="@{reposUIModel.ownerName}"
+                android:text="@{`{GSY-REPOS_ITEM_USER}\n`+reposUIModel.ownerName}"
                 android:textColor="@color/subTextColor"
                 android:textSize="@dimen/smallTextSize" />
 
@@ -72,9 +74,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/repos_user_img"
-                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
                 android:maxLines="3"
-                android:text="@{reposUIModel.repositoryDes}"
+                android:text="@{Html.fromHtml(reposUIModel.repositoryDes)}"
                 android:textColor="@color/subTextColor"
                 android:textSize="@dimen/smallTextSize" />
 
@@ -92,8 +96,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:singleLine="true"
-                    android:text="{GSY-LOGIN_PW}\nxxx"
+                    android:maxLines="2"
+                    android:text="@{`{GSY-REPOS_ITEM_STAR}\n`+reposUIModel.repositoryStar}"
                     android:textColor="@color/subLightTextColor"
                     android:textSize="@dimen/smallTextSize" />
 
@@ -103,7 +107,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:text="{GSY-LOGIN_PW}\nxxx"
+                    android:text="@{`{GSY-REPOS_ITEM_FORK}\n`+reposUIModel.repositoryFork}"
                     android:textColor="@color/subLightTextColor"
                     android:textSize="@dimen/smallTextSize" />
 
@@ -113,7 +117,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:text="{GSY-LOGIN_PW} \nxxx"
+                    android:text="@{`{GSY-REPOS_ITEM_WATCH}\n`+reposUIModel.repositoryWatch}"
                     android:textColor="@color/subLightTextColor"
                     android:textSize="@dimen/smallTextSize" />
 

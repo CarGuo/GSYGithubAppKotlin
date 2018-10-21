@@ -4,10 +4,10 @@ data class ReposUIModel(
         var ownerName: String = "--",
         var ownerPic: String = "",
         var repositoryName: String = "---",
-        var repositoryStar: String = "",
-        var repositoryFork: String = "",
-        var repositoryWatch: String = "",
-        var hideWatchIcon: String = "",
+        var repositoryStar: String = "---",
+        var repositoryFork: String = "---",
+        var repositoryWatch: String = "---",
+        var hideWatchIcon: Boolean = true,
         var repositoryType: String = "---",
-        var repositoryDes: String = "FFFFFFFFFFFFFFF"
+        var repositoryDes: String = "--"
 )
