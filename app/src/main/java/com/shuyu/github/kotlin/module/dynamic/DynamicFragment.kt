@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapterManager
@@ -51,7 +52,7 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
             adapter.notifyDataSetChanged()
         })
 
-
+        showRefresh()
 
     }
 
@@ -60,11 +61,15 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
     }
 
     override fun onRefresh() {
-        super.onRefresh()
+        Handler().postDelayed({
+            refreshComplete()
+        }, 2000)
     }
 
     override fun onLoadMore() {
-        super.onLoadMore()
+        Handler().postDelayed({
+            loadMoreComplete()
+        }, 2000)
     }
 
     override fun enableRefresh(): Boolean = true

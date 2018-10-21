@@ -86,6 +86,10 @@ abstract class BaseListFragment<T : ViewDataBinding> : BaseFragment<T>(), OnItem
         getAdapterManager()?.loadMoreComplete()
     }
 
+    open fun showRefresh() {
+        getAdapterManager()?.setRefreshing(true)
+    }
+
 
     fun initList() {
         val manager = getAdapterManager()

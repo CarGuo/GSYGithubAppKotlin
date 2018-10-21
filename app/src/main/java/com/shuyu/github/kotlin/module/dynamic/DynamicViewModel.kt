@@ -13,12 +13,31 @@ import javax.inject.Inject
 
 class DynamicViewModel @Inject constructor(private val userRepository: UserRepository, private val globalModel: AppGlobalModel) : ViewModel() {
 
-    val eventDataList =  MutableLiveData<ArrayList<Any>>()
+    val eventDataList = MutableLiveData<ArrayList<Any>>()
 
     val loading = MutableLiveData<Boolean>()
 
+    private var page = 0
+
     init {
-        userRepository.getReceivedEvent(eventDataList, loading)
+        loadData()
+    }
+
+
+    fun refresh() {
+        page = 0
+        eventDataList.value?.clear()
+        loadData()
+    }
+
+    fun loadMore() {
+        page++
+        loadData()
+    }
+
+
+    private fun loadData() {
+        userRepository.getReceivedEvent(eventDataList, loading, page)
     }
 
 }
