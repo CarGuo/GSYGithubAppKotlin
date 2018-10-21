@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.base
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.databinding.ViewDataBinding
 import android.os.Bundle
@@ -24,6 +25,17 @@ abstract class BaseListFragment<T : ViewDataBinding> : BaseFragment<T>(), OnItem
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
+
+        getViewModel()?.loading?.observe(this, Observer {
+            when (it) {
+                LoadState.RefreshDone -> {
+                    refreshComplete()
+                }
+                LoadState.LoadMoreDone -> {
+                    loadMoreComplete()
+                }
+            }
+        })
     }
 
     /**
@@ -37,14 +49,14 @@ abstract class BaseListFragment<T : ViewDataBinding> : BaseFragment<T>(), OnItem
      * 刷新
      */
     override fun onRefresh() {
-        refreshComplete()
+        getViewModel()?.refresh()
     }
 
     /**
      * 加载更多
      */
     override fun onLoadMore() {
-        loadMoreComplete()
+       getViewModel()?.loadMore()
     }
 
     /**
@@ -66,6 +78,11 @@ abstract class BaseListFragment<T : ViewDataBinding> : BaseFragment<T>(), OnItem
      * 绑定Item
      */
     abstract fun bindHolder(manager: BindSuperAdapterManager)
+
+    /**
+     * ViewModel
+     */
+    open fun getViewModel(): BaseViewModel? = null
 
     /**
      * 是否需要下拉刷新

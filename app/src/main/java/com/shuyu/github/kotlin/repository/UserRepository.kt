@@ -54,8 +54,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         })
     }
 
-    fun getReceivedEvent(dataList: MutableLiveData<ArrayList<Any>>, loading: MutableLiveData<Boolean>, page: Int = 0) {
-        loading.value = true
+    fun getReceivedEvent(resultCallBack: ResultCallBack<ArrayList<Any>>, page: Int = 0) {
         val login = appGlobalModel.userObservable.get()?.login
         val username = login ?: ""
         if (username.isEmpty()) {
@@ -78,20 +77,15 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
 
         RetrofitFactory.executeResult(receivedEvent, object : ResultObserver<ArrayList<Any>>() {
             override fun onSuccess(result: ArrayList<Any>?) {
-                result?.apply {
-                    val preview = dataList.value
-                    preview?.addAll(this.toArray())
-                    dataList.value = result
-                }
-                loading.value = false
+                resultCallBack.onSuccess(result)
             }
 
             override fun onCodeError(code: Int, message: String) {
-                loading.value = false
+                resultCallBack.onFailure()
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
-                loading.value = false
+                resultCallBack.onFailure()
             }
 
         })

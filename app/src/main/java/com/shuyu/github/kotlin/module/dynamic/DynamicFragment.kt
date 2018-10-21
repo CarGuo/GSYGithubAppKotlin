@@ -7,7 +7,9 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
@@ -15,6 +17,8 @@ import com.shuyu.github.kotlin.holder.EventHolder
 import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.base.BaseViewModel
+import com.shuyu.github.kotlin.module.base.LoadState
 import com.shuyu.github.kotlin.module.base.autoCleared
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
@@ -36,40 +40,32 @@ class DynamicFragment : BaseListFragment<FragmentListBinding>() {
 
     override fun onCreateView(mainView: View) {
         normalAdapterManager = BindingDataRecyclerManager()
+        dynamicViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(DynamicViewModel::class.java)
     }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_list
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dynamicViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(DynamicViewModel::class.java)
 
-        dynamicViewModel.eventDataList.observe(this, Observer { items->
+        dynamicViewModel.eventDataList.observe(this, Observer { items ->
             adapter.dataList = items
             adapter.notifyDataSetChanged()
         })
 
         showRefresh()
-
     }
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
     }
 
-    override fun onRefresh() {
-        Handler().postDelayed({
-            refreshComplete()
-        }, 2000)
-    }
-
-    override fun onLoadMore() {
-        Handler().postDelayed({
-            loadMoreComplete()
-        }, 2000)
+    override fun getViewModel(): BaseViewModel? {
+        return dynamicViewModel
     }
 
     override fun enableRefresh(): Boolean = true

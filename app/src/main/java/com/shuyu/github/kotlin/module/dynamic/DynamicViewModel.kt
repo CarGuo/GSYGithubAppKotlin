@@ -2,7 +2,10 @@ package com.shuyu.github.kotlin.module.dynamic
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.module.base.BaseViewModel
+import com.shuyu.github.kotlin.module.base.LoadState
 import com.shuyu.github.kotlin.repository.UserRepository
 import javax.inject.Inject
 
@@ -11,33 +14,29 @@ import javax.inject.Inject
  * Date: 2018-10-19
  */
 
-class DynamicViewModel @Inject constructor(private val userRepository: UserRepository, private val globalModel: AppGlobalModel) : ViewModel() {
+class DynamicViewModel @Inject constructor(private val userRepository: UserRepository, private val globalModel: AppGlobalModel) : BaseViewModel() {
 
     val eventDataList = MutableLiveData<ArrayList<Any>>()
 
-    val loading = MutableLiveData<Boolean>()
-
-    private var page = 0
-
     init {
-        loadData()
+        eventDataList.value = arrayListOf()
     }
 
+    override fun loadData(loadState: LoadState) {
+        userRepository.getReceivedEvent(object : ResultCallBack<ArrayList<Any>> {
+            override fun onSuccess(result: ArrayList<Any>?) {
+                result?.apply {
+                    val dataList = eventDataList.value
+                    dataList?.addAll(result.toArray())
+                    eventDataList.value = dataList
+                }
+                completeLoadData(loadState)
+            }
 
-    fun refresh() {
-        page = 0
-        eventDataList.value?.clear()
-        loadData()
-    }
-
-    fun loadMore() {
-        page++
-        loadData()
-    }
-
-
-    private fun loadData() {
-        userRepository.getReceivedEvent(eventDataList, loading, page)
+            override fun onFailure() {
+                completeLoadData(loadState)
+            }
+        }, page)
     }
 
 }
