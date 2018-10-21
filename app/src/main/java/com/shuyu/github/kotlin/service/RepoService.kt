@@ -201,4 +201,12 @@ interface RepoService {
             @Path("tag") tag: String
     ): Observable<Response<Release>>
 
+
+    @GET("https://github.com/trending/{languageType}")
+    @Headers("Content-Type: text/plain;charset=utf-8")
+    fun getTrendData(
+            @Header("forceNetWork") forceNetWork: Boolean,
+            @Path("languageType") languageType: String,
+            @Query("since") since: String): Observable<Response<String>>
+
 }
