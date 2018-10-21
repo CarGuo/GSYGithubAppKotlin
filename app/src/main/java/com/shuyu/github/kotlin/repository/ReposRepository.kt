@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.common.net.RetrofitFactory
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.LoginRequestModel
+import com.shuyu.github.kotlin.model.conversion.TrendConversion
 import com.shuyu.github.kotlin.service.LoginService
 import com.shuyu.github.kotlin.service.RepoService
 import io.reactivex.Observable
@@ -21,6 +22,8 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
         RetrofitFactory.executeResult(trendService, object : ResultObserver<String>() {
             override fun onSuccess(result: String?) {
+                val dataList = TrendConversion.htmlToRepo(result!!)
+                Debuger.printfLog("&&&&&&&&&&&&" + dataList.size)
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
