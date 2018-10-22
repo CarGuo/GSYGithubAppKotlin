@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="globalModel"
+            type="com.shuyu.github.kotlin.model.AppGlobalModel" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bottom_radius"
+        android:elevation="5dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/user_header_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_header_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="---"
+                android:textColor="@color/white"
+                android:textSize="@dimen/bigTextSize"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/user_header_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_header_other_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="---"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toEndOf="@+id/user_header_image"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_name" />
+
+            <TextView
+                android:id="@+id/user_header_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="---"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toEndOf="@+id/user_header_image"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_other_name" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@+id/user_header_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_header_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="---"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_image" />
+
+            <TextView
+                android:id="@+id/user_header_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:text="---"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_link" />
+
+            <TextView
+                android:id="@+id/user_header_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:text="---"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_des" />
+
+
+            <View
+                android:id="@+id/user_header_action_horizontal_line"
+                style="@style/horizontalLine"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_action" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_header_action_horizontal_line"
+                app:layout_constraintWidth_percent="1">
+
+                <TextView
+                    android:id="@+id/user_header_repos"
+                    style="@style/verticalItemText"
+                    android:text="---\n---" />
+
+                <View style="@style/verticalLine" />
+
+                <TextView
+                    android:id="@+id/user_header_fan"
+                    style="@style/verticalItemText"
+                    android:text="---\n---" />
+
+                <View style="@style/verticalLine" />
+
+                <TextView
+                    android:id="@+id/user_header_focus"
+                    style="@style/verticalItemText"
+                    android:text="---\n---" />
+
+                <View style="@style/verticalLine" />
+
+                <TextView
+                    android:id="@+id/user_header_star"
+                    style="@style/verticalItemText"
+                    android:text="---\n---" />
+
+                <View style="@style/verticalLine" />
+
+                <TextView
+                    android:id="@+id/user_header_honor"
+                    style="@style/verticalItemText"
+                    android:text="---\n---" />
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
+
+</layout>

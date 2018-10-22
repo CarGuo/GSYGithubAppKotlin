@@ -1,15 +1,18 @@
 package com.shuyu.github.kotlin.module.my
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentMyBinding
+import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
+import com.shuyu.github.kotlin.holder.base.GSYDataBindingComponent
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
-import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
+import kotlinx.android.synthetic.main.fragment_my.*
 import javax.inject.Inject
 
 /**
@@ -18,7 +21,7 @@ import javax.inject.Inject
  * Date: 2018-09-28
  */
 
-class MyFragment : BaseListFragment<FragmentMyBinding, DynamicViewModel>() {
+class MyFragment : BaseListFragment<FragmentMyBinding, MyViewModel>() {
 
     @Inject
     lateinit var appGlobalModel: AppGlobalModel
@@ -32,10 +35,13 @@ class MyFragment : BaseListFragment<FragmentMyBinding, DynamicViewModel>() {
         binding?.globalModel = appGlobalModel
     }
 
-    override fun getViewModelClass(): Class<DynamicViewModel>  = DynamicViewModel::class.java
+    override fun getViewModelClass(): Class<MyViewModel> = MyViewModel::class.java
 
-    override fun getRecyclerView(): RecyclerView?= null
+    override fun getRecyclerView(): RecyclerView? = fragment_my_recycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
+        val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_user_header,
+                null, false, GSYDataBindingComponent())
+        manager.addHeaderView(binding.root)
     }
 }
