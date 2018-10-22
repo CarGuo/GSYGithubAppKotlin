@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.shuyu.commonrecycler.BindBaseRefreshHeader
+import com.shuyu.commonrecycler.xrecycler.base.BaseRefreshHeader
 import com.shuyu.github.kotlin.R
 
 

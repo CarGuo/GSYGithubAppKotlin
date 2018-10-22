@@ -9,6 +9,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.shuyu.commonrecycler.BindSuperAdapter
+import com.shuyu.commonrecycler.BindSuperAdapterManager
+import com.shuyu.commonrecycler.listener.OnItemClickListener
+import com.shuyu.commonrecycler.listener.OnLoadingListener
 import com.shuyu.github.kotlin.holder.base.BindCustomRefreshHeader
 import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
 import javax.inject.Inject
