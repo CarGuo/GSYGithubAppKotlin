@@ -1,23 +1,19 @@
 package com.shuyu.github.kotlin.repository
 
 import com.shuyu.github.kotlin.common.net.*
-import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.model.AppGlobalModel
-import com.shuyu.github.kotlin.model.bean.LoginRequestModel
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.conversion.TrendConversion
-import com.shuyu.github.kotlin.service.LoginService
 import com.shuyu.github.kotlin.service.RepoService
-import io.reactivex.Observable
 import retrofit2.Retrofit
 import javax.inject.Inject
 
 class ReposRepository @Inject constructor(private val retrofit: Retrofit, private val appGlobalModel: AppGlobalModel) {
 
 
-    fun getTrend(resultCallBack: ResultCallBack<ArrayList<Any>>) {
+    fun getTrend(resultCallBack: ResultCallBack<ArrayList<Any>>, language: String, since: String) {
         val trendService = retrofit.create(RepoService::class.java)
-                .getTrendData(true, "java", "week")
+                .getTrendData(true, language, since)
                 .flatMap {
                     FlatMapResponse2Result(it)
                 }.map {

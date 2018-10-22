@@ -32,10 +32,6 @@
     <string name="repositoryText">仓库</string>
     <string name="personDynamic">个人动态</string>
     <string name="Member">组织成员</string>
-    <string name="trendDay">今日</string>
-    <string name="trendWeek">本周</string>
-    <string name="trendMonth">本月</string>
-    <string name="trendAll">全部</string>
     <string name="search">搜索</string>
     <string name="best_match">最匹配</string>
     <string name="stars">star</string>
@@ -160,4 +156,44 @@
     <string name="enLanguage">英文</string>
     <string name="gone410">410 Gone，不存在吧？</string>
     <string name="clearCache">清除缓存</string>
+    <array name="trend_since">
+        <item>今日</item>
+        <item>本周</item>
+        <item>本月</item>
+    </array>
+    <array name="trend_since_data">
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+    </array>
+    <array name="trend_language">
+        <item>全部</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Dart</item>
+        <item>Objective-C</item>
+        <item>Swift</item>
+        <item>JavaScript</item>
+        <item>PHP</item>
+        <item>Go</item>
+        <item>C++</item>
+        <item>C</item>
+        <item>HTML</item>
+        <item>CSS</item>
+    </array>
+    <array name="trend_language_data">
+        <item>all</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Dart</item>
+        <item>Objective-C</item>
+        <item>Swift</item>
+        <item>JavaScript</item>
+        <item>PHP</item>
+        <item>Go</item>
+        <item>C++</item>
+        <item>C</item>
+        <item>HTML</item>
+        <item>CSS</item>
+    </array>
 </resources>

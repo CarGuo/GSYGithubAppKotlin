@@ -1,21 +1,25 @@
 package com.shuyu.github.kotlin.module.trend
 
+import android.app.Application
+import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.ReposRepository
 import javax.inject.Inject
 
 
-class TrendViewModel @Inject constructor(private val repository: ReposRepository) : BaseViewModel() {
+class TrendViewModel @Inject constructor(private val repository: ReposRepository, private val application: Application) : BaseViewModel() {
 
 
-    override fun refresh() {
-        super.refresh()
-    }
+    val sortData: List<List<String>> = listOf(
+            application.resources.getStringArray(R.array.trend_language).toList(),
+            application.resources.getStringArray(R.array.trend_since).toList())
 
-    override fun loadMore() {
-        super.loadMore()
-    }
+    val sortValue: List<List<String>> = listOf(
+            application.resources.getStringArray(R.array.trend_language_data).toList(),
+            application.resources.getStringArray(R.array.trend_since_data).toList())
+
+    var sortType = arrayListOf(sortValue[0][0], sortValue[1][0])
 
     override fun loadData() {
         if (page <= 1) {
@@ -34,7 +38,7 @@ class TrendViewModel @Inject constructor(private val repository: ReposRepository
             override fun onFailure() {
                 completeLoadData()
             }
-        })
+        }, sortType[0], sortType[1])
     }
 
 }

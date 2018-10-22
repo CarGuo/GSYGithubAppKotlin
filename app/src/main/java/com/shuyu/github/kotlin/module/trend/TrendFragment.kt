@@ -24,10 +24,6 @@ import kotlinx.android.synthetic.main.fragment_trend.*
 
 class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
 
-    private val citys = listOf("不限", "武汉", "北京", "上海", "成都", "广州", "深圳", "重庆", "天津", "西安", "南京", "杭州")
-
-    private val ages = listOf("不限", "18岁以下", "18-22岁", "23-26岁", "27-35岁", "35岁以上")
-
     private lateinit var baseRecycler: RecyclerView
 
     override fun getLayoutId(): Int {
@@ -36,34 +32,15 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
 
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
-        //init context view
+
         baseRecycler = RecyclerView(activity)
         baseRecycler.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        val sexView = ListView(activity)
-        sexView.dividerHeight = 0
-        val sexAdapter = ListDropDownAdapter(context!!, ages)
-        sexView.adapter = sexAdapter
-
-        val sexView2 = ListView(activity)
-        sexView2.dividerHeight = 0
-        val sexAdapter2 = ListDropDownAdapter(context!!, citys)
-        sexView2.adapter = sexAdapter2
-
-
-        val popupViews = ArrayList<View>()
-        popupViews.add(sexView)
-        popupViews.add(sexView2)
-
-        val headers = listOf("城市", "城市2")
-
-        trend_drop_menu.setDropDownMenu(headers, popupViews, baseRecycler)
-
+        initDropLists(context)
     }
 
     override fun onItemClick(context: Context, position: Int) {
@@ -80,5 +57,32 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(ReposUIModel::class.java, ReposHolder.ID, ReposHolder::class.java)
+    }
+
+
+    private fun initDropLists(context: Context?) {
+
+        val sortData = getViewModel().sortData
+        val sortValue = getViewModel().sortValue
+
+        val dropMap = HashMap<String, View>()
+
+        for (i in 0 until sortData.size) {
+            val dropList = ListView(context)
+            dropList.dividerHeight = 0
+            val sinceListAdapter = ListDropDownAdapter(context!!, sortData[i])
+            dropList.adapter = sinceListAdapter
+            dropMap[sortData[i][0]] = dropList
+            dropList.setOnItemClickListener { view, _, p, _ ->
+                (view.adapter as ListDropDownAdapter).setCheckItem(p)
+                trend_drop_menu.setTabText(sortData[i][p])
+                trend_drop_menu.closeMenu()
+                getViewModel().sortType[i] = sortValue[i][p]
+                showRefresh()
+            }
+        }
+
+
+        trend_drop_menu.setDropDownMenu(dropMap.keys.toList(), dropMap.values.toList(), baseRecycler)
     }
 }
