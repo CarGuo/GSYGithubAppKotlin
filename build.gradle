@@ -20,7 +20,7 @@ buildscript {
     ext.lifecycle_version = '1.1.1'
     ext.spinkit_version = '1.1.0'
     ext.gradle_version = '3.1.4'
-    ext.recycler_common_version = 'v4.0.3'
+    ext.recycler_common_version = 'v4.0.4'
     ext.gsy_image_load = 'v1.0.1'
     ext.drop_menu_version = '1.0.4'
 

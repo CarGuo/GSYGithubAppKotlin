@@ -1,11 +1,14 @@
 package com.shuyu.github.kotlin.module.main
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
+import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
@@ -27,13 +30,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
      * fragment列表
      */
     @Inject
-    lateinit var mainFragmentList:MutableList<Fragment>
+    lateinit var mainFragmentList: MutableList<Fragment>
 
     /**
      * tab列表
      */
     @Inject
-    lateinit var mainTabModel:MutableList<NavigationTabBar.Model>
+    lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         home_navigation_tab_bar.setViewPager(home_view_pager, 0)
         home_view_pager.offscreenPageLimit = mainFragmentList.size
 
-        home_view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+        home_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }
@@ -62,6 +65,17 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 }
             }
         })
+
+        home_navigation_tab_bar.doubleTouchListener = object : GSYNavigationTabBar.TabDoubleClickListener {
+            override fun onDoubleClick(position: Int) {
+                if (position == 0) {
+                    val fragment = mainFragmentList[position] as DynamicFragment
+                    fragment.showRefresh()
+                }
+
+            }
+        }
+
         /*test.setOnClickListener {
             val authorization = RetrofitFactory.createService(LoginService::class.java).authorizations(LoginRequestModel.generate())
             RetrofitFactory.executeResult(authorization, object : ResultObserver<AccessToken>() {
