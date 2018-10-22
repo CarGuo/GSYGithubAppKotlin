@@ -16,5 +16,6 @@
     <color name="mainBackgroundColor">@color/miWhite</color>
     <color name="mainTextColor">@color/colorPrimaryDark</color>
     <color name="textColorWhite">@color/white</color>
+    <color name="maskColor">#88000000</color>
 
 </resources>
