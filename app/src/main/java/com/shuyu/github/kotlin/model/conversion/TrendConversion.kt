@@ -100,6 +100,10 @@ object TrendConversion {
     private fun parseRepoContributors(repo: TrendingRepoModel, htmlContributorsString: String) {
         val htmlContributors = parseContentWithNote(htmlContributorsString, "Built by", "</a>")
         val splitWitSemicolon = htmlContributors.split("\"")
+        if (splitWitSemicolon.size < 2) {
+            repo.contributors = arrayListOf("")
+            return
+        }
         repo.contributorsUrl = splitWitSemicolon[1]
         val contributors = ArrayList<String>()
 
