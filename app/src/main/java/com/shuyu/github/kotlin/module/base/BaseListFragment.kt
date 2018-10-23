@@ -13,6 +13,7 @@ import com.shuyu.commonrecycler.BindSuperAdapter
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.commonrecycler.listener.OnItemClickListener
 import com.shuyu.commonrecycler.listener.OnLoadingListener
+import com.shuyu.github.kotlin.holder.base.BindCustomLoadMoreFooter
 import com.shuyu.github.kotlin.holder.base.BindCustomRefreshHeader
 import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
 import javax.inject.Inject
@@ -133,6 +134,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     ?.setOnItemClickListener(this)
                     ?.setLoadingListener(this)
                     ?.setRefreshHeader(BindCustomRefreshHeader(activity!!))
+                    ?.setFootView(BindCustomLoadMoreFooter(activity!!))
             normalAdapterManager?.apply {
                 bindHolder(this)
                 adapter = BindSuperAdapter(activity as Context, this, arrayListOf())

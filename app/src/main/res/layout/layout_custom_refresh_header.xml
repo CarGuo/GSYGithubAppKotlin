@@ -31,5 +31,5 @@
         android:layout_toEndOf="@+id/custom_refresh_base_line"
         android:text="@string/loading_prepare"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/minTextSize" />
+        android:textSize="@dimen/smallTextSize" />
 </RelativeLayout>

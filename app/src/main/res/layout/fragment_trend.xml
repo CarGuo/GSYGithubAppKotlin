@@ -21,7 +21,7 @@
             app:ddmenuBackgroundColor="@color/colorPrimary"
             app:ddmenuMenuHeightPercent="0.5"
             app:ddmenuSelectedIcon="@drawable/arrow_dropup"
-            app:ddmenuTextSize="@dimen/middleTextWhiteSize"
+            app:ddmenuTextSize="@dimen/middleTextSize"
             app:ddmenuUnselectedIcon="@drawable/arrow_dropdown"
             app:ddtextSelectedColor="@color/white"
             app:ddtextUnselectedColor="@color/subTextColor"
