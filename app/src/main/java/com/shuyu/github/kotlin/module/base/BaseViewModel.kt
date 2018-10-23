@@ -54,6 +54,20 @@ abstract class BaseViewModel : ViewModel() {
             loading.value == LoadState.Refresh && loading.value == LoadState.LoadMore
 
 
+    open fun clearWhenRefresh() {
+        if (page <= 1) {
+            dataList.value?.clear()
+        }
+    }
+
+    open fun commitResult(result: ArrayList<Any>?) {
+        result?.apply {
+            val value = dataList.value
+            value?.addAll(this.toArray())
+            dataList.value = value
+        }
+    }
+
     abstract fun loadData()
 
 }

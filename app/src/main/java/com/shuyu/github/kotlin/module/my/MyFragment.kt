@@ -8,8 +8,10 @@ import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentMyBinding
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
+import com.shuyu.github.kotlin.holder.EventHolder
 import com.shuyu.github.kotlin.holder.base.GSYDataBindingComponent
 import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import kotlinx.android.synthetic.main.fragment_my.*
 import javax.inject.Inject
@@ -35,6 +37,10 @@ class MyFragment : BaseListFragment<FragmentMyBinding, MyViewModel>() {
 
     override fun getViewModelClass(): Class<MyViewModel> = MyViewModel::class.java
 
+    override fun enableRefresh(): Boolean = true
+
+    override fun enableLoadMore(): Boolean = true
+
     override fun getRecyclerView(): RecyclerView? = fragment_my_recycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
@@ -42,5 +48,7 @@ class MyFragment : BaseListFragment<FragmentMyBinding, MyViewModel>() {
                 null, false, GSYDataBindingComponent())
         binding.globalModel = appGlobalModel
         manager.addHeaderView(binding.root)
+
+        manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
     }
 }

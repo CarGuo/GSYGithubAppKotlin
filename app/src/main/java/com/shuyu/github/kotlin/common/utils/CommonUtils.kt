@@ -21,7 +21,7 @@ object CommonUtils {
     private const val DAYS_LIMIT = 30 * HOURS_LIMIT
 
 
-    fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(30, 30)) {
+    fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(50, 50)) {
         val option = GSYLoadOption()
                 .setDefaultImg(R.drawable.logo)
                 .setErrorImg(R.drawable.logo)

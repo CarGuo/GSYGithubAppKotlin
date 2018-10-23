@@ -95,7 +95,7 @@ object EventConversion {
                 } else {
                     count
                 }
-                for (i in 0..max) {
+                for (i in 0 until max) {
                     val commit = event.payload?.commits!![i]
                     if (i != 0) {
                         descSpan += ("\n")

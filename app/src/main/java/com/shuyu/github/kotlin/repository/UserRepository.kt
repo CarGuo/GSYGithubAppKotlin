@@ -1,16 +1,17 @@
 package com.shuyu.github.kotlin.repository
 
-import android.arch.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.Function
+import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -28,6 +29,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                     ///保存用户信息
                     Debuger.printfLog("userInfo $userInfoStorage")
                     userInfoStorage = GsonUtils.toJsonString(it)
+                    appGlobalModel.userObservable.set(it)
                 }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
                     ///拦截错误
                     //userInfoStorage = ""
@@ -36,22 +38,32 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 })
     }
 
-    fun getPersonInfo(liveUser: MutableLiveData<User>? = null) {
+    fun getPersonInfo(resultCallBack: ResultCallBack<User>?) {
         val userInfoService = getPersonInfoObservable().flatMap { FlatMapResult2Response(it) }
         RetrofitFactory.executeResult(userInfoService, object : ResultObserver<User>() {
             override fun onSuccess(result: User?) {
-                liveUser?.value = result
+                resultCallBack?.onSuccess(result)
             }
 
             override fun onCodeError(code: Int, message: String) {
-                liveUser?.value = null
+                resultCallBack?.onFailure()
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
-                liveUser?.value = null
+                resultCallBack?.onFailure()
             }
 
         })
+    }
+
+    fun getUserEvent(login: String?, resultCallBack: ResultCallBack<ArrayList<Any>>, page: Int = 0) {
+        val username = login ?: ""
+        if (username.isEmpty()) {
+            return
+        }
+        val userEvent = retrofit.create(UserService::class.java)
+                .getUserEvents(true, username, page)
+        userEventRequest(userEvent, resultCallBack)
     }
 
     fun getReceivedEvent(resultCallBack: ResultCallBack<ArrayList<Any>>, page: Int = 0) {
@@ -62,20 +74,23 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         }
         val receivedEvent = retrofit.create(UserService::class.java)
                 .getNewsEvent(true, username, page)
-                .flatMap {
-                    FlatMapResponse2Result(it)
-                }
-                .map {
-                    val eventUIList = ArrayList<Any>()
-                    for (event in it) {
-                        eventUIList.add(EventConversion.eventToEventUIModel(event))
-                    }
-                    eventUIList
-                }.flatMap {
-                    FlatMapResult2Response(it)
-                }
+        userEventRequest(receivedEvent, resultCallBack)
+    }
 
-        RetrofitFactory.executeResult(receivedEvent, object : ResultObserver<ArrayList<Any>>() {
+    private fun userEventRequest(observer: Observable<Response<java.util.ArrayList<Event>>>, resultCallBack: ResultCallBack<ArrayList<Any>>) {
+        val service = observer.flatMap {
+            FlatMapResponse2Result(it)
+        }.map {
+            val eventUIList = ArrayList<Any>()
+            for (event in it) {
+                eventUIList.add(EventConversion.eventToEventUIModel(event))
+            }
+            eventUIList
+        }.flatMap {
+            FlatMapResult2Response(it)
+        }
+
+        RetrofitFactory.executeResult(service, object : ResultObserver<ArrayList<Any>>() {
             override fun onSuccess(result: ArrayList<Any>?) {
                 resultCallBack.onSuccess(result)
             }
@@ -89,7 +104,6 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             }
 
         })
-
     }
 
 }
