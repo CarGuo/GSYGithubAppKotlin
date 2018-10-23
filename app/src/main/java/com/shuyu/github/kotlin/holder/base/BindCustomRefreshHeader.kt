@@ -57,12 +57,10 @@ open class BindCustomRefreshHeader : BindBaseRefreshHeader {
         set(state) {
             if (state == super.state) return
 
-            if (state == BaseRefreshHeader.STATE_REFRESHING) {
-                mAnimationDrawable!!.start()
-            } else if (state == BaseRefreshHeader.STATE_DONE) {
-                mAnimationDrawable!!.stop()
-            } else {
-                mAnimationDrawable!!.stop()
+            when (state) {
+                BaseRefreshHeader.STATE_REFRESHING -> mAnimationDrawable?.start()
+                BaseRefreshHeader.STATE_DONE -> mAnimationDrawable?.stop()
+                else -> mAnimationDrawable?.stop()
             }
 
             when (state) {
@@ -71,13 +69,13 @@ open class BindCustomRefreshHeader : BindBaseRefreshHeader {
                     }
                     if (super.state == BaseRefreshHeader.STATE_REFRESHING) {
                     }
-                    mCustomRefreshTxt!!.text = "看到了我吧！"
+                    mCustomRefreshTxt?.text = context.getString(R.string.loading_prepare)
                 }
                 BaseRefreshHeader.STATE_RELEASE_TO_REFRESH -> if (super.state != BaseRefreshHeader.STATE_RELEASE_TO_REFRESH) {
-                    mCustomRefreshTxt!!.text = "放开我刷新！"
+                    mCustomRefreshTxt?.text = context.getString(R.string.loading_drop)
                 }
-                BaseRefreshHeader.STATE_REFRESHING -> mCustomRefreshTxt!!.text = "刷新中！"
-                BaseRefreshHeader.STATE_DONE -> mCustomRefreshTxt!!.text = "刷新好了哟！"
+                BaseRefreshHeader.STATE_REFRESHING -> mCustomRefreshTxt?.text = context.getString(R.string.loading_start)
+                BaseRefreshHeader.STATE_DONE -> mCustomRefreshTxt?.text = context.getString(R.string.loading_end)
             }
             super.state = state
         }
@@ -101,14 +99,14 @@ open class BindCustomRefreshHeader : BindBaseRefreshHeader {
         addView(container, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0))
         gravity = Gravity.BOTTOM
 
-        mCustomRefreshImg = container?.findViewById(R.id.custom_refresh_img) as ImageView
-        mCustomRefreshTxt = container.findViewById(R.id.custom_refresh_txt) as TextView
+        mCustomRefreshImg = container?.findViewById(R.id.custom_refresh_img)
+        mCustomRefreshTxt = container?.findViewById(R.id.custom_refresh_txt)
 
 
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         currentMeasuredHeight = measuredHeight
 
-        mAnimationDrawable = mCustomRefreshImg!!.drawable as AnimationDrawable
+        mAnimationDrawable = mCustomRefreshImg?.drawable as AnimationDrawable
     }
 
 
