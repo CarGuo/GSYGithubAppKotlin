@@ -3,11 +3,16 @@ package com.shuyu.github.kotlin.holder.base
 import android.annotation.SuppressLint
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
+import android.graphics.Color
 import android.graphics.Point
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.model.bean.User
 
@@ -61,7 +66,31 @@ class DataBindingExtendUtils {
                 }
             } else if (view is ImageView) {
                 CommonUtils.loadUserHeaderImage(view, user?.avatarUrl ?: "", Point(90, 90))
+            } else if (view is WebView) {
+                view.apply {
+                    fun changeColor(): String {
+                        val stringBuffer = StringBuffer()
+                        val color = ContextCompat.getColor(view.context, R.color.colorPrimary)
+                        stringBuffer.append(Integer.toHexString(Color.red(color)))
+                        stringBuffer.append(Integer.toHexString(Color.green(color)))
+                        stringBuffer.append(Integer.toHexString(Color.blue(color)))
+                        return stringBuffer.toString()
+                    }
+                    fun getUserChartAddress(name: String): String {
+                        return AppConfig.GRAPHIC_HOST + changeColor() + "/" + name
+                    }
+                    val settings = view.settings
+                    settings?.javaScriptEnabled = true
+                    settings?.loadWithOverviewMode = true
+                    settings?.builtInZoomControls = false
+                    settings?.displayZoomControls = false
+                    settings?.domStorageEnabled = true
+                    settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+                    settings?.setAppCacheEnabled(true)
+                    view.loadUrl(getUserChartAddress(user?.login ?: ""))
+                }
             }
+
         }
 
     }

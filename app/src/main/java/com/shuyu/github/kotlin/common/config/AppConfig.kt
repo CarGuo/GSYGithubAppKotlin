@@ -11,6 +11,8 @@ object AppConfig {
 
     const val GITHUB_CONTENT_BASE_URL = "https://raw.githubusercontent.com/"
 
+    const val GRAPHIC_HOST = "https://ghchart.rshah.org/"
+
     const val HTTP_TIME_OUT = 20 * 1000L
 
     const val HTTP_MAX_CACHE_SIZE = 16 * 1024 * 1024L
