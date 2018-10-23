@@ -43,4 +43,15 @@ class GSYWebView : WebView {
         }
         return super.onTouchEvent(event)
     }
+
+    override fun onScrollChanged(x: Int, y: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(x, y, oldl, oldt)
+        if (!isVerticalScrollBarEnabled) {
+            //禁上下滚动
+            scrollTo(x, 0)
+        } else if (!isHorizontalScrollBarEnabled) {
+            //禁止左右滚动
+            scrollTo(0, y)
+        }
+    }
 }

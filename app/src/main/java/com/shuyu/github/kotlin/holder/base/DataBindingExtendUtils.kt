@@ -76,9 +76,11 @@ class DataBindingExtendUtils {
                         stringBuffer.append(Integer.toHexString(Color.blue(color)))
                         return stringBuffer.toString()
                     }
+
                     fun getUserChartAddress(name: String): String {
                         return AppConfig.GRAPHIC_HOST + changeColor() + "/" + name
                     }
+
                     val settings = view.settings
                     settings?.javaScriptEnabled = true
                     settings?.loadWithOverviewMode = true
@@ -87,6 +89,8 @@ class DataBindingExtendUtils {
                     settings?.domStorageEnabled = true
                     settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
                     settings?.setAppCacheEnabled(true)
+
+                    view.isVerticalScrollBarEnabled = false
                     view.loadUrl(getUserChartAddress(user?.login ?: ""))
                 }
             }
