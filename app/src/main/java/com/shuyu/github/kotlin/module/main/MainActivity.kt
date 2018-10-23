@@ -2,8 +2,10 @@ package com.shuyu.github.kotlin.module.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.LayoutInflaterCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
@@ -39,9 +41,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         home_view_pager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
         home_navigation_tab_bar.models = mainTabModel
@@ -75,19 +77,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
             }
         }
-
-        /*test.setOnClickListener {
-            val authorization = RetrofitFactory.createService(LoginService::class.java).authorizations(LoginRequestModel.generate())
-            RetrofitFactory.executeResult(authorization, object : ResultObserver<AccessToken>() {
-                override fun onSuccess(t: AccessToken?) {
-
-                }
-
-                override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
-
-                }
-            })
-        }*/
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector

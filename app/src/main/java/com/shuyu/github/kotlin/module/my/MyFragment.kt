@@ -11,7 +11,6 @@ import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.holder.base.GSYDataBindingComponent
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
-import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import kotlinx.android.synthetic.main.fragment_my.*
 import javax.inject.Inject
 
@@ -32,7 +31,6 @@ class MyFragment : BaseListFragment<FragmentMyBinding, MyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.globalModel = appGlobalModel
     }
 
     override fun getViewModelClass(): Class<MyViewModel> = MyViewModel::class.java
@@ -42,6 +40,7 @@ class MyFragment : BaseListFragment<FragmentMyBinding, MyViewModel>() {
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_user_header,
                 null, false, GSYDataBindingComponent())
+        binding.globalModel = appGlobalModel
         manager.addHeaderView(binding.root)
     }
 }

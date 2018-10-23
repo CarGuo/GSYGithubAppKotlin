@@ -2,8 +2,7 @@ package com.shuyu.github.kotlin.model.bean
 
 
 import com.google.gson.annotations.SerializedName
-
-import java.util.Date
+import java.util.*
 
 
 class User {
@@ -22,6 +21,8 @@ class User {
     var email: String? = null
     var bio: String? = null
 
+    var starRepos: Int? = null
+    var honorRepos: Int? = null
     @SerializedName("public_repos")
     var publicRepos: Int = 0
     @SerializedName("public_gists")
