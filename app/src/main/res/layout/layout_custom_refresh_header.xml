@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/custom_refresh_img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/custom_refresh_base_line"
+        app:SpinKit_Color="@color/colorPrimary" />
+
+    <View
+        android:id="@+id/custom_refresh_base_line"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/custom_refresh_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/custom_refresh_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/progressbar" />
-
-        <TextView
-            android:id="@+id/custom_refresh_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="看到了我吧！" />
-    </LinearLayout>
-
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/custom_refresh_base_line"
+        android:text="@string/loading_prepare"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/minTextSize" />
 </RelativeLayout>

@@ -1,13 +1,14 @@
 package com.shuyu.github.kotlin.holder.base
 
 import android.content.Context
-import android.graphics.drawable.AnimationDrawable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.github.ybq.android.spinkit.SpinKitView
+import com.github.ybq.android.spinkit.sprite.SpriteContainer
+import com.github.ybq.android.spinkit.style.CubeGrid
 import com.shuyu.commonrecycler.BindBaseRefreshHeader
 import com.shuyu.commonrecycler.xrecycler.base.BaseRefreshHeader
 import com.shuyu.github.kotlin.R
@@ -26,11 +27,11 @@ import com.shuyu.github.kotlin.R
 open class BindCustomRefreshHeader : BindBaseRefreshHeader {
 
 
-    private var mCustomRefreshImg: ImageView? = null
+    private var customRefreshImg: SpinKitView? = null
 
-    private var mCustomRefreshTxt: TextView? = null
+    private var customRefreshTxt: TextView? = null
 
-    private var mAnimationDrawable: AnimationDrawable? = null
+    private var spriteContainer: SpriteContainer? = null
 
     /**
      * 继承，返回高度
@@ -58,9 +59,9 @@ open class BindCustomRefreshHeader : BindBaseRefreshHeader {
             if (state == super.state) return
 
             when (state) {
-                BaseRefreshHeader.STATE_REFRESHING -> mAnimationDrawable?.start()
-                BaseRefreshHeader.STATE_DONE -> mAnimationDrawable?.stop()
-                else -> mAnimationDrawable?.stop()
+                BaseRefreshHeader.STATE_REFRESHING -> spriteContainer?.start()
+                BaseRefreshHeader.STATE_DONE -> spriteContainer?.stop()
+                else -> spriteContainer?.stop()
             }
 
             when (state) {
@@ -69,13 +70,13 @@ open class BindCustomRefreshHeader : BindBaseRefreshHeader {
                     }
                     if (super.state == BaseRefreshHeader.STATE_REFRESHING) {
                     }
-                    mCustomRefreshTxt?.text = context.getString(R.string.loading_prepare)
+                    customRefreshTxt?.text = context.getString(R.string.loading_prepare)
                 }
                 BaseRefreshHeader.STATE_RELEASE_TO_REFRESH -> if (super.state != BaseRefreshHeader.STATE_RELEASE_TO_REFRESH) {
-                    mCustomRefreshTxt?.text = context.getString(R.string.loading_drop)
+                    customRefreshTxt?.text = context.getString(R.string.loading_drop)
                 }
-                BaseRefreshHeader.STATE_REFRESHING -> mCustomRefreshTxt?.text = context.getString(R.string.loading_start)
-                BaseRefreshHeader.STATE_DONE -> mCustomRefreshTxt?.text = context.getString(R.string.loading_end)
+                BaseRefreshHeader.STATE_REFRESHING -> customRefreshTxt?.text = context.getString(R.string.loading_start)
+                BaseRefreshHeader.STATE_DONE -> customRefreshTxt?.text = context.getString(R.string.loading_end)
             }
             super.state = state
         }
@@ -99,14 +100,20 @@ open class BindCustomRefreshHeader : BindBaseRefreshHeader {
         addView(container, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0))
         gravity = Gravity.BOTTOM
 
-        mCustomRefreshImg = container?.findViewById(R.id.custom_refresh_img)
-        mCustomRefreshTxt = container?.findViewById(R.id.custom_refresh_txt)
+        customRefreshImg = container?.findViewById(R.id.custom_refresh_img)
+        customRefreshTxt = container?.findViewById(R.id.custom_refresh_txt)
+
+
+        val animator = CubeGrid()
+        customRefreshImg?.setIndeterminateDrawable(animator)
 
 
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         currentMeasuredHeight = measuredHeight
 
-        mAnimationDrawable = mCustomRefreshImg?.drawable as AnimationDrawable
+        spriteContainer = animator
+
+
     }
 
 
