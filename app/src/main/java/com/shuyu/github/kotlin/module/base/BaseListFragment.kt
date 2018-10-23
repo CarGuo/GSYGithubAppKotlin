@@ -55,8 +55,8 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
         })
 
         getViewModel().dataList.observe(this, Observer { items ->
-            adapter?.dataList = items
-            adapter?.notifyDataSetChanged()
+            adapter?.dataList?.addAll(items!!)
+            adapter?.notifyItemRangeChanged(adapter!!.dataList!!.size, (adapter!!.dataList!!.size + items!!.size) - 1)
         })
 
         showRefresh()
@@ -73,6 +73,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
      * 刷新
      */
     override fun onRefresh() {
+        adapter?.dataList?.clear()
         getViewModel().refresh()
     }
 

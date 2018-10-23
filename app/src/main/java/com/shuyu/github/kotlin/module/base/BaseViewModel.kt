@@ -62,9 +62,9 @@ abstract class BaseViewModel : ViewModel() {
 
     open fun commitResult(result: ArrayList<Any>?) {
         result?.apply {
-            val value = dataList.value
-            value?.addAll(this.toArray())
-            dataList.value = value
+            //val value = dataList.value
+            //value?.addAll(this.toArray())
+            dataList.value = result
         }
     }
 
