@@ -61,7 +61,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             } else {
                 ///读取用户数据
                 val user = GsonUtils.parserJsonToBean(userInfoStorage, User::class.java)
-                appGlobalModel.userObservable.set(user)
+                appGlobalModel.userObservable.cloneDataFromUser(user)
                 //去主页
                 navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
                 //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)

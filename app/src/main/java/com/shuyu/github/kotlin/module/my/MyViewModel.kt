@@ -11,7 +11,7 @@ class MyViewModel @Inject constructor(private val userRepository: UserRepository
 
     override fun loadData() {
         clearWhenRefresh()
-        val login = globalAppModel.userObservable.get()?.login
+        val login = globalAppModel.userObservable.login
         userRepository.getPersonInfo(null)
         userRepository.getUserEvent(login, object: ResultCallBack<ArrayList<Any>>{
             override fun onSuccess(result: ArrayList<Any>?) {

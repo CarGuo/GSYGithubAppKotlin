@@ -29,7 +29,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                     ///保存用户信息
                     Debuger.printfLog("userInfo $userInfoStorage")
                     userInfoStorage = GsonUtils.toJsonString(it)
-                    appGlobalModel.userObservable.set(it)
+                    appGlobalModel.userObservable.cloneDataFromUser(it)
                 }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
                     ///拦截错误
                     //userInfoStorage = ""
@@ -67,7 +67,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     }
 
     fun getReceivedEvent(resultCallBack: ResultCallBack<ArrayList<Any>>, page: Int = 0) {
-        val login = appGlobalModel.userObservable.get()?.login
+        val login = appGlobalModel.userObservable.login
         val username = login ?: ""
         if (username.isEmpty()) {
             return

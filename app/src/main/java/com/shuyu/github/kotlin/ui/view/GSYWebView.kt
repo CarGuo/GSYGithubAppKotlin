@@ -32,8 +32,8 @@ class GSYWebView : WebView {
                 startY = event.y
             }
             MotionEvent.ACTION_MOVE -> {
-                offsetX = Math.abs(event.getX() - startX);
-                offsetY = Math.abs(event.getY() - startY);
+                offsetX = Math.abs(event.x - startX)
+                offsetY = Math.abs(event.y - startY)
                 if (offsetX > offsetY) {
                     parent.requestDisallowInterceptTouchEvent(true)
                 } else {

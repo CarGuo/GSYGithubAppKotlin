@@ -14,7 +14,7 @@ import android.widget.TextView
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.CommonUtils
-import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.model.ui.UserUIModel
 
 
 /**
@@ -30,7 +30,7 @@ class DataBindingExtendUtils {
 
         @BindingAdapter("userModel", "userParams", requireAll = false)
         @SuppressLint("SetTextI18n")
-        fun userModelInsert(view: View?, user: User?, userParams: String?) {
+        fun userModelInsert(view: View?, user: UserUIModel?, userParams: String?) {
             if (view is TextView) {
                 fun getBlankText(value: Int?): String {
                     return value?.toString() ?: "---"

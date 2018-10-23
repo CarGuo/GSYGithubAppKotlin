@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.model
 
-import android.databinding.ObservableField
-import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.model.ui.UserUIModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,5 +11,5 @@ import javax.inject.Singleton
  */
 @Singleton
 class AppGlobalModel @Inject constructor() {
-    val userObservable = ObservableField<User>()
+    val userObservable = UserUIModel()
 }

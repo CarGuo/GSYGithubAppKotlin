@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="globalModel"
-            type="com.shuyu.github.kotlin.model.AppGlobalModel" />
+            name="userUIModel"
+            type="com.shuyu.github.kotlin.model.ui.UserUIModel" />
 
     </data>
 
@@ -29,21 +29,19 @@
                 android:src="@drawable/logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:userModel="@{globalModel.userObservable}" />
+                app:userModel="@{userUIModel}" />
 
             <TextView
                 android:id="@+id/user_header_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="---"
+                android:text="@{userUIModel.login}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/bigTextSize"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:userModel="@{globalModel.userObservable}"
-                app:userParams='@{"login"}' />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/user_header_other_name"
@@ -56,7 +54,7 @@
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_name"
-                app:userModel="@{globalModel.userObservable}"
+                app:userModel="@{userUIModel}"
                 app:userParams='@{"name"}' />
 
             <TextView
@@ -70,7 +68,7 @@
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_other_name"
-                app:userModel="@{globalModel.userObservable}"
+                app:userModel="@{userUIModel}"
                 app:userParams='@{"company"}' />
 
             <TextView
@@ -84,7 +82,7 @@
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_company"
-                app:userModel="@{globalModel.userObservable}"
+                app:userModel="@{userUIModel}"
                 app:userParams='@{"location"}' />
 
             <TextView
@@ -110,7 +108,7 @@
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_location"
-                app:userModel="@{globalModel.userObservable}"
+                app:userModel="@{userUIModel}"
                 app:userParams='@{"link"}' />
 
             <TextView
@@ -124,7 +122,7 @@
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_link"
-                app:userModel="@{globalModel.userObservable}"
+                app:userModel="@{userUIModel}"
                 app:userParams='@{"bio"}' />
 
             <View
@@ -149,7 +147,7 @@
                     android:id="@+id/user_header_repos"
                     style="@style/verticalItemText"
                     android:text="---\n---"
-                    app:userModel="@{globalModel.userObservable}"
+                    app:userModel="@{userUIModel}"
                     app:userParams='@{"publicRepos"}' />
 
                 <View style="@style/verticalLine" />
@@ -158,7 +156,7 @@
                     android:id="@+id/user_header_fan"
                     style="@style/verticalItemText"
                     android:text="---\n---"
-                    app:userModel="@{globalModel.userObservable}"
+                    app:userModel="@{userUIModel}"
                     app:userParams='@{"followers"}' />
 
                 <View style="@style/verticalLine" />
@@ -167,7 +165,7 @@
                     android:id="@+id/user_header_focus"
                     style="@style/verticalItemText"
                     android:text="---\n---"
-                    app:userModel="@{globalModel.userObservable}"
+                    app:userModel="@{userUIModel}"
                     app:userParams='@{"following"}' />
 
                 <View style="@style/verticalLine" />
@@ -176,7 +174,7 @@
                     android:id="@+id/user_header_star"
                     style="@style/verticalItemText"
                     android:text="---\n---"
-                    app:userModel="@{globalModel.userObservable}"
+                    app:userModel="@{userUIModel}"
                     app:userParams='@{"starRepos"}' />
 
                 <View style="@style/verticalLine" />
@@ -185,7 +183,7 @@
                     android:id="@+id/user_header_honor"
                     style="@style/verticalItemText"
                     android:text="---\n---"
-                    app:userModel="@{globalModel.userObservable}"
+                    app:userModel="@{userUIModel}"
                     app:userParams='@{"honorRepos"}' />
             </LinearLayout>
 
@@ -202,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                app:userModel="@{globalModel.userObservable}" />
+                app:userModel="@{userUIModel}" />
 
         </android.support.v7.widget.CardView>
 

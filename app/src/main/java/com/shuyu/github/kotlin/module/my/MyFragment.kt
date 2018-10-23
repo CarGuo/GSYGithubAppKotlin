@@ -46,7 +46,7 @@ class MyFragment : BaseListFragment<FragmentMyBinding, MyViewModel>() {
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_user_header,
                 null, false, GSYDataBindingComponent())
-        binding.globalModel = appGlobalModel
+        binding.userUIModel = appGlobalModel.userObservable
         manager.addHeaderView(binding.root)
 
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
