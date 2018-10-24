@@ -11,7 +11,7 @@ import android.view.WindowManager
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.shuyu.github.kotlin.di.Injectable
-import com.shuyu.github.kotlin.holder.base.GSYDataBindingComponent
+import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 
 /**
  * 基类Fragment

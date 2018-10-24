@@ -1,19 +1,13 @@
 package com.shuyu.github.kotlin.service
 
+import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
-
-import java.util.ArrayList
-
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
+import java.util.*
 
 
 interface UserService {
@@ -75,7 +69,8 @@ interface UserService {
     fun getUserEvents(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Event>>>
 
     /**
@@ -85,7 +80,8 @@ interface UserService {
     fun getNewsEvent(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Event>>>
 
     @GET("orgs/{org}/members")

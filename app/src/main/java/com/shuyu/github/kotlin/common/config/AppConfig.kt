@@ -13,6 +13,8 @@ object AppConfig {
 
     const val GRAPHIC_HOST = "https://ghchart.rshah.org/"
 
+    const val PAGE_SIZE = 30
+
     const val HTTP_TIME_OUT = 20 * 1000L
 
     const val HTTP_MAX_CACHE_SIZE = 16 * 1024 * 1024L
@@ -20,7 +22,6 @@ object AppConfig {
     const val IMAGE_MAX_CACHE_SIZE = 16 * 1024 * 1024L
 
     const val CACHE_MAX_AGE = 7 * 24 * 60 * 60L
-
 
     const val ACCESS_TOKEN = "accessToken"
 

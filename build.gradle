@@ -23,6 +23,8 @@ buildscript {
     ext.recycler_common_version = 'v4.0.4'
     ext.gsy_image_load = 'v1.0.1'
     ext.drop_menu_version = '1.0.4'
+    ext.arouter_api_versoion = '1.4.0'
+    ext.arouter_compiler_versoion = '1.2.1'
 
     repositories {
         google()

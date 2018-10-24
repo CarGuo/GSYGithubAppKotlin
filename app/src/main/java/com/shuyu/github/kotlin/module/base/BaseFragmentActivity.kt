@@ -18,7 +18,6 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-10-24
  */
-
 abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject

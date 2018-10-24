@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.Iconics
 import com.mikepenz.iconics.context.IconicsContextWrapper
 import com.shuyu.github.kotlin.common.style.GSYIconfont
@@ -36,6 +37,13 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
         instance = this
 
+        ///初始化路由
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog()
+            ARouter.openDebug()
+        }
+        ARouter.init(this)
+
         //Application级别注入
         AppInjector.init(this)
 
@@ -43,7 +51,10 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         Iconics.init(applicationContext)
         Iconics.registerFont(GSYIconfont())
 
+        ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
+
+
     }
 
     override fun activityInjector() = dispatchingAndroidInjector

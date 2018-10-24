@@ -1,12 +1,12 @@
-package com.shuyu.github.kotlin.holder
+package com.shuyu.github.kotlin.ui.holder
 
 import android.content.Context
 import android.databinding.ViewDataBinding
 import android.view.View
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.LayoutReposItemBinding
-import com.shuyu.github.kotlin.holder.base.DataBindingHolder
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
+import com.shuyu.github.kotlin.ui.holder.base.DataBindingHolder
 
 
 /**

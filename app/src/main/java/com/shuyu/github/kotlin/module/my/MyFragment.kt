@@ -11,5 +11,5 @@ class MyFragment : BaseUserInfoFragment<MyViewModel>() {
 
     override fun getViewModelClass(): Class<MyViewModel> = MyViewModel::class.java
 
-    override fun getUserName(): String? = null
+    override fun getLoginName(): String? = null
 }

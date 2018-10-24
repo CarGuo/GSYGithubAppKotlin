@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.holder.base
+package com.shuyu.github.kotlin.ui.holder.base
 
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
@@ -18,8 +18,8 @@ class DataBindingExpandUtils {
     companion object {
 
         @BindingAdapter("userHeaderUrl", "userHeaderSize", requireAll = false)
-        fun loadImage(view: ImageView, url: String, size: Int = 50) {
-            CommonUtils.loadUserHeaderImage(view, url, Point(size.dp, size.dp))
+        fun loadImage(view: ImageView, url: String?, size: Int = 50) {
+            CommonUtils.loadUserHeaderImage(view, url ?: "", Point(size.dp, size.dp))
         }
 
         @BindingAdapter("webViewUrl")

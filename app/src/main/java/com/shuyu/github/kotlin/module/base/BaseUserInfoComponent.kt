@@ -8,11 +8,11 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.databinding.FragmentUserInfoBinding
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
-import com.shuyu.github.kotlin.holder.EventHolder
-import com.shuyu.github.kotlin.holder.base.GSYDataBindingComponent
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.model.ui.UserUIModel
 import com.shuyu.github.kotlin.repository.UserRepository
+import com.shuyu.github.kotlin.ui.holder.EventHolder
+import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_user_info.*
 
 /**
@@ -28,7 +28,7 @@ abstract class BaseUserInfoFragment<T: BaseUserInfoViewModel>: BaseListFragment<
 
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
-        getViewModel().login = getUserName()
+        getViewModel().login = getLoginName()
     }
 
     override fun enableRefresh(): Boolean = true
@@ -46,7 +46,7 @@ abstract class BaseUserInfoFragment<T: BaseUserInfoViewModel>: BaseListFragment<
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
     }
 
-    abstract fun getUserName(): String?
+    abstract fun getLoginName(): String?
 }
 
 

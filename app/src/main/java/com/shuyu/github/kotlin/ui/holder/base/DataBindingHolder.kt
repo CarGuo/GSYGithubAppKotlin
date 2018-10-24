@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.holder.base
+package com.shuyu.github.kotlin.ui.holder.base
 
 import android.content.Context
 import android.databinding.ViewDataBinding

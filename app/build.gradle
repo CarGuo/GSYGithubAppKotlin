@@ -17,8 +17,12 @@ android {
         versionCode 1
         versionName "1.0"
         javaCompileOptions {
-            annotationProcessorOptions.includeCompileClasspath = true
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
         }
+
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
@@ -32,12 +36,19 @@ android {
     }
     kapt {
         generateStubs = true
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
     }
     lintOptions {
         abortOnError false
     }
     dataBinding{
         enabled=true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -92,10 +103,15 @@ dependencies {
         exclude group: 'stax', module: 'stax'
     }
 
+    ///ARouter
+    implementation "com.alibaba:arouter-api:${arouter_api_versoion}"
+    kapt "com.alibaba:arouter-compiler:${arouter_compiler_versoion}"
+
 
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${rx_version}"
     implementation "io.reactivex.rxjava2:rxjava:${rx_version}"
+
     //eventbus
     implementation "org.greenrobot:eventbus:${event_bus}"
 

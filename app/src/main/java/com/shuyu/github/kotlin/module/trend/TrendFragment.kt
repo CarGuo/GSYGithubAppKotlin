@@ -9,10 +9,10 @@ import android.widget.ListView
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentTrendBinding
-import com.shuyu.github.kotlin.holder.ReposHolder
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.ui.adapter.ListDropDownAdapter
+import com.shuyu.github.kotlin.ui.holder.ReposHolder
 import kotlinx.android.synthetic.main.fragment_trend.*
 
 

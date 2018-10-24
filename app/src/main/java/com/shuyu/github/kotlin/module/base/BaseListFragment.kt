@@ -13,9 +13,9 @@ import com.shuyu.commonrecycler.BindSuperAdapter
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.commonrecycler.listener.OnItemClickListener
 import com.shuyu.commonrecycler.listener.OnLoadingListener
-import com.shuyu.github.kotlin.holder.base.BindCustomLoadMoreFooter
-import com.shuyu.github.kotlin.holder.base.BindCustomRefreshHeader
-import com.shuyu.github.kotlin.holder.base.BindingDataRecyclerManager
+import com.shuyu.github.kotlin.ui.holder.base.BindCustomLoadMoreFooter
+import com.shuyu.github.kotlin.ui.holder.base.BindCustomRefreshHeader
+import com.shuyu.github.kotlin.ui.holder.base.BindingDataRecyclerManager
 import javax.inject.Inject
 
 /**
@@ -55,8 +55,19 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
         })
 
         getViewModel().dataList.observe(this, Observer { items ->
-            adapter?.dataList?.addAll(items!!)
-            adapter?.notifyItemRangeChanged(adapter!!.dataList!!.size, (adapter!!.dataList!!.size + items!!.size) - 1)
+            items?.apply {
+                if (items.size > 0) {
+                    adapter?.dataList?.addAll(items)
+                    adapter?.notifyItemRangeChanged(adapter!!.dataList!!.size, (adapter!!.dataList!!.size + items.size) - 1)
+                }
+                normalAdapterManager?.setNoMore(items.size == 0)
+            }
+        })
+
+        getViewModel().loadMore.observe(this, Observer { it ->
+            it?.apply {
+                normalAdapterManager?.setNoMore(!it)
+            }
         })
 
         showRefresh()
