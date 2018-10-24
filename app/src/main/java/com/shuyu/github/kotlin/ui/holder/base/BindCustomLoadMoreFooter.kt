@@ -36,6 +36,7 @@ open class BindCustomLoadMoreFooter : BaseLoadMoreFooter {
 
     private var spriteContainer: SpriteContainer? = null
 
+    private var prevState = BaseLoadMoreFooter.STATE_LOADING
 
     constructor(context: Context) : super(context) {
         initView()
@@ -65,6 +66,9 @@ open class BindCustomLoadMoreFooter : BaseLoadMoreFooter {
                 spriteContainer?.start()
             }
             BaseLoadMoreFooter.STATE_COMPLETE -> {
+                if(prevState == BaseLoadMoreFooter.STATE_NOMORE) {
+                    return
+                }
                 mText?.text = context.getText(R.string.listview_loading)
                 this.visibility = View.GONE
                 spriteContainer?.stop()
@@ -76,6 +80,7 @@ open class BindCustomLoadMoreFooter : BaseLoadMoreFooter {
                 spriteContainer?.stop()
             }
         }
+        prevState = state
     }
 
     /**
