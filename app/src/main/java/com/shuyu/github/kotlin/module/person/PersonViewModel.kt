@@ -9,7 +9,7 @@ import com.shuyu.github.kotlin.module.base.BaseUserInfoViewModel
 import com.shuyu.github.kotlin.repository.UserRepository
 import javax.inject.Inject
 
-class PersonViewModel @Inject constructor(private val userRepository: UserRepository, private val application: Application) : BaseUserInfoViewModel(userRepository) {
+class PersonViewModel @Inject constructor(private val userRepository: UserRepository, private val application: Application) : BaseUserInfoViewModel(userRepository, application) {
 
     val userObservable = UserUIModel()
 

@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.base
 
+import android.app.Application
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -14,13 +15,14 @@ import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_user_info.*
+import org.jetbrains.anko.runOnUiThread
 
 /**
  * Created by guoshuyu
  * Date: 2018-10-24
  */
 
-abstract class BaseUserInfoFragment<T: BaseUserInfoViewModel>: BaseListFragment<FragmentUserInfoBinding, T>() {
+abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragment<FragmentUserInfoBinding, T>() {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_user_info
@@ -50,7 +52,7 @@ abstract class BaseUserInfoFragment<T: BaseUserInfoViewModel>: BaseListFragment<
 }
 
 
-abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository) : BaseViewModel(), ResultCallBack<ArrayList<Any>> {
+abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository, private val application: Application) : BaseViewModel(), ResultCallBack<ArrayList<Any>> {
 
     var login: String? = null
 
@@ -71,5 +73,13 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
         completeLoadData()
     }
 
-    abstract fun getUserModel():UserUIModel
+    override fun onPage(first: Int, current: Int, last: Int) {
+        if (last != -1) {
+            application.runOnUiThread {
+                needMore.value = page >= last
+            }
+        }
+    }
+
+    abstract fun getUserModel(): UserUIModel
 }

@@ -64,7 +64,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
             }
         })
 
-        getViewModel().loadMore.observe(this, Observer { it ->
+        getViewModel().needMore.observe(this, Observer { it ->
             it?.apply {
                 normalAdapterManager?.setNoMore(!it)
             }

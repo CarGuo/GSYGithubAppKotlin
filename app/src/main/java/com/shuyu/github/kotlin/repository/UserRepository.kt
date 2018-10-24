@@ -46,9 +46,14 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     }
 
 
-    fun getUserEventObservable(userName: String?, page: Int = 1): Observable<ArrayList<Event>> {
+    fun getUserEventObservable(resultEventCallBack: ResultCallBack<ArrayList<Any>>?, userName: String?, page: Int = 1): Observable<ArrayList<Event>> {
         return retrofit.create(UserService::class.java)
-                .getUserEvents(true, userName ?: "", page).flatMap {
+                .getUserEvents(true, userName ?: "", page)
+                .doOnNext {
+                    val pageInfo = GsonUtils.parserJsonToBean(it.headers().get("page_info")!!, PageInfo::class.java)
+                    resultEventCallBack?.onPage(pageInfo.first, page, pageInfo.last)
+                }
+                .flatMap {
                     FlatMapResponse2Result(it)
                 }
     }
@@ -60,7 +65,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         val mergeService = getPersonInfoObservable(userName)
                 .flatMap {
                     resultCallBack?.onSuccess(it)
-                    getUserEventObservable(it.login)
+                    getUserEventObservable(resultEventCallBack, it.login)
                 }
         userEventRequest(mergeService, resultEventCallBack)
     }
@@ -73,7 +78,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         if (username.isEmpty()) {
             return
         }
-        val userEvent = getUserEventObservable(login, page)
+        val userEvent = getUserEventObservable(resultCallBack, login, page)
         userEventRequest(userEvent, resultCallBack)
     }
 

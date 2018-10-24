@@ -57,6 +57,7 @@ dependencies {
 
     //kotlin plugin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.anko:anko:$anko_version"
     //kotlin ktx (used 0.3 now , 1.0.0 need api28)
     implementation "androidx.core:core-ktx:$ktx_version"
 

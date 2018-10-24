@@ -40,6 +40,7 @@ class RetrofitFactory private constructor() {
                 .connectTimeout(AppConfig.HTTP_TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(logging)
                 .addInterceptor(headerInterceptor())
+                .addInterceptor(PageInfoInterceptor())
                 .build()
         retrofit = Retrofit.Builder()
                 .baseUrl(AppConfig.GITHUB_API_BASE_URL)

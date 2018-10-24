@@ -25,6 +25,7 @@ buildscript {
     ext.drop_menu_version = '1.0.4'
     ext.arouter_api_versoion = '1.4.0'
     ext.arouter_compiler_versoion = '1.2.1'
+    ext.anko_version='0.10.7'
 
     repositories {
         google()

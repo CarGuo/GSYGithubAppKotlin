@@ -10,12 +10,12 @@ abstract class BaseViewModel : ViewModel() {
 
     val loading = MutableLiveData<LoadState>()
 
-    val loadMore = MutableLiveData<Boolean>()
+    val needMore = MutableLiveData<Boolean>()
 
     var page = 1
 
     init {
-        loadMore.value = true
+        needMore.value = true
         loading.value = LoadState.NONE
         dataList.value = arrayListOf()
     }
@@ -67,7 +67,6 @@ abstract class BaseViewModel : ViewModel() {
         result?.apply {
             dataList.value = result
         }
-        loadMore.value = (result != null && result.size > 0)
     }
 
     abstract fun loadDataByRefresh()
