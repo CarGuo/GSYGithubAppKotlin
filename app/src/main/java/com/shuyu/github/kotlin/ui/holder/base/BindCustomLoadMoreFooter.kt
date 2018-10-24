@@ -92,7 +92,7 @@ open class BindCustomLoadMoreFooter : BaseLoadMoreFooter {
         layoutParams = RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         setPadding(0, resources.getDimension(R.dimen.textandiconmargin).toInt(), 0,
-                resources.getDimension(R.dimen.textandiconmargin).toInt())
+                3 * resources.getDimension(R.dimen.textandiconmargin).toInt())
 
 
         mImageView = SpinKitView(context)

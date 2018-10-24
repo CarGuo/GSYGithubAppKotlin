@@ -8,10 +8,12 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.R
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.android.synthetic.main.activity_fragment_container.*
 import javax.inject.Inject
 
 /**
@@ -27,24 +29,42 @@ abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInj
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment_container)
+
+        setSupportActionBar(activity_fragment_container_toolbar)
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setDisplayShowTitleEnabled(false)
+        }
+
+        activity_fragment_container_toolbar.title = getToolBarTitle()
+
         addFragment(getInitFragment(), R.id.activity_fragment_container_id)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
+    abstract fun getToolBarTitle(): String
+
     abstract fun getInitFragment(): Fragment
 }
-
 
 fun Context.startActivity(cls: Class<*>) {
     startActivity(Intent(this, cls))
 }
 
-
 fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { add(frameId, fragment) }
 }
-
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { replace(frameId, fragment) }
@@ -53,3 +73,4 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
     beginTransaction().func().commit()
 }
+

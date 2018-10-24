@@ -60,7 +60,6 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     adapter?.dataList?.addAll(items)
                     adapter?.notifyItemRangeChanged(adapter!!.dataList!!.size, (adapter!!.dataList!!.size + items.size) - 1)
                 }
-                normalAdapterManager?.setNoMore(items.size == 0)
             }
         })
 
@@ -147,6 +146,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     ?.setLoadingListener(this)
                     ?.setRefreshHeader(BindCustomRefreshHeader(activity!!))
                     ?.setFootView(BindCustomLoadMoreFooter(activity!!))
+                    ?.setLoadingMoreEmptyEnabled(false)
             normalAdapterManager?.apply {
                 bindHolder(this)
                 adapter = BindSuperAdapter(activity as Context, this, arrayListOf())

@@ -54,4 +54,10 @@
         <item name="android:layout_height">1px</item>
         <item name="android:background">@color/subLightTextColor</item>
     </style>
+
+
+    <style name="toolbarTheme" parent="@style/AppTheme">
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
 </resources>

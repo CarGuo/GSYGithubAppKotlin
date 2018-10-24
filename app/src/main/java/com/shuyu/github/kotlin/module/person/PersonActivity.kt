@@ -41,4 +41,6 @@ class PersonActivity : BaseFragmentActivity(), ARouterInjectable {
     override fun getInitFragment(): Fragment {
         return getRouterNavigation(ARouterAddress.PersonFragment, userName).navigation() as Fragment
     }
+
+    override fun getToolBarTitle(): String = userName
 }
