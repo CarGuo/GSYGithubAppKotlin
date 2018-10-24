@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.databinding.FragmentWelcomeBinding
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.model.conversion.UserConversion
 import com.shuyu.github.kotlin.module.base.BaseFragment
 import javax.inject.Inject
 
@@ -61,7 +62,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             } else {
                 ///读取用户数据
                 val user = GsonUtils.parserJsonToBean(userInfoStorage, User::class.java)
-                appGlobalModel.userObservable.cloneDataFromUser(user)
+                UserConversion.cloneDataFromUser(context, user, appGlobalModel.userObservable)
                 //去主页
                 navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
                 //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)

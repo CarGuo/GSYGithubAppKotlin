@@ -29,7 +29,8 @@
                 android:src="@drawable/logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:userModel="@{userUIModel}" />
+                app:userHeaderSize="@{100}"
+                app:userHeaderUrl="@{userUIModel.avatarUrl}" />
 
             <TextView
                 android:id="@+id/user_header_name"
@@ -49,13 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="3dp"
-                android:text="---"
+                android:text="@{userUIModel.name}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
-                app:layout_constraintTop_toBottomOf="@+id/user_header_name"
-                app:userModel="@{userUIModel}"
-                app:userParams='@{"name"}' />
+                app:layout_constraintTop_toBottomOf="@+id/user_header_name" />
 
             <TextView
                 android:id="@+id/user_header_company"
@@ -63,13 +62,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="3dp"
-                android:text="---"
+                android:text="@{userUIModel.company}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
-                app:layout_constraintTop_toBottomOf="@+id/user_header_other_name"
-                app:userModel="@{userUIModel}"
-                app:userParams='@{"company"}' />
+                app:layout_constraintTop_toBottomOf="@+id/user_header_other_name" />
 
             <TextView
                 android:id="@+id/user_header_location"
@@ -77,13 +74,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="3dp"
-                android:text="---"
+                android:text="@{userUIModel.location}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
-                app:layout_constraintTop_toBottomOf="@+id/user_header_company"
-                app:userModel="@{userUIModel}"
-                app:userParams='@{"location"}' />
+                app:layout_constraintTop_toBottomOf="@+id/user_header_company" />
 
             <TextView
                 android:id="@+id/user_header_notify"
@@ -103,13 +98,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="---"
+                android:text="@{userUIModel.blog}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_header_location"
-                app:userModel="@{userUIModel}"
-                app:userParams='@{"link"}' />
+                app:layout_constraintTop_toBottomOf="@+id/user_header_location" />
 
             <TextView
                 android:id="@+id/user_header_des"
@@ -117,13 +110,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:text="---"
+                android:text="@{userUIModel.bio}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_header_link"
-                app:userModel="@{userUIModel}"
-                app:userParams='@{"bio"}' />
+                app:layout_constraintTop_toBottomOf="@+id/user_header_link" />
 
             <View
                 android:id="@+id/user_header_action_horizontal_line"
@@ -146,45 +137,35 @@
                 <TextView
                     android:id="@+id/user_header_repos"
                     style="@style/verticalItemText"
-                    android:text="---\n---"
-                    app:userModel="@{userUIModel}"
-                    app:userParams='@{"publicRepos"}' />
+                    android:text="@{userUIModel.publicRepos}" />
 
                 <View style="@style/verticalLine" />
 
                 <TextView
                     android:id="@+id/user_header_fan"
                     style="@style/verticalItemText"
-                    android:text="---\n---"
-                    app:userModel="@{userUIModel}"
-                    app:userParams='@{"followers"}' />
+                    android:text="@{userUIModel.followers}" />
 
                 <View style="@style/verticalLine" />
 
                 <TextView
                     android:id="@+id/user_header_focus"
                     style="@style/verticalItemText"
-                    android:text="---\n---"
-                    app:userModel="@{userUIModel}"
-                    app:userParams='@{"following"}' />
+                    android:text="@{userUIModel.following}" />
 
                 <View style="@style/verticalLine" />
 
                 <TextView
                     android:id="@+id/user_header_star"
                     style="@style/verticalItemText"
-                    android:text="---\n---"
-                    app:userModel="@{userUIModel}"
-                    app:userParams='@{"starRepos"}' />
+                    android:text="@{userUIModel.starRepos}" />
 
                 <View style="@style/verticalLine" />
 
                 <TextView
                     android:id="@+id/user_header_honor"
                     style="@style/verticalItemText"
-                    android:text="---\n---"
-                    app:userModel="@{userUIModel}"
-                    app:userParams='@{"honorRepos"}' />
+                    android:text="@{userUIModel.honorRepos}" />
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
@@ -200,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                app:userModel="@{userUIModel}" />
+                app:webViewUrl="@{userUIModel.actionUrl}" />
 
         </android.support.v7.widget.CardView>
 

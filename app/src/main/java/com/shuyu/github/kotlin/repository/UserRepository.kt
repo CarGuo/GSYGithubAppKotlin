@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.repository
 
+import android.app.Application
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
@@ -8,6 +9,7 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
+import com.shuyu.github.kotlin.model.conversion.UserConversion
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.Function
@@ -16,7 +18,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 
-class UserRepository @Inject constructor(private val retrofit: Retrofit, private val appGlobalModel: AppGlobalModel) {
+class UserRepository @Inject constructor(private val retrofit: Retrofit, private val appGlobalModel: AppGlobalModel, private val application: Application) {
 
     private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
@@ -29,7 +31,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                     ///保存用户信息
                     Debuger.printfLog("userInfo $userInfoStorage")
                     userInfoStorage = GsonUtils.toJsonString(it)
-                    appGlobalModel.userObservable.cloneDataFromUser(it)
+                    UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
                 }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
                     ///拦截错误
                     //userInfoStorage = ""

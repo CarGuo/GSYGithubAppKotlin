@@ -3,7 +3,6 @@ package com.shuyu.github.kotlin.model.ui
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.shuyu.github.kotlin.BR
-import com.shuyu.github.kotlin.model.bean.User
 import java.util.*
 
 
@@ -102,7 +101,7 @@ class UserUIModel : BaseObservable() {
         }
 
 
-    var starRepos: Int? = null
+    var starRepos: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -110,7 +109,7 @@ class UserUIModel : BaseObservable() {
             notifyPropertyChanged(BR.starRepos)
         }
 
-    var honorRepos: Int? = null
+    var honorRepos: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -118,7 +117,7 @@ class UserUIModel : BaseObservable() {
             notifyPropertyChanged(BR.honorRepos)
         }
 
-    var publicRepos: Int = 0
+    var publicRepos: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -134,7 +133,7 @@ class UserUIModel : BaseObservable() {
             notifyPropertyChanged(BR.publicGists)
         }
 
-    var followers: Int = 0
+    var followers: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -142,7 +141,7 @@ class UserUIModel : BaseObservable() {
             notifyPropertyChanged(BR.followers)
         }
 
-    var following: Int = 0
+    var following: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -166,25 +165,11 @@ class UserUIModel : BaseObservable() {
             notifyPropertyChanged(BR.updatedAt)
         }
 
-    fun cloneDataFromUser(user: User) {
-        login = user.login
-        id = user.id
-        name = user.name
-        avatarUrl = user.avatarUrl
-        htmlUrl = user.htmlUrl
-        type = user.type
-        company = user.company
-        blog = user.blog
-        location = user.location
-        email = user.email
-        bio = user.bio
-        starRepos = user.starRepos
-        honorRepos = user.honorRepos
-        publicRepos = user.publicRepos
-        publicGists = user.publicGists
-        followers = user.followers
-        following = user.following
-        createdAt = user.createdAt
-        updatedAt = user.updatedAt
-    }
+    var actionUrl: String = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.actionUrl)
+        }
 }
