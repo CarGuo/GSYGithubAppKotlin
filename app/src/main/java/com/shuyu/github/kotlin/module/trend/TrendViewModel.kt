@@ -21,7 +21,15 @@ class TrendViewModel @Inject constructor(private val repository: ReposRepository
 
     var sortType = arrayListOf(sortValue[0][0], sortValue[1][0])
 
-    override fun loadData() {
+    override fun loadDataByRefresh() {
+        loadData()
+    }
+
+    override fun loadDataByLoadMore() {
+        loadData()
+    }
+
+    private fun loadData() {
         clearWhenRefresh()
         repository.getTrend(object : ResultCallBack<ArrayList<Any>> {
             override fun onSuccess(result: ArrayList<Any>?) {

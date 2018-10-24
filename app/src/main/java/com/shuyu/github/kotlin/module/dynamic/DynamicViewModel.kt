@@ -19,7 +19,15 @@ class DynamicViewModel @Inject constructor(private val userRepository: UserRepos
         super.refresh()
     }
 
-    override fun loadData() {
+    override fun loadDataByRefresh() {
+        loadData()
+    }
+
+    override fun loadDataByLoadMore() {
+        loadData()
+    }
+
+    private fun loadData() {
         clearWhenRefresh()
         userRepository.getReceivedEvent(object : ResultCallBack<ArrayList<Any>> {
             override fun onSuccess(result: ArrayList<Any>?) {

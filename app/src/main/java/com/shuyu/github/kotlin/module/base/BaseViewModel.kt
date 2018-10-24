@@ -23,7 +23,7 @@ abstract class BaseViewModel : ViewModel() {
         }
         page = 1
         loading.value = LoadState.Refresh
-        loadData()
+        loadDataByRefresh()
     }
 
     open fun loadMore() {
@@ -32,7 +32,7 @@ abstract class BaseViewModel : ViewModel() {
         }
         page++
         loading.value = LoadState.LoadMore
-        loadData()
+        loadDataByLoadMore()
     }
 
 
@@ -68,6 +68,8 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    abstract fun loadData()
+    abstract fun loadDataByRefresh()
+
+    abstract fun loadDataByLoadMore()
 
 }
