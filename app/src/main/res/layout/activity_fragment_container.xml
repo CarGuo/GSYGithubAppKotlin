@@ -17,27 +17,10 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/home_view_pager"
+    <FrameLayout
+        android:id="@+id/activity_fragment_container_id"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-    <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
-        android:id="@+id/home_navigation_tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:ntb_badge_gravity="top"
-        app:ntb_badge_position="right"
-        app:ntb_badged="true"
-        app:ntb_bg_color="@color/colorPrimary"
-        app:ntb_icon_size_fraction="0.4"
-        app:ntb_inactive_color="@color/subTextColor"
-        app:ntb_scaled="true"
-        app:ntb_swiped="true"
-        app:ntb_tinted="true"
-        app:ntb_title_mode="all"
-        app:ntb_title_size="13sp"
-        app:ntb_titled="true" />
 
 </LinearLayout>

@@ -7,7 +7,7 @@ import com.shuyu.github.kotlin.module.base.BaseUserInfoFragment
  * Date: 2018-09-28
  */
 
-open class MyFragment : BaseUserInfoFragment<MyViewModel>() {
+class MyFragment : BaseUserInfoFragment<MyViewModel>() {
 
     override fun getViewModelClass(): Class<MyViewModel> = MyViewModel::class.java
 

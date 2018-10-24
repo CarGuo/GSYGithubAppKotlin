@@ -23,6 +23,7 @@ import com.shuyu.github.kotlin.di.annotation.ViewModelKey
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
+import com.shuyu.github.kotlin.module.person.PersonViewModel
 import com.shuyu.github.kotlin.module.trend.TrendViewModel
 
 
@@ -58,6 +59,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MyViewModel::class)
     abstract fun bindMyViewModel(myViewModel: MyViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PersonViewModel::class)
+    abstract fun bindPersonViewModel(myViewModel: PersonViewModel): ViewModel
 
 
     @Binds

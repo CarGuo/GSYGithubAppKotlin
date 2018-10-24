@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.di
 import com.shuyu.github.kotlin.di.annotation.ActivityScope
 import com.shuyu.github.kotlin.module.StartActivity
 import com.shuyu.github.kotlin.module.main.MainActivity
+import com.shuyu.github.kotlin.module.person.PersonActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -22,5 +23,9 @@ abstract class ActivityBindModule {
     @ContributesAndroidInjector(modules = [MainActivityModule::class, MainFragmentBindModule::class])
     abstract fun mainActivityInjector(): MainActivity
 
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [PersonFragmentBindModule::class])
+    abstract fun personActivityInjector(): PersonActivity
 
 }
