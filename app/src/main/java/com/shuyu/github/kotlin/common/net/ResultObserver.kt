@@ -20,6 +20,7 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
     }
 
     override fun onNext(reposnse: Response<T>) {
+        onPageInfo(reposnse)
         onRequestEnd()
         if (reposnse.isSuccessful) {
             try {
@@ -57,6 +58,14 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
 
     override fun onComplete() {}
 
+    fun onPageInfo(response: Response<T>) {
+        val pageString = response.headers().get("page_info")
+        if (pageString != null) {
+            val pageInfo = GsonUtils.parserJsonToBean(pageString, PageInfo::class.java)
+            onPageInfo(pageInfo.first, pageInfo.next - 1, pageInfo.last)
+        }
+    }
+
     /**
      * 返回成功
      *
@@ -92,6 +101,10 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
     }
 
     open fun onRequestEnd() {
+
+    }
+
+    open fun onPageInfo(first: Int, current: Int, last: Int) {
 
     }
 

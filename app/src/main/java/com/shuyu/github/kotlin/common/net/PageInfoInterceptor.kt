@@ -43,8 +43,8 @@ class PageInfoInterceptor : Interceptor {
         if (item == null) {
             return -1
         }
-        val startFlag = "per_page="
-        val endFlag = ">;"
+        val startFlag = "?page="
+        val endFlag = "&per_page"
         val startIndex = item.indexOf(startFlag)
         val endStart = item.indexOf(endFlag)
         if (startIndex <= 0 || endStart <= 0) {

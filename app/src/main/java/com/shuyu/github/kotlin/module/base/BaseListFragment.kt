@@ -51,6 +51,11 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                 LoadState.LoadMoreDone -> {
                     loadMoreComplete()
                 }
+                LoadState.Refresh -> {
+                    ///刷新时清空旧数据
+                    adapter?.dataList?.clear()
+                    adapter?.notifyDataSetChanged()
+                }
             }
         })
 

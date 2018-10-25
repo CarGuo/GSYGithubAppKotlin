@@ -1,6 +1,6 @@
 package com.shuyu.github.kotlin.module.dynamic
 
-import com.shuyu.github.kotlin.common.net.ResultCallBack
+import android.app.Application
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.UserRepository
 import javax.inject.Inject
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Date: 2018-10-19
  */
 
-class DynamicViewModel @Inject constructor(private val userRepository: UserRepository) : BaseViewModel() {
+class DynamicViewModel @Inject constructor(private val userRepository: UserRepository, application: Application) : BaseViewModel(application) {
 
     override fun refresh() {
         if (isLoading()) {
@@ -29,16 +29,7 @@ class DynamicViewModel @Inject constructor(private val userRepository: UserRepos
 
     private fun loadData() {
         clearWhenRefresh()
-        userRepository.getReceivedEvent(object : ResultCallBack<ArrayList<Any>> {
-            override fun onSuccess(result: ArrayList<Any>?) {
-                commitResult(result)
-                completeLoadData()
-            }
-
-            override fun onFailure() {
-                completeLoadData()
-            }
-        }, page)
+        userRepository.getReceivedEvent(this, page)
     }
 
 }

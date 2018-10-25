@@ -1,16 +1,21 @@
 package com.shuyu.github.kotlin.module.base
 
+import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.shuyu.github.kotlin.common.net.ResultCallBack
+import org.jetbrains.anko.runOnUiThread
 
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(private val application: Application) : ViewModel(), ResultCallBack<ArrayList<Any>> {
 
     val dataList = MutableLiveData<ArrayList<Any>>()
 
     val loading = MutableLiveData<LoadState>()
 
     val needMore = MutableLiveData<Boolean>()
+
+    var lastPage: Int = -1
 
     var page = 1
 
@@ -59,13 +64,35 @@ abstract class BaseViewModel : ViewModel() {
 
     open fun clearWhenRefresh() {
         if (page <= 1) {
-            dataList.value?.clear()
+            dataList.value = arrayListOf()
+            needMore.value = true
         }
     }
 
     open fun commitResult(result: ArrayList<Any>?) {
         result?.apply {
             dataList.value = result
+        }
+    }
+
+
+    override fun onSuccess(result: ArrayList<Any>?) {
+        commitResult(result)
+        completeLoadData()
+    }
+
+    override fun onFailure() {
+        completeLoadData()
+    }
+
+    override fun onPage(first: Int, current: Int, last: Int) {
+        if (last != -1) {
+            lastPage = last
+        }
+        if (lastPage != -1) {
+            application.runOnUiThread {
+                needMore.value = (page < lastPage)
+            }
         }
     }
 

@@ -8,7 +8,7 @@ import com.shuyu.github.kotlin.repository.ReposRepository
 import javax.inject.Inject
 
 
-class TrendViewModel @Inject constructor(private val repository: ReposRepository, private val application: Application) : BaseViewModel() {
+class TrendViewModel @Inject constructor(private val repository: ReposRepository, application: Application) : BaseViewModel(application) {
 
 
     val sortData: List<List<String>> = listOf(

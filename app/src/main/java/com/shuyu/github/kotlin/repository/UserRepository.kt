@@ -13,6 +13,7 @@ import com.shuyu.github.kotlin.model.conversion.UserConversion
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.Function
+import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -46,16 +47,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     }
 
 
-    fun getUserEventObservable(resultEventCallBack: ResultCallBack<ArrayList<Any>>?, userName: String?, page: Int = 1): Observable<ArrayList<Event>> {
+    fun getUserEventObservable(userName: String?, page: Int = 1): Observable<Response<ArrayList<Event>>> {
         return retrofit.create(UserService::class.java)
                 .getUserEvents(true, userName ?: "", page)
-                .doOnNext {
-                    val pageInfo = GsonUtils.parserJsonToBean(it.headers().get("page_info")!!, PageInfo::class.java)
-                    resultEventCallBack?.onPage(pageInfo.first, page, pageInfo.last)
-                }
-                .flatMap {
-                    FlatMapResponse2Result(it)
-                }
     }
 
     /**
@@ -65,7 +59,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         val mergeService = getPersonInfoObservable(userName)
                 .flatMap {
                     resultCallBack?.onSuccess(it)
-                    getUserEventObservable(resultEventCallBack, it.login)
+                    getUserEventObservable(it.login)
                 }
         userEventRequest(mergeService, resultEventCallBack)
     }
@@ -78,14 +72,14 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         if (username.isEmpty()) {
             return
         }
-        val userEvent = getUserEventObservable(resultCallBack, login, page)
+        val userEvent = getUserEventObservable(login, page)
         userEventRequest(userEvent, resultCallBack)
     }
 
     /**
      * 获取用户接收到的事件
      */
-    fun getReceivedEvent(resultCallBack: ResultCallBack<ArrayList<Any>>, page: Int = 1) {
+    fun getReceivedEvent(resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int = 1) {
         val login = appGlobalModel.userObservable.login
         val username = login ?: ""
         if (username.isEmpty()) {
@@ -93,37 +87,43 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         }
         val receivedEvent = retrofit.create(UserService::class.java)
                 .getNewsEvent(true, username, page)
-                .flatMap {
-                    FlatMapResponse2Result(it)
-                }
         userEventRequest(receivedEvent, resultCallBack)
     }
 
     /**
      * 执行用事件相关请求
      */
-    private fun userEventRequest(observer: Observable<ArrayList<Event>>, resultCallBack: ResultCallBack<ArrayList<Any>>) {
-        val service = observer.map {
-            val eventUIList = ArrayList<Any>()
-            for (event in it) {
-                eventUIList.add(EventConversion.eventToEventUIModel(event))
-            }
-            eventUIList
-        }.flatMap {
-            FlatMapResult2Response(it)
-        }
-
+    private fun userEventRequest(observer: Observable<Response<ArrayList<Event>>>, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+        val service = observer
+                .flatMap {
+                    FlatMapResponse2ResponeResult(it, object : FlatConversionInterface<ArrayList<Event>> {
+                        override fun onConversion(t: ArrayList<Event>?): ArrayList<Any> {
+                            val eventUIList = ArrayList<Any>()
+                            t?.apply {
+                                for (event in t) {
+                                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                                }
+                            }
+                            return eventUIList
+                        }
+                    })
+                }
         RetrofitFactory.executeResult(service, object : ResultObserver<ArrayList<Any>>() {
+
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                resultCallBack?.onPage(first, current, last)
+            }
+
             override fun onSuccess(result: ArrayList<Any>?) {
-                resultCallBack.onSuccess(result)
+                resultCallBack?.onSuccess(result)
             }
 
             override fun onCodeError(code: Int, message: String) {
-                resultCallBack.onFailure()
+                resultCallBack?.onFailure()
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
-                resultCallBack.onFailure()
+                resultCallBack?.onFailure()
             }
 
         })

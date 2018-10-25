@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.databinding.FragmentUserInfoBinding
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.model.ui.EventUIModel
@@ -15,7 +14,6 @@ import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_user_info.*
-import org.jetbrains.anko.runOnUiThread
 
 /**
  * Created by guoshuyu
@@ -52,7 +50,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 }
 
 
-abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository, private val application: Application) : BaseViewModel(), ResultCallBack<ArrayList<Any>> {
+abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository, application: Application) : BaseViewModel(application) {
 
     var login: String? = null
 
@@ -62,23 +60,6 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
 
     override fun loadDataByLoadMore() {
         userRepository.getUserEvent(getUserModel().login, this, page)
-    }
-
-    override fun onSuccess(result: ArrayList<Any>?) {
-        commitResult(result)
-        completeLoadData()
-    }
-
-    override fun onFailure() {
-        completeLoadData()
-    }
-
-    override fun onPage(first: Int, current: Int, last: Int) {
-        if (last != -1) {
-            application.runOnUiThread {
-                needMore.value = page >= last
-            }
-        }
     }
 
     abstract fun getUserModel(): UserUIModel
