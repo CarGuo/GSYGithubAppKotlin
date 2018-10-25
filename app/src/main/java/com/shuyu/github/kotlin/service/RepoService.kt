@@ -195,4 +195,12 @@ interface RepoService {
             @Path("languageType") languageType: String,
             @Query("since") since: String): Observable<Response<String>>
 
+    @GET("repos/{owner}/{repo}/readme")
+    @Headers("Content-Type: text/plain;charset=utf-8", "Accept: application/vnd.github.html")
+    fun getReadmeHtml(
+            @Header("forceNetWork") forceNetWork: Boolean,
+            @Path("owner") owner: String,
+            @Path("repo") repo: String,
+            @Query("ref") branch: String = "master"): Observable<Response<String>>
+
 }

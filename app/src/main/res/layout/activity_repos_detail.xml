@@ -18,18 +18,17 @@
     <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
         android:id="@+id/repos_detail_tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:ntb_badge_gravity="top"
-        app:ntb_badge_position="right"
+        android:layout_height="50dp"
+        app:ntb_badge_size="0sp"
         app:ntb_badged="false"
         app:ntb_bg_color="@color/colorPrimary"
-        app:ntb_icon_size_fraction="0.4"
+        app:ntb_icon_size_fraction="0"
         app:ntb_inactive_color="@color/subTextColor"
         app:ntb_scaled="true"
         app:ntb_swiped="true"
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
-        app:ntb_title_size="13sp"
+        app:ntb_title_size="@dimen/smallTextSize"
         app:ntb_titled="true" />
 
     <android.support.v4.view.ViewPager
