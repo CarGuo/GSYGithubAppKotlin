@@ -39,7 +39,6 @@ object CommonUtils {
         val option = GSYLoadOption()
                 .setDefaultImg(R.drawable.logo)
                 .setErrorImg(R.drawable.logo)
-                .setCircle(true)
                 .setUri(url)
                 .setTransformations(process)
 
