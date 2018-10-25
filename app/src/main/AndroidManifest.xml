@@ -26,6 +26,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.repos.ReposDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.StartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppFullTheme">

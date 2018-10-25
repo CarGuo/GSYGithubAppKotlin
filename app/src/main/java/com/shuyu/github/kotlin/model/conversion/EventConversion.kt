@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.model.conversion
 
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 
 
@@ -12,6 +13,8 @@ object EventConversion {
     fun eventToEventUIModel(event: Event): EventUIModel {
         var actionStr: String? = ""
         var des: String? = ""
+        val eventUIModel = EventUIModel()
+        eventAction(event, eventUIModel)
         when (event.type) {
             "CommitCommentEvent" -> {
                 actionStr = "Commit comment at " + event.repo?.name
@@ -30,6 +33,7 @@ object EventConversion {
                 val oriRepo = event.repo?.name
                 val newRepo = event.actor?.login + "/" + event.repo?.name
                 actionStr = "Forked $oriRepo to $newRepo"
+
             }
             "GollumEvent" -> {
                 actionStr = event.actor?.login + " a wiki page "
@@ -117,12 +121,69 @@ object EventConversion {
 
             }
         }
-        val eventUIModel = EventUIModel()
         eventUIModel.username = event.actor?.login ?: ""
         eventUIModel.action = actionStr ?: ""
         eventUIModel.des = des ?: ""
-        eventUIModel.image = event.actor?.avatarUrl ?:""
+        eventUIModel.image = event.actor?.avatarUrl ?: ""
         eventUIModel.time = CommonUtils.getNewsTimeStr(event.createdAt)
         return eventUIModel
+    }
+
+    ///跳转
+    private fun eventAction(event: Event, eventUIModel: EventUIModel) {
+        if (event.repo == null) {
+            eventUIModel.owner = event.actor?.login ?: ""
+            eventUIModel.actionType = EventUIAction.Person
+            return
+        }
+        val owner = event.repo?.name?.split("/")?.get(0)
+        val repositoryName = event.repo?.name?.split("/")?.get(1)
+        val fullName = "$owner/$repositoryName"
+        eventUIModel.owner = owner ?: ""
+        eventUIModel.repositoryName = repositoryName ?: ""
+        when (event.type) {
+            "ForkEvent" -> {
+                eventUIModel.actionType = EventUIAction.Repos
+                eventUIModel.owner = event.actor?.login!!
+            }
+            "PushEvent" -> {
+                when {
+                    event.payload?.commits == null -> {
+                        eventUIModel.actionType = EventUIAction.Repos
+                    }
+                    event.payload?.commits?.size == 1 -> {
+                        eventUIModel.actionType = EventUIAction.Push
+                        eventUIModel.pushSha = event.payload?.commits?.get(0)?.sha ?: ""
+                        //NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[0].sha, true);
+                    }
+                    else -> {
+                        eventUIModel.actionType = EventUIAction.Push
+                        //todo 选择提交item
+                        //eventUIModel.pushSha = event.payload?.commits?.get(0)?.sha ?:""
+                        /*List<String> list = new List();
+                            for (int i = 0; i < event.payload.commits.length; i++) {
+                                list.add(event.payload.commits[i].message + " " + event.payload.commits[i].sha.substring(0, 4));
+                            }
+                            CommonUtils.showCommitOptionDialog(context, list, (index) {
+                                NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[index].sha, true);
+                            });*/
+                    }
+                }
+            }
+            "ReleaseEvent" -> {
+                val url = event.payload?.release?.tarballUrl
+                eventUIModel.actionType = EventUIAction.Release
+                eventUIModel.releaseUrl = url ?: ""
+                /*CommonUtils.launchWebView(context, repositoryName, url);*/
+            }
+            "IssueCommentEvent", "IssuesEvent" -> {
+                eventUIModel.actionType = EventUIAction.Issue
+                eventUIModel.IssueNum = event.payload?.issue?.number?.toString() ?: ""
+                //NavigatorUtils.goIssueDetail(context, owner, repositoryName, event.payload.issue.number.toString(), needRightLocalIcon: true);
+            }
+            else -> {
+                eventUIModel.actionType = EventUIAction.Repos
+            }
+        }
     }
 }

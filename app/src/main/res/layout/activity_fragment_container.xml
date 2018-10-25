@@ -9,13 +9,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/activity_fragment_container_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="5dp"
+        style="@style/toolbarStyle"
         android:theme="@style/toolbarTheme"
         app:title="@string/app_name"
-        app:titleTextColor="@android:color/white">
+        app:titleTextColor="@color/white">
 
     </android.support.v7.widget.Toolbar>
 

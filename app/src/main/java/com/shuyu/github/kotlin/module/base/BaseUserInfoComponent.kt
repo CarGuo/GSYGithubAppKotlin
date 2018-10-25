@@ -1,11 +1,13 @@
 package com.shuyu.github.kotlin.module.base
 
 import android.app.Application
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.EventUtils
 import com.shuyu.github.kotlin.databinding.FragmentUserInfoBinding
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.model.ui.EventUIModel
@@ -29,6 +31,12 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
         getViewModel().login = getLoginName()
+    }
+
+
+    override fun onItemClick(context: Context, position: Int) {
+        super.onItemClick(context, position)
+        EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
     }
 
     override fun enableRefresh(): Boolean = true

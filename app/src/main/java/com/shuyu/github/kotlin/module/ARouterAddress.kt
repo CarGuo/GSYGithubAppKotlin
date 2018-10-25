@@ -10,4 +10,10 @@ object ARouterAddress {
 
     const val PersonFragment = "/userInfo/fragment"
 
+    const val ReposDetailActivity = "/reposDetail/activity"
+    const val ReposDetailReadme = "/reposDetail/readme"
+    const val ReposDetailActionList = "/reposDetail/actionList"
+    const val ReposDetailIssueList = "/reposDetail/issueList"
+    const val ReposDetailFileList = "/reposDetail/fileList"
+
 }

@@ -8,21 +8,15 @@
     tools:context=".module.main.MainActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/repos_detail_toolbar"
         style="@style/toolbarStyle"
         android:theme="@style/toolbarTheme"
-        app:title="@string/app_name"
         app:titleTextColor="@color/white">
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/home_view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
-        android:id="@+id/home_navigation_tab_bar"
+        android:id="@+id/repos_detail_tab_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:ntb_badge_gravity="top"
@@ -37,5 +31,11 @@
         app:ntb_title_mode="all"
         app:ntb_title_size="13sp"
         app:ntb_titled="true" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/repos_detail_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

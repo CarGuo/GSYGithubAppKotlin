@@ -1,23 +1,35 @@
-package com.shuyu.github.kotlin.module.dynamic
+package com.shuyu.github.kotlin.module.repos.action
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.utils.EventUtils
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
+import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.EventUIModel
+import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
- * 动态
  * Created by guoshuyu
- * Date: 2018-09-28
+ * Date: 2018-10-25
  */
 
-class DynamicFragment : BaseListFragment<FragmentListBinding, DynamicViewModel>() {
+@Route(path = ARouterAddress.ReposDetailActionList)
+class ReposActionListFragment : BaseListFragment<FragmentListBinding, DynamicViewModel>(), ARouterInjectable {
+
+    @Autowired
+    @JvmField
+    var reposName = ""
+
+    @Autowired
+    @JvmField
+    var userName = ""
 
 
     override fun getLayoutId(): Int {
@@ -26,7 +38,6 @@ class DynamicFragment : BaseListFragment<FragmentListBinding, DynamicViewModel>(
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
-        EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
     }
 
     override fun getViewModelClass(): Class<DynamicViewModel> = DynamicViewModel::class.java

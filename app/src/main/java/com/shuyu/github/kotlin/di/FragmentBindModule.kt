@@ -4,6 +4,10 @@ import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.login.LoginFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.person.PersonFragment
+import com.shuyu.github.kotlin.module.repos.action.ReposActionListFragment
+import com.shuyu.github.kotlin.module.repos.file.ReposFileListFragment
+import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListFragment
+import com.shuyu.github.kotlin.module.repos.readme.ReposReadmeFragment
 import com.shuyu.github.kotlin.module.trend.TrendFragment
 import com.shuyu.github.kotlin.module.welcome.WelcomeFragment
 import dagger.Module
@@ -46,4 +50,23 @@ abstract class PersonFragmentBindModule {
     @ContributesAndroidInjector
     abstract fun contributeWelcomeFragment(): PersonFragment
 
+}
+
+@Module
+abstract class ReposDetailFragmentBindModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributeReposReadmeFragment(): ReposReadmeFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeReposIssueListFragment(): ReposIssueListFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeReposActionListFragment(): ReposActionListFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeReposFileListFragment(): ReposFileListFragment
 }
