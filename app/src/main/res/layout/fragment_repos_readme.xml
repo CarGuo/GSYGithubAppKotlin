@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.shuyu.github.kotlin.ui.view.GSYWebView
+        <com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
             android:id="@+id/repos_readme_web"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

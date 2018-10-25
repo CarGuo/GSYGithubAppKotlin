@@ -3,11 +3,10 @@ package com.shuyu.github.kotlin.ui.holder.base
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
 import android.graphics.Point
-import android.webkit.WebSettings
-import android.webkit.WebView
 import android.widget.ImageView
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
+import com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
 
 
 /**
@@ -23,19 +22,10 @@ class DataBindingExpandUtils {
         }
 
         @BindingAdapter("webViewUrl")
-        fun webViewUrl(view: WebView?, url: String?) {
+        fun webViewUrl(view: GSYWebViewContainer?, url: String?) {
             view?.apply {
-                val settings = this.settings
-                settings?.javaScriptEnabled = true
-                settings?.loadWithOverviewMode = true
-                settings?.builtInZoomControls = false
-                settings?.displayZoomControls = false
-                settings?.domStorageEnabled = true
-                settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-                settings?.setAppCacheEnabled(true)
-
-                view.isVerticalScrollBarEnabled = false
-                view.loadUrl(url)
+                webView.isVerticalScrollBarEnabled = false
+                webView.loadUrl(url)
             }
 
         }

@@ -41,24 +41,19 @@ class ReposReadmeFragment : BaseFragment<FragmentReposReadmeBinding>(), ARouterI
     override fun onCreateView(mainView: View?) {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ReposReadmeViewModel::class.java)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val settings = repos_readme_web.settings
-        settings?.javaScriptEnabled = true
-        settings?.loadWithOverviewMode = true
-        settings?.builtInZoomControls = false
-        settings?.displayZoomControls = false
-        settings?.domStorageEnabled = true
-        settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        settings?.setAppCacheEnabled(true)
-        view.isVerticalScrollBarEnabled = false
-
-
+        repos_readme_web.spinKit.visibility = View.VISIBLE
         viewModel.htmlData.observe(this, Observer {
-            repos_readme_web.loadData(it, "text/html", "utf-8")
+            if (it.isNullOrBlank()) {
+                return@Observer
+            }
+            repos_readme_web.spinKit.visibility = View.GONE
+            repos_readme_web.webView.loadData(it, "text/html", "utf-8")
+
         })
         viewModel.getReadmeHtml(userName, reposName)
     }

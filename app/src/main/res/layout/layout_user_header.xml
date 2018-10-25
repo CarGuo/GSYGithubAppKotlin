@@ -176,7 +176,7 @@
             android:layout_height="140dp"
             android:layout_below="@+id/user_header_card">
 
-            <com.shuyu.github.kotlin.ui.view.GSYWebView
+            <com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
                 android:id="@+id/user_header_state"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
