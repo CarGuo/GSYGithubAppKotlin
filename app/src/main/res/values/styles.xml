@@ -66,4 +66,23 @@
         <item name="android:elevation">5dp</item>
     </style>
 
+
+    <style name="shadowText">
+        <item name="android:shadowColor">@color/colorPrimary</item>
+        <item name="android:shadowRadius">0.5</item>
+        <item name="android:shadowDx">0.5</item>
+        <item name="android:shadowDy">0.5</item>
+    </style>
+
+
+    <style name="reposActionItemText" parent="shadowText">
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/subLightTextColor</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/smallTextSize</item>
+    </style>
+
 </resources>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_bottom_radius"
+            android:elevation="3dp">
+
+            <ImageView
+                android:id="@+id/repos_header_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                app:image_blur="@{`https://avatars0.githubusercontent.com/u/34023615?v\u003d4`}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/repos_header_username"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="user"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/repos_header_username_line"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp"
+                android:text="/"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toEndOf="@+id/repos_header_username"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/repos_header_repos_name"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp"
+                android:text="name"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toEndOf="@+id/repos_header_username_line"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/repos_header_language"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="language"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_username" />
+
+            <TextView
+                android:id="@+id/repos_header_size"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="size"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toEndOf="@+id/repos_header_language"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_username" />
+
+            <TextView
+                android:id="@+id/repos_header_license"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="license"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toEndOf="@+id/repos_header_size"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_username" />
+
+            <TextView
+                android:id="@+id/repos_header_des"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="des"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_language" />
+
+            <TextView
+                android:id="@+id/repos_header_action"
+                style="@style/shadowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="action"
+                android:textColor="@color/subLightTextColor"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_des" />
+
+
+            <View
+                android:id="@+id/repos_header_action_horizontal_line"
+                style="@style/horizontalLine"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_action" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repos_header_action_horizontal_line"
+                app:layout_constraintWidth_percent="1">
+
+                <TextView
+                    android:id="@+id/repos_header_star"
+                    style="@style/reposActionItemText"
+                    android:text="---" />
+
+                <View style="@style/verticalLine" />
+
+                <TextView
+                    android:id="@+id/repos_header_fork"
+                    style="@style/reposActionItemText"
+                    android:text="---" />
+
+                <View style="@style/reposActionItemText" />
+
+                <TextView
+                    android:id="@+id/repos_header_watch"
+                    style="@style/reposActionItemText"
+                    android:text="---" />
+
+                <View style="@style/verticalLine" />
+
+                <TextView
+                    android:id="@+id/repos_header_issue"
+                    style="@style/reposActionItemText"
+                    android:text="---" />
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </RelativeLayout>
+</layout>

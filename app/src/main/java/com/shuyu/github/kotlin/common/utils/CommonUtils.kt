@@ -3,6 +3,8 @@ package com.shuyu.github.kotlin.common.utils
 import android.graphics.Point
 import android.widget.ImageView
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.style.image.BlurTransformation
+import com.shuyu.gsyimageloader.GSYImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import com.shuyu.gsyimageloader.GSYLoadOption
 import java.util.*
@@ -28,6 +30,19 @@ object CommonUtils {
                 .setCircle(true)
                 .setSize(size)
                 .setUri(url)
+        GSYImageLoaderManager.sInstance.imageLoader().loadImage(option, imageView, null)
+    }
+
+
+    fun loadImageBlur(imageView: ImageView, url: String) {
+        val process = BlurTransformation()
+        val option = GSYLoadOption()
+                .setDefaultImg(R.drawable.logo)
+                .setErrorImg(R.drawable.logo)
+                .setCircle(true)
+                .setUri(url)
+                .setTransformations(process)
+
         GSYImageLoaderManager.sInstance.imageLoader().loadImage(option, imageView, null)
     }
 

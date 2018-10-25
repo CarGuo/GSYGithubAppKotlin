@@ -1,18 +1,22 @@
 package com.shuyu.github.kotlin.module.repos.action
 
 import android.content.Context
+import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
+import com.shuyu.github.kotlin.databinding.LayoutReposHeaderBinding
+import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.ui.holder.EventHolder
+import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
@@ -49,6 +53,10 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, DynamicVie
     override fun getRecyclerView(): RecyclerView? = baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
+        val binding: LayoutReposHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,
+                null, false, GSYDataBindingComponent())
+        manager.addHeaderView(binding.root)
+
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
     }
 }

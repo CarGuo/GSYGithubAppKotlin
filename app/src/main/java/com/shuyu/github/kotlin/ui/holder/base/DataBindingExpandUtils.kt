@@ -16,6 +16,11 @@ class DataBindingExpandUtils {
 
     companion object {
 
+        @BindingAdapter("image_blur")
+        fun loadImageBlur(view: ImageView, url: String?) {
+            CommonUtils.loadImageBlur(view, url ?: "")
+        }
+
         @BindingAdapter("userHeaderUrl", "userHeaderSize", requireAll = false)
         fun loadImage(view: ImageView, url: String?, size: Int = 50) {
             CommonUtils.loadUserHeaderImage(view, url ?: "", Point(size.dp, size.dp))
