@@ -30,6 +30,7 @@ class GSYWebViewContainer : RelativeLayout {
 
     init {
         webView = GSYWebView(context)
+        webView.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         var layoutParams = RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
 

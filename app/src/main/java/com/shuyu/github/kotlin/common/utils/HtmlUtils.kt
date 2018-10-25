@@ -18,7 +18,7 @@ object HtmlUtils {
         return generateHtml(context, currentData, backgroundColorId, userBR)
     }
 
-    fun generateHtml(context: Context, mdData: String?, backgroundColorId: Int = R.color.miWhite, userBR: Boolean = true): String {
+    fun generateHtml(context: Context, mdData: String?, backgroundColorId: Int = R.color.white, userBR: Boolean = true): String {
         if (mdData == null) {
             return ""
         }
