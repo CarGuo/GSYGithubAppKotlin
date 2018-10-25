@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.common.net
 
+import android.net.Uri
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -36,22 +37,23 @@ class PageInfoInterceptor : Interceptor {
                 }
             }
         }
-        return  response.newBuilder().addHeader("page_info", GsonUtils.toJsonString(pageInfo)).build()
+        return response.newBuilder().addHeader("page_info", GsonUtils.toJsonString(pageInfo)).build()
     }
 
     private fun parseNumber(item: String?): Int {
         if (item == null) {
             return -1
         }
-        val startFlag = "?page="
-        val endFlag = "&per_page"
+        val startFlag = "<"
+        val endFlag = ">"
         val startIndex = item.indexOf(startFlag)
         val endStart = item.indexOf(endFlag)
         if (startIndex <= 0 || endStart <= 0) {
             return -1
         }
         val startStart = startIndex + startFlag.length
-        val value = item.substring(startStart, endStart)
+        val url = item.substring(startStart, endStart)
+        val value = Uri.parse(url).getQueryParameter("page")
         return value.toInt()
     }
 }

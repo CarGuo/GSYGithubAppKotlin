@@ -1,26 +1,12 @@
 package com.shuyu.github.kotlin.service
 
-import com.shuyu.github.kotlin.model.bean.Branch
-import com.shuyu.github.kotlin.model.bean.Event
-import com.shuyu.github.kotlin.model.bean.FileModel
-import com.shuyu.github.kotlin.model.bean.Release
-import com.shuyu.github.kotlin.model.bean.Repository
-import com.shuyu.github.kotlin.model.bean.User
-
-import java.util.ArrayList
-
+import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.model.bean.*
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.http.*
+import java.util.*
 
 
 interface RepoService {
@@ -30,8 +16,8 @@ interface RepoService {
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String,
             @Query("page") page: Int,
-            @Query("sort") sort: String,
-            @Query("direction") direction: String
+            @Query("sort") sort: String = "updated",
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Repository>>>
 
     @GET("user/repos")

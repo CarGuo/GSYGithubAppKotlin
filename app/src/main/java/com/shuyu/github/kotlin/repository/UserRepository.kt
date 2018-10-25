@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.UserConversion
+import com.shuyu.github.kotlin.service.RepoService
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.Function
@@ -31,13 +32,23 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         }
         return userService.flatMap {
             FlatMapResponse2Result(it)
+        }.flatMap {
+            ///获取用户star数
+            val starredService = retrofit.create(RepoService::class.java).getStarredRepos(true, it.login!!, 1, "updated", 1)
+            val response = starredService.blockingSingle()
+            val pageString = response.headers().get("page_info")
+            if (pageString != null) {
+                val pageInfo = GsonUtils.parserJsonToBean(pageString, PageInfo::class.java)
+                it.starRepos = pageInfo.last
+            }
+            Observable.just(it)
         }.doOnNext {
-            Debuger.printfLog("userInfo $userInfoStorage")
             if (isLoginUser) {
                 ///保存用户信息
                 userInfoStorage = GsonUtils.toJsonString(it)
                 UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
             }
+            Debuger.printfLog("userInfo $userInfoStorage")
         }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
             ///拦截错误
             //userInfoStorage = ""
@@ -96,7 +107,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     private fun userEventRequest(observer: Observable<Response<ArrayList<Event>>>, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val service = observer
                 .flatMap {
-                    FlatMapResponse2ResponeResult(it, object : FlatConversionInterface<ArrayList<Event>> {
+                    FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Event>> {
                         override fun onConversion(t: ArrayList<Event>?): ArrayList<Any> {
                             val eventUIList = ArrayList<Any>()
                             t?.apply {

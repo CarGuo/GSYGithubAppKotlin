@@ -21,7 +21,7 @@ class FlatMapResult2Response<T>(private val t: T) : ObservableSource<Response<T>
     }
 }
 
-class FlatMapResponse2ResponeResult<T>(private val response: Response<T>, private val conversionCallBack: FlatConversionInterface<T>) : ObservableSource<Response<ArrayList<Any>>> {
+class FlatMapResponse2ResponseResult<T>(private val response: Response<T>, private val conversionCallBack: FlatConversionInterface<T>) : ObservableSource<Response<ArrayList<Any>>> {
     override fun subscribe(observer: Observer<in Response<ArrayList<Any>>>) {
         if (response.isSuccessful) {
             val result = conversionCallBack.onConversion(response.body())
