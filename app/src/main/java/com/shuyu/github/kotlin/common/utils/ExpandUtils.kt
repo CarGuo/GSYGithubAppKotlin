@@ -45,3 +45,12 @@ fun Context.colorIdToString(colorId: Int): String {
     stringBuffer.append(Integer.toHexString(Color.blue(color)))
     return stringBuffer.toString()
 }
+
+
+fun ArrayList<String>.toSplitString():String {
+    var result = ""
+    this.forEach {
+        result = "$result/$it"
+    }
+    return result
+}

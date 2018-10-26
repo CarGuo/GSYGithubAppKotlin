@@ -6,4 +6,5 @@ class FileUIModel  {
     var icon: String = ""
     var title: String = ""
     var next: String = ""
+    var type: String = ""
 }

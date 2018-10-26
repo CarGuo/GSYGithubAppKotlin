@@ -61,6 +61,7 @@ object ReposConversion {
         list.forEach {
             val fileUIModel = FileUIModel()
             fileUIModel.title = it.name ?: ""
+            fileUIModel.type = it.type ?: ""
             if (it.type == "file") {
                 fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
                 fileUIModel.next = ""

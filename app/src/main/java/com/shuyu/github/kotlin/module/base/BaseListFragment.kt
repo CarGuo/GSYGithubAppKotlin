@@ -142,6 +142,8 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
         normalAdapterManager?.setRefreshing(true)
     }
 
+    open fun isLoading(): Boolean = getViewModel().isLoading()
+
 
     fun initList() {
         if (activity != null && getRecyclerView() != null) {
