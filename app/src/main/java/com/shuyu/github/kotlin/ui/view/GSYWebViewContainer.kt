@@ -1,16 +1,17 @@
 package com.shuyu.github.kotlin.ui.view
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.RelativeLayout
-import android.graphics.Bitmap
-import android.support.v4.content.ContextCompat
-import android.view.View
-import android.view.ViewGroup
 import com.github.ybq.android.spinkit.SpinKitView
 import com.github.ybq.android.spinkit.style.MultiplePulseRing
 import com.shuyu.github.kotlin.R
@@ -24,12 +25,11 @@ class GSYWebViewContainer : RelativeLayout {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    val webView: WebView
+    val webView: GSYWebView = GSYWebView(context)
 
     val spinKit: SpinKitView
 
     init {
-        webView = GSYWebView(context)
         webView.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         var layoutParams = RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
@@ -66,12 +66,24 @@ class GSYWebViewContainer : RelativeLayout {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 spinKit.visibility = View.GONE
+
             }
         }
 
         webView.webViewClient = webViewClient
 
+        webView.addJavascriptInterface(JsCallback(), "GSYWebView")
+    }
+
+    internal inner class JsCallback {
+
+        @JavascriptInterface
+        fun requestEvent(request: Boolean) {
+            webView.requestIntercept = request
+        }
 
     }
+
+
 
 }

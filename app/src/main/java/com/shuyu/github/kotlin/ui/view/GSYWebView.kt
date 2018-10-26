@@ -17,6 +17,8 @@ class GSYWebView : WebView {
     private var offsetX: Float = 0.0f
     private var offsetY: Float = 0.0f
 
+    var requestIntercept = true
+
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -27,7 +29,7 @@ class GSYWebView : WebView {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                parent.requestDisallowInterceptTouchEvent(true)
+                parent.requestDisallowInterceptTouchEvent(requestIntercept)
                 startX = event.x
                 startY = event.y
             }
@@ -35,7 +37,7 @@ class GSYWebView : WebView {
                 offsetX = Math.abs(event.x - startX)
                 offsetY = Math.abs(event.y - startY)
                 if (offsetX > offsetY) {
-                    parent.requestDisallowInterceptTouchEvent(true)
+                    parent.requestDisallowInterceptTouchEvent(requestIntercept)
                 } else {
                     parent.requestDisallowInterceptTouchEvent(false)
                 }

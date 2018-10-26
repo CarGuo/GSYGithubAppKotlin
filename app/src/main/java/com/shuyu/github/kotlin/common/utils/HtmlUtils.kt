@@ -100,10 +100,28 @@ object HtmlUtils {
                 "<script>hljs.configure({'useBR': " +
                 userBR.toString() +
                 "});hljs.initHighlightingOnLoad();</script> " +
+                "<script type=\"text/javascript\" charset=\"utf-8\">"+
+                "function setTouch() {" +
+                "console.log('**************2*************');"+
+                "var list =  Array.from(document.getElementsByTagName(\"pre\")); "+
+                "list.forEach(function(value,index){\n" +
+                "   value.addEventListener('touchstart', function(e){\n" +
+                "       window.GSYWebView.requestEvent(true);" +
+                "   });\n" +
+                "   value.addEventListener('touchend', function(e){\n" +
+                "       window.GSYWebView.requestEvent(false);" +
+                "   });"+
+                "});"+
+                "console.log('**************3*************');"+
+                "}"+
+                "window.onload=setTouch;" +
+                "</script>" +
                 "<style>" +
                 "body{background: " +
                 backgroundColor +
-                ";}" +
+                ";\n" +
+                "word-wrap:break-word;\n" +
+                "}" +
                 "a {color:" +
                 "#0000FF" +
                 " !important;}" +

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebSettings
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.github.kotlin.R
@@ -52,6 +51,7 @@ class ReposReadmeFragment : BaseFragment<FragmentReposReadmeBinding>(), ARouterI
                 return@Observer
             }
             repos_readme_web.spinKit.visibility = View.GONE
+            repos_readme_web.webView.requestIntercept = false
             repos_readme_web.webView.loadData(it, "text/html", "utf-8")
 
         })
