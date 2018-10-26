@@ -5,16 +5,17 @@ import android.graphics.Bitmap
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.RelativeLayout
+import androidx.core.view.setPadding
 import com.github.ybq.android.spinkit.SpinKitView
 import com.github.ybq.android.spinkit.style.MultiplePulseRing
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.dp
 
 
 class GSYWebViewContainer : RelativeLayout {
@@ -47,9 +48,9 @@ class GSYWebViewContainer : RelativeLayout {
 
 
         spinKit = SpinKitView(context)
-        layoutParams = RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams = RelativeLayout.LayoutParams(90.dp, 90.dp)
         spinKit.setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        spinKit.setPadding(15.dp)
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
 
         addView(spinKit, layoutParams)
