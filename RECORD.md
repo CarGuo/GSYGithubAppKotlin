@@ -1,3 +1,100 @@
+
+
+
+
+
+目前已知问题
+
+* 下拉刷新效果的触摸滑动，需要优化滑动问题
+
+1.0.0 欠缺
+
+repository 详情的issue列表、带搜索
+
+repository 的操作(star、fork、watch)
+
+issue 详情（回复、编辑、评论、删除、锁定）
+
+启动页
+
+搜索页面（筛选）
+
+主页drawer（头像、名称、问题反馈、关于、退出登录）
+
+文件详情页面
+
+
+1.0.1
+
+空页面显示
+
+readme 页面跳转拦截（ARouter？）
+
+repository action 的提交列表
+
+push 弹出选择框 和 push详情
+
+通知消息列表
+
+用户相关列表 和 仓库相关列表
+
+release 列表
+
+
+1.0.2
+
+数据库
+
+组织显示兼容
+
+检查更新
+
+repository action tag 显示
+
+issue 数据统计
+
+图片预览和保存
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## android-architecture-components
 
 ### BasicSample
