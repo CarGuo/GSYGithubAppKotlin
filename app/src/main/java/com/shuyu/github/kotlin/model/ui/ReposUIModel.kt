@@ -9,5 +9,9 @@ data class ReposUIModel(
         var repositoryWatch: String = "---",
         var hideWatchIcon: Boolean = true,
         var repositoryType: String = "---",
-        var repositoryDes: String = "--"
+        var repositoryDes: String = "--",
+        var repositorySize: String = "--",
+        var repositoryLicense: String = "--",
+        var repositoryAction: String = "--",
+        var repositoryIssue: String = "--"
 )

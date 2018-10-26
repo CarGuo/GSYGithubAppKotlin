@@ -9,9 +9,9 @@ import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.databinding.LayoutReposHeaderBinding
-import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.EventUIModel
+import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
@@ -55,6 +55,9 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, DynamicVie
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutReposHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,
                 null, false, GSYDataBindingComponent())
+
+        binding.reposUIModel = ReposUIModel()
+
         manager.addHeaderView(binding.root)
 
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)

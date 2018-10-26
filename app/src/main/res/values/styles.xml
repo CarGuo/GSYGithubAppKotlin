@@ -77,7 +77,7 @@
 
     <style name="reposActionItemText" parent="shadowText">
         <item name="android:layout_weight">1</item>
-        <item name="android:maxLines">1</item>
+        <item name="android:maxLines">2</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/subLightTextColor</item>
         <item name="android:layout_width">0dp</item>
