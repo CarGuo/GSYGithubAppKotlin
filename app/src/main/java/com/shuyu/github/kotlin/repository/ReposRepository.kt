@@ -70,7 +70,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     fun getRepoInfo(userName: String, reposName: String, resultCallBack: ResultCallBack<ReposUIModel>?) {
         val infoService = retrofit.create(RepoService::class.java).getRepoInfo(true, userName, reposName)
                 .flatMap {
-                   FlatMapResponse2Result(it)
+                    FlatMapResponse2Result(it)
                 }.map {
                     ReposConversion.reposToReposUIModel(application, it)
                 }.flatMap {
@@ -100,13 +100,13 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                 .flatMap {
                     FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Event>> {
                         override fun onConversion(t: ArrayList<Event>?): ArrayList<Any> {
-                            val eventUIList = ArrayList<Any>()
+                            val list = ArrayList<Any>()
                             t?.apply {
                                 for (event in t) {
-                                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                                    list.add(EventConversion.eventToEventUIModel(event))
                                 }
                             }
-                            return eventUIList
+                            return list
                         }
                     })
                 }
@@ -130,5 +130,34 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
             }
 
         })
+    }
+
+
+    fun getFiles(userName: String, reposName: String, path: String, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+        val eventService = retrofit.create(RepoService::class.java).getRepoFiles(userName, reposName, path)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }.map {
+                    ReposConversion.fileListToFileUIList(it)
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+
+        RetrofitFactory.executeResult(eventService, object : ResultObserver<ArrayList<Any>>() {
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
+
     }
 }

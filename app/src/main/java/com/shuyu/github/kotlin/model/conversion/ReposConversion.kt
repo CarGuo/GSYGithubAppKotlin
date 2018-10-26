@@ -3,8 +3,10 @@ package com.shuyu.github.kotlin.model.conversion
 import android.content.Context
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.CommonUtils
+import com.shuyu.github.kotlin.model.bean.FileModel
 import com.shuyu.github.kotlin.model.bean.Repository
 import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
+import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 
 
@@ -48,6 +50,30 @@ object ReposConversion {
         reposUIModel.repositoryAction = createStr
         reposUIModel.repositoryIssue = repository?.openIssuesCount?.toString() ?: ""
         return reposUIModel
+    }
+
+
+    fun fileListToFileUIList(list: ArrayList<FileModel>): ArrayList<Any> {
+        val result = ArrayList<Any>()
+        val dirs = ArrayList<Any>()
+        val files = ArrayList<Any>()
+
+        list.forEach {
+            val fileUIModel = FileUIModel()
+            fileUIModel.title = it.name ?: ""
+            if (it.type == "file") {
+                fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
+                fileUIModel.next = ""
+                files.add(fileUIModel)
+            } else {
+                fileUIModel.icon = "{ion-android_folder_open}"
+                fileUIModel.next = "{GSY-REPOS_ITEM_NEXT}"
+                dirs.add(fileUIModel)
+            }
+        }
+        result.addAll(dirs)
+        result.addAll(files)
+        return result
     }
 
 }
