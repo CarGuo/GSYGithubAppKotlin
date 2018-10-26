@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.module.repos.action
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
@@ -11,10 +12,8 @@ import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.databinding.LayoutReposHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.EventUIModel
-import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
-import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -25,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
  */
 
 @Route(path = ARouterAddress.ReposDetailActionList)
-class ReposActionListFragment : BaseListFragment<FragmentListBinding, DynamicViewModel>(), ARouterInjectable {
+class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActionViewModel>(), ARouterInjectable {
 
     @Autowired
     @JvmField
@@ -44,7 +43,13 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, DynamicVie
         super.onItemClick(context, position)
     }
 
-    override fun getViewModelClass(): Class<DynamicViewModel> = DynamicViewModel::class.java
+    override fun onCreateView(mainView: View?) {
+        super.onCreateView(mainView)
+        getViewModel().reposName = reposName
+        getViewModel().userName = userName
+    }
+
+    override fun getViewModelClass(): Class<ReposActionViewModel> = ReposActionViewModel::class.java
 
     override fun enableRefresh(): Boolean = true
 
@@ -56,7 +61,7 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, DynamicVie
         val binding: LayoutReposHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,
                 null, false, GSYDataBindingComponent())
 
-        binding.reposUIModel = ReposUIModel()
+        binding.reposUIModel = getViewModel().reposUIModel
 
         manager.addHeaderView(binding.root)
 

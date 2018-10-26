@@ -1,8 +1,7 @@
 package com.shuyu.github.kotlin.model.bean
 
 import com.google.gson.annotations.SerializedName
-
-import java.util.Date
+import java.util.*
 
 class Repository {
 
@@ -17,6 +16,7 @@ class Repository {
     var description: String? = null
     var language: String? = null
     var owner: User? = null
+    var license: License? = null
 
     @SerializedName("default_branch")
     var defaultBranch: String? = null

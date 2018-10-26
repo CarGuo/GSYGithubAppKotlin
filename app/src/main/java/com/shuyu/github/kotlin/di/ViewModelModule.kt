@@ -24,6 +24,7 @@ import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
 import com.shuyu.github.kotlin.module.person.PersonViewModel
+import com.shuyu.github.kotlin.module.repos.action.ReposActionViewModel
 import com.shuyu.github.kotlin.module.repos.readme.ReposReadmeViewModel
 import com.shuyu.github.kotlin.module.trend.TrendViewModel
 
@@ -71,6 +72,13 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ReposReadmeViewModel::class)
     abstract fun bindReposReadmeViewModel(myViewModel: ReposReadmeViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReposActionViewModel::class)
+    abstract fun bindReposActionViewModel(myViewModel: ReposActionViewModel): ViewModel
+
 
 
     @Binds

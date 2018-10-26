@@ -102,7 +102,6 @@ object HtmlUtils {
                 "});hljs.initHighlightingOnLoad();</script> " +
                 "<script type=\"text/javascript\" charset=\"utf-8\">"+
                 "function setTouch() {" +
-                "console.log('**************2*************');"+
                 "var list =  Array.from(document.getElementsByTagName(\"pre\")); "+
                 "list.forEach(function(value,index){\n" +
                 "   value.addEventListener('touchstart', function(e){\n" +
@@ -112,7 +111,6 @@ object HtmlUtils {
                 "       window.GSYWebView.requestEvent(false);" +
                 "   });"+
                 "});"+
-                "console.log('**************3*************');"+
                 "}"+
                 "window.onload=setTouch;" +
                 "</script>" +

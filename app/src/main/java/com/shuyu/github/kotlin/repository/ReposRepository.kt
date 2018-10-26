@@ -3,8 +3,11 @@ package com.shuyu.github.kotlin.repository
 import android.app.Application
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.HtmlUtils
+import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.conversion.TrendConversion
+import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.service.RepoService
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -62,5 +65,70 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
             }
         })
 
+    }
+
+    fun getRepoInfo(userName: String, reposName: String, resultCallBack: ResultCallBack<ReposUIModel>?) {
+        val infoService = retrofit.create(RepoService::class.java).getRepoInfo(true, userName, reposName)
+                .flatMap {
+                   FlatMapResponse2Result(it)
+                }.map {
+                    ReposConversion.reposToReposUIModel(application, it)
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+
+        RetrofitFactory.executeResult(infoService, object : ResultObserver<ReposUIModel>() {
+
+            override fun onSuccess(result: ReposUIModel?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
+    }
+
+
+    fun getReposEvents(userName: String, reposName: String, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int = 1) {
+        val eventService = retrofit.create(RepoService::class.java).getRepoEvent(true, userName, reposName, page)
+                .flatMap {
+                    FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Event>> {
+                        override fun onConversion(t: ArrayList<Event>?): ArrayList<Any> {
+                            val eventUIList = ArrayList<Any>()
+                            t?.apply {
+                                for (event in t) {
+                                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                                }
+                            }
+                            return eventUIList
+                        }
+                    })
+                }
+
+        RetrofitFactory.executeResult(eventService, object : ResultObserver<ArrayList<Any>>() {
+
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
     }
 }
