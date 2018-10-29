@@ -19,6 +19,7 @@ object IssueConversion {
         issueUIModel.comment = issue.commentNum.toString()
         issueUIModel.issueNum = issue.number
         issueUIModel.status = issue.state ?: ""
+        issueUIModel.content = issue.body ?: ""
         return issueUIModel
     }
 
