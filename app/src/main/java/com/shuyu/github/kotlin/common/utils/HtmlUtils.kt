@@ -251,7 +251,7 @@ object HtmlUtils {
         return builder
     }
 
-    fun resolveHtmlFile(context: Context, res: String, defaultLang: String): String {
+    fun resolveHtmlFile(context: Context, res: String, defaultLang: String = "markdown"): String {
 
         val startTag = "class=\"instapaper_body "
         val startLang = res.indexOf(startTag)
@@ -259,21 +259,21 @@ object HtmlUtils {
         var lang = ""
         if (startLang >= 0 && endLang >= 0) {
             var tmpLang = res.substring(startLang + startTag.length, endLang)
-            lang = formName(tmpLang.toLowerCase());
+            lang = fromName(tmpLang.toLowerCase());
         }
         if (lang.isBlank()) {
             lang = defaultLang
         }
         return if ("markdown" == lang) {
-            generateHtml(context, res, R.color.miWhite)
+            generateHtml(context, res, R.color.white)
         } else {
-            generateCode2HTml(context, res, R.color.miWhite, lang)
+            generateCode2HTml(context, res, R.color.webDraculaBackgroundColor, lang)
         }
 
     }
 
-    fun formName(name: String): String {
-        var result = ""
+    fun fromName(name: String): String {
+        var result = name
         when (name) {
             "sh" -> result = "shell"
             "js" -> result = "javascript"

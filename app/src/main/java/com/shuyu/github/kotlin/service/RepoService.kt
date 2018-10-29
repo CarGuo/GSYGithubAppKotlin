@@ -204,4 +204,14 @@ interface RepoService {
             @Path("repo") repo: String,
             @Query("ref") branch: String = "master"): Observable<Response<String>>
 
+
+    @GET("repos/{owner}/{repo}/contents/{path}")
+    @Headers("Content-Type: text/plain;charset=utf-8", "Accept: application/vnd.github.html")
+    fun getRepoFilesDetail(
+            @Path("owner") owner: String,
+            @Path("repo") repo: String,
+            @Path(value = "path", encoded = true) path: String,
+            @Query("ref") branch: String = "master"
+    ): Observable<Response<String>>
+
 }

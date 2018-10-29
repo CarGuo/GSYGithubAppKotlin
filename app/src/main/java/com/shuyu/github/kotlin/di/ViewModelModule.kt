@@ -20,6 +20,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.shuyu.github.kotlin.GSYViewModelFactory
 import com.shuyu.github.kotlin.di.annotation.ViewModelKey
+import com.shuyu.github.kotlin.module.code.CodeDetailViewModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
@@ -67,23 +68,29 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(PersonViewModel::class)
-    abstract fun bindPersonViewModel(myViewModel: PersonViewModel): ViewModel
+    abstract fun bindPersonViewModel(personViewModel: PersonViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ReposReadmeViewModel::class)
-    abstract fun bindReposReadmeViewModel(myViewModel: ReposReadmeViewModel): ViewModel
+    abstract fun bindReposReadmeViewModel(reposReadmeViewModel: ReposReadmeViewModel): ViewModel
 
 
     @Binds
     @IntoMap
     @ViewModelKey(ReposActionViewModel::class)
-    abstract fun bindReposActionViewModel(myViewModel: ReposActionViewModel): ViewModel
+    abstract fun bindReposActionViewModel(reposActionViewModel: ReposActionViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ReposFileViewModel::class)
-    abstract fun bindReposFileViewModel(myViewModel: ReposFileViewModel): ViewModel
+    abstract fun bindReposFileViewModel(reposFileViewModel: ReposFileViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CodeDetailViewModel::class)
+    abstract fun bindCodeDetailViewModel(codeDetailViewModel: CodeDetailViewModel): ViewModel
 
 
     @Binds

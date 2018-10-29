@@ -14,7 +14,9 @@ import javax.inject.Inject
 
 class ReposRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application) {
 
-
+    /**
+     * 趋势
+     */
     fun getTrend(resultCallBack: ResultCallBack<ArrayList<Any>>, language: String, since: String) {
         val trendService = retrofit.create(RepoService::class.java)
                 .getTrendData(true, language, since)
@@ -44,6 +46,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
+    /**
+     * readme
+     */
     fun getReposReadme(resultCallBack: ResultCallBack<String>, userName: String, reposName: String) {
         val readeService = retrofit.create(RepoService::class.java)
                 .getReadmeHtml(true, userName, reposName)
@@ -67,6 +72,37 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
+
+    /**
+     * 文件详情
+     */
+    fun getRepoFilesDetail(userName: String, reposName: String, path: String, resultCallBack: ResultCallBack<String>) {
+        val readeService = retrofit.create(RepoService::class.java)
+                .getRepoFilesDetail(userName, reposName, path)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }.map {
+                    HtmlUtils.resolveHtmlFile(application, it)
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+
+        RetrofitFactory.executeResult(readeService, object : ResultObserver<String>() {
+            override fun onSuccess(result: String?) {
+                resultCallBack.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack.onFailure()
+            }
+        })
+
+    }
+
+
+    /**
+     * 仓库详情
+     */
     fun getRepoInfo(userName: String, reposName: String, resultCallBack: ResultCallBack<ReposUIModel>?) {
         val infoService = retrofit.create(RepoService::class.java).getRepoInfo(true, userName, reposName)
                 .flatMap {
@@ -94,7 +130,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
-
+    /**
+     * 仓库事件
+     */
     fun getReposEvents(userName: String, reposName: String, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int = 1) {
         val eventService = retrofit.create(RepoService::class.java).getRepoEvent(true, userName, reposName, page)
                 .flatMap {
@@ -133,6 +171,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     }
 
 
+    /**
+     * 仓库文件
+     */
     fun getFiles(userName: String, reposName: String, path: String, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val eventService = retrofit.create(RepoService::class.java).getRepoFiles(userName, reposName, path)
                 .flatMap {

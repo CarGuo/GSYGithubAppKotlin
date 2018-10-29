@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.module.repos.file
 
 import android.arch.lifecycle.Observer
 import android.content.Context
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.AdapterView
@@ -15,6 +16,7 @@ import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.ui.holder.base.FileHolder
 import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
@@ -48,7 +50,7 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
         item?.apply {
             val itemData = this as FileUIModel
             if (itemData.type == "file") {
-                //todo gotoCodeDetail
+                CodeDetailActivity.gotoCodeDetail(userName, reposName, itemData.title, repos_file_select_header.list.toSplitString() + "/" + itemData.title)
             } else {
                 addSelectList(itemData.title)
                 getViewModel().path = repos_file_select_header.list.toSplitString()
@@ -61,10 +63,16 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
         super.onCreateView(mainView)
         getViewModel().userName = userName
         getViewModel().reposName = reposName
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getViewModel().dataList.removeObservers(this)
         getViewModel().dataList.observe(this, Observer { items ->
             items?.apply {
                 if (items.size > 0) {
-                    adapter?.dataList?.addAll(items)
+                    adapter?.dataList = items
                     adapter?.notifyDataSetChanged()
                 }
             }

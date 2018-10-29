@@ -7,7 +7,6 @@ package com.shuyu.github.kotlin.module
 object ARouterAddress {
 
     const val PersonActivity = "/userInfo/activity"
-
     const val PersonFragment = "/userInfo/fragment"
 
     const val ReposDetailActivity = "/reposDetail/activity"
@@ -15,5 +14,10 @@ object ARouterAddress {
     const val ReposDetailActionList = "/reposDetail/actionList"
     const val ReposDetailIssueList = "/reposDetail/issueList"
     const val ReposDetailFileList = "/reposDetail/fileList"
+
+
+    const val CodeDetailActivity = "/codeDetail/activity"
+    const val CodeDetailFragment = "/codeDetail/fragment"
+
 
 }

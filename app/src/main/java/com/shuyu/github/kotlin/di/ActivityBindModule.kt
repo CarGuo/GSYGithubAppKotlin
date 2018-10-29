@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.di
 
 import com.shuyu.github.kotlin.di.annotation.ActivityScope
 import com.shuyu.github.kotlin.module.StartActivity
+import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.module.main.MainActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
@@ -33,5 +34,10 @@ abstract class ActivityBindModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [ReposDetailFragmentBindModule::class, ReposDetailModule::class])
     abstract fun reposDetailActivityInjector(): ReposDetailActivity
+
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [CodeDetailFragmentBindModule::class])
+    abstract fun codeDetailActivityInjector(): CodeDetailActivity
 
 }
