@@ -4,22 +4,19 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.utils.dp
 import com.shuyu.github.kotlin.common.utils.toSplitString
-import com.shuyu.github.kotlin.databinding.FragmentListBinding
+import com.shuyu.github.kotlin.databinding.FragmentReposFileListBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.ui.holder.base.FileHolder
-import com.shuyu.github.kotlin.ui.view.HorizontalTextList
-import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
 /**
  * Created by guoshuyu
@@ -27,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
  */
 
 @Route(path = ARouterAddress.ReposDetailFileList)
-class ReposFileListFragment : BaseListFragment<FragmentListBinding, ReposFileViewModel>(), ARouterInjectable {
+class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, ReposFileViewModel>(), ARouterInjectable {
 
 
     @Autowired
@@ -38,10 +35,8 @@ class ReposFileListFragment : BaseListFragment<FragmentListBinding, ReposFileVie
     @JvmField
     var userName = ""
 
-    lateinit var selectList: HorizontalTextList
-
     override fun getLayoutId(): Int {
-        return R.layout.fragment_list
+        return R.layout.fragment_repos_file_list
     }
 
     override fun onItemClick(context: Context, position: Int) {
@@ -56,7 +51,7 @@ class ReposFileListFragment : BaseListFragment<FragmentListBinding, ReposFileVie
                 //todo gotoCodeDetail
             } else {
                 addSelectList(itemData.title)
-                getViewModel().path = selectList.list.toSplitString()
+                getViewModel().path = repos_file_select_header.list.toSplitString()
                 showRefresh()
             }
         }
@@ -85,11 +80,8 @@ class ReposFileListFragment : BaseListFragment<FragmentListBinding, ReposFileVie
     override fun getRecyclerView(): RecyclerView? = baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
-        val layoutParams = RecyclerView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, 50.dp)
-        selectList = HorizontalTextList(context!!)
-        selectList.layoutParams = layoutParams
-        selectList.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
+
+        repos_file_select_header.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
             if (isLoading()) {
                 return@OnItemClickListener
             }
@@ -98,33 +90,32 @@ class ReposFileListFragment : BaseListFragment<FragmentListBinding, ReposFileVie
                 getViewModel().path = ""
             } else {
                 deleteSelect(position)
-                getViewModel().path = selectList.list.toSplitString()
+                getViewModel().path = repos_file_select_header.list.toSplitString()
             }
             showRefresh()
         }
         clearSelectList()
-        manager.addHeaderView(selectList)
 
         manager.bind(FileUIModel::class.java, FileHolder.ID, FileHolder::class.java)
     }
 
     private fun clearSelectList() {
-        selectList.list.clear()
-        selectList.list.add(".")
-        selectList.listView.adapter.notifyDataSetChanged()
+        repos_file_select_header.list.clear()
+        repos_file_select_header.list.add(".")
+        repos_file_select_header.listView.adapter.notifyDataSetChanged()
     }
 
     private fun addSelectList(item: String) {
-        selectList.list.add(item)
-        selectList.listView.adapter.notifyDataSetChanged()
+        repos_file_select_header.list.add(item)
+        repos_file_select_header.listView.adapter.notifyDataSetChanged()
     }
 
     private fun deleteSelect(position: Int) {
         val nextList = arrayListOf<String>()
-        val result = selectList.list.subList(0, position + 1)
+        val result = repos_file_select_header.list.subList(0, position + 1)
         nextList.addAll(result)
-        selectList.list.clear()
-        selectList.list.addAll(nextList)
-        selectList.listView.adapter.notifyDataSetChanged()
+        repos_file_select_header.list.clear()
+        repos_file_select_header.list.addAll(nextList)
+        repos_file_select_header.listView.adapter.notifyDataSetChanged()
     }
 }
