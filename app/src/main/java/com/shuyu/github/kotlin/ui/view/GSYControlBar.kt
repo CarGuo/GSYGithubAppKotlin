@@ -32,7 +32,7 @@ class GSYControlBar : CardView {
 
 
     val listView = RecyclerView(context)
-    val list: ArrayList<String> = arrayListOf("{GSY-REPOS_ITEM_FILE} star", "{GSY-REPOS_ITEM_FILE} star", "{GSY-REPOS_ITEM_FILE} star", "{GSY-REPOS_ITEM_FILE} star")
+    val list: ArrayList<String> = arrayListOf()
     var itemClick: AdapterView.OnItemClickListener? = null
 
     init {

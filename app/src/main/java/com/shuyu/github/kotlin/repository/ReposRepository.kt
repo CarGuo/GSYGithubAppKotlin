@@ -9,6 +9,8 @@ import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.conversion.TrendConversion
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.service.RepoService
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -200,5 +202,48 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
         })
 
+    }
+
+    fun getReposStatus(userName: String, reposName: String, resultCallBack: ResultCallBack<HashMap<String, Boolean>>?) {
+        val starredService = retrofit.create(RepoService::class.java).checkRepoStarred(userName, reposName)
+                .flatMap {
+                    val starred = if (it.code() == 404) {
+                        false
+                    } else it.isSuccessful
+                    Observable.just(starred)
+                }
+        val watchedService = retrofit.create(RepoService::class.java).checkRepoWatched(userName, reposName)
+                .flatMap {
+                    val watched = if (it.code() == 404) {
+                        false
+                    } else it.isSuccessful
+                    Observable.just(watched)
+                }
+
+        val statusService = Observable.zip(starredService, watchedService,
+                BiFunction<Boolean, Boolean, HashMap<String, Boolean>> { starred, watched ->
+                    val map = HashMap<String, Boolean>()
+                    map["starred"] = starred
+                    map["watched"] = watched
+                    map
+                })
+                .flatMap {
+                    FlatMapResult2Response(it)
+                }
+        RetrofitFactory.executeResult(statusService, object : ResultObserver<HashMap<String, Boolean>>() {
+
+            override fun onSuccess(result: HashMap<String, Boolean>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
     }
 }

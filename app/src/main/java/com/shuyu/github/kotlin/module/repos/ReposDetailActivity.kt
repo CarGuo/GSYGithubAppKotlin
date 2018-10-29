@@ -1,10 +1,14 @@
 package com.shuyu.github.kotlin.module.repos
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.AdapterView
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -59,11 +63,18 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+
     /**
      * tab列表
      */
     @Inject
     lateinit var tabModel: MutableList<NavigationTabBar.Model>
+
+
+    private lateinit var viewModel: ReposDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
@@ -77,6 +88,15 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
         repos_detail_tab_bar.models = tabModel
         repos_detail_tab_bar.setViewPager(repos_detail_view_pager, 0)
         repos_detail_view_pager.offscreenPageLimit = fragmentList.size
+
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ReposDetailViewModel::class.java)
+        viewModel.getReposStatus(userName, reposName)
+
+        viewModel.watchedStatus.observe(this, Observer { result ->
+            initControlBar()
+        })
 
     }
 
@@ -107,6 +127,48 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
         val fragmentFileList = getRouterNavigation(ARouterAddress.ReposDetailFileList, userName, reposName).navigation() as ReposFileListFragment
         val fragmentIssueList = getRouterNavigation(ARouterAddress.ReposDetailIssueList, userName, reposName).navigation() as ReposIssueListFragment
         return arrayListOf(fragmentReadme, fragmentActionList, fragmentFileList, fragmentIssueList)
+    }
+
+    private fun initControlBar() {
+        val dataList = getControlList()
+        repos_detail_control_bar.list.clear()
+        repos_detail_control_bar.list.addAll(dataList)
+        repos_detail_control_bar.listView.adapter.notifyDataSetChanged()
+        repos_detail_control_bar.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
+           //todo 请求star，watch，fork
+            val item = repos_detail_control_bar.list[position]
+            when {
+                item.contains("star") -> {
+
+                }
+                item.contains("watch") -> {
+
+                }
+                item.contains("fork") -> {
+
+                }
+            }
+        }
+    }
+
+    private fun getControlList(): ArrayList<String> {
+        val controlList = arrayListOf<String>()
+        val starStatus = viewModel.starredStatus.value
+        val watchStatus = viewModel.watchedStatus.value
+        if (starStatus != null) {
+            val star = if(starStatus) "{GSY-REPOS_ITEM_STARED} unStar" else "{GSY-REPOS_ITEM_STAR} star"
+            controlList.add(star)
+        }
+
+        if (watchStatus != null) {
+            val watch = if(watchStatus) "{GSY-REPOS_ITEM_WATCHED} unWatch" else "{GSY-REPOS_ITEM_WATCH} watch"
+            controlList.add(watch)
+        }
+
+        if (starStatus != null && watchStatus != null) {
+            controlList.add("{GSY-REPOS_ITEM_FORK} fork")
+        }
+        return  controlList
     }
 
 }
