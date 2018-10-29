@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.di.AppInjector
 import com.shuyu.gsygiideloader.GSYGlideImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
+import com.zzhoujay.richtext.RichText
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
@@ -53,6 +54,9 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
         ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
+
+        ///markdown 缓存目录初始化
+        RichText.initCacheDir(this)
 
 
     }

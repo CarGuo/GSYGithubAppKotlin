@@ -8,7 +8,7 @@ data class EventUIModel(var username: String = "",
                         var actionType: EventUIAction = EventUIAction.Person,
                         var owner: String = "",
                         var repositoryName: String = "",
-                        var IssueNum: String = "",
+                        var IssueNum: Int = 0,
                         var releaseUrl: String = "",
                         var pushSha: String = "")
 

@@ -58,7 +58,7 @@
                 android:layout_toEndOf="@+id/issue_user_img"
                 android:maxLines="3"
                 android:text="@{issueUIModel.action}"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/subTextColor"
                 android:textSize="@dimen/smallTextSize" />
 
             <LinearLayout
@@ -86,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:text="@{`#`+ issueUIModel.issueNum}"
+                    android:textColor="@color/subTextColor"
                     android:textSize="@dimen/smallTextSize" />
 
                 <com.mikepenz.iconics.view.IconicsTextView
@@ -97,6 +98,7 @@
                     android:gravity="center_vertical|end"
                     android:singleLine="true"
                     android:text="@{`{GSY-ISSUE_ITEM_COMMENT}`+issueUIModel.comment}"
+                    android:textColor="@color/subTextColor"
                     android:textSize="@dimen/smallTextSize" />
 
 

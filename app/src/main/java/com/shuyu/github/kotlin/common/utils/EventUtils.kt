@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.common.utils
 
 import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
+import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 
@@ -21,6 +22,7 @@ object EventUtils {
                 ReposDetailActivity.gotoReposDetail(eventUIModel.owner, eventUIModel.repositoryName)
             }
             EventUIAction.Issue -> {
+                IssueDetailActivity.gotoIssueDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.IssueNum)
             }
             EventUIAction.Push -> {
             }

@@ -22,6 +22,7 @@ import com.shuyu.github.kotlin.GSYViewModelFactory
 import com.shuyu.github.kotlin.di.annotation.ViewModelKey
 import com.shuyu.github.kotlin.module.code.CodeDetailViewModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
+import com.shuyu.github.kotlin.module.issue.IssueDetailViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
 import com.shuyu.github.kotlin.module.person.PersonViewModel
@@ -105,6 +106,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ReposIssueListViewModel::class)
     abstract fun bindReposIssueListViewModel(reposIssueListViewModel: ReposIssueListViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(IssueDetailViewModel::class)
+    abstract fun bindIssueDetailViewModel(issueDetailViewModel: IssueDetailViewModel): ViewModel
 
 
     @Binds

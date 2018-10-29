@@ -19,5 +19,10 @@ object ARouterAddress {
     const val CodeDetailActivity = "/codeDetail/activity"
     const val CodeDetailFragment = "/codeDetail/fragment"
 
+    const val IssueDetailActivity = "/issueDetail/activity"
+    const val IssueDetailFragment = "/issueDetail/fragment"
+
+
+
 
 }

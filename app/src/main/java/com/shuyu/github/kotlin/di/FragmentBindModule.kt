@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.di
 
 import com.shuyu.github.kotlin.module.code.CodeDetailFragment
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
+import com.shuyu.github.kotlin.module.issue.IssueDetailFragment
 import com.shuyu.github.kotlin.module.login.LoginFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.person.PersonFragment
@@ -59,6 +60,16 @@ abstract class CodeDetailFragmentBindModule {
     @ContributesAndroidInjector
     abstract fun contributeCodeDetailFragment(): CodeDetailFragment
 }
+
+
+@Module
+abstract class IssueDetailFragmentBindModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributeIssueDetailFragment(): IssueDetailFragment
+}
+
+
 
 @Module
 abstract class ReposDetailFragmentBindModule {

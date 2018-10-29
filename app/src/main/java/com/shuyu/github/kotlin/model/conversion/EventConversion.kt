@@ -178,8 +178,7 @@ object EventConversion {
             }
             "IssueCommentEvent", "IssuesEvent" -> {
                 eventUIModel.actionType = EventUIAction.Issue
-                eventUIModel.IssueNum = event.payload?.issue?.number?.toString() ?: ""
-                //NavigatorUtils.goIssueDetail(context, owner, repositoryName, event.payload.issue.number.toString(), needRightLocalIcon: true);
+                eventUIModel.IssueNum = event.payload?.issue?.number ?: 0
             }
             else -> {
                 eventUIModel.actionType = EventUIAction.Repos
