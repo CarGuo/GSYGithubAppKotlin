@@ -28,6 +28,7 @@ import com.shuyu.github.kotlin.module.person.PersonViewModel
 import com.shuyu.github.kotlin.module.repos.ReposDetailViewModel
 import com.shuyu.github.kotlin.module.repos.action.ReposActionViewModel
 import com.shuyu.github.kotlin.module.repos.file.ReposFileViewModel
+import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListViewModel
 import com.shuyu.github.kotlin.module.repos.readme.ReposReadmeViewModel
 import com.shuyu.github.kotlin.module.trend.TrendViewModel
 
@@ -97,7 +98,13 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ReposDetailViewModel::class)
-    abstract fun bindReposDetailViewModel(codeDetailViewModel: ReposDetailViewModel): ViewModel
+    abstract fun bindReposDetailViewModel(reposDetailViewModel: ReposDetailViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReposIssueListViewModel::class)
+    abstract fun bindReposIssueListViewModel(reposIssueListViewModel: ReposIssueListViewModel): ViewModel
 
 
     @Binds

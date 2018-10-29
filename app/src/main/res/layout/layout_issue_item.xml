@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="issueUIModel"
+            type="com.shuyu.github.kotlin.model.ui.IssueUIModel" />
+
+    </data>
+
+    <android.support.v7.widget.CardView style="@style/whiteCard">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+
+            <ImageView
+                android:id="@+id/issue_user_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:userHeaderUrl="@{issueUIModel.image}" />
+
+            <TextView
+                android:id="@+id/issue_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/issue_user_img"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:singleLine="true"
+                android:text="@{issueUIModel.username}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallTextSize" />
+
+            <TextView
+                android:id="@+id/issue_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{issueUIModel.time}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+            <TextView
+                android:id="@+id/issue_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/issue_user_img"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:maxLines="3"
+                android:text="@{issueUIModel.action}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallTextSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/issue_title"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/issue_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="@{`{GSY-ISSUE_ITEM_ISSUE}`+issueUIModel.status}"
+                    android:textColor="@{(`open`.equals(issueUIModel.status )) ? @color/green : @color/red}"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/issue_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="@{`#`+ issueUIModel.issueNum}"
+                    android:textSize="@dimen/smallTextSize" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/issue_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:singleLine="true"
+                    android:text="@{`{GSY-ISSUE_ITEM_COMMENT}`+issueUIModel.comment}"
+                    android:textSize="@dimen/smallTextSize" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

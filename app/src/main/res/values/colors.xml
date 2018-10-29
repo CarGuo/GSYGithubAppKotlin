@@ -17,5 +17,7 @@
     <color name="mainTextColor">@color/colorPrimaryDark</color>
     <color name="textColorWhite">@color/white</color>
     <color name="maskColor">#88000000</color>
+    <color name="green">#8800FF11</color>
+    <color name="red">#88FF1100</color>
 
 </resources>

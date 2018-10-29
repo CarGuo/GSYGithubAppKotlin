@@ -4,10 +4,13 @@ import android.app.Application
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.HtmlUtils
 import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.conversion.EventConversion
+import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.conversion.TrendConversion
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
+import com.shuyu.github.kotlin.service.IssueService
 import com.shuyu.github.kotlin.service.RepoService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
@@ -233,6 +236,43 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         RetrofitFactory.executeResult(statusService, object : ResultObserver<HashMap<String, Boolean>>() {
 
             override fun onSuccess(result: HashMap<String, Boolean>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
+    }
+
+    fun getReposIssueList(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+        val eventService = retrofit.create(IssueService::class.java).getRepoIssues(true, userName, reposName, page)
+                .flatMap {
+                    FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Issue>> {
+                        override fun onConversion(t: ArrayList<Issue>?): ArrayList<Any> {
+                            val list = ArrayList<Any>()
+                            t?.apply {
+                                for (issue in t) {
+                                    list.add(IssueConversion.issueToIssueUIModel(issue))
+                                }
+                            }
+                            return list
+                        }
+                    })
+                }
+
+        RetrofitFactory.executeResult(eventService, object : ResultObserver<ArrayList<Any>>() {
+
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
                 resultCallBack?.onSuccess(result)
             }
 

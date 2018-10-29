@@ -1,23 +1,14 @@
 package com.shuyu.github.kotlin.service
 
+import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.model.bean.CommentRequestModel
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.IssueEvent
-
-import java.util.ArrayList
-
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
+import java.util.*
 
 
 interface IssueService {
@@ -28,10 +19,11 @@ interface IssueService {
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("owner") owner: String,
             @Path("repo") repo: String,
-            @Query("state") state: String,
-            @Query("sort") sort: String,
-            @Query("direction") direction: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("state") state: String = "all",
+            @Query("sort") sort: String = "created",
+            @Query("direction") direction: String = "desc",
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Issue>>>
 
     @GET("user/issues")
