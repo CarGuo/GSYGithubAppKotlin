@@ -49,17 +49,17 @@
                 android:textColor="@color/subTextColor"
                 android:textSize="@dimen/smallTextSize" />
 
-            <br.tiagohm.markdownview.MarkdownView
+            <TextView
                 android:id="@+id/issue_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/issue_user_img"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/issue_user_img"
-                android:textColor="@color/subTextColor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/smallTextSize"
-                app:style="@{`default`}"
                 app:markdownText="@{issueUIModel.action}" />
+
 
         </RelativeLayout>
 
