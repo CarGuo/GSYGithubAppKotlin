@@ -100,13 +100,13 @@
                     app:layout_constraintStart_toStartOf="@+id/issue_header_name"
                     app:layout_constraintTop_toBottomOf="@+id/issue_status_layout" />
 
-                <TextView
+                <br.tiagohm.markdownview.MarkdownView
                     android:id="@+id/issue_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/smallTextSize"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorPrimary"
+                    app:escapeHtml="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/issue_action"

@@ -151,7 +151,6 @@ dependencies {
     ///drop menu
     implementation "com.github.dongjunkun:DropDownMenu:${drop_menu_version}"
 
-
-    implementation "com.zzhoujay.richtext:richtext:${richtext_version}"
+    implementation "com.github.tiagohm.MarkdownView:library:${richtext_version}"
 
 }

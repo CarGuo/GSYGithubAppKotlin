@@ -4,11 +4,11 @@ import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
 import android.graphics.Point
 import android.widget.ImageView
-import android.widget.TextView
+import br.tiagohm.markdownview.MarkdownView
+import com.shuyu.github.kotlin.common.style.GSYMarkdownStyle
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
 import com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
-import com.zzhoujay.richtext.RichText
 
 
 /**
@@ -39,9 +39,10 @@ class DataBindingExpandUtils {
 
 
         @BindingAdapter("markdownText")
-        fun webViewUrl(view: TextView?, text: String?) {
+        fun webViewUrl(view: MarkdownView?, text: String?) {
             view?.apply {
-                RichText.fromMarkdown(text).into(view)
+                this.addStyleSheet(GSYMarkdownStyle(view.context.applicationContext))
+                this.loadMarkdown(text)
             }
         }
 
