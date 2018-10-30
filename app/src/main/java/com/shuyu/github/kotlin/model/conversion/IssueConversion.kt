@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.model.conversion
 
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.model.bean.Issue
+import com.shuyu.github.kotlin.model.bean.IssueEvent
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 
 /**
@@ -20,6 +21,17 @@ object IssueConversion {
         issueUIModel.issueNum = issue.number
         issueUIModel.status = issue.state ?: ""
         issueUIModel.content = issue.body ?: ""
+        return issueUIModel
+    }
+
+
+    fun issueEventToIssueUIModel(issue: IssueEvent): IssueUIModel {
+        val issueUIModel = IssueUIModel()
+        issueUIModel.username = issue.user?.login ?: ""
+        issueUIModel.image = issue.user?.avatarUrl ?: ""
+        issueUIModel.action = issue.body ?: ""
+        issueUIModel.time = CommonUtils.getDateStr(issue.createdAt)
+        issueUIModel.status = issue.id ?: ""
         return issueUIModel
     }
 

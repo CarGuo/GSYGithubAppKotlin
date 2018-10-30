@@ -14,7 +14,7 @@ import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
-import com.shuyu.github.kotlin.ui.holder.IssueHolder
+import com.shuyu.github.kotlin.ui.holder.IssueCommentHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -69,7 +69,7 @@ class IssueDetailFragment : BaseListFragment<FragmentListBinding, IssueDetailVie
         binding.issueUIModel = getViewModel().issueUIModel
         manager.addHeaderView(binding.root)
 
-        manager.bind(IssueUIModel::class.java, IssueHolder.ID, IssueHolder::class.java)
+        manager.bind(IssueUIModel::class.java, IssueCommentHolder.ID, IssueCommentHolder::class.java)
     }
 
 }

@@ -110,7 +110,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/issue_action"
-                    app:markdownText="@{issueUIModel.content}" />
+                    app:markdownText="@{issueUIModel.content}"
+                    app:style="@{`new`}" />
 
                 <TextView
                     android:id="@+id/issue_time"

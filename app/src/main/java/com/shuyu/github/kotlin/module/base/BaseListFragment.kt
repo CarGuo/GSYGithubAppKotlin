@@ -62,8 +62,13 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
         getViewModel().dataList.observe(this, Observer { items ->
             items?.apply {
                 if (items.size > 0) {
+                    val currentSize:Int = adapter?.dataList?.size ?: 0
                     adapter?.dataList?.addAll(items)
-                    adapter?.notifyItemRangeChanged(adapter!!.dataList!!.size, (adapter!!.dataList!!.size + items.size) - 1)
+                    if (currentSize == 0) {
+                        adapter?.notifyDataSetChanged()
+                    } else {
+                        adapter?.notifyItemRangeChanged(currentSize, (currentSize + items.size))
+                    }
                 }
             }
         })

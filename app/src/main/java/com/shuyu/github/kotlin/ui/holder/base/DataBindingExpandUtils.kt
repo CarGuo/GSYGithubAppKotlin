@@ -5,6 +5,7 @@ import android.databinding.DataBindingComponent
 import android.graphics.Point
 import android.widget.ImageView
 import br.tiagohm.markdownview.MarkdownView
+import br.tiagohm.markdownview.css.styles.Github
 import com.shuyu.github.kotlin.common.style.GSYMarkdownStyle
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
@@ -38,10 +39,15 @@ class DataBindingExpandUtils {
         }
 
 
-        @BindingAdapter("markdownText")
-        fun webViewUrl(view: MarkdownView?, text: String?) {
+        @BindingAdapter("markdownText", "style", requireAll = false)
+        fun webViewUrl(view: MarkdownView?, text: String?, style: String? = "default") {
             view?.apply {
-                this.addStyleSheet(GSYMarkdownStyle(view.context.applicationContext))
+                val sheet = if (style == "default") {
+                    Github()
+                } else {
+                    GSYMarkdownStyle(view.context.applicationContext)
+                }
+                this.addStyleSheet(sheet)
                 this.loadMarkdown(text)
             }
         }

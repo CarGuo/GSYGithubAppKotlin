@@ -28,8 +28,14 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
             override fun onFailure() {
             }
         })
+        loadData()
     }
 
     override fun loadDataByLoadMore() {
+        loadData()
+    }
+
+    private fun loadData() {
+        issueRepository.getIssueComments(userName, reposName, issueNumber, page, this)
     }
 }
