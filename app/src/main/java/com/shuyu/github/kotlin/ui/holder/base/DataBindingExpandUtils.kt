@@ -5,6 +5,7 @@ import android.databinding.DataBindingComponent
 import android.graphics.Point
 import android.widget.ImageView
 import android.widget.TextView
+import com.shuyu.github.kotlin.common.style.MarkDownConfig
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
 import com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
@@ -40,8 +41,9 @@ class DataBindingExpandUtils {
 
         @BindingAdapter("markdownText", "style", requireAll = false)
         fun webViewUrl(view: TextView?, text: String?, style: String? = "default") {
+
             view?.apply {
-                Markwon.setMarkdown(this, text ?: "")
+                Markwon.setMarkdown(this, MarkDownConfig.instance, text ?: "")
             }
         }
 

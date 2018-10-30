@@ -151,7 +151,14 @@ dependencies {
     ///drop menu
     implementation "com.github.dongjunkun:DropDownMenu:${drop_menu_version}"
 
+    ///markdown
     implementation "com.github.tiagohm.MarkdownView:library:${richtext_version}"
     implementation "ru.noties:markwon:${markwon_version}"
+    implementation "ru.noties:markwon-image-loader:${markwon_version}"
+    implementation "ru.noties:markwon-syntax-highlight:${markwon_version}"
+    implementation "ru.noties:markwon-view:${markwon_version}"
+
+    ///Prism4j
+    kapt "ru.noties:prism4j-bundler:${prism4j_version}"
 
 }

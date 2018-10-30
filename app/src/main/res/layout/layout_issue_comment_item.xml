@@ -55,6 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/issue_user_img"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_toEndOf="@+id/issue_user_img"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/smallTextSize"
