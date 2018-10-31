@@ -1,31 +1,26 @@
 package com.shuyu.github.kotlin.common.style
 
 import android.content.Context
+import com.shuyu.github.kotlin.GSYGithubApplication
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.dp
 import ru.noties.markwon.SpannableConfiguration
-import ru.noties.markwon.SpannableFactoryDef
 import ru.noties.markwon.il.AsyncDrawableLoader
-import ru.noties.markwon.renderer.ImageSize
-import ru.noties.markwon.renderer.ImageSizeResolver
-import ru.noties.markwon.spans.AsyncDrawable
-import ru.noties.markwon.spans.AsyncDrawableSpan
-import ru.noties.markwon.spans.SpannableTheme
 import ru.noties.markwon.syntax.Prism4jSyntaxHighlight
 import ru.noties.markwon.syntax.Prism4jThemeDarkula
 import ru.noties.prism4j.Prism4j
 import ru.noties.prism4j.annotations.PrismBundle
-import kotlin.properties.Delegates
 
 
 @PrismBundle(includeAll = true)
 object MarkDownConfig {
 
-    var instance: SpannableConfiguration by Delegates.notNull()
-
-    fun init(context: Context) {
+    fun getConfig(context: Context): SpannableConfiguration {
+        val drawable = GSYGithubApplication.instance.getDrawable(R.drawable.logo)
+        drawable.setBounds(0, 0, 50.dp, 50.dp)
         val loader = AsyncDrawableLoader.builder()
                 .resources(context.resources)
-                .errorDrawable(context.getDrawable(R.drawable.logo))
+                .errorDrawable(drawable)
                 .build()
 
         val prism4j = Prism4j(GrammarLocatorDef())
@@ -33,30 +28,13 @@ object MarkDownConfig {
                 Prism4jSyntaxHighlight.create(prism4j, Prism4jThemeDarkula.create(), "java")
 
 
-        instance = SpannableConfiguration.builder(context)
+        return SpannableConfiguration.builder(context)
                 .asyncDrawableLoader(loader)
-                .factory(GSYSpannableFactoryDef())
                 .softBreakAddsNewLine(true)
                 .syntaxHighlight(highlight)
                 .build()
     }
 
-}
-
-class GSYSpannableFactoryDef : SpannableFactoryDef() {
-    override fun image(theme: SpannableTheme, destination: String, loader: AsyncDrawable.Loader, imageSizeResolver: ImageSizeResolver, imageSize: ImageSize?, replacementTextIsLink: Boolean): Any? {
-        return AsyncDrawableSpan(
-                theme,
-                AsyncDrawable(
-                        destination,
-                        loader,
-                        imageSizeResolver,
-                        imageSize
-                ),
-                AsyncDrawableSpan.ALIGN_BOTTOM,
-                replacementTextIsLink
-        )
-    }
 }
 
 

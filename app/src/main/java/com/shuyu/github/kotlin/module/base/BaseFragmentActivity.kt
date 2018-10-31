@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.R
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -26,7 +24,6 @@ abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInj
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment_container)
 

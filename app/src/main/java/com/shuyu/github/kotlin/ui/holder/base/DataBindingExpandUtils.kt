@@ -41,9 +41,8 @@ class DataBindingExpandUtils {
 
         @BindingAdapter("markdownText", "style", requireAll = false)
         fun webViewUrl(view: TextView?, text: String?, style: String? = "default") {
-
             view?.apply {
-                Markwon.setMarkdown(this, MarkDownConfig.instance, text ?: "")
+                Markwon.setMarkdown(view, MarkDownConfig.getConfig(view.context), text ?: "")
             }
         }
 
