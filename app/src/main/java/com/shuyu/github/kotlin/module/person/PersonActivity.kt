@@ -2,10 +2,12 @@ package com.shuyu.github.kotlin.module.person
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.LayoutInflaterCompat
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragmentActivity
@@ -35,6 +37,7 @@ class PersonActivity : BaseFragmentActivity(), ARouterInjectable {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
     }
 
