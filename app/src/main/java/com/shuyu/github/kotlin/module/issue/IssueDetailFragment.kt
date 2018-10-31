@@ -11,6 +11,8 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.IssueDialogClickListener
+import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.databinding.FragmentIssueDetailBinding
 import com.shuyu.github.kotlin.databinding.LayoutIssueHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
@@ -28,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_issue_detail.*
  */
 
 @Route(path = ARouterAddress.IssueDetailFragment)
-class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDetailViewModel>(), ARouterInjectable {
+class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDetailViewModel>(), ARouterInjectable, IssueDialogClickListener {
 
     @Autowired
     @JvmField
@@ -88,11 +90,26 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
     }
 
 
+    override fun onConfirm(title: String, editTitle: String?, editContent: String?) {
+        when {
+            title.contains(getString(R.string.issueComment)) -> {
+
+            }
+            title.contains(getString(R.string.issueEdit)) -> {
+
+            }
+            title.contains(getString(R.string.issueCommentEdit)) -> {
+
+            }
+        }
+    }
+
     private fun initControlBar(issueUIModel: IssueUIModel?) {
         if (issueUIModel == null) {
             return
         }
         val dataList = getControlList(issueUIModel)
+        val issueInfo = getViewModel().issueUIModel
         issue_detail_control_bar.list.clear()
         issue_detail_control_bar.list.addAll(dataList)
         issue_detail_control_bar.listView.adapter.notifyDataSetChanged()
@@ -100,10 +117,10 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
             val item = issue_detail_control_bar.list[position]
             when {
                 item.contains(getString(R.string.issueComment)) -> {
-
+                    activity?.showIssueEditDialog(getString(R.string.issueComment), true, "", "", this)
                 }
                 item.contains(getString(R.string.issueEdit)) -> {
-
+                    activity?.showIssueEditDialog(getString(R.string.issueComment), true, issueInfo.action, issueInfo.content, this)
                 }
                 item.contains(getString(R.string.issueClose)) -> {
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp"
+    app:contentPadding="10dp">
+
+    <LinearLayout
+        android:id="@+id/issue_dialog_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/issue_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/middleTextSize" />
+
+        <EditText
+            android:id="@+id/issue_dialog_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_edit_border"
+            android:hint="@string/issueInputTipTitle"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/smallTextSize" />
+
+        <EditText
+            android:id="@+id/issue_dialog_edit_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_edit_border"
+            android:gravity="top|start"
+            android:hint="@string/issueInputTip"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/smallTextSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/issue_dialog_edit_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_bg"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/middleTextSize" />
+
+            <View style="@style/verticalLine" />
+
+            <TextView
+                android:id="@+id/issue_dialog_edit_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_bg"
+                android:gravity="center"
+                android:text="@string/ok"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/middleTextSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

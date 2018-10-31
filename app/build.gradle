@@ -161,4 +161,7 @@ dependencies {
     ///Prism4j
     kapt "ru.noties:prism4j-bundler:${prism4j_version}"
 
+    ///dialogplus
+    implementation "com.orhanobut:dialogplus:${dialogplus_version}"
+
 }

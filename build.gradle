@@ -29,6 +29,7 @@ buildscript {
     ext.richtext_version='0.19.0'
     ext.markwon_version='2.0.0'
     ext.prism4j_version='1.1.0'
+    ext.dialogplus_version='1.11@aar'
 
     repositories {
         google()

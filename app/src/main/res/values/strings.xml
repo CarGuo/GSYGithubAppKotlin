@@ -69,8 +69,10 @@
     <string name="reposIssue">Issues</string>
     <string name="issueInfo">说明</string>
     <string name="issueComment">回复</string>
-    <string name="issueCommentDelete">刪除</string>
-    <string name="issueCommentEdit">编辑</string>
+    <string name="issueCommentDelete">刪除回复</string>
+    <string name="issueCommentEdit">编辑回复</string>
+    <string name="issueTitleEmpty">标题不能为空</string>
+    <string name="issueContentEmpty">内容不能为空</string>
     <string name="issueEdit">编辑</string>
     <string name="issueClose">关闭</string>
     <string name="issueOpen">打开</string>

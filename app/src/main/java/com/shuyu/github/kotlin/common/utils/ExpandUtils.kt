@@ -47,7 +47,7 @@ fun Context.colorIdToString(colorId: Int): String {
 }
 
 
-fun ArrayList<String>.toSplitString():String {
+fun ArrayList<String>.toSplitString(): String {
     var result = ""
     this.forEach {
         result = "$result/$it"
