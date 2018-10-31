@@ -62,6 +62,14 @@ class IssueUIModel : BaseObservable() {
             notifyPropertyChanged(BR.status)
         }
 
+    var locked: Boolean = false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.locked)
+        }
+
     fun cloneFrom(issueUIModel: IssueUIModel) {
         username = issueUIModel.username
         image = issueUIModel.image
@@ -71,6 +79,7 @@ class IssueUIModel : BaseObservable() {
         content = issueUIModel.content
         issueNum = issueUIModel.issueNum
         status = issueUIModel.status
+        locked = issueUIModel.locked
     }
 }
 

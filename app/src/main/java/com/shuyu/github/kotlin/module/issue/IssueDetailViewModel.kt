@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.module.issue
 
 import android.app.Application
+import android.arch.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
@@ -17,11 +18,14 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
 
     val issueUIModel = IssueUIModel()
 
+    val liveIssueModel = MutableLiveData<IssueUIModel>()
+
     override fun loadDataByRefresh() {
         issueRepository.getIssueInfo(userName, reposName, issueNumber, object : ResultCallBack<IssueUIModel> {
             override fun onSuccess(result: IssueUIModel?) {
                 result?.apply {
                     issueUIModel.cloneFrom(this)
+                    liveIssueModel.value = this
                 }
             }
 

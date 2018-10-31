@@ -39,11 +39,12 @@
 
     <View
         android:id="@+id/user_header_action_horizontal_line"
+        android:layout_height="1dp"
         style="@style/horizontalLine" />
 
     <com.shuyu.github.kotlin.ui.view.GSYControlBar
         android:id="@+id/repos_detail_control_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="60dp"  />
 
 </LinearLayout>

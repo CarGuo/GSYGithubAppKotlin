@@ -69,7 +69,7 @@ class GSYControlBar : CardView {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
             val textView = IconicsTextView(context)
-            textView.setPadding(10.dp)
+            textView.setPadding(15.dp)
 
             textView.setBackgroundResource(R.drawable.ripple_bg)
 

@@ -21,6 +21,7 @@ object IssueConversion {
         issueUIModel.issueNum = issue.number
         issueUIModel.status = issue.state ?: ""
         issueUIModel.content = issue.body ?: ""
+        issueUIModel.locked = issue.locked
         return issueUIModel
     }
 
