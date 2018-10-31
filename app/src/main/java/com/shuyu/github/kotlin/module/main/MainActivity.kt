@@ -3,9 +3,13 @@ package com.shuyu.github.kotlin.module.main
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
-import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
+import com.mikepenz.materialdrawer.AccountHeaderBuilder
+import com.mikepenz.materialdrawer.DrawerBuilder
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
@@ -16,6 +20,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+
 
 /**
  * 主页
@@ -50,22 +55,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         home_navigation_tab_bar.setViewPager(home_view_pager, 0)
         home_view_pager.offscreenPageLimit = mainFragmentList.size
 
-        home_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                if (position == 1) {
-                    //globalModel.userObservable.login = "TEST"
-                }
-            }
-        })
-
         home_navigation_tab_bar.doubleTouchListener = object : GSYNavigationTabBar.TabDoubleClickListener {
             override fun onDoubleClick(position: Int) {
                 if (position == 0) {
@@ -75,6 +64,25 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
             }
         }
+
+        DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(home_tool_bar)
+                .addDrawerItems(
+                        PrimaryDrawerItem().withName(R.string.LoginOut)
+                )
+                .withAccountHeader(AccountHeaderBuilder().withActivity(this)
+                        .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login)
+                                .withSetSelected(false)
+                                .withIcon(globalModel.userObservable.avatarUrl?.toUri())
+                                .withEmail(globalModel.userObservable.email ?: ""))
+                        .withHeaderBackground(R.color.colorPrimary)
+                        .withSelectionListEnabled(false)
+                        .build())
+                .withOnDrawerItemClickListener { view, position, drawerItem ->
+
+                    false
+                }.build()
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector

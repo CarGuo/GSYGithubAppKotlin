@@ -164,4 +164,7 @@ dependencies {
     ///dialogplus
     implementation "com.orhanobut:dialogplus:${dialogplus_version}"
 
+    ///Drawer
+    implementation "com.mikepenz:materialdrawer:6.0.9"
+
 }

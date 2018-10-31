@@ -2,9 +2,16 @@ package com.shuyu.github.kotlin
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.widget.ImageView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.Iconics
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
+import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.shuyu.github.kotlin.common.style.GSYIconfont
+import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.di.AppInjector
 import com.shuyu.gsygiideloader.GSYGlideImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
@@ -48,6 +55,14 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
 
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
+            override fun placeholder(ctx: Context?): Drawable {
+                return getDrawable(R.drawable.logo)
+            }
+            override fun set(imageView: ImageView?, uri: Uri?, placeholder: Drawable?, tag: String?) {
+                CommonUtils.loadUserHeaderImage(imageView!!, uri.toString())
+            }
+        })
     }
 
     override fun activityInjector() = dispatchingAndroidInjector

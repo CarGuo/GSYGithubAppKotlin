@@ -4,7 +4,6 @@ import android.graphics.Point
 import android.widget.ImageView
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.image.BlurTransformation
-import com.shuyu.gsyimageloader.GSYImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import com.shuyu.gsyimageloader.GSYLoadOption
 import java.util.*
@@ -23,7 +22,7 @@ object CommonUtils {
     private const val DAYS_LIMIT = 30 * HOURS_LIMIT
 
 
-    fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(50, 50)) {
+    fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(50.dp, 50.dp)) {
         val option = GSYLoadOption()
                 .setDefaultImg(R.drawable.logo)
                 .setErrorImg(R.drawable.logo)

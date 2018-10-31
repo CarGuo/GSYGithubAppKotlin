@@ -8,6 +8,7 @@
     tools:context=".module.main.MainActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/home_tool_bar"
         style="@style/toolbarStyle"
         android:theme="@style/toolbarTheme"
         app:title="@string/app_name"
