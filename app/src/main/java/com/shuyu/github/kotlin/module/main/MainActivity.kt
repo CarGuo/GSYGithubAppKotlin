@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
@@ -11,7 +12,10 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AppGlobalModel
+import com.shuyu.github.kotlin.module.StartActivity
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
@@ -19,6 +23,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.clearTask
 import javax.inject.Inject
 
 
@@ -45,6 +50,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
 
+
+    private var basicStorage: String by GSYPreference(AppConfig.USER_BASIC_CODE, "")
+
+    private var tokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
+
+    private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
@@ -68,8 +81,21 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(home_tool_bar)
+                .withSelectedItem(-1)
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.LoginOut)
+                                .withTextColorRes(R.color.red).withOnDrawerItemClickListener { view, position, drawerItem ->
+
+                                    basicStorage = ""
+                                    tokenStorage = ""
+                                    userInfoStorage = ""
+                                    val intent = Intent(view.context, StartActivity::class.java)
+                                    intent.clearTask()
+                                    startActivity(intent)
+
+                                    drawerItem.withSetSelected(false)
+                                    true
+                                }
                 )
                 .withAccountHeader(AccountHeaderBuilder().withActivity(this)
                         .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login)
@@ -78,11 +104,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                                 .withEmail(globalModel.userObservable.email ?: ""))
                         .withHeaderBackground(R.color.colorPrimary)
                         .withSelectionListEnabled(false)
-                        .build())
-                .withOnDrawerItemClickListener { view, position, drawerItem ->
-
-                    false
-                }.build()
+                        .build()).build()
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
