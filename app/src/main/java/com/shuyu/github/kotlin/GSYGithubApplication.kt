@@ -2,12 +2,9 @@ package com.shuyu.github.kotlin
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.Iconics
-import com.mikepenz.iconics.context.IconicsContextWrapper
 import com.shuyu.github.kotlin.common.style.GSYIconfont
-import com.shuyu.github.kotlin.common.style.MarkDownConfig
 import com.shuyu.github.kotlin.di.AppInjector
 import com.shuyu.gsygiideloader.GSYGlideImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
@@ -28,10 +25,6 @@ class GSYGithubApplication : Application(), HasActivityInjector {
      */
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(base))
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -54,10 +47,6 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
         ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
-
-
-        MarkDownConfig.init(this)
-
 
     }
 
