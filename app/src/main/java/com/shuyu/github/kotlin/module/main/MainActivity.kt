@@ -1,6 +1,5 @@
 package com.shuyu.github.kotlin.module.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
@@ -12,18 +11,15 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.config.AppConfig
-import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AppGlobalModel
-import com.shuyu.github.kotlin.module.StartActivity
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
+import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.clearTask
 import javax.inject.Inject
 
 
@@ -51,11 +47,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
 
 
-    private var basicStorage: String by GSYPreference(AppConfig.USER_BASIC_CODE, "")
 
-    private var tokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
-
-    private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
+    @Inject
+    lateinit var loginRepository: LoginRepository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,14 +79,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.LoginOut)
                                 .withTextColorRes(R.color.red).withOnDrawerItemClickListener { view, position, drawerItem ->
-
-                                    basicStorage = ""
-                                    tokenStorage = ""
-                                    userInfoStorage = ""
-                                    val intent = Intent(view.context, StartActivity::class.java)
-                                    intent.clearTask()
-                                    startActivity(intent)
-
+                                    loginRepository.logout(view.context)
                                     drawerItem.withSetSelected(false)
                                     true
                                 }

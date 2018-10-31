@@ -2,17 +2,23 @@ package com.shuyu.github.kotlin.repository
 
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import android.content.Intent
 import android.util.Base64
 import com.shuyu.github.kotlin.common.config.AppConfig
-import com.shuyu.github.kotlin.common.net.*
+import com.shuyu.github.kotlin.common.net.FlatMapResponse2Result
+import com.shuyu.github.kotlin.common.net.FlatMapResult2Response
+import com.shuyu.github.kotlin.common.net.ResultProgressObserver
+import com.shuyu.github.kotlin.common.net.RetrofitFactory
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.bean.LoginRequestModel
 import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.module.StartActivity
 import com.shuyu.github.kotlin.service.LoginService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
+import org.jetbrains.anko.clearTask
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -28,6 +34,8 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
     private var accessTokenStorage: String by GSYPreference(AppConfig.ACCESS_TOKEN, "")
 
     private var userBasicCodeStorage: String by GSYPreference(AppConfig.USER_BASIC_CODE, "")
+
+    private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
 
     fun getTokenObservable(): Observable<String> {
@@ -96,5 +104,16 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
     fun clearTokenStorage() {
         accessTokenStorage = ""
         userBasicCodeStorage = ""
+    }
+
+
+
+    fun logout(context: Context) {
+        accessTokenStorage = ""
+        userBasicCodeStorage = ""
+        userInfoStorage = ""
+        val intent = Intent(context, StartActivity::class.java)
+        intent.clearTask()
+        context.startActivity(intent)
     }
 }
