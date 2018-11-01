@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.image.BlurTransformation
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import com.shuyu.gsyimageloader.GSYLoadOption
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -51,7 +52,7 @@ object CommonUtils {
         } else if (date.toString().length < 10) {
             return date.toString()
         }
-        return date.toString().substring(0, 10)
+        return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date).substring(0, 10)
     }
 
     fun getNewsTimeStr(date: Date?): String {
