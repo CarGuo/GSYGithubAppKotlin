@@ -9,7 +9,6 @@ import com.shuyu.github.kotlin.model.bean.IssueEvent
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.service.IssueService
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -187,20 +186,17 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     fun deleteComment(context: Context, userName: String, reposName: String, commentId: String, resultCallBack: ResultCallBack<String>?) {
         val issueService = retrofit.create(IssueService::class.java).deleteComment(userName, reposName, commentId)
-                .flatMap {
-                    FlatMapResponse2Result(it)
-                }.flatMap {
-                    Observable.just(commentId)
-                }.flatMap {
-                    FlatMapResult2Response(it)
-                }
-        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<String>(context) {
-            override fun onSuccess(result: String?) {
-                resultCallBack?.onSuccess(result)
+        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<ResponseBody>(context) {
+            override fun onSuccess(result: ResponseBody?) {
+                resultCallBack?.onSuccess(commentId)
             }
 
             override fun onCodeError(code: Int, message: String) {
-                resultCallBack?.onFailure()
+                if (code == 404) {
+                    resultCallBack?.onSuccess(commentId)
+                } else {
+                    resultCallBack?.onFailure()
+                }
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
