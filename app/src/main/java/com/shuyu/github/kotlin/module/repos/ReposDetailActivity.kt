@@ -76,6 +76,11 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
 
     private lateinit var viewModel: ReposDetailViewModel
 
+    private lateinit var fragmentReadme: ReposReadmeFragment
+    private lateinit var fragmentActionList: ReposActionListFragment
+    private lateinit var fragmentFileList: ReposFileListFragment
+    private lateinit var fragmentIssueList: ReposIssueListFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
@@ -94,6 +99,9 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
                 .get(ReposDetailViewModel::class.java)
         viewModel.getReposStatus(userName, reposName)
 
+        viewModel.starredStatus.observe(this, Observer { result ->
+            initControlBar()
+        })
         viewModel.watchedStatus.observe(this, Observer { result ->
             initControlBar()
         })
@@ -122,10 +130,10 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
     }
 
     private fun getFragmentList(): ArrayList<Fragment> {
-        val fragmentReadme = getRouterNavigation(ARouterAddress.ReposDetailReadme, userName, reposName).navigation() as ReposReadmeFragment
-        val fragmentActionList = getRouterNavigation(ARouterAddress.ReposDetailActionList, userName, reposName).navigation() as ReposActionListFragment
-        val fragmentFileList = getRouterNavigation(ARouterAddress.ReposDetailFileList, userName, reposName).navigation() as ReposFileListFragment
-        val fragmentIssueList = getRouterNavigation(ARouterAddress.ReposDetailIssueList, userName, reposName).navigation() as ReposIssueListFragment
+        fragmentReadme = getRouterNavigation(ARouterAddress.ReposDetailReadme, userName, reposName).navigation() as ReposReadmeFragment
+        fragmentActionList = getRouterNavigation(ARouterAddress.ReposDetailActionList, userName, reposName).navigation() as ReposActionListFragment
+        fragmentFileList = getRouterNavigation(ARouterAddress.ReposDetailFileList, userName, reposName).navigation() as ReposFileListFragment
+        fragmentIssueList = getRouterNavigation(ARouterAddress.ReposDetailIssueList, userName, reposName).navigation() as ReposIssueListFragment
         return arrayListOf(fragmentReadme, fragmentActionList, fragmentFileList, fragmentIssueList)
     }
 
@@ -135,17 +143,16 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
         repos_detail_control_bar.list.addAll(dataList)
         repos_detail_control_bar.listView.adapter.notifyDataSetChanged()
         repos_detail_control_bar.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
-           //todo 请求star，watch，fork
             val item = repos_detail_control_bar.list[position]
             when {
-                item.contains("star") -> {
-
+                item.toLowerCase().contains("star") -> {
+                    viewModel.changeStarStatus(this, userName, reposName)
                 }
-                item.contains("watch") -> {
-
+                item.toLowerCase().contains("watch") -> {
+                    viewModel.changeWatchStatus(this, userName, reposName)
                 }
                 item.contains("fork") -> {
-
+                    viewModel.forkRepository(this, userName, reposName)
                 }
             }
         }
@@ -156,19 +163,19 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
         val starStatus = viewModel.starredStatus.value
         val watchStatus = viewModel.watchedStatus.value
         if (starStatus != null) {
-            val star = if(starStatus) "{GSY-REPOS_ITEM_STARED} unStar" else "{GSY-REPOS_ITEM_STAR} star"
+            val star = if (starStatus) "{GSY-REPOS_ITEM_STARED} unStar" else "{GSY-REPOS_ITEM_STAR} star"
             controlList.add(star)
         }
 
         if (watchStatus != null) {
-            val watch = if(watchStatus) "{GSY-REPOS_ITEM_WATCHED} unWatch" else "{GSY-REPOS_ITEM_WATCH} watch"
+            val watch = if (watchStatus) "{GSY-REPOS_ITEM_WATCHED} unWatch" else "{GSY-REPOS_ITEM_WATCH} watch"
             controlList.add(watch)
         }
 
         if (starStatus != null && watchStatus != null) {
             controlList.add("{GSY-REPOS_ITEM_FORK} fork")
         }
-        return  controlList
+        return controlList
     }
 
 }

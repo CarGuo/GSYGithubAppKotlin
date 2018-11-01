@@ -1,10 +1,14 @@
 package com.shuyu.github.kotlin.repository
 
 import android.app.Application
+import android.arch.lifecycle.MutableLiveData
+import android.content.Context
+import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.HtmlUtils
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.Issue
+import com.shuyu.github.kotlin.model.bean.Repository
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
@@ -14,10 +18,17 @@ import com.shuyu.github.kotlin.service.IssueService
 import com.shuyu.github.kotlin.service.RepoService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import okhttp3.ResponseBody
+import org.jetbrains.anko.toast
 import retrofit2.Retrofit
 import javax.inject.Inject
 
 class ReposRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application) {
+
+    companion object {
+        const val STAR_KEY = "starred"
+        const val WATCH_KEY = "watched"
+    }
 
     /**
      * 趋势
@@ -207,6 +218,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
+    /**
+     * 获取仓库状态
+     */
     fun getReposStatus(userName: String, reposName: String, resultCallBack: ResultCallBack<HashMap<String, Boolean>>?) {
         val starredService = retrofit.create(RepoService::class.java).checkRepoStarred(userName, reposName)
                 .flatMap {
@@ -226,8 +240,8 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         val statusService = Observable.zip(starredService, watchedService,
                 BiFunction<Boolean, Boolean, HashMap<String, Boolean>> { starred, watched ->
                     val map = HashMap<String, Boolean>()
-                    map["starred"] = starred
-                    map["watched"] = watched
+                    map[STAR_KEY] = starred
+                    map[WATCH_KEY] = watched
                     map
                 })
                 .flatMap {
@@ -250,6 +264,81 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    /**
+     * STAR 操作
+     */
+    fun changeStarStatus(context: Context, userName: String, reposName: String, status: MutableLiveData<Boolean>) {
+        val reposService = retrofit.create(RepoService::class.java)
+        val starred = status.value ?: return
+        val starredStatus = if (starred) {
+            reposService.unstarRepo(userName, reposName)
+        } else {
+            reposService.starRepo(userName, reposName)
+        }
+        RetrofitFactory.executeResult(starredStatus, object : ResultProgressObserver<ResponseBody>(context) {
+
+            override fun onSuccess(result: ResponseBody?) {
+                status.value = status.value?.not()
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+
+            }
+
+        })
+    }
+
+    fun changeWatchStatus(context: Context, userName: String, reposName: String, status: MutableLiveData<Boolean>) {
+        val reposService = retrofit.create(RepoService::class.java)
+        val watched = status.value ?: return
+        val watchedStatus = if (watched) {
+            reposService.unwatchRepo(userName, reposName)
+        } else {
+            reposService.watchRepo(userName, reposName)
+        }
+        RetrofitFactory.executeResult(watchedStatus, object : ResultProgressObserver<ResponseBody>(context) {
+
+            override fun onSuccess(result: ResponseBody?) {
+                status.value = status.value?.not()
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+
+            }
+
+        })
+    }
+
+    fun forkRepository(context: Context, userName: String, reposName: String) {
+        val reposService = retrofit.create(RepoService::class.java)
+                .createFork(userName, reposName)
+        RetrofitFactory.executeResult(reposService, object : ResultProgressObserver<Repository>(context) {
+
+            override fun onSuccess(result: Repository?) {
+                context.toast(R.string.forkSuccess)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                context.toast(R.string.forkFail)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                context.toast(R.string.forkFail)
+            }
+        })
+    }
+
+    /**
+     * 获取issue列表
+     */
     fun getReposIssueList(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val eventService = retrofit.create(IssueService::class.java).getRepoIssues(true, userName, reposName, page)
                 .flatMap {
