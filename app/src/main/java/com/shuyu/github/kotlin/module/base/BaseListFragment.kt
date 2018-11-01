@@ -67,7 +67,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     if (currentSize == 0) {
                         adapter?.notifyDataSetChanged()
                     } else {
-                        adapter?.notifyItemRangeChanged(currentSize, (currentSize + items.size))
+                        adapter?.notifyItemRangeChanged(currentSize + 1, (currentSize + items.size - 1))
                     }
                 }
             }

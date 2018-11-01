@@ -50,7 +50,7 @@ fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, eidtTitle
             toast(R.string.issueContentEmpty)
             return@setOnClickListener
         }
-        listener?.onConfirm(title, titleText, contentText)
+        listener?.onConfirm(dialog, title, titleText, contentText)
 
     }
     contentView.issue_dialog_edit_cancel.setOnClickListener {
@@ -60,5 +60,5 @@ fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, eidtTitle
 }
 
 interface IssueDialogClickListener {
-    fun onConfirm(title: String, editTitle: String?, editContent: String?)
+    fun onConfirm(dialog: DialogPlus, title: String, editTitle: String?, editContent: String?)
 }

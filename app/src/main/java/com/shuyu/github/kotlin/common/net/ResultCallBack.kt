@@ -8,6 +8,8 @@ interface ResultCallBack<T> {
 
     fun onSuccess(result: T?)
 
-    fun onFailure()
+    fun onFailure() {
+
+    }
 
 }

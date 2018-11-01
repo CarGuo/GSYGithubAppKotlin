@@ -2,7 +2,9 @@ package com.shuyu.github.kotlin.module.issue
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import com.shuyu.github.kotlin.common.net.ResultCallBack
+import com.shuyu.github.kotlin.model.bean.CommentRequestModel
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.IssueRepository
@@ -41,5 +43,23 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
 
     private fun loadData() {
         issueRepository.getIssueComments(userName, reposName, issueNumber, page, this)
+    }
+
+
+    fun commentIssue(context: Context, content: String, resultCallBack: ResultCallBack<IssueUIModel>?) {
+        val commentRequestModel = CommentRequestModel()
+        commentRequestModel.body = content
+        issueRepository.commentIssue(context, userName, reposName, issueNumber, commentRequestModel, object : ResultCallBack<IssueUIModel> {
+            override fun onSuccess(result: IssueUIModel?) {
+                result?.apply {
+                    dataList.value = arrayListOf(result)
+                }
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure() {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 }

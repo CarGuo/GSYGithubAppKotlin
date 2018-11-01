@@ -9,8 +9,10 @@ import android.view.View
 import android.widget.AdapterView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.orhanobut.dialogplus.DialogPlus
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.common.utils.IssueDialogClickListener
 import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.databinding.FragmentIssueDetailBinding
@@ -90,10 +92,15 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
     }
 
 
-    override fun onConfirm(title: String, editTitle: String?, editContent: String?) {
+    override fun onConfirm(dialog: DialogPlus, title: String, editTitle: String?, editContent: String?) {
         when {
             title.contains(getString(R.string.issueComment)) -> {
-
+                getViewModel().commentIssue(context!!, editContent!!, object : ResultCallBack<IssueUIModel> {
+                    override fun onSuccess(result: IssueUIModel?) {
+                        dialog.dismiss()
+                        getRecyclerView()?.layoutManager?.scrollToPosition(adapter?.dataList!!.size - 1)
+                    }
+                })
             }
             title.contains(getString(R.string.issueEdit)) -> {
 
@@ -117,10 +124,10 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
             val item = issue_detail_control_bar.list[position]
             when {
                 item.contains(getString(R.string.issueComment)) -> {
-                    activity?.showIssueEditDialog(getString(R.string.issueComment), true, "", "", this)
+                    activity?.showIssueEditDialog(getString(R.string.issueComment), false, "", "", this)
                 }
                 item.contains(getString(R.string.issueEdit)) -> {
-                    activity?.showIssueEditDialog(getString(R.string.issueComment), true, issueInfo.action, issueInfo.content, this)
+                    activity?.showIssueEditDialog(getString(R.string.issueEdit), true, issueInfo.action, issueInfo.content, this)
                 }
                 item.contains(getString(R.string.issueClose)) -> {
 
