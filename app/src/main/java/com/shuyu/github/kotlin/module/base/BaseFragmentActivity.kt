@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.shuyu.github.kotlin.R
 import dagger.android.DispatchingAndroidInjector
@@ -18,7 +19,7 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-10-24
  */
-abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInjector {
+abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -34,6 +35,8 @@ abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInj
             actionBar.setDisplayShowTitleEnabled(false)
         }
 
+        activity_fragment_container_toolbar.setOnMenuItemClickListener(this)
+
         activity_fragment_container_toolbar.title = getToolBarTitle()
 
         addFragment(getInitFragment(), R.id.activity_fragment_container_id)
@@ -47,6 +50,8 @@ abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInj
         }
         return true
     }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean = true
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 

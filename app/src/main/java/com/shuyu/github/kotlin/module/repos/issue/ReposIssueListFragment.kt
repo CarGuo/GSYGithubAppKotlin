@@ -83,6 +83,7 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
                     adapter?.dataList?.add(0, result)
                     adapter?.notifyDataSetChanged()
                     getRecyclerView()?.layoutManager?.scrollToPosition(0)
+                    dialog.dismiss()
                 }
             }
         })
