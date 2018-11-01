@@ -68,6 +68,7 @@
     <string name="reposFile">文件</string>
     <string name="reposIssue">Issues</string>
     <string name="issueInfo">说明</string>
+    <string name="issue">问题</string>
     <string name="issueComment">回复</string>
     <string name="issueCommentDelete">刪除回复</string>
     <string name="issueCommentEdit">编辑回复</string>

@@ -62,4 +62,5 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
             }
         })
     }
+
 }

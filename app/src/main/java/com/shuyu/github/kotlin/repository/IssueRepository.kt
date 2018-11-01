@@ -4,10 +4,12 @@ import android.app.Application
 import android.content.Context
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.model.bean.CommentRequestModel
+import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.IssueEvent
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.service.IssueService
+import io.reactivex.Observable
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -77,11 +79,46 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
-    fun editIssue() {
+    fun editIssue(context: Context, userName: String, reposName: String, number: Int, issue: Issue, resultCallBack: ResultCallBack<IssueUIModel>?) {
+        val issueService = retrofit.create(IssueService::class.java).editIssue(userName, reposName, number, issue)
+                .flatMap {
+                    FlatMapResponse2ResponseObject(it, object : FlatConversionObjectInterface<Issue, IssueUIModel> {
+                        override fun onConversion(t: Issue?): IssueUIModel {
+                            return IssueConversion.issueToIssueUIModel(t!!)
+                        }
+                    })
+                }
+        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<IssueUIModel>(context) {
+
+            override fun onSuccess(result: IssueUIModel?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
-    fun createIssue() {
+    fun createIssue(context: Context, userName: String, reposName: String, issue: Issue, resultCallBack: ResultCallBack<IssueUIModel>?) {
+        val issueService = retrofit.create(IssueService::class.java).createIssue(userName, reposName, issue)
+                .flatMap {
+                    FlatMapResponse2ResponseObject(it, object : FlatConversionObjectInterface<Issue, IssueUIModel> {
+                        override fun onConversion(t: Issue?): IssueUIModel {
+                            return IssueConversion.issueToIssueUIModel(t!!)
+                        }
+                    })
+                }
+        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<IssueUIModel>(context) {
 
+            override fun onSuccess(result: IssueUIModel?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
     fun commentIssue(context: Context, userName: String, reposName: String, number: Int, commentRequestModel: CommentRequestModel, resultCallBack: ResultCallBack<IssueUIModel>?) {
@@ -106,20 +143,50 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
-    fun changeIssueStatus() {
 
+    fun editComment(context: Context, userName: String, reposName: String, commentId: String, commentRequestModel: CommentRequestModel, resultCallBack: ResultCallBack<IssueUIModel>?) {
+        val issueService = retrofit.create(IssueService::class.java).editComment(userName, reposName, commentId, commentRequestModel)
+                .flatMap {
+                    FlatMapResponse2ResponseObject(it, object : FlatConversionObjectInterface<IssueEvent, IssueUIModel> {
+                        override fun onConversion(t: IssueEvent?): IssueUIModel {
+                            return IssueConversion.issueEventToIssueUIModel(t!!)
+                        }
+                    })
+                }
+        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<IssueUIModel>(context) {
+
+            override fun onSuccess(result: IssueUIModel?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
-    fun editComment() {
+    fun deleteComment(context: Context, userName: String, reposName: String, commentId: String, resultCallBack: ResultCallBack<String>?) {
+        val issueService = retrofit.create(IssueService::class.java).deleteComment(userName, reposName, commentId)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }.flatMap {
+                    Observable.just(commentId)
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<String>(context) {
+            override fun onSuccess(result: String?) {
+                resultCallBack?.onSuccess(result)
+            }
 
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
-    fun deleteComment() {
-
-    }
-
-    fun changeIssueLock() {
-
-
-    }
 }
