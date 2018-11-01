@@ -4,17 +4,22 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.AdapterView
+import androidx.core.os.postDelayed
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.OnItemClickListener
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.common.utils.IssueDialogClickListener
+import com.shuyu.github.kotlin.common.utils.copy
 import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
+import com.shuyu.github.kotlin.common.utils.showOptionSelectDialog
 import com.shuyu.github.kotlin.databinding.FragmentIssueDetailBinding
 import com.shuyu.github.kotlin.databinding.LayoutIssueHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
@@ -25,6 +30,7 @@ import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.IssueCommentHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_issue_detail.*
+import org.jetbrains.anko.toast
 
 /**
  * Created by guoshuyu
@@ -67,6 +73,42 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
+        val item = adapter?.dataList?.get(position) as IssueUIModel
+        val list = arrayListOf(getString(R.string.copyComment), getString(R.string.issueCommentEdit), getString(R.string.issueCommentDelete))
+        val itemListener = OnItemClickListener { dialog, _, _, p ->
+            when {
+                list[p].contains(getString(R.string.copyComment)) -> {
+                    context.copy(item.action)
+                    dialog.dismiss()
+                    context.toast(R.string.hadCopy)
+
+                }
+                list[p].contains(getString(R.string.issueCommentEdit)) -> {
+                    dialog.dismiss()
+                    Handler().postDelayed(1000) {
+                        activity?.showIssueEditDialog(getString(R.string.issueCommentEdit), false, position.toString(), item.action, object : IssueDialogClickListener {
+                            override fun onConfirm(dialog: DialogPlus, title: String, editTitle: String?, editContent: String?) {
+                                val currentPosition = editTitle!!.toInt()
+                                val currentItem = adapter?.dataList!![currentPosition] as IssueUIModel
+                                currentItem.action = editContent ?: ""
+                                getViewModel().editComment(context, currentItem.status, currentItem)
+                                dialog.dismiss()
+                            }
+                        })
+                    }
+                }
+                list[p].contains(getString(R.string.issueCommentDelete)) -> {
+                    dialog.dismiss()
+                    getViewModel().deleteComment(context, item.status, object : ResultCallBack<String> {
+                        override fun onSuccess(result: String?) {
+                            adapter?.dataList?.remove(position)
+                            adapter?.notifyItemRemoved(position)
+                        }
+                    })
+                }
+            }
+        }
+        context.showOptionSelectDialog(list, itemListener)
     }
 
     override fun enableRefresh(): Boolean = true
@@ -104,12 +146,6 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
             }
             title.contains(getString(R.string.issueEdit)) -> {
                 getViewModel().editIssue(context!!, editTitle!!, editContent!!)
-                dialog.dismiss()
-            }
-            title.contains(getString(R.string.issueCommentEdit)) -> {
-                val position = editTitle!!.toInt()
-                val item = adapter?.dataList!![position] as IssueUIModel
-                getViewModel().editComment(context!!, item.status, item)
                 dialog.dismiss()
             }
         }

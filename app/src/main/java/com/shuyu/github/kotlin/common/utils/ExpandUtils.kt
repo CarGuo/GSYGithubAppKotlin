@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.common.utils
 
+import android.content.ClipData
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
@@ -44,6 +45,13 @@ fun Context.colorIdToString(colorId: Int): String {
     stringBuffer.append(Integer.toHexString(Color.green(color)))
     stringBuffer.append(Integer.toHexString(Color.blue(color)))
     return stringBuffer.toString()
+}
+
+fun Context.copy(string: String) {
+    val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
+            as android.content.ClipboardManager
+    val clip = ClipData.newPlainText("", string)
+    clipboardManager.primaryClip = clip
 }
 
 

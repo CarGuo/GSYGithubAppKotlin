@@ -6,8 +6,10 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.OnItemClickListener
 import com.orhanobut.dialogplus.ViewHolder
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.ui.adapter.TextListAdapter
 import kotlinx.android.synthetic.main.layout_issue_edit_dialog.view.*
 import org.jetbrains.anko.toast
 
@@ -16,7 +18,7 @@ import org.jetbrains.anko.toast
  * Date: 2018-10-31
  */
 
-fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, eidtTitle: String?, editContent: String?, listener: IssueDialogClickListener?) {
+fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, editTitle: String?, editContent: String?, listener: IssueDialogClickListener?) {
     val contentView = LayoutInflater.from(this).inflate(R.layout.layout_issue_edit_dialog, null, false)
     val height = (Resources.getSystem().displayMetrics.heightPixels * 0.6).toInt()
     contentView.issue_dialog_content_layout.layoutParams.height = height
@@ -36,7 +38,7 @@ fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, eidtTitle
 
     contentView.issue_dialog_title.text = title
 
-    eidtTitle?.apply { contentView.issue_dialog_edit_title.setText(this) }
+    editTitle?.apply { contentView.issue_dialog_edit_title.setText(this) }
     editContent?.apply { contentView.issue_dialog_edit_content.setText(this) }
 
     contentView.issue_dialog_edit_ok.setOnClickListener {
@@ -56,6 +58,17 @@ fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, eidtTitle
     contentView.issue_dialog_edit_cancel.setOnClickListener {
         dialog.dismiss()
     }
+    dialog.show()
+}
+
+
+fun Context.showOptionSelectDialog(dataList: ArrayList<String>, onItemClickListener: OnItemClickListener) {
+    val dialog = DialogPlus.newDialog(this)
+            .setAdapter(TextListAdapter(this, dataList))
+            .setGravity(Gravity.CENTER)
+            .setOnItemClickListener(onItemClickListener)
+            .setExpanded(false)
+            .create()
     dialog.show()
 }
 
