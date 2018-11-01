@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.service.IssueService
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -141,6 +142,25 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
             }
         })
 
+    }
+
+    fun lockIssue(context: Context, userName: String, reposName: String, number: Int, lock: Boolean, resultCallBack: ResultCallBack<Boolean>?) {
+        val service = retrofit.create(IssueService::class.java)
+        val issueService = if (lock) {
+            service.lockIssue(userName, reposName, number)
+        } else {
+            service.unLockIssue(userName, reposName, number)
+        }
+        RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<ResponseBody>(context) {
+
+            override fun onSuccess(result: ResponseBody?) {
+                resultCallBack?.onSuccess(true)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
 

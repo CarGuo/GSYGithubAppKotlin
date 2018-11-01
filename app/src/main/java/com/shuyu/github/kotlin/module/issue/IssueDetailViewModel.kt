@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.bean.CommentRequestModel
+import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.IssueRepository
@@ -23,6 +24,19 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
     val liveIssueModel = MutableLiveData<IssueUIModel>()
 
     override fun loadDataByRefresh() {
+        loadInfo()
+        loadData()
+    }
+
+    override fun loadDataByLoadMore() {
+        loadData()
+    }
+
+    private fun loadData() {
+        issueRepository.getIssueComments(userName, reposName, issueNumber, page, this)
+    }
+
+    private fun loadInfo() {
         issueRepository.getIssueInfo(userName, reposName, issueNumber, object : ResultCallBack<IssueUIModel> {
             override fun onSuccess(result: IssueUIModel?) {
                 result?.apply {
@@ -34,15 +48,6 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
             override fun onFailure() {
             }
         })
-        loadData()
-    }
-
-    override fun loadDataByLoadMore() {
-        loadData()
-    }
-
-    private fun loadData() {
-        issueRepository.getIssueComments(userName, reposName, issueNumber, page, this)
     }
 
 
@@ -63,4 +68,26 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
         })
     }
 
+    fun changeIssueStatus(context: Context, status: String) {
+        val issue = Issue()
+        issue.state = status
+        issueRepository.editIssue(context, userName, reposName, issueNumber, issue, object : ResultCallBack<IssueUIModel> {
+            override fun onSuccess(result: IssueUIModel?) {
+                result?.apply {
+                    issueUIModel.cloneFrom(this)
+                    liveIssueModel.value = this
+                }
+            }
+        })
+
+    }
+
+    fun lockIssueStatus(context: Context, lock: Boolean) {
+        issueRepository.lockIssue(context, userName, reposName, issueNumber, lock, object : ResultCallBack<Boolean> {
+            override fun onSuccess(result: Boolean?) {
+                loadInfo()
+            }
+        })
+
+    }
 }

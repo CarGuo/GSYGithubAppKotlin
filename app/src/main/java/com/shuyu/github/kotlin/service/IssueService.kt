@@ -119,4 +119,17 @@ interface IssueService {
             @Body body: Issue
     ): Observable<Response<Issue>>
 
+    @PUT("repos/{owner}/{repo}/issues/{issueNumber}/lock")
+    fun lockIssue(
+            @Path("owner") owner: String,
+            @Path("repo") repo: String,
+            @Path("issueNumber") issueNumber: Int
+    ): Observable<Response<ResponseBody>>
+
+    @DELETE("repos/{owner}/{repo}/issues/{issueNumber}/lock")
+    fun unLockIssue(
+            @Path("owner") owner: String,
+            @Path("repo") repo: String,
+            @Path("issueNumber") issueNumber: Int
+    ): Observable<Response<ResponseBody>>
 }

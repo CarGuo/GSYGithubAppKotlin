@@ -130,16 +130,16 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
                     activity?.showIssueEditDialog(getString(R.string.issueEdit), true, issueInfo.action, issueInfo.content, this)
                 }
                 item.contains(getString(R.string.issueClose)) -> {
-
+                    getViewModel().changeIssueStatus(activity!!, "closed")
                 }
                 item.contains(getString(R.string.issueOpen)) -> {
-
+                    getViewModel().changeIssueStatus(activity!!, "open")
                 }
                 item.contains(getString(R.string.issueUnlock)) -> {
-
+                    getViewModel().lockIssueStatus(activity!!, false)
                 }
                 item.contains(getString(R.string.issueLocked)) -> {
-
+                    getViewModel().lockIssueStatus(activity!!, true)
                 }
             }
         }
