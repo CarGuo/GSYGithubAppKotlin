@@ -62,12 +62,12 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
         getViewModel().dataList.observe(this, Observer { items ->
             items?.apply {
                 if (items.size > 0) {
-                    val currentSize:Int = adapter?.dataList?.size ?: 0
+                    val currentSize: Int = adapter?.dataList?.size ?: 0
                     adapter?.dataList?.addAll(items)
                     if (currentSize == 0) {
                         adapter?.notifyDataSetChanged()
                     } else {
-                        adapter?.notifyItemRangeInserted(currentSize + adapter!!.absFirstPosition(), items.size)
+                        notifyInsert(currentSize, items.size)
                     }
                 }
             }
@@ -149,6 +149,14 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
 
     open fun isLoading(): Boolean = getViewModel().isLoading()
 
+    open fun notifyInsert(position: Int, count: Int) {
+        adapter?.notifyItemRangeInserted(position + adapter!!.absFirstPosition(), count)
+    }
+
+    open fun notifyDelete(position: Int, count: Int) {
+        adapter?.dataList?.removeAt(position)
+        adapter?.notifyItemRangeRemoved(position + adapter!!.absFirstPosition(), count)
+    }
 
     fun initList() {
         if (activity != null && getRecyclerView() != null) {

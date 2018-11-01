@@ -101,8 +101,7 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
                     dialog.dismiss()
                     getViewModel().deleteComment(context, item.status, object : ResultCallBack<String> {
                         override fun onSuccess(result: String?) {
-                            adapter?.dataList?.remove(position)
-                            adapter?.notifyDataSetChanged()
+                            notifyDelete(position, 1)
                         }
                     })
                 }
