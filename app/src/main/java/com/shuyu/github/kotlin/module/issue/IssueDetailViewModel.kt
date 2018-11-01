@@ -88,6 +88,35 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
                 loadInfo()
             }
         })
+    }
 
+    fun editIssue(context: Context, title: String, body: String) {
+        val issue = Issue()
+        issue.title = title
+        issue.body = body
+        issueRepository.editIssue(context, userName, reposName, issueNumber, issue, object : ResultCallBack<IssueUIModel> {
+            override fun onSuccess(result: IssueUIModel?) {
+                result?.apply {
+                    issueUIModel.cloneFrom(this)
+                    liveIssueModel.value = this
+                }
+            }
+        })
+    }
+
+    fun editComment(context: Context, commentId: String, issueUIModel: IssueUIModel) {
+        val commentRequestModel = CommentRequestModel()
+        commentRequestModel.body = issueUIModel.action
+        issueRepository.editComment(context, userName, reposName, commentId, commentRequestModel, object : ResultCallBack<IssueUIModel> {
+            override fun onSuccess(result: IssueUIModel?) {
+                result?.apply {
+                    issueUIModel.cloneFrom(this)
+                }
+            }
+        })
+    }
+
+    fun deleteComment(context: Context, commentId: String, resultCallBack: ResultCallBack<String>?) {
+        issueRepository.deleteComment(context, userName, reposName, commentId, resultCallBack)
     }
 }

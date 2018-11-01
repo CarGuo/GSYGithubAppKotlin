@@ -103,10 +103,14 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
                 })
             }
             title.contains(getString(R.string.issueEdit)) -> {
-
+                getViewModel().editIssue(context!!, editTitle!!, editContent!!)
+                dialog.dismiss()
             }
             title.contains(getString(R.string.issueCommentEdit)) -> {
-
+                val position = editTitle!!.toInt()
+                val item = adapter?.dataList!![position] as IssueUIModel
+                getViewModel().editComment(context!!, item.status, item)
+                dialog.dismiss()
             }
         }
     }
