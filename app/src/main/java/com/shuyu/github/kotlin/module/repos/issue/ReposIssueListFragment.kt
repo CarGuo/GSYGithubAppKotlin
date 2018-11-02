@@ -14,12 +14,15 @@ import com.shuyu.github.kotlin.common.utils.IssueDialogClickListener
 import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.databinding.FragmentReposIssueListBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
+import com.shuyu.github.kotlin.di.annotation.FragmentQualifier
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.ui.holder.IssueHolder
+import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_repos_issue_list.*
+import javax.inject.Inject
 
 /**
  * Created by guoshuyu
@@ -37,6 +40,10 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
     @Autowired
     @JvmField
     var userName = ""
+
+    @field:FragmentQualifier("IssueList")
+    @Inject
+    lateinit var reposIssueListTab: MutableList<NavigationTabBar.Model>
 
 
     override fun getLayoutId(): Int {
@@ -59,6 +66,7 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        issue_list_navigation_tab_bar.models = reposIssueListTab
         issue_list_create_button.setOnClickListener {
             activity?.showIssueEditDialog(getString(R.string.issue), true, "", "", this)
         }

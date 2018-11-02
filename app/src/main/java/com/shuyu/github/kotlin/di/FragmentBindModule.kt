@@ -78,7 +78,7 @@ abstract class ReposDetailFragmentBindModule {
     abstract fun contributeReposReadmeFragment(): ReposReadmeFragment
 
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [ReposIssueListModule::class])
     abstract fun contributeReposIssueListFragment(): ReposIssueListFragment
 
 
