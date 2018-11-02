@@ -7,6 +7,7 @@ import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.module.main.MainActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
+import com.shuyu.github.kotlin.module.search.SearchActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -46,5 +47,7 @@ abstract class ActivityBindModule {
     @ContributesAndroidInjector(modules = [IssueDetailFragmentBindModule::class])
     abstract fun issueDetailActivityInjector(): IssueDetailActivity
 
-
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [IssueDetailFragmentBindModule::class])
+    abstract fun searchActivityInjector(): SearchActivity
 }

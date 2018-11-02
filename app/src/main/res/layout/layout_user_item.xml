@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="userUIModel"
+            type="com.shuyu.github.kotlin.model.ui.UserUIModel" />
+
+    </data>
+
+    <android.support.v7.widget.CardView style="@style/whiteCard">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+
+            <ImageView
+                android:id="@+id/user_item_user_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:userHeaderUrl="@{userUIModel.avatarUrl}" />
+
+            <TextView
+                android:id="@+id/user_item_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/user_item_user_img"
+                android:singleLine="true"
+                android:text="@{userUIModel.login}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/middleTextSize"
+                android:textStyle="bold" />
+
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/user_item_user_other_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_item_user_name"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/user_item_user_img"
+                android:singleLine="true"
+                android:text="@{`{GSY-REPOS_ITEM_USER}\n`+userUIModel.name}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

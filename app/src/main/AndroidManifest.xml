@@ -39,6 +39,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.search.SearchActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.StartNavigationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppFullTheme" />

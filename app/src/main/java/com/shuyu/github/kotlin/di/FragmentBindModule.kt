@@ -89,3 +89,11 @@ abstract class ReposDetailFragmentBindModule {
     @ContributesAndroidInjector
     abstract fun contributeReposFileListFragment(): ReposFileListFragment
 }
+
+@Module
+abstract class IssueDetailFragmentBindModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributeIssueDetailFragment(): IssueDetailFragment
+}
+
