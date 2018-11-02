@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import androidx.core.net.toUri
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -26,7 +29,7 @@ import javax.inject.Inject
 /**
  * 主页
  */
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener {
 
     @Inject
     lateinit var globalModel: AppGlobalModel
@@ -45,7 +48,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
      */
     @Inject
     lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
-
 
 
     @Inject
@@ -72,6 +74,17 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             }
         }
 
+
+
+        setSupportActionBar(home_tool_bar)
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setDisplayShowTitleEnabled(false)
+        }
+        home_tool_bar.setTitle(R.string.app_name)
+        home_tool_bar.setOnMenuItemClickListener(this)
+
         DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(home_tool_bar)
@@ -92,7 +105,23 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                         .withHeaderBackground(R.color.colorPrimary)
                         .withSelectionListEnabled(false)
                         .build()).build()
+
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
+        return true
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_search -> {
+
+            }
+        }
+        return true
+    }
 }
