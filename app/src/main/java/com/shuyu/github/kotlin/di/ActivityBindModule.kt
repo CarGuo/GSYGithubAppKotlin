@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.di
 
 import com.shuyu.github.kotlin.di.annotation.ActivityScope
-import com.shuyu.github.kotlin.module.StartActivity
+import com.shuyu.github.kotlin.module.StartNavigationActivity
 import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.module.main.MainActivity
@@ -20,7 +20,7 @@ abstract class ActivityBindModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [StartFragmentBindModule::class])
-    abstract fun startActivityInjector(): StartActivity
+    abstract fun StartNavigationActivityInjector(): StartNavigationActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [MainActivityModule::class, MainFragmentBindModule::class])

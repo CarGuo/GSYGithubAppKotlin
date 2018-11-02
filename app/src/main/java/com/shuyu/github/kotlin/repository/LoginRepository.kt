@@ -13,7 +13,7 @@ import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.bean.LoginRequestModel
 import com.shuyu.github.kotlin.model.bean.User
-import com.shuyu.github.kotlin.module.StartActivity
+import com.shuyu.github.kotlin.module.StartNavigationActivity
 import com.shuyu.github.kotlin.service.LoginService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
@@ -112,7 +112,7 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
         accessTokenStorage = ""
         userBasicCodeStorage = ""
         userInfoStorage = ""
-        val intent = Intent(context, StartActivity::class.java)
+        val intent = Intent(context, StartNavigationActivity::class.java)
         intent.clearTask()
         context.startActivity(intent)
     }

@@ -38,6 +38,10 @@
             android:name=".module.issue.IssueDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.StartNavigationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullTheme" />
 
         <activity
             android:name=".module.StartActivity"

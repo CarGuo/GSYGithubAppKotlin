@@ -9,7 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="match_parent"
@@ -20,10 +21,11 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/welcome" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/welcome_animation"
+            android:id="@+id/login_bg_animation"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_alignParentBottom="true"
