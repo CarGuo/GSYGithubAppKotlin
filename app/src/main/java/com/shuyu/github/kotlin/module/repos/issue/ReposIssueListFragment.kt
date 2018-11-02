@@ -30,7 +30,7 @@ import javax.inject.Inject
  */
 
 @Route(path = ARouterAddress.ReposDetailIssueList)
-class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, ReposIssueListViewModel>(), ARouterInjectable, IssueDialogClickListener {
+class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, ReposIssueListViewModel>(), ARouterInjectable, IssueDialogClickListener, NavigationTabBar.OnTabBarSelectedIndexListener {
 
 
     @Autowired
@@ -45,6 +45,10 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
     @Inject
     lateinit var reposIssueListTab: MutableList<NavigationTabBar.Model>
 
+
+    @field:FragmentQualifier("IssueList")
+    @Inject
+    lateinit var statusList: ArrayList<String>
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_repos_issue_list
@@ -62,11 +66,14 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
         super.onCreateView(mainView)
         getViewModel().userName = userName
         getViewModel().reposName = reposName
+        getViewModel().status = statusList[0]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         issue_list_navigation_tab_bar.models = reposIssueListTab
+        issue_list_navigation_tab_bar.onTabBarSelectedIndexListener = this
+        issue_list_navigation_tab_bar.modelIndex = 0
         issue_list_create_button.setOnClickListener {
             activity?.showIssueEditDialog(getString(R.string.issue), true, "", "", this)
         }
@@ -95,5 +102,20 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
                 }
             }
         })
+    }
+
+    override fun refreshComplete() {
+        super.refreshComplete()
+        issue_list_navigation_tab_bar.isTouchEnable = true
+    }
+
+    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
+
+    }
+
+    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+        issue_list_navigation_tab_bar.isTouchEnable = false
+        getViewModel().status = statusList[index]
+        showRefresh()
     }
 }

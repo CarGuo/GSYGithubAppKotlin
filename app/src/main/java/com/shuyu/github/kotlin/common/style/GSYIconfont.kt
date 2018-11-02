@@ -101,6 +101,10 @@ class GSYIconfont : ITypeface {
         GSY_HOME('\ue624'),
         GSY_MORE('\ue674'),
         GSY_SEARCH('\ue61c'),
+        GSY_EMAIL('\ue685'),
+        GSY_FOCUS('\ue60a'),
+        GSY_UN_FOCUS('\ue60b'),
+        GSY_DES('\ue6c4'),
 
         GSY_MAIN_DT('\ue684'),
         GSY_MAIN_QS('\ue818'),
@@ -114,6 +118,9 @@ class GSYIconfont : ITypeface {
         GSY_REPOS_ITEM_STAR('\ue643'),
         GSY_REPOS_ITEM_FORK('\ue67e'),
         GSY_REPOS_ITEM_ISSUE('\ue661'),
+        GSY_REPOS_ITEM_OPEN('\ue653'),
+        GSY_REPOS_ITEM_ALL('\ue603'),
+        GSY_REPOS_ITEM_CLOSE('\ue65c'),
 
         GSY_REPOS_ITEM_STARED('\ue698'),
         GSY_REPOS_ITEM_WATCH('\ue681'),

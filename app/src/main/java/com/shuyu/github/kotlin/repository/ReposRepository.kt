@@ -339,8 +339,8 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     /**
      * 获取issue列表
      */
-    fun getReposIssueList(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
-        val eventService = retrofit.create(IssueService::class.java).getRepoIssues(true, userName, reposName, page)
+    fun getReposIssueList(userName: String, reposName: String, status: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+        val eventService = retrofit.create(IssueService::class.java).getRepoIssues(true, userName, reposName, page, status)
                 .flatMap {
                     FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Issue>> {
                         override fun onConversion(t: ArrayList<Issue>?): ArrayList<Any> {

@@ -13,6 +13,8 @@ import devlight.io.library.ntb.NavigationTabBar
 
 class GSYNavigationTabBar : NavigationTabBar {
 
+    var isTouchEnable = true
+
 
     var doubleTouchListener: TabDoubleClickListener? = null
 
@@ -34,6 +36,11 @@ class GSYNavigationTabBar : NavigationTabBar {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        if (!isTouchEnable) {
+            return true
+        }
+
         super.onTouchEvent(event)
 
         gestureDetector.onTouchEvent(event)

@@ -21,6 +21,8 @@ class ReposIssueListViewModel @Inject constructor(private val reposRepository: R
 
     var reposName: String = ""
 
+    var status: String = ""
+
     override fun loadDataByRefresh() {
         loadData()
     }
@@ -30,13 +32,13 @@ class ReposIssueListViewModel @Inject constructor(private val reposRepository: R
     }
 
     private fun loadData() {
-        reposRepository.getReposIssueList(userName, reposName, page, this)
+        reposRepository.getReposIssueList(userName, reposName, status, page, this)
     }
 
     fun createIssue(context: Context, title: String, body: String, resultCallback: ResultCallBack<IssueUIModel>) {
         val issue = Issue()
         issue.title = title
         issue.body = body
-        issueRepository.createIssue(context, userName, reposName, issue, resultCallback)
+        issueRepository.createIssue(context, userName, reposName,  issue, resultCallback)
     }
 }
