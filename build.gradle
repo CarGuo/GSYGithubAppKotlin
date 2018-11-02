@@ -30,6 +30,7 @@ buildscript {
     ext.markwon_version='2.0.0'
     ext.prism4j_version='1.1.0'
     ext.dialogplus_version='1.11@aar'
+    ext.lottie_version='2.7.0'
 
     repositories {
         google()

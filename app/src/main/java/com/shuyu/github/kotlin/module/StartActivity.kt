@@ -18,6 +18,7 @@ class StartActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window?.setBackgroundDrawable(null)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
     }

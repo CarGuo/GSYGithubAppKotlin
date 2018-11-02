@@ -167,4 +167,7 @@ dependencies {
     ///Drawer
     implementation "com.mikepenz:materialdrawer:6.0.9"
 
+    ///lottie
+    implementation "com.airbnb.android:lottie:${lottie_version}"
+
 }

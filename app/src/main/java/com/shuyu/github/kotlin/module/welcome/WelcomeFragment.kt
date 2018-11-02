@@ -12,6 +12,7 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.UserConversion
 import com.shuyu.github.kotlin.module.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_welcome.*
 import javax.inject.Inject
 
 /**
@@ -32,6 +33,9 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
      */
     private var accessTokenStorage by GSYPreference(AppConfig.ACCESS_TOKEN, "")
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(mainView: View?) {
 
@@ -43,7 +47,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        welcome_animation.speed = 5.0f
         Handler().postDelayed({
             goNext(view)
         }, 2000)

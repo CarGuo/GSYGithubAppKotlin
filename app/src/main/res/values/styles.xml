@@ -15,6 +15,10 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="StartTheme" parent="AppFullTheme">
+        <item name="android:background">@drawable/launch_background</item>
+    </style>
+
     <style name="LoadingDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
