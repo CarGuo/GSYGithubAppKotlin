@@ -48,6 +48,6 @@ abstract class ActivityBindModule {
     abstract fun issueDetailActivityInjector(): IssueDetailActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [IssueDetailFragmentBindModule::class])
+    @ContributesAndroidInjector(modules = [SearchFragmentBindModule::class])
     abstract fun searchActivityInjector(): SearchActivity
 }

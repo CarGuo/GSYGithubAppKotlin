@@ -16,6 +16,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
+import com.shuyu.github.kotlin.module.search.SearchActivity
 import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search -> {
-
+                SearchActivity.gotoSearchActivity()
             }
         }
         return true

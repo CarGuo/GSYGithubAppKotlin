@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.module.repos.action.ReposActionListFragment
 import com.shuyu.github.kotlin.module.repos.file.ReposFileListFragment
 import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListFragment
 import com.shuyu.github.kotlin.module.repos.readme.ReposReadmeFragment
+import com.shuyu.github.kotlin.module.search.SearchFragment
 import com.shuyu.github.kotlin.module.trend.TrendFragment
 import com.shuyu.github.kotlin.module.welcome.WelcomeFragment
 import dagger.Module
@@ -91,9 +92,9 @@ abstract class ReposDetailFragmentBindModule {
 }
 
 @Module
-abstract class IssueDetailFragmentBindModule {
+abstract class SearchFragmentBindModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeIssueDetailFragment(): IssueDetailFragment
+    abstract fun contributeSearchFragment(): SearchFragment
 }
 
