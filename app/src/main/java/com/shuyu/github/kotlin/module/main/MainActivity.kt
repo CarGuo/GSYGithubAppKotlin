@@ -59,6 +59,32 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initViewPager()
+
+        initToolbar()
+
+        initDrawer()
+
+    }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
+        return true
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_search -> {
+
+            }
+        }
+        return true
+    }
+
+    private fun initViewPager() {
         home_view_pager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
         home_navigation_tab_bar.models = mainTabModel
         home_navigation_tab_bar.setViewPager(home_view_pager, 0)
@@ -73,9 +99,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
 
             }
         }
+    }
 
-
-
+    private fun initToolbar() {
         setSupportActionBar(home_tool_bar)
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -84,7 +110,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
         }
         home_tool_bar.setTitle(R.string.app_name)
         home_tool_bar.setOnMenuItemClickListener(this)
+    }
 
+
+    private fun initDrawer() {
         DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(home_tool_bar)
@@ -105,23 +134,5 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
                         .withHeaderBackground(R.color.colorPrimary)
                         .withSelectionListEnabled(false)
                         .build()).build()
-
-    }
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
-        return true
-    }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_search -> {
-
-            }
-        }
-        return true
     }
 }
