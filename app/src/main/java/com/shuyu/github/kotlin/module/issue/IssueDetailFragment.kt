@@ -42,9 +42,9 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
     @JvmField
     var issueNumber = 0
 
-    private lateinit var issueCommentViewModel: IssueOptionCommentViewModel
+    private lateinit var issueCommentViewModel: IssueOptionCommentController
 
-    private lateinit var issueControlViewModel: IssueControlViewModel
+    private lateinit var issueControlViewModel: IssueStatusController
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_issue_detail
@@ -59,8 +59,8 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        issueCommentViewModel = IssueOptionCommentViewModel(context!!, adapter, this)
-        issueControlViewModel = IssueControlViewModel(context!!, adapter, this, issue_detail_control_bar)
+        issueCommentViewModel = IssueOptionCommentController(context!!, adapter, this)
+        issueControlViewModel = IssueStatusController(context!!, adapter, this, issue_detail_control_bar)
 
         getViewModel().liveIssueModel.observe(this, Observer { result ->
             issueControlViewModel.initControlBar(result)

@@ -16,7 +16,7 @@ import com.shuyu.github.kotlin.common.utils.showOptionSelectDialog
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import org.jetbrains.anko.toast
 
-class IssueOptionCommentViewModel(private val context: Context, private val adapter: BindSuperAdapter?, private val issueDetailFragment: IssueDetailFragment) : OnItemClickListener {
+class IssueOptionCommentController(private val context: Context, private val adapter: BindSuperAdapter?, private val issueDetailFragment: IssueDetailFragment) : OnItemClickListener {
 
     private var selectPosition = -1
     private var selectItem: IssueUIModel? = null

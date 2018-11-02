@@ -11,7 +11,7 @@ import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.ui.view.GSYControlBar
 
-class IssueControlViewModel(private val context: Context, private val adapter: BindSuperAdapter?,
+class IssueStatusController(private val context: Context, private val adapter: BindSuperAdapter?,
                             private val issueDetailFragment: IssueDetailFragment, private val controlBar: GSYControlBar) : IssueDialogClickListener {
 
 
