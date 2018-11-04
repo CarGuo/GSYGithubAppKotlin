@@ -3,6 +3,10 @@ package com.shuyu.github.kotlin.di
 import android.app.Application
 import android.support.v4.content.ContextCompat
 import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.di.annotation.FragmentQualifier
