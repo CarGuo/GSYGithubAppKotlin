@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -11,10 +12,81 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:id="@+id/search_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_edit_border"
+                    android:hint="@string/issueInputTipTitle"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/smallTextSize" />
+
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/search_icon_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ripple_bg"
+                    android:padding="5dp"
+                    app:iiv_color="@color/colorPrimary"
+                    app:iiv_icon="GSY-SEARCH" />
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            style="@style/whiteCard"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp">
+
+            <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
+                android:id="@+id/search_type_bar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                app:ntb_badge_gravity="top"
+                app:ntb_badge_position="right"
+                app:ntb_badged="false"
+                app:ntb_bg_color="@color/colorPrimary"
+                app:ntb_icon_size_fraction="0.4"
+                app:ntb_inactive_color="@color/subTextColor"
+                app:ntb_scaled="true"
+                app:ntb_swiped="true"
+                app:ntb_tinted="true"
+                app:ntb_title_mode="all"
+                app:ntb_title_size="13sp"
+                app:ntb_titled="true" />
+        </android.support.v7.widget.CardView>
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/baseRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </layout>

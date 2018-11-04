@@ -71,7 +71,6 @@ abstract class IssueDetailFragmentBindModule {
 }
 
 
-
 @Module
 abstract class ReposDetailFragmentBindModule {
 
@@ -94,7 +93,7 @@ abstract class ReposDetailFragmentBindModule {
 @Module
 abstract class SearchFragmentBindModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [SearchModule::class])
     abstract fun contributeSearchFragment(): SearchFragment
 }
 
