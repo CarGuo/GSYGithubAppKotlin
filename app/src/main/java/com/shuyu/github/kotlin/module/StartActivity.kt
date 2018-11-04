@@ -20,5 +20,7 @@ class StartActivity : AppCompatActivity() {
         intent.clearTask()
         startActivity(intent)
 
+        finish()
+
     }
 }
