@@ -46,6 +46,7 @@
     <string name="filerType">类型</string>
     <string name="filterSort">排序</string>
     <string name="filterLanguage">语言</string>
+    <string name="filterAll">全部</string>
     <string name="Java">Java</string>
     <string name="Kotlin">Kotlin</string>
     <string name="Objective_C">Objective-C</string>

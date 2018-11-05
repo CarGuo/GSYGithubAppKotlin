@@ -10,7 +10,6 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
@@ -39,35 +38,47 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
     @Inject
     lateinit var searchTabList: MutableList<NavigationTabBar.Model>
 
-    var sortList = arrayListOf(
+    companion object {
+        const val SORT_ID = 1000L
+        const val LANGUAGE_ID = 2000L
+        const val STATUS_ID = 3000L
+    }
+
+    var sortList: ArrayList<IDrawerItem<*, *>> = arrayListOf(
             DividerDrawerItem(),
-            PrimaryDrawerItem().withIdentifier(1).withName("111").withSelectable(false).withEnabled(false),
+            PrimaryDrawerItem().withIdentifier(SORT_ID).withName(R.string.filterSort)
+                    .withSelectable(false).withEnabled(false)
+                    .withTextColorRes(R.color.subLightTextColor),
             DividerDrawerItem(),
-            SecondaryDrawerItem().withIdentifier(2).withName("111"),
-            SecondaryDrawerItem().withIdentifier(2).withName("111")
+            PrimaryDrawerItem().withIdentifier(SORT_ID + 1).withName("desc").withTag("desc").withSetSelected(true),
+            PrimaryDrawerItem().withIdentifier(SORT_ID + 2).withName("asc").withTag("asc")
     )
 
-    var languageList = arrayListOf(
+    var languageList: ArrayList<IDrawerItem<*, *>> = arrayListOf(
             DividerDrawerItem(),
-            PrimaryDrawerItem().withIdentifier(1).withName("aaa").withSelectable(false).withEnabled(false),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID).withName(R.string.filterLanguage)
+                    .withSelectable(false).withEnabled(false),
             DividerDrawerItem(),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa"),
-            SecondaryDrawerItem().withIdentifier(2).withName("aaa")
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 1).withName(R.string.filterAll).withTag("").withSetSelected(true),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 2).withName("Java").withTag("Java"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 3).withName("Dart").withTag("Dart"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 4).withName("Objective-C").withTag("Objective-C"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 5).withName("Swift").withTag("Swift"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 6).withName("PHP").withTag("PHP"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 7).withName("C++").withTag("C++"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 8).withName("C").withTag("C"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 9).withName("HTML").withTag("HTML"),
+            PrimaryDrawerItem().withIdentifier(LANGUAGE_ID + 10).withName("CSS").withTag("CSS")
     )
-    var statusList = arrayListOf(
+    var statusList: ArrayList<IDrawerItem<*, *>> = arrayListOf(
             DividerDrawerItem(),
-            PrimaryDrawerItem().withIdentifier(1).withName("---").withSelectable(false).withEnabled(false),
+            PrimaryDrawerItem().withIdentifier(STATUS_ID).withName(R.string.filerType)
+                    .withSelectable(false).withEnabled(false),
             DividerDrawerItem(),
-            SecondaryDrawerItem().withIdentifier(2).withName("---"),
-            SecondaryDrawerItem().withIdentifier(2).withName("---")
+            PrimaryDrawerItem().withIdentifier(STATUS_ID + 1).withName(R.string.best_match).withTag("best%20match").withSetSelected(true),
+            PrimaryDrawerItem().withIdentifier(STATUS_ID + 2).withName(R.string.stars).withTag("stars"),
+            PrimaryDrawerItem().withIdentifier(STATUS_ID + 3).withName(R.string.forks).withTag("forks"),
+            PrimaryDrawerItem().withIdentifier(STATUS_ID + 4).withName(R.string.updated).withTag("updated")
     )
 
     var drawer: Drawer? = null
@@ -98,16 +109,44 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
         search_type_bar.modelIndex = 0
 
         val filterList = arrayListOf<IDrawerItem<*, *>>()
+        filterList.addAll(statusList)
         filterList.addAll(sortList)
         filterList.addAll(languageList)
-        filterList.addAll(statusList)
 
+        fun clearSelect(clearList: ArrayList<IDrawerItem<*, *>>) {
+            clearList.forEach {
+                it.withSetSelected(false)
+            }
+        }
+        drawer?.currentSelectedPosition
         drawer = DrawerBuilder()
                 .withActivity(activity!!)
-                .withDrawerGravity(GravityCompat.END)
-                .withMultiSelect(true)
+                .withDrawerGravity(GravityCompat.
+                        END)
                 .withDrawerItems(filterList)
-                .addDrawerItems().build()
+                .withMultiSelect(true)
+                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                    when (drawerItem.identifier / 1000 * 1000) {
+                        SORT_ID -> {
+                            clearSelect(sortList)
+                            drawerItem.withSetSelected(true)
+                        }
+                        LANGUAGE_ID -> {
+                            clearSelect(languageList)
+                            drawerItem.withSetSelected(true)
+                        }
+                        STATUS_ID -> {
+                            clearSelect(statusList)
+                            drawerItem.withSetSelected(true)
+                        }
+                    }
+                    drawer?.adapter?.notifyAdapterDataSetChanged()
+                    true
+                }.build()
+
+        statusList[3].withSetSelected(true)
+        sortList[3].withSetSelected(true)
+        languageList[3].withSetSelected(true)
 
     }
 
