@@ -58,7 +58,6 @@
 
 
 
-
 ### 示例图片
 
 
@@ -97,8 +96,12 @@
 >敬请期待
 
 
-
 <img src="https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/thanks.jpg" width="426px"/>
+
+
+### 其他推荐
+
+* [ThirtyDegreesRay/OpenHub](https://github.com/ThirtyDegreesRay/OpenHub) : 基于 Java + Retrofit + RxJava + MVP 的开源 github app（本项目的部分数据实体是从 OpenHub 拷贝而来。）
 
 
 ### LICENSE
