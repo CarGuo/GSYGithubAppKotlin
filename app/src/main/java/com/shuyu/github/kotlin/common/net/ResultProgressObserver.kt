@@ -10,7 +10,7 @@ import com.shuyu.github.kotlin.ui.view.LoadingDialog
  * Created by guoshuyu
  * Date: 2018-10-08
  */
-abstract class ResultProgressObserver<T>(private val context: Context) : ResultObserver<T>() {
+abstract class ResultProgressObserver<T>(private val context: Context, private val needLoading: Boolean = true) : ResultObserver<T>() {
 
     private var loadingDialog: LoadingDialog? = null
 
@@ -22,7 +22,9 @@ abstract class ResultProgressObserver<T>(private val context: Context) : ResultO
 
     override fun onRequestStart() {
         super.onRequestStart()
-        showLoading()
+        if (needLoading) {
+            showLoading()
+        }
     }
 
     override fun onRequestEnd() {

@@ -3,6 +3,8 @@ package com.shuyu.github.kotlin.ui.holder.base
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
 import android.graphics.Point
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.shuyu.github.kotlin.common.style.MarkDownConfig
@@ -46,6 +48,13 @@ class DataBindingExpandUtils {
             }
         }
 
+
+        @BindingAdapter("keyListener")
+        fun editTextKeyListener(view: EditText?, listener: View.OnKeyListener) {
+            view?.apply {
+              this.setOnKeyListener(listener)
+            }
+        }
     }
 }
 

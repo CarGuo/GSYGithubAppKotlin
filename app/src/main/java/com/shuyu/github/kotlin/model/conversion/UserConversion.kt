@@ -16,6 +16,19 @@ import com.shuyu.github.kotlin.model.ui.UserUIModel
 
 object UserConversion {
 
+    fun userToUserUIModel(user: User): UserUIModel {
+        val userUIModel = UserUIModel()
+        userUIModel.login = user.login
+        userUIModel.name = if (user.type == "User") {
+            "personal"
+        } else {
+            "organization"
+        }
+        userUIModel.avatarUrl = user.avatarUrl
+        return userUIModel
+
+    }
+
     fun cloneDataFromUser(context: Context?, user: User, userUIModel: UserUIModel) {
         userUIModel.login = user.login
         userUIModel.id = user.id

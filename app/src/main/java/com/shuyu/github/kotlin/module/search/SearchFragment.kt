@@ -16,9 +16,14 @@ import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentSearchBinding
 import com.shuyu.github.kotlin.di.annotation.FragmentQualifier
+import com.shuyu.github.kotlin.model.ui.ReposUIModel
+import com.shuyu.github.kotlin.model.ui.UserUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
-import dagger.Provides
+import com.shuyu.github.kotlin.module.person.PersonActivity
+import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
+import com.shuyu.github.kotlin.ui.holder.ReposHolder
+import com.shuyu.github.kotlin.ui.holder.UserHolder
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
@@ -69,10 +74,20 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
 
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
+        binding?.searchViewModel = getViewModel()
     }
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
+        val item = adapter?.dataList?.get(position)
+        when (item) {
+            is UserUIModel -> {
+                PersonActivity.gotoPersonInfo(item.login!!)
+            }
+            is ReposUIModel -> {
+                ReposDetailActivity.gotoReposDetail(item.ownerName, item.repositoryName)
+            }
+        }
     }
 
 
@@ -93,6 +108,7 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
                 .withMultiSelect(true)
                 .withDrawerItems(filterList)
                 .addDrawerItems().build()
+
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_search
@@ -100,17 +116,36 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
 
     override fun getRecyclerView(): RecyclerView? = baseRecycler
 
+    override fun enableRefresh(): Boolean = false
+
+    override fun enableLoadMore(): Boolean = true
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
-
+        manager.bind(ReposUIModel::class.java, ReposHolder.ID, ReposHolder::class.java)
+        manager.bind(UserUIModel::class.java, UserHolder.ID, UserHolder::class.java)
     }
 
     override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
 
+    override fun onRefresh() {
+        super.onRefresh()
+        getViewModel().refresh(activity!!)
+    }
+
+    override fun onLoadMore() {
+        super.onLoadMore()
+        getViewModel().loadMore(activity!!)
+    }
 
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
     }
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+        getViewModel().type = if (index == 1) {
+            SearchViewModel.USER
+        } else {
+            SearchViewModel.REPOSITORY
+        }
+        onRefresh()
     }
 }

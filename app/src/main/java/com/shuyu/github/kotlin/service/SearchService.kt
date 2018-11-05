@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.service
 
+import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Repository
 import com.shuyu.github.kotlin.model.bean.SearchResult
@@ -18,17 +19,19 @@ interface SearchService {
     @GET("search/users")
     fun searchUsers(
             @Query(value = "q", encoded = true) query: String,
-            @Query("sort") sort: String,
-            @Query("order") order: String,
-            @Query("page") page: Int
+            @Query("sort") sort: String = "best%20match",
+            @Query("order") order: String = "desc",
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<SearchResult<User>>>
 
     @GET("search/repositories")
     fun searchRepos(
             @Query(value = "q", encoded = true) query: String,
-            @Query("sort") sort: String,
-            @Query("order") order: String,
-            @Query("page") page: Int
+            @Query("sort") sort: String = "best%20match",
+            @Query("order") order: String = "desc",
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<SearchResult<Repository>>>
 
     @GET("search/issues")
@@ -38,7 +41,8 @@ interface SearchService {
             @Query(value = "q", encoded = true) query: String,
             @Query("sort") sort: String,
             @Query("order") order: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<SearchResult<Issue>>>
 
 }
