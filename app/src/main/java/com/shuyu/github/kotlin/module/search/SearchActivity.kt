@@ -43,7 +43,7 @@ class SearchActivity : BaseFragmentActivity() {
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_filter -> {
-                fragment.drawer?.openDrawer()
+                fragment.searchFilterContorller?.drawer?.openDrawer()
             }
         }
         return true

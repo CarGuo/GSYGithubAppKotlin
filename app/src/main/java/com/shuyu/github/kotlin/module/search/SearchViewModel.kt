@@ -29,6 +29,8 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 
     var order = "desc"
 
+    var language = ""
+
     override fun loadDataByRefresh() {
     }
 
@@ -54,11 +56,14 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     }
 
     private fun loadData(context: Context) {
-        val searchQ = query.get()
+        var searchQ = query.get()
         if (searchQ.isNullOrBlank()) {
             return
         }
         if (type == REPOSITORY) {
+            if (language.isNotBlank()) {
+                searchQ = "$searchQ+language:$language"
+            }
             searchRepository.searchRepos(context, searchQ!!, sort, order, page, this)
         } else if (type == USER) {
             searchRepository.searchUsers(context, searchQ!!, sort, order, page, this)
