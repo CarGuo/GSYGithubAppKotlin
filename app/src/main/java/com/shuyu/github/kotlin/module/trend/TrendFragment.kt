@@ -11,6 +11,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentTrendBinding
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.ui.adapter.ListDropDownAdapter
 import com.shuyu.github.kotlin.ui.holder.ReposHolder
 import kotlinx.android.synthetic.main.fragment_trend.*
@@ -45,6 +46,10 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
+        adapter?.dataList?.get(position).apply {
+            val data = this as ReposUIModel
+            ReposDetailActivity.gotoReposDetail(data.ownerName, data.repositoryName)
+        }
     }
 
     override fun getViewModelClass(): Class<TrendViewModel> = TrendViewModel::class.java

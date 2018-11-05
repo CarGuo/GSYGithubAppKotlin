@@ -10,7 +10,7 @@ import com.shuyu.github.kotlin.ui.view.LoadingDialog
  * Created by guoshuyu
  * Date: 2018-10-08
  */
-abstract class ResultProgressObserver<T>(private val context: Context, private val needLoading: Boolean = true) : ResultObserver<T>() {
+abstract class ResultProgressObserver<T>(private val context: Context, private val needLoading: Boolean = true) : ResultTipObserver<T>(context) {
 
     private var loadingDialog: LoadingDialog? = null
 

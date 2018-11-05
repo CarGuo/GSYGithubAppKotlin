@@ -31,7 +31,7 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
 
         } else {
             try {
-                onCodeError(reposnse.code(), reposnse.message())
+                onInnerCodeError(reposnse.code(), reposnse.message())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -58,6 +58,34 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
 
     override fun onComplete() {}
 
+    open fun onInnerCodeError(code: Int, message: String) {
+        onCodeError(code, message)
+    }
+
+    /**
+     * 返回成功了,但是code错误
+     *
+     * @param t
+     * @throws Exception
+     */
+    @Throws(Exception::class)
+    open fun onCodeError(code: Int, message: String) {
+
+    }
+
+    open fun onRequestStart() {
+
+    }
+
+    open fun onRequestEnd() {
+
+    }
+
+    open fun onPageInfo(first: Int, current: Int, last: Int) {
+
+    }
+
+
     fun onPageInfo(response: Response<T>) {
         val pageString = response.headers().get("page_info")
         if (pageString != null) {
@@ -76,17 +104,6 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
     abstract fun onSuccess(result: T?)
 
     /**
-     * 返回成功了,但是code错误
-     *
-     * @param t
-     * @throws Exception
-     */
-    @Throws(Exception::class)
-    open fun onCodeError(code: Int, message: String) {
-
-    }
-
-    /**
      * 返回失败
      *
      * @param e
@@ -95,17 +112,5 @@ abstract class ResultObserver<T> : Observer<Response<T>> {
      */
     @Throws(Exception::class)
     abstract fun onFailure(e: Throwable, isNetWorkError: Boolean)
-
-    open fun onRequestStart() {
-
-    }
-
-    open fun onRequestEnd() {
-
-    }
-
-    open fun onPageInfo(first: Int, current: Int, last: Int) {
-
-    }
 
 }

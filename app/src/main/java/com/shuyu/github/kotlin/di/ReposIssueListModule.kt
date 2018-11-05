@@ -27,7 +27,7 @@ class ReposIssueListModule {
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_REPOS_ITEM_ALL)
                                 .color(ContextCompat.getColor(application, R.color.subTextColor))
-                                .sizeDp(20),
+                                .sizeDp(14),
                         ContextCompat.getColor(application, R.color.colorPrimaryLight))
                         .title(application.getString(R.string.issueAllText))
                         .build(),
@@ -35,7 +35,7 @@ class ReposIssueListModule {
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_REPOS_ITEM_OPEN)
                                 .color(ContextCompat.getColor(application, R.color.subTextColor))
-                                .sizeDp(20),
+                                .sizeDp(14),
                         ContextCompat.getColor(application, R.color.colorPrimaryLight))
                         .title(application.getString(R.string.issueOpenText))
                         .build(),
@@ -43,7 +43,7 @@ class ReposIssueListModule {
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_REPOS_ITEM_CLOSE)
                                 .color(ContextCompat.getColor(application, R.color.subTextColor))
-                                .sizeDp(20),
+                                .sizeDp(14),
                         ContextCompat.getColor(application, R.color.colorPrimaryLight))
                         .title(application.getString(R.string.issueCloseText))
                         .build()

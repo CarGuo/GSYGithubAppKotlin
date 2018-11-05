@@ -50,7 +50,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(trendService, object : ResultObserver<ArrayList<Any>>() {
+        RetrofitFactory.executeResult(trendService, object : ResultTipObserver<ArrayList<Any>>(application) {
             override fun onSuccess(result: ArrayList<Any>?) {
                 resultCallBack.onSuccess(result)
             }
@@ -76,7 +76,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(readeService, object : ResultObserver<String>() {
+        RetrofitFactory.executeResult(readeService, object : ResultTipObserver<String>(application) {
             override fun onSuccess(result: String?) {
                 resultCallBack.onSuccess(result)
             }
@@ -103,7 +103,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(readeService, object : ResultObserver<String>() {
+        RetrofitFactory.executeResult(readeService, object : ResultTipObserver<String>(application) {
             override fun onSuccess(result: String?) {
                 resultCallBack.onSuccess(result)
             }
@@ -129,7 +129,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(infoService, object : ResultObserver<ReposUIModel>() {
+        RetrofitFactory.executeResult(infoService, object : ResultTipObserver<ReposUIModel>(application) {
 
             override fun onSuccess(result: ReposUIModel?) {
                 resultCallBack?.onSuccess(result)
@@ -165,7 +165,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     })
                 }
 
-        RetrofitFactory.executeResult(eventService, object : ResultObserver<ArrayList<Any>>() {
+        RetrofitFactory.executeResult(eventService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)
@@ -200,7 +200,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(eventService, object : ResultObserver<ArrayList<Any>>() {
+        RetrofitFactory.executeResult(eventService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onSuccess(result: ArrayList<Any>?) {
                 resultCallBack?.onSuccess(result)
@@ -355,7 +355,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     })
                 }
 
-        RetrofitFactory.executeResult(eventService, object : ResultObserver<ArrayList<Any>>() {
+        RetrofitFactory.executeResult(eventService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)

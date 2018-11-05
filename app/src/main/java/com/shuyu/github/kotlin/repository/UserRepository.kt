@@ -119,8 +119,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                         }
                     })
                 }
-        RetrofitFactory.executeResult(service, object : ResultObserver<ArrayList<Any>>() {
-
+        RetrofitFactory.executeResult(service, object : ResultTipObserver<ArrayList<Any>>(application) {
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)
             }
@@ -132,7 +131,6 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             override fun onCodeError(code: Int, message: String) {
                 resultCallBack?.onFailure()
             }
-
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
                 resultCallBack?.onFailure()
             }

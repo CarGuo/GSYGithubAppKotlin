@@ -33,7 +33,7 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(issueService, object : ResultObserver<IssueUIModel>() {
+        RetrofitFactory.executeResult(issueService, object : ResultTipObserver<IssueUIModel>(application) {
             override fun onSuccess(result: IssueUIModel?) {
                 resultCallBack?.onSuccess(result)
             }
@@ -63,7 +63,7 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
                         }
                     })
                 }
-        RetrofitFactory.executeResult(issueService, object : ResultObserver<ArrayList<Any>>() {
+        RetrofitFactory.executeResult(issueService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)
