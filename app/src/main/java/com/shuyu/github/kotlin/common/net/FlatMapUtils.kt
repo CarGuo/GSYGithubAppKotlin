@@ -9,7 +9,7 @@ class FlatMapResponse2Result<T>(private val response: Response<T>) : ObservableS
         if (response.isSuccessful) {
             observer.onNext(response.body())
         } else {
-            observer.onError(Throwable(response.errorBody().toString()))
+            observer.onError(Throwable(response.code().toString(), Throwable(response.errorBody().toString())))
         }
     }
 }
@@ -28,7 +28,7 @@ class FlatMapResponse2ResponseResult<T>(private val response: Response<T>, priva
             observer.onNext(Response.success(result, response.headers()))
 
         } else {
-            observer.onError(Throwable(response.errorBody().toString()))
+            observer.onError(Throwable(response.code().toString(), Throwable(response.errorBody().toString())))
         }
 
     }
@@ -42,7 +42,7 @@ class FlatMapResponse2ResponseObject<T, R>(private val response: Response<T>, pr
             observer.onNext(Response.success(result, response.headers()))
 
         } else {
-            observer.onError(Throwable(response.errorBody().toString()))
+            observer.onError(Throwable(response.code().toString(), Throwable(response.errorBody().toString())))
         }
 
     }

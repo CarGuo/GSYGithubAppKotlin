@@ -17,6 +17,7 @@ import com.shuyu.gsygiideloader.GSYGlideImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import io.realm.Realm
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -54,6 +55,9 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
         ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
+
+        ///数据库
+        Realm.init(this)
 
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
             override fun placeholder(ctx: Context?): Drawable {

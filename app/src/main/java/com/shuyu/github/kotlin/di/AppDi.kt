@@ -2,14 +2,17 @@ package com.shuyu.github.kotlin.di
 
 import android.app.Application
 import com.shuyu.github.kotlin.GSYGithubApplication
+import com.shuyu.github.kotlin.common.db.RealmFactory
 import com.shuyu.github.kotlin.common.net.RetrofitFactory
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.AndroidSupportInjectionModule
+import io.realm.Realm
 import retrofit2.Retrofit
 import javax.inject.Singleton
+
 
 /**
  * App级别注入
@@ -41,6 +44,12 @@ class AppModule {
     @Provides
     fun providerRetrofit(): Retrofit {
         return RetrofitFactory.instance.retrofit
+    }
+
+    @Singleton
+    @Provides
+    fun providerReaml(): Realm {
+        return RealmFactory.instance.realm
     }
 }
 
