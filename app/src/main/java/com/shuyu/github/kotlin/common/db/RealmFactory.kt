@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.common.db
 
+import io.reactivex.Observable
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -28,15 +29,21 @@ class RealmFactory private constructor() {
                 }
                 return mRealmFactory!!
             }
-    }
 
-    val realm: Realm
+        fun getRealmObservable(): Observable<Realm> {
+            return Observable.create { emitter ->
+                val observableRealm = Realm.getDefaultInstance()
+                emitter.onNext(observableRealm)
+                emitter.onComplete()
+            }
+        }
+    }
 
     init {
         val config = RealmConfiguration.Builder()
                 .name("gsy.realm")
                 .schemaVersion(VERSION)
                 .build()
-        realm = Realm.getInstance(config)
+        Realm.setDefaultConfiguration(config)
     }
 }

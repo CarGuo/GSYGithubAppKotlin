@@ -54,8 +54,8 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                 }
                 LoadState.Refresh -> {
                     ///刷新时清空旧数据
-                    adapter?.dataList?.clear()
-                    adapter?.notifyDataSetChanged()
+                    /*adapter?.dataList?.clear()
+                    adapter?.notifyDataSetChanged()*/
                 }
             }
         })
@@ -63,6 +63,10 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
         getViewModel().dataList.observe(this, Observer { items ->
             items?.apply {
                 if (items.size > 0) {
+                    if (getViewModel().isFirstData()) {
+                        adapter?.dataList?.clear()
+                        adapter?.notifyDataSetChanged()
+                    }
                     val currentSize: Int = adapter?.dataList?.size ?: 0
                     adapter?.dataList?.addAll(items)
                     if (currentSize == 0) {

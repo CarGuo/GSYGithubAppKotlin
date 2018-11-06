@@ -2,6 +2,8 @@ package com.shuyu.github.kotlin.repository
 
 import android.app.Application
 import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.db.RealmFactory
+import com.shuyu.github.kotlin.common.db.ReceivedEvent
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
@@ -14,6 +16,7 @@ import com.shuyu.github.kotlin.service.RepoService
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.Function
+import io.realm.Realm
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -96,9 +99,48 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         if (username.isEmpty()) {
             return
         }
+
+
         val receivedEvent = retrofit.create(UserService::class.java)
                 .getNewsEvent(true, username, page)
-        userEventRequest(receivedEvent, resultCallBack)
+                .flatMap {
+                    if (page == 1 && it.isSuccessful) {
+                        val realm = Realm.getDefaultInstance()
+                        val data = GsonUtils.toJsonString(it.body())
+                        realm.executeTransaction { bgRealm ->
+                            val results = bgRealm.where(ReceivedEvent::class.java).findAll()
+                            val commitTarget = if (results.isNotEmpty()) {
+                                results[0]
+                            } else {
+                                bgRealm.createObject(ReceivedEvent::class.java)
+                            }
+                            commitTarget?.data = data
+                            bgRealm.close()
+                        }
+                    }
+                    Observable.just(it)
+                }
+
+        val receivedEventWithDb = RealmFactory.getRealmObservable()
+                .flatMap {
+                    val realmResults = it.where(ReceivedEvent::class.java).findAll()
+                    val list = if (realmResults.isEmpty()) {
+                        ArrayList()
+                    } else {
+                        GsonUtils.parserJsonToArrayBeans(realmResults[0]!!.data!!, Event::class.java)
+                    }
+                    //it.close()
+                    Observable.just(list)
+                }.flatMap {
+                    val eventUIList = ArrayList<Any>()
+                    for (event in it) {
+                        eventUIList.add(EventConversion.eventToEventUIModel(event))
+                    }
+                    resultCallBack?.onCacheSuccess(eventUIList)
+                    receivedEvent
+                }
+
+        userEventRequest(receivedEventWithDb, resultCallBack)
     }
 
     /**
@@ -131,6 +173,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             override fun onCodeError(code: Int, message: String) {
                 resultCallBack?.onFailure()
             }
+
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
                 resultCallBack?.onFailure()
             }

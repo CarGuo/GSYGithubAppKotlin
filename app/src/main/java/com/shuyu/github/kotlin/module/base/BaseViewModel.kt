@@ -75,10 +75,22 @@ abstract class BaseViewModel(private val application: Application) : ViewModel()
         }
     }
 
+    open fun isFirstData(): Boolean = page == 1
+
 
     override fun onSuccess(result: ArrayList<Any>?) {
         commitResult(result)
         completeLoadData()
+    }
+
+    override fun onCacheSuccess(result: ArrayList<Any>?) {
+        application.runOnUiThread {
+            result?.apply {
+                if (this.isNotEmpty()) {
+                    commitResult(result)
+                }
+            }
+        }
     }
 
     override fun onFailure() {

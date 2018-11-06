@@ -9,7 +9,6 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.AndroidSupportInjectionModule
-import io.realm.Realm
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -48,8 +47,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providerReaml(): Realm {
-        return RealmFactory.instance.realm
+    fun providerRealmFactory(): RealmFactory {
+        return RealmFactory.instance
     }
 }
 
