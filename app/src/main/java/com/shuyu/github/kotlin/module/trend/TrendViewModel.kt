@@ -2,7 +2,6 @@ package com.shuyu.github.kotlin.module.trend
 
 import android.app.Application
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.ReposRepository
 import javax.inject.Inject
@@ -31,16 +30,7 @@ class TrendViewModel @Inject constructor(private val repository: ReposRepository
 
     private fun loadData() {
         clearWhenRefresh()
-        repository.getTrend(object : ResultCallBack<ArrayList<Any>> {
-            override fun onSuccess(result: ArrayList<Any>?) {
-                commitResult(result)
-                completeLoadData()
-            }
-
-            override fun onFailure() {
-                completeLoadData()
-            }
-        }, sortType[0], sortType[1])
+        repository.getTrend(this, sortType[0], sortType[1])
     }
 
 }

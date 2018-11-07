@@ -14,16 +14,18 @@ import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.conversion.TrendConversion
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
+import com.shuyu.github.kotlin.repository.dao.ReposDao
 import com.shuyu.github.kotlin.service.IssueService
 import com.shuyu.github.kotlin.service.RepoService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import okhttp3.ResponseBody
 import org.jetbrains.anko.toast
+import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class ReposRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application) {
+class ReposRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application, private val reposDao: ReposDao) {
 
     companion object {
         const val STAR_KEY = "starred"
@@ -34,12 +36,21 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
      * 趋势
      */
     fun getTrend(resultCallBack: ResultCallBack<ArrayList<Any>>, language: String, since: String) {
+
+        val dbService = reposDao.getTrendDao(language, since)
+                .doOnNext {
+                    resultCallBack.onCacheSuccess(it)
+                }
+
+
         val trendService = retrofit.create(RepoService::class.java)
                 .getTrendData(true, language, since)
                 .flatMap {
                     FlatMapResponse2Result(it)
                 }.map {
                     TrendConversion.htmlToRepo(it)
+                }.doOnNext {
+                    reposDao.saveTrendDao(Response.success(GsonUtils.toJsonString(it)), language, since, true)
                 }.map {
                     val dataUIList = ArrayList<Any>()
                     for (reposUi in it) {
@@ -50,7 +61,13 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(trendService, object : ResultTipObserver<ArrayList<Any>>(application) {
+
+        val zipService = Observable.zip(dbService, trendService,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
             override fun onSuccess(result: ArrayList<Any>?) {
                 resultCallBack.onSuccess(result)
             }
