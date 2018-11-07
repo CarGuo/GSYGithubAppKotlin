@@ -7,6 +7,7 @@ import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import io.reactivex.Observable
+import io.realm.Realm
 import io.realm.RealmQuery
 import io.realm.RealmResults
 import retrofit2.Response
@@ -37,9 +38,9 @@ class UserDao @Inject constructor(private val application: Application) {
     fun getReceivedEventDao(): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
-                    val list = FlatMapRealmReadList(it, ReceivedEvent::class.java, object : FlatRealmReadConversionInterface<Event, ReceivedEvent> {
-                        override fun query(q: RealmQuery<ReceivedEvent>): RealmResults<ReceivedEvent> {
-                            return q.findAll()
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<Event, ReceivedEvent> {
+                        override fun query(realm: Realm): RealmResults<ReceivedEvent> {
+                            return realm.where(ReceivedEvent::class.java).findAll()
                         }
 
                         override fun onJSON(t: ReceivedEvent): List<Event> {
@@ -57,9 +58,9 @@ class UserDao @Inject constructor(private val application: Application) {
     fun getUserEventDao(userName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
-                    val list = FlatMapRealmReadList(it, UserEvent::class.java, object : FlatRealmReadConversionInterface<Event, UserEvent> {
-                        override fun query(q: RealmQuery<UserEvent>): RealmResults<UserEvent> {
-                            return q.equalTo("userName", userName).findAll()
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<Event, UserEvent> {
+                        override fun query(realm: Realm): RealmResults<UserEvent> {
+                            return realm.where(UserEvent::class.java).equalTo("userName", userName).findAll()
                         }
 
                         override fun onJSON(t: UserEvent): List<Event> {
@@ -99,24 +100,6 @@ class UserDao @Inject constructor(private val application: Application) {
                     } else {
                         GsonUtils.parserJsonToBean(result[0]!!.data!!, User::class.java)
                     }
-                    /*val item = FlatMapRealmReadObject(it, UserInfo::class.java, object : FlatRealmReadConversionObjectInterface<User, UserInfo, UserUIModel> {
-                        override fun query(q: RealmQuery<UserInfo>): RealmResults<UserInfo> {
-                            return q.equalTo("userName", userName).findAll()
-                        }
-
-                        override fun onJSON(t: UserInfo): User {
-                            return GsonUtils.parserJsonToBean(t.data!!, User::class.java)
-                        }
-
-                        override fun onConversion(t: User?): UserUIModel? {
-                            return if (t == null) {
-                                null
-                            } else {
-                                UserConversion.userToUserUIModel(t)
-                            }
-                        }
-                    })
-                    */
                     item
                 }
     }

@@ -34,8 +34,8 @@ interface FlatTransactionInterface<E : RealmModel> {
 }
 
 
-fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, clazz: Class<E>, listener: FlatRealmReadConversionInterface<T, E>): ArrayList<Any> {
-    val realmResults = listener.query(realm.where(clazz))
+fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, listener: FlatRealmReadConversionInterface<T, E>): ArrayList<Any> {
+    val realmResults = listener.query(realm)
     val list = if (realmResults.isEmpty()) {
         ArrayList()
     } else {
@@ -48,9 +48,9 @@ fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, clazz: Class<E>, list
     return dataList
 }
 
-fun <T, E : RealmModel, R> FlatMapRealmReadObject(realm: Realm, clazz: Class<E>, listener: FlatRealmReadConversionObjectInterface<T, E, R>): R? {
-    val realmResults = listener.query(realm.where(clazz))
-    val data =  if (realmResults.isEmpty()) {
+fun <T, E : RealmModel, R> FlatMapRealmReadObject(realm: Realm, listener: FlatRealmReadConversionObjectInterface<T, E, R>): R? {
+    val realmResults = listener.query(realm)
+    val data = if (realmResults.isEmpty()) {
         null
     } else {
         listener.onJSON(realmResults[0]!!)
@@ -60,13 +60,13 @@ fun <T, E : RealmModel, R> FlatMapRealmReadObject(realm: Realm, clazz: Class<E>,
 
 
 interface FlatRealmReadConversionInterface<T, E> {
-    fun query(q: RealmQuery<E>): RealmResults<E>
+    fun query(realm: Realm): RealmResults<E>
     fun onJSON(t: E): List<T>
     fun onConversion(t: T): Any
 }
 
 interface FlatRealmReadConversionObjectInterface<T, E, R> {
-    fun query(q: RealmQuery<E>): RealmResults<E>
+    fun query(realm: Realm): RealmResults<E>
     fun onJSON(t: E): T
     fun onConversion(t: T?): R?
 }

@@ -68,8 +68,19 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
      * issue 评论
      */
     fun getIssueComments(userName: String, reposName: String, number: Int, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = issueDao.getIssueCommentDao(userName, reposName, number)
+                .doOnNext {
+                    if (page == 1) {
+                        resultCallBack?.onCacheSuccess(it)
+                    }
+                }
+
         val issueService = retrofit.create(IssueService::class.java)
                 .getIssueComments(true, userName, reposName, number, page)
+                .doOnNext {
+                    issueDao.saveIssueCommentDao(it, userName, reposName, number, page == 1)
+                }
                 .flatMap {
                     FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<IssueEvent>> {
                         override fun onConversion(t: ArrayList<IssueEvent>?): ArrayList<Any> {
@@ -83,7 +94,13 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
                         }
                     })
                 }
-        RetrofitFactory.executeResult(issueService, object : ResultTipObserver<ArrayList<Any>>(application) {
+
+        val zipService = Observable.zip(dbService, issueService,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)

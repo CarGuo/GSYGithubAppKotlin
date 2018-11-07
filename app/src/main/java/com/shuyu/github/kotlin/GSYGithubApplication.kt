@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.Iconics
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
+import com.shuyu.github.kotlin.common.db.RealmFactory
 import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.di.AppInjector
@@ -58,6 +59,8 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
         ///数据库
         Realm.init(this)
+        RealmFactory.instance
+
 
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
             override fun placeholder(ctx: Context?): Drawable {

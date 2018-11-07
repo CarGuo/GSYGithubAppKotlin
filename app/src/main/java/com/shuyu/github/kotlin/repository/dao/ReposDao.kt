@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.common.net.GsonUtils
 import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import io.reactivex.Observable
+import io.realm.Realm
 import io.realm.RealmQuery
 import io.realm.RealmResults
 import retrofit2.Response
@@ -21,9 +22,9 @@ class ReposDao @Inject constructor(private val application: Application) {
     fun getTrendDao(language: String, since: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
-                    val list = FlatMapRealmReadList(it, TrendRepository::class.java, object : FlatRealmReadConversionInterface<TrendingRepoModel, TrendRepository> {
-                        override fun query(q: RealmQuery<TrendRepository>): RealmResults<TrendRepository> {
-                            return q.equalTo("languageType", language).equalTo("since", since).findAll()
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<TrendingRepoModel, TrendRepository> {
+                        override fun query(realm: Realm): RealmResults<TrendRepository> {
+                            return realm.where(TrendRepository::class.java).equalTo("languageType", language).equalTo("since", since).findAll()
                         }
 
                         override fun onJSON(t: TrendRepository): List<TrendingRepoModel> {
