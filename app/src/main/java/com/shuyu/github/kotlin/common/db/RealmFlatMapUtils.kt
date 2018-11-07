@@ -1,9 +1,9 @@
 package com.shuyu.github.kotlin.common.db
 
-import io.reactivex.ObservableSource
-import io.reactivex.Observer
 import io.realm.Realm
 import io.realm.RealmModel
+import io.realm.RealmQuery
+import io.realm.RealmResults
 import retrofit2.Response
 
 /**
@@ -11,37 +11,35 @@ import retrofit2.Response
  * Date: 2018-11-06
  */
 
-class FlatMapRealmSaveResult<T, E : RealmModel>(private val response: Response<T>, private val clazz: Class<E>, private val listener: FlatTransactionInterface<E>, private val needSave: Boolean) : ObservableSource<Response<T>> {
-    override fun subscribe(observer: Observer<in Response<T>?>) {
+class FlatMapRealmSaveResult<T, E : RealmModel>(response: Response<T>, private val clazz: Class<E>, private val listener: FlatTransactionInterface<E>, needSave: Boolean) {
+    init {
         if (response.isSuccessful && needSave) {
             val realm = Realm.getDefaultInstance()
             realm.executeTransaction { bgRealm ->
-                val results = bgRealm.where(clazz).findAll()
+                val results = listener.query(bgRealm.where(clazz))
                 val commitTarget = if (results.isNotEmpty()) {
                     results[0]
                 } else {
                     bgRealm.createObject(clazz)
                 }
                 listener.onTransaction(commitTarget)
-
-                bgRealm.close()
             }
         }
-        observer.onNext(response)
     }
 }
 
 interface FlatTransactionInterface<E : RealmModel> {
+    fun query(q: RealmQuery<E>): RealmResults<E>
     fun onTransaction(targetObject: E?)
 }
 
 
 fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, clazz: Class<E>, listener: FlatRealmReadConversionInterface<T, E>): ArrayList<Any> {
-    val realmResults = realm.where(clazz).findAll()
+    val realmResults = listener.query(realm.where(clazz))
     val list = if (realmResults.isEmpty()) {
         ArrayList()
     } else {
-        listener.onJSON(realmResults[0])
+        listener.onJSON(realmResults[0]!!)
     }
     val dataList = ArrayList<Any>()
     for (item in list) {
@@ -51,6 +49,7 @@ fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, clazz: Class<E>, list
 }
 
 interface FlatRealmReadConversionInterface<T, E> {
-    fun onJSON(t: E?): List<T>
-    fun onConversion(t: T?): Any
+    fun query(q: RealmQuery<E>): RealmResults<E>
+    fun onJSON(t: E): List<T>
+    fun onConversion(t: T): Any
 }

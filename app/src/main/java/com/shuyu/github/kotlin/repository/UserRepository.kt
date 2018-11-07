@@ -2,7 +2,6 @@ package com.shuyu.github.kotlin.repository
 
 import android.app.Application
 import com.shuyu.github.kotlin.common.config.AppConfig
-import com.shuyu.github.kotlin.common.db.*
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
@@ -11,16 +10,19 @@ import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.UserConversion
+import com.shuyu.github.kotlin.repository.dao.UserDao
 import com.shuyu.github.kotlin.service.RepoService
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
 
-class UserRepository @Inject constructor(private val retrofit: Retrofit, private val appGlobalModel: AppGlobalModel, private val application: Application) {
+class UserRepository @Inject constructor(private val retrofit: Retrofit, private val appGlobalModel: AppGlobalModel,
+                                         private val application: Application, private val userDao: UserDao) {
 
     private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
@@ -62,6 +64,10 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     fun getUserEventObservable(userName: String?, page: Int = 1): Observable<Response<ArrayList<Event>>> {
         return retrofit.create(UserService::class.java)
                 .getUserEvents(true, userName ?: "", page)
+                .doOnNext {
+                    userDao.saveUserEventDao(it, userName!!, page == 1)
+                }
+
     }
 
     /**
@@ -98,33 +104,23 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             return
         }
 
-
         val receivedEvent = retrofit.create(UserService::class.java)
                 .getNewsEvent(true, username, page)
-                .flatMap {
-                    FlatMapRealmSaveResult(it, ReceivedEvent::class.java, object : FlatTransactionInterface<ReceivedEvent> {
-                        override fun onTransaction(targetObject: ReceivedEvent?) {
-                            val data = GsonUtils.toJsonString(it.body())
-                            targetObject?.data = data
-                        }
-                    }, page == 1)
+                .doOnNext {
+                    userDao.saveReceivedEventDao(it, page == 1)
                 }
 
-        val receivedEventWithDb = RealmFactory.getRealmObservable()
-                .flatMap {
-                    val list = FlatMapRealmReadList(it, ReceivedEvent::class.java, object : FlatRealmReadConversionInterface<Event, ReceivedEvent> {
-                        override fun onJSON(t: ReceivedEvent?): List<Event> {
-                            return GsonUtils.parserJsonToArrayBeans(t!!.data!!, Event::class.java)
-                        }
-
-                        override fun onConversion(t: Event?): Any {
-                            return EventConversion.eventToEventUIModel(t!!)
-                        }
-                    })
-                    resultCallBack?.onCacheSuccess(list)
-                    receivedEvent
+        val userObserver = userDao.getReceivedEventDao()
+                .doOnNext {
+                    resultCallBack?.onCacheSuccess(it)
                 }
-        userEventRequest(receivedEventWithDb, resultCallBack)
+
+        val zipService = Observable.zip(userObserver, receivedEvent,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Event>>, Response<ArrayList<Event>>> { _, remote ->
+                    remote
+                })
+
+        userEventRequest(zipService, resultCallBack)
     }
 
     /**
