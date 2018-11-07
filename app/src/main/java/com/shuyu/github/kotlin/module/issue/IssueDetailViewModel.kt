@@ -38,6 +38,12 @@ class IssueDetailViewModel @Inject constructor(private val issueRepository: Issu
 
     private fun loadInfo() {
         issueRepository.getIssueInfo(userName, reposName, issueNumber, object : ResultCallBack<IssueUIModel> {
+            override fun onCacheSuccess(result: IssueUIModel?) {
+                result?.apply {
+                    issueUIModel.cloneFrom(this)
+                }
+            }
+
             override fun onSuccess(result: IssueUIModel?) {
                 result?.apply {
                     issueUIModel.cloneFrom(this)

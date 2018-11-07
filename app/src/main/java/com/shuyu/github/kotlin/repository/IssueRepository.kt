@@ -8,8 +8,12 @@ import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.IssueEvent
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
+import com.shuyu.github.kotlin.repository.dao.IssueDao
 import com.shuyu.github.kotlin.service.IssueService
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -17,14 +21,23 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-10-29
  */
-class IssueRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application) {
+class IssueRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application, private val issueDao: IssueDao) {
 
     /**
      * issue 信息
      */
     fun getIssueInfo(userName: String, reposName: String, number: Int, resultCallBack: ResultCallBack<IssueUIModel>?) {
+
+        val dbService = issueDao.getIssueInfoDao(userName, reposName, number)
+                .doOnNext {
+                    resultCallBack?.onCacheSuccess(it)
+                }
+
         val issueService = retrofit.create(IssueService::class.java)
                 .getIssueInfo(true, userName, reposName, number)
+                .doOnNext {
+                    issueDao.saveIssueInfoDao(it, userName, reposName, number)
+                }
                 .flatMap {
                     FlatMapResponse2Result(it)
                 }.map {
@@ -33,7 +46,14 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(issueService, object : ResultTipObserver<IssueUIModel>(application) {
+
+        val zipService = Observable.zip(dbService, issueService,
+                BiFunction<IssueUIModel?, Response<IssueUIModel>, Response<IssueUIModel>> { _, remote ->
+                    remote
+                })
+
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<IssueUIModel>(application) {
             override fun onSuccess(result: IssueUIModel?) {
                 resultCallBack?.onSuccess(result)
             }
