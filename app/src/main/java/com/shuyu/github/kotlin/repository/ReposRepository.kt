@@ -198,7 +198,20 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
      * 仓库事件
      */
     fun getReposEvents(userName: String, reposName: String, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int = 1) {
+
+
+        val dbService = reposDao.getReposEventDao(userName, reposName)
+                .doOnNext {
+                    if (page == 1) {
+                        resultCallBack?.onCacheSuccess(it)
+                    }
+                }
+
+
         val eventService = retrofit.create(RepoService::class.java).getRepoEvent(true, userName, reposName, page)
+                .doOnNext {
+                    reposDao.saveReposEventDao(it, userName, reposName, page == 1)
+                }
                 .flatMap {
                     FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Event>> {
                         override fun onConversion(t: ArrayList<Event>?): ArrayList<Any> {
@@ -213,7 +226,12 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     })
                 }
 
-        RetrofitFactory.executeResult(eventService, object : ResultTipObserver<ArrayList<Any>>(application) {
+        val zipService = Observable.zip(dbService, eventService,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)

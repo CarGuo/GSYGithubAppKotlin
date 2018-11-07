@@ -3,8 +3,10 @@ package com.shuyu.github.kotlin.repository.dao
 import android.app.Application
 import com.shuyu.github.kotlin.common.db.*
 import com.shuyu.github.kotlin.common.net.GsonUtils
+import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.Repository
 import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
+import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import io.reactivex.Observable
@@ -120,6 +122,39 @@ class ReposDao @Inject constructor(private val application: Application) {
                         }
                     })
                     item
+                }
+    }
+
+    fun saveReposEventDao(response: Response<ArrayList<Event>>, userName: String, reposName: String, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, RepositoryEvent::class.java, object : FlatTransactionInterface<RepositoryEvent> {
+            override fun query(q: RealmQuery<RepositoryEvent>): RealmResults<RepositoryEvent> {
+                return q.equalTo("fullName", "$userName/$reposName").findAll()
+            }
+
+            override fun onTransaction(targetObject: RepositoryEvent?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.fullName = "$userName/$reposName"
+            }
+        }, needSave)
+    }
+
+    fun getReposEventDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<Event, RepositoryEvent> {
+                        override fun query(realm: Realm): RealmResults<RepositoryEvent> {
+                            return realm.where(RepositoryEvent::class.java).equalTo("fullName", "$userName/$reposName").findAll()
+                        }
+
+                        override fun onJSON(t: RepositoryEvent): List<Event> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, Event::class.java)
+                        }
+
+                        override fun onConversion(t: Event): Any {
+                            return EventConversion.eventToEventUIModel(t)
+                        }
+                    })
+                    list
                 }
     }
 }
