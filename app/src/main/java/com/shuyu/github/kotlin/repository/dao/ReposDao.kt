@@ -4,9 +4,11 @@ import android.app.Application
 import com.shuyu.github.kotlin.common.db.*
 import com.shuyu.github.kotlin.common.net.GsonUtils
 import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Repository
 import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
 import com.shuyu.github.kotlin.model.conversion.EventConversion
+import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import io.reactivex.Observable
@@ -152,6 +154,41 @@ class ReposDao @Inject constructor(private val application: Application) {
 
                         override fun onConversion(t: Event): Any {
                             return EventConversion.eventToEventUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
+
+    fun saveReposIssue(response: Response<ArrayList<Issue>>, userName: String, reposName: String, status: String, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, RepositoryIssue::class.java, object : FlatTransactionInterface<RepositoryIssue> {
+            override fun query(q: RealmQuery<RepositoryIssue>): RealmResults<RepositoryIssue> {
+                return q.equalTo("fullName", "$userName/$reposName").equalTo("state", status).findAll()
+            }
+
+            override fun onTransaction(targetObject: RepositoryIssue?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.fullName = "$userName/$reposName"
+                targetObject?.state = status
+            }
+        }, needSave)
+    }
+
+    fun getReposIssueDao(userName: String, reposName: String, status: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<Issue, RepositoryIssue> {
+                        override fun query(realm: Realm): RealmResults<RepositoryIssue> {
+                            return realm.where(RepositoryIssue::class.java).equalTo("fullName", "$userName/$reposName")
+                                    .equalTo("state", status).findAll()
+                        }
+
+                        override fun onJSON(t: RepositoryIssue): List<Issue> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, Issue::class.java)
+                        }
+
+                        override fun onConversion(t: Issue): Any {
+                            return IssueConversion.issueToIssueUIModel(t)
                         }
                     })
                     list

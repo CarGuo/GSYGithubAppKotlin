@@ -406,7 +406,15 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
      * 获取issue列表
      */
     fun getReposIssueList(userName: String, reposName: String, status: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
-        val eventService = retrofit.create(IssueService::class.java).getRepoIssues(true, userName, reposName, page, status)
+
+        val dbService = reposDao.getReposIssueDao(userName, reposName, status)
+                .doOnNext {
+                    resultCallBack?.onCacheSuccess(it)
+                }
+        val issueService = retrofit.create(IssueService::class.java).getRepoIssues(true, userName, reposName, page, status)
+                .doOnNext {
+                    reposDao.saveReposIssue(it, userName, reposName, status, page == 1)
+                }
                 .flatMap {
                     FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Issue>> {
                         override fun onConversion(t: ArrayList<Issue>?): ArrayList<Any> {
@@ -421,7 +429,12 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     })
                 }
 
-        RetrofitFactory.executeResult(eventService, object : ResultTipObserver<ArrayList<Any>>(application) {
+        val zipService = Observable.zip(dbService, issueService,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
 
             override fun onPageInfo(first: Int, current: Int, last: Int) {
                 resultCallBack?.onPage(first, current, last)
