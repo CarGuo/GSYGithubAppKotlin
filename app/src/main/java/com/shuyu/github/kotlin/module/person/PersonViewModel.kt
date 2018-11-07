@@ -15,6 +15,13 @@ class PersonViewModel @Inject constructor(private val userRepository: UserReposi
 
     override fun loadDataByRefresh() {
         userRepository.getPersonInfo(object : ResultCallBack<User> {
+
+            override fun onCacheSuccess(result: User?) {
+                result?.apply {
+                    UserConversion.cloneDataFromUser(application, this, userObservable)
+                }
+            }
+
             override fun onSuccess(result: User?) {
                 result?.apply {
                     UserConversion.cloneDataFromUser(application, this, userObservable)

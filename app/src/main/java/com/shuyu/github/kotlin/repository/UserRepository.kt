@@ -51,7 +51,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 userInfoStorage = GsonUtils.toJsonString(it)
                 UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
             }
-            Debuger.printfLog("userInfo $userInfoStorage")
+            userDao.saveUserInfo(Response.success(it), it.login!!)
         }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
             ///拦截错误
             //userInfoStorage = ""
@@ -74,12 +74,34 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
      * 获取用户信息
      */
     fun getPersonInfo(resultCallBack: ResultCallBack<User>?, resultEventCallBack: ResultCallBack<ArrayList<Any>>, userName: String? = null) {
+
+        val userObserver = userDao.getUserInfoDao(userName)
+                .doOnNext {
+                    if (it?.login != null) {
+                        resultCallBack?.onCacheSuccess(it)
+                    }
+                }.flatMap {
+                    if (it.login != null) {
+                        userDao.getUserEventDao(it.login!!)
+                    } else {
+                        Observable.just(ArrayList())
+                    }
+                }.doOnNext {
+                    resultEventCallBack.onCacheSuccess(it)
+                }
+
         val mergeService = getPersonInfoObservable(userName)
                 .flatMap {
                     resultCallBack?.onSuccess(it)
                     getUserEventObservable(it.login)
                 }
-        userEventRequest(mergeService, resultEventCallBack)
+
+        val zipService = Observable.zip(userObserver, mergeService,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Event>>, Response<ArrayList<Event>>> { _, remote ->
+                    remote
+                })
+
+        userEventRequest(zipService, resultEventCallBack)
     }
 
     /**
@@ -112,7 +134,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
 
         val userObserver = userDao.getReceivedEventDao()
                 .doOnNext {
-                    resultCallBack?.onCacheSuccess(it)
+                    if (page == 1) {
+                        resultCallBack?.onCacheSuccess(it)
+                    }
                 }
 
         val zipService = Observable.zip(userObserver, receivedEvent,
