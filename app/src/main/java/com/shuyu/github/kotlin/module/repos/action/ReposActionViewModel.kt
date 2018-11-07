@@ -5,6 +5,7 @@ import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.ReposRepository
+import org.jetbrains.anko.runOnUiThread
 import javax.inject.Inject
 
 /**
@@ -12,7 +13,7 @@ import javax.inject.Inject
  * Date: 2018-10-26
  */
 
-class ReposActionViewModel @Inject constructor(private val reposRepository: ReposRepository, application: Application) : BaseViewModel(application) {
+class ReposActionViewModel @Inject constructor(private val reposRepository: ReposRepository, private val application: Application) : BaseViewModel(application) {
 
     val reposUIModel = ReposUIModel()
 
@@ -23,6 +24,15 @@ class ReposActionViewModel @Inject constructor(private val reposRepository: Repo
 
     override fun loadDataByRefresh() {
         reposRepository.getRepoInfo(userName, reposName, object : ResultCallBack<ReposUIModel> {
+
+            override fun onCacheSuccess(result: ReposUIModel?) {
+                application.runOnUiThread {
+                    result?.apply {
+                        reposUIModel.cloneFrom(this)
+                    }
+                }
+            }
+
             override fun onSuccess(result: ReposUIModel?) {
                 result?.apply {
                     reposUIModel.cloneFrom(this)

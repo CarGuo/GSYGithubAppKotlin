@@ -83,6 +83,13 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
      * readme
      */
     fun getReposReadme(resultCallBack: ResultCallBack<String>, userName: String, reposName: String) {
+
+        val dbService = reposDao.getReadmeDao(userName, reposName, branch = "master")
+                .doOnNext {
+                    resultCallBack.onCacheSuccess(it)
+                }
+
+
         val readeService = retrofit.create(RepoService::class.java)
                 .getReadmeHtml(true, userName, reposName)
                 .flatMap {
@@ -91,9 +98,17 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     HtmlUtils.generateHtml(application, it)
                 }.flatMap {
                     FlatMapResult2Response(it)
+                }.doOnNext {
+                    reposDao.saveReadme(it, userName, reposName, branch = "master")
                 }
 
-        RetrofitFactory.executeResult(readeService, object : ResultTipObserver<String>(application) {
+
+        val zipService = Observable.zip(dbService, readeService,
+                BiFunction<String, Response<String>, Response<String>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<String>(application) {
             override fun onSuccess(result: String?) {
                 resultCallBack.onSuccess(result)
             }
@@ -137,7 +152,17 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
      * 仓库详情
      */
     fun getRepoInfo(userName: String, reposName: String, resultCallBack: ResultCallBack<ReposUIModel>?) {
+
+        val dbService = reposDao.getRepoInfoDao(userName, reposName)
+                .doOnNext {
+                    resultCallBack?.onCacheSuccess(it)
+                }
+
+
         val infoService = retrofit.create(RepoService::class.java).getRepoInfo(true, userName, reposName)
+                .doOnNext {
+                    reposDao.saveReposInfo(it, userName, reposName)
+                }
                 .flatMap {
                     FlatMapResponse2Result(it)
                 }.map {
@@ -146,7 +171,13 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(infoService, object : ResultTipObserver<ReposUIModel>(application) {
+
+        val zipService = Observable.zip(dbService, infoService,
+                BiFunction<ReposUIModel, Response<ReposUIModel>, Response<ReposUIModel>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ReposUIModel>(application) {
 
             override fun onSuccess(result: ReposUIModel?) {
                 resultCallBack?.onSuccess(result)
