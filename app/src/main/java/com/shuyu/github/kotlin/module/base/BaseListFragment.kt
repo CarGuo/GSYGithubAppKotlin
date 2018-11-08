@@ -73,6 +73,11 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     } else {
                         notifyInsert(currentSize, items.size)
                     }
+                } else{
+                    if (getViewModel().isFirstData()) {
+                        adapter?.dataList?.clear()
+                        adapter?.notifyDataSetChanged()
+                    }
                 }
             }
         })
