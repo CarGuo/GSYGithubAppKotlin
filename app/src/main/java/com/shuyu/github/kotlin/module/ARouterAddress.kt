@@ -25,6 +25,9 @@ object ARouterAddress {
     const val SearchActivity = "/search/activity"
     const val SearchFragment = "/search/fragment"
 
+    const val GeneralListActivity = "/general/activity"
+    const val GeneralListFragment = "/general/fragment"
+
 
 
 

@@ -23,6 +23,7 @@ import com.shuyu.github.kotlin.di.annotation.ViewModelKey
 import com.shuyu.github.kotlin.module.code.CodeDetailViewModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
 import com.shuyu.github.kotlin.module.issue.IssueDetailViewModel
+import com.shuyu.github.kotlin.module.list.GeneralListViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
 import com.shuyu.github.kotlin.module.person.PersonViewModel
@@ -119,6 +120,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindIssueSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GeneralListViewModel::class)
+    abstract fun bindGeneralListViewModel(generalListViewModel: GeneralListViewModel): ViewModel
 
 
     @Binds

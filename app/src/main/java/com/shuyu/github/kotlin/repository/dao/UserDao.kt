@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.common.net.GsonUtils
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
+import com.shuyu.github.kotlin.model.conversion.UserConversion
 import io.reactivex.Observable
 import io.realm.Realm
 import io.realm.RealmQuery
@@ -119,4 +120,137 @@ class UserDao @Inject constructor(private val application: Application) {
         }, true)
     }
 
+
+    fun saveUserFollowerDao(userName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, UserFollower::class.java, object : FlatTransactionInterface<UserFollower> {
+            override fun query(q: RealmQuery<UserFollower>): RealmResults<UserFollower> {
+                return q.equalTo("userName", userName).findAll()
+            }
+
+            override fun onTransaction(targetObject: UserFollower?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.userName = userName
+            }
+        }, needSave)
+    }
+
+    fun getUserFollowerDao(userName: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<User, UserFollower> {
+                        override fun query(realm: Realm): RealmResults<UserFollower> {
+                            return realm.where(UserFollower::class.java).equalTo("userName", userName).findAll()
+                        }
+
+                        override fun onJSON(t: UserFollower): List<User> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, User::class.java)
+                        }
+
+                        override fun onConversion(t: User): Any {
+                            return UserConversion.userToUserUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
+
+    fun saveUserFollowedDao(userName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, UserFollowed::class.java, object : FlatTransactionInterface<UserFollowed> {
+            override fun query(q: RealmQuery<UserFollowed>): RealmResults<UserFollowed> {
+                return q.equalTo("userName", userName).findAll()
+            }
+
+            override fun onTransaction(targetObject: UserFollowed?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.userName = userName
+            }
+        }, needSave)
+    }
+
+    fun getUserFollowedDao(userName: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<User, UserFollowed> {
+                        override fun query(realm: Realm): RealmResults<UserFollowed> {
+                            return realm.where(UserFollowed::class.java).equalTo("userName", userName).findAll()
+                        }
+
+                        override fun onJSON(t: UserFollowed): List<User> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, User::class.java)
+                        }
+
+                        override fun onConversion(t: User): Any {
+                            return UserConversion.userToUserUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
+
+    fun saveRepositoryStarUserDao(userName: String, reposName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, RepositoryStar::class.java, object : FlatTransactionInterface<RepositoryStar> {
+            override fun query(q: RealmQuery<RepositoryStar>): RealmResults<RepositoryStar> {
+                return q.equalTo("fullName", "$userName/$reposName").findAll()
+            }
+
+            override fun onTransaction(targetObject: RepositoryStar?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.fullName = "$userName/$reposName"
+            }
+        }, needSave)
+    }
+
+
+    fun getRepositoryStarUserDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<User, RepositoryStar> {
+                        override fun query(realm: Realm): RealmResults<RepositoryStar> {
+                            return realm.where(RepositoryStar::class.java).equalTo("fullName", "$userName/$reposName").findAll()
+                        }
+
+                        override fun onJSON(t: RepositoryStar): List<User> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, User::class.java)
+                        }
+
+                        override fun onConversion(t: User): Any {
+                            return UserConversion.userToUserUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
+
+    fun saveRepositoryWatchUserDao(userName: String, reposName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, RepositoryWatcher::class.java, object : FlatTransactionInterface<RepositoryWatcher> {
+            override fun query(q: RealmQuery<RepositoryWatcher>): RealmResults<RepositoryWatcher> {
+                return q.equalTo("fullName", "$userName/$reposName").findAll()
+            }
+
+            override fun onTransaction(targetObject: RepositoryWatcher?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.fullName = "$userName/$reposName"
+            }
+        }, needSave)
+    }
+
+    fun getRepositoryWatchUserDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<User, RepositoryWatcher> {
+                        override fun query(realm: Realm): RealmResults<RepositoryWatcher> {
+                            return realm.where(RepositoryWatcher::class.java).equalTo("fullName", "$userName/$reposName").findAll()
+                        }
+
+                        override fun onJSON(t: RepositoryWatcher): List<User> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, User::class.java)
+                        }
+
+                        override fun onConversion(t: User): Any {
+                            return UserConversion.userToUserUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
 }

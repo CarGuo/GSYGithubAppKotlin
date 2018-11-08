@@ -147,6 +147,101 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         userEventRequest(zipService, resultCallBack)
     }
 
+
+    fun getUserFollower(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = userDao.getUserFollowerDao(userName)
+
+        val service = retrofit.create(UserService::class.java)
+                .getFollowers(true, userName, page)
+                .doOnNext {
+                    userDao.saveUserFollowerDao(userName, it, page == 1)
+                }
+        userListRequest(dbService, service, resultCallBack, page)
+    }
+
+    fun getUserFollowed(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = userDao.getUserFollowedDao(userName)
+
+        val service = retrofit.create(UserService::class.java)
+                .getFollowing(true, userName, page)
+                .doOnNext {
+                    userDao.saveUserFollowedDao(userName, it, page == 1)
+                }
+        userListRequest(dbService, service, resultCallBack, page)
+    }
+
+    fun getRepositoryStarUser(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = userDao.getRepositoryStarUserDao(userName, reposName)
+
+        val service = retrofit.create(RepoService::class.java)
+                .getStargazers(true, userName, reposName, page)
+                .doOnNext {
+                    userDao.saveRepositoryStarUserDao(userName, reposName, it, page == 1)
+                }
+        userListRequest(dbService, service, resultCallBack, page)
+    }
+
+
+    fun getRepositoryWatchUser(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = userDao.getRepositoryWatchUserDao(userName, reposName)
+
+        val service = retrofit.create(RepoService::class.java)
+                .getWatchers(true, userName, reposName, page)
+                .doOnNext {
+                    userDao.saveRepositoryWatchUserDao(userName, reposName, it, page == 1)
+                }
+        userListRequest(dbService, service, resultCallBack, page)
+    }
+
+    private fun userListRequest(dbObserver: Observable<ArrayList<Any>>, observer: Observable<Response<ArrayList<User>>>, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int) {
+
+
+        val dbService = dbObserver.doOnNext {
+            if (page == 1) {
+                resultCallBack?.onCacheSuccess(it)
+            }
+        }
+
+        val service = observer.flatMap {
+            FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<User>> {
+                override fun onConversion(t: ArrayList<User>?): ArrayList<Any> {
+                    val list = arrayListOf<Any>()
+                    t?.apply {
+                        this.forEach { data ->
+                            val item = UserConversion.userToUserUIModel(data)
+                            list.add(item)
+                        }
+                    }
+                    return list
+                }
+            })
+        }
+
+        val zipService = Observable.zip(dbService, service,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                super.onPageInfo(first, current, last)
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
+    }
+
     /**
      * 执行用事件相关请求
      */

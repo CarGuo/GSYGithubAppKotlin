@@ -4,6 +4,7 @@ import com.shuyu.github.kotlin.di.annotation.ActivityScope
 import com.shuyu.github.kotlin.module.StartNavigationActivity
 import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
+import com.shuyu.github.kotlin.module.list.GeneralListActivity
 import com.shuyu.github.kotlin.module.main.MainActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
@@ -50,4 +51,8 @@ abstract class ActivityBindModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [SearchFragmentBindModule::class])
     abstract fun searchActivityInjector(): SearchActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [GeneralListFragmentBindModule::class])
+    abstract fun generalListActivityInjector(): GeneralListActivity
 }

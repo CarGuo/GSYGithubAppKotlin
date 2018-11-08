@@ -48,6 +48,10 @@
             android:theme="@style/AppFullTheme" />
 
         <activity
+            android:name=".module.list.GeneralListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".module.StartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/StartTheme">

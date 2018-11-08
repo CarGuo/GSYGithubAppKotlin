@@ -8,6 +8,10 @@
             name="userUIModel"
             type="com.shuyu.github.kotlin.model.ui.UserUIModel" />
 
+        <variable
+            name="baseUserViewModel"
+            type="com.shuyu.github.kotlin.module.base.BaseUserInfoViewModel" />
+
     </data>
 
     <RelativeLayout
@@ -137,6 +141,7 @@
                 <TextView
                     android:id="@+id/user_header_repos"
                     style="@style/verticalItemText"
+                    android:onClick="@{baseUserViewModel::onTabIconClick}"
                     android:text="@{userUIModel.publicRepos}" />
 
                 <View style="@style/verticalLine" />
@@ -144,6 +149,7 @@
                 <TextView
                     android:id="@+id/user_header_fan"
                     style="@style/verticalItemText"
+                    android:onClick="@{baseUserViewModel::onTabIconClick}"
                     android:text="@{userUIModel.followers}" />
 
                 <View style="@style/verticalLine" />
@@ -151,6 +157,7 @@
                 <TextView
                     android:id="@+id/user_header_focus"
                     style="@style/verticalItemText"
+                    android:onClick="@{baseUserViewModel::onTabIconClick}"
                     android:text="@{userUIModel.following}" />
 
                 <View style="@style/verticalLine" />
@@ -158,6 +165,7 @@
                 <TextView
                     android:id="@+id/user_header_star"
                     style="@style/verticalItemText"
+                    android:onClick="@{baseUserViewModel::onTabIconClick}"
                     android:text="@{userUIModel.starRepos}" />
 
                 <View style="@style/verticalLine" />
@@ -165,6 +173,7 @@
                 <TextView
                     android:id="@+id/user_header_honor"
                     style="@style/verticalItemText"
+                    android:onClick="@{baseUserViewModel::onTabIconClick}"
                     android:text="@{userUIModel.honorRepos}" />
             </LinearLayout>
 

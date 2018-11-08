@@ -52,14 +52,16 @@ interface UserService {
     fun getFollowers(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<User>>>
 
     @GET("users/{user}/following")
     fun getFollowing(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<User>>>
 
     /**

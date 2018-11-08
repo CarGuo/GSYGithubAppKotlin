@@ -12,6 +12,8 @@ import com.shuyu.github.kotlin.databinding.FragmentUserInfoBinding
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.model.ui.UserUIModel
+import com.shuyu.github.kotlin.module.list.GeneralEnum
+import com.shuyu.github.kotlin.module.list.GeneralListActivity
 import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
@@ -49,6 +51,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
         val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_user_header,
                 null, false, GSYDataBindingComponent())
         binding.userUIModel = getViewModel().getUserModel()
+        binding.baseUserViewModel = getViewModel()
         manager.addHeaderView(binding.root)
 
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
@@ -58,7 +61,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 }
 
 
-abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository, application: Application) : BaseViewModel(application) {
+abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository, private val application: Application) : BaseViewModel(application) {
 
     var login: String? = null
 
@@ -68,6 +71,30 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
 
     override fun loadDataByLoadMore() {
         userRepository.getUserEvent(getUserModel().login, this, page)
+    }
+
+
+    fun onTabIconClick(v: View?) {
+        getUserModel().login?.apply {
+            when (v?.id) {
+                R.id.user_header_repos -> {
+                }
+                R.id.user_header_fan -> {
+                    GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
+                    +application.getString(R.string.FollowersText), GeneralEnum.UserFollower)
+                }
+                R.id.user_header_focus -> {
+                    GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
+                    +application.getString(R.string.FollowedText), GeneralEnum.UserFollowed)
+                }
+                R.id.user_header_star -> {
+
+                }
+                R.id.user_header_honor -> {
+
+                }
+            }
+        }
     }
 
     abstract fun getUserModel(): UserUIModel

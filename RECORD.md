@@ -9,20 +9,17 @@
 
 1.0.0 欠缺
 
-repository 详情的issue列表、带搜索
+用户相关列表 和 仓库相关列表
 
-repository 的操作(star、fork、watch)
+repository issue列表、带搜索
 
-issue 详情（回复、编辑、评论、删除、锁定）
+repository action的提交列表
 
-启动页
+主页drawer（问题反馈、关于、退出登录）
 
-搜索页面（筛选）
+图片预览（readme 和文件下的图片预览）
 
-主页drawer（头像、名称、问题反馈、关于、退出登录）
-
-文件详情页面
-
+提交页面详情、提交对比详情、提交选择列表
 
 1.0.1
 
