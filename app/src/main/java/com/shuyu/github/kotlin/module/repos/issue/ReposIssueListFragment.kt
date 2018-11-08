@@ -67,6 +67,7 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
         getViewModel().userName = userName
         getViewModel().reposName = reposName
         getViewModel().status = statusList[0]
+        binding?.issueListViewModel = getViewModel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

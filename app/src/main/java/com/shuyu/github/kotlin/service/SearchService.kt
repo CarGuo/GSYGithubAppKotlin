@@ -39,8 +39,6 @@ interface SearchService {
     fun searchIssues(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Query(value = "q", encoded = true) query: String,
-            @Query("sort") sort: String,
-            @Query("order") order: String,
             @Query("page") page: Int,
             @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<SearchResult<Issue>>>

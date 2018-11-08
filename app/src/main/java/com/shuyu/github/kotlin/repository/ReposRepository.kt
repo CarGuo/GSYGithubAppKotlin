@@ -9,6 +9,7 @@ import com.shuyu.github.kotlin.common.utils.HtmlUtils
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Repository
+import com.shuyu.github.kotlin.model.bean.SearchResult
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
@@ -17,6 +18,7 @@ import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.repository.dao.ReposDao
 import com.shuyu.github.kotlin.service.IssueService
 import com.shuyu.github.kotlin.service.RepoService
+import com.shuyu.github.kotlin.service.SearchService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import okhttp3.ResponseBody
@@ -455,6 +457,47 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+
+    fun searchReposIssueList(userName: String, reposName: String, status: String, query: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+        val q = if (status == "all") {
+            "$query+repo:$userName/$reposName"
+        } else {
+            "$query+repo:$userName/$reposName+state:$status"
+        }
+        val issueService = retrofit.create(SearchService::class.java).searchIssues(true, q, page)
+                .flatMap {
+                    FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<SearchResult<Issue>> {
+                        override fun onConversion(t: SearchResult<Issue>?): ArrayList<Any> {
+                            val list = ArrayList<Any>()
+                            t?.items?.apply {
+                                for (issue in this) {
+                                    list.add(IssueConversion.issueToIssueUIModel(issue))
+                                }
+                            }
+                            return list
+                        }
+                    })
+                }
+        RetrofitFactory.executeResult(issueService, object : ResultTipObserver<ArrayList<Any>>(application) {
+
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
+    }
 
     fun getReposFork(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 

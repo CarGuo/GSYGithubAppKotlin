@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="issueListViewModel"
+            type="com.shuyu.github.kotlin.module.repos.issue.ReposIssueListViewModel"/>
 
     </data>
 
@@ -15,6 +18,47 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:id="@+id/issue_search_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_edit_border"
+                    android:hint="@string/issueInputTipTitle"
+                    android:imeOptions="actionSearch"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@={issueListViewModel.query}"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/smallTextSize"
+                    app:keyListener="@{issueListViewModel.onSearchKeyListener}" />
+
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/issue_search_icon_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ripple_bg"
+                    android:onClick="@{issueListViewModel::onSearchClick}"
+                    android:padding="5dp"
+                    app:iiv_color="@color/colorPrimary"
+                    app:iiv_icon="GSY-SEARCH" />
+
+
+            </LinearLayout>
 
             <android.support.v7.widget.CardView
                 style="@style/whiteCard"

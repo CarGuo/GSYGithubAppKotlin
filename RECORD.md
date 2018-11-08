@@ -9,8 +9,6 @@
 
 1.0.0 欠缺
 
-用户相关列表 和 仓库相关列表
-
 repository issue列表、带搜索
 
 repository action的提交列表
