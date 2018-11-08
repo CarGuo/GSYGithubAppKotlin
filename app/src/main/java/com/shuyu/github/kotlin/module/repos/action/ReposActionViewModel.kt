@@ -1,9 +1,13 @@
 package com.shuyu.github.kotlin.module.repos.action
 
 import android.app.Application
+import android.view.View
+import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
+import com.shuyu.github.kotlin.module.list.GeneralEnum
+import com.shuyu.github.kotlin.module.list.GeneralListActivity
 import com.shuyu.github.kotlin.repository.ReposRepository
 import org.jetbrains.anko.runOnUiThread
 import javax.inject.Inject
@@ -53,4 +57,21 @@ class ReposActionViewModel @Inject constructor(private val reposRepository: Repo
         clearWhenRefresh()
         reposRepository.getReposEvents(userName, reposName, this, page)
     }
+
+    fun onTabIconClick(v: View?) {
+        when (v?.id) {
+            R.id.repos_header_star -> {
+                GeneralListActivity.gotoGeneralList(userName, reposName, "$reposName star", GeneralEnum.RepositoryStarUser)
+            }
+            R.id.repos_header_fork -> {
+            }
+            R.id.repos_header_watch -> {
+                GeneralListActivity.gotoGeneralList(userName, reposName, "$reposName watch", GeneralEnum.RepositoryWatchUser)
+            }
+            R.id.repos_header_issue -> {
+
+            }
+        }
+    }
+
 }

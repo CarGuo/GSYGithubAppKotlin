@@ -62,6 +62,7 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
                 null, false, GSYDataBindingComponent())
 
         binding.reposUIModel = getViewModel().reposUIModel
+        binding.actionViewModel = getViewModel()
 
         manager.addHeaderView(binding.root)
 

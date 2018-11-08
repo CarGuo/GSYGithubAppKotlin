@@ -7,6 +7,10 @@
         <variable
             name="reposUIModel"
             type="com.shuyu.github.kotlin.model.ui.ReposUIModel" />
+        <variable
+            name="actionViewModel"
+            type="com.shuyu.github.kotlin.module.repos.action.ReposActionViewModel" />
+
 
     </data>
 
@@ -168,6 +172,7 @@
                     <com.mikepenz.iconics.view.IconicsTextView
                         android:id="@+id/repos_header_star"
                         style="@style/reposActionItemText"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
                         android:text="@{`{GSY-REPOS_ITEM_STAR}\n`+reposUIModel.repositoryStar}" />
 
                     <View
@@ -177,6 +182,7 @@
                     <com.mikepenz.iconics.view.IconicsTextView
                         android:id="@+id/repos_header_fork"
                         style="@style/reposActionItemText"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
                         android:text="@{`{GSY-REPOS_ITEM_FORK}\n`+reposUIModel.repositoryFork}" />
 
                     <View
@@ -186,6 +192,7 @@
                     <com.mikepenz.iconics.view.IconicsTextView
                         android:id="@+id/repos_header_watch"
                         style="@style/reposActionItemText"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
                         android:text="@{`{GSY-REPOS_ITEM_WATCH}\n`+reposUIModel.repositoryWatch}" />
 
                     <View
@@ -195,6 +202,7 @@
                     <com.mikepenz.iconics.view.IconicsTextView
                         android:id="@+id/repos_header_issue"
                         style="@style/reposActionItemText"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
                         android:text="@{`{GSY-REPOS_ITEM_ISSUE}\n`+reposUIModel.repositoryIssue}" />
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
