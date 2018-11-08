@@ -15,6 +15,7 @@ import com.shuyu.github.kotlin.model.ui.UserUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.person.PersonActivity
+import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.ReposHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
@@ -56,7 +57,7 @@ class GeneralListFragment : BaseListFragment<FragmentListBinding, GeneralListVie
                 PersonActivity.gotoPersonInfo(item.login!!)
             }
             is ReposUIModel -> {
-
+                ReposDetailActivity.gotoReposDetail(item.ownerName, item.repositoryName)
             }
         }
     }

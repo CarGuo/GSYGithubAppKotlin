@@ -26,7 +26,8 @@ interface RepoService {
             @Query("page") page: Int,
             @Query("type") type: String,
             @Query("sort") sort: String,
-            @Query("direction") direction: String
+            @Query("direction") direction: String,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Repository>>>
 
     /**
@@ -37,9 +38,8 @@ interface RepoService {
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String,
             @Query("page") page: Int,
-            @Query("type") type: String,
-            @Query("sort") sort: String,
-            @Query("direction") direction: String
+            @Query("sort") sort: String = "pushed",
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<retrofit2.Response<ArrayList<Repository>>>
 
     /**
@@ -155,7 +155,8 @@ interface RepoService {
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("owner") owner: String,
             @Path("repo") repo: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Repository>>>
 
     /**

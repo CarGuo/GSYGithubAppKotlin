@@ -64,12 +64,13 @@ class ReposActionViewModel @Inject constructor(private val reposRepository: Repo
                 GeneralListActivity.gotoGeneralList(userName, reposName, "$reposName star", GeneralEnum.RepositoryStarUser)
             }
             R.id.repos_header_fork -> {
+                GeneralListActivity.gotoGeneralList(userName, reposName, "$reposName star", GeneralEnum.RepositoryForkUser)
             }
             R.id.repos_header_watch -> {
                 GeneralListActivity.gotoGeneralList(userName, reposName, "$reposName watch", GeneralEnum.RepositoryWatchUser)
             }
             R.id.repos_header_issue -> {
-
+                //todo show issue info
             }
         }
     }

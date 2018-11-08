@@ -37,13 +37,16 @@ class GeneralListViewModel @Inject constructor(private val userRepository: UserR
                 userRepository.getUserFollowed(userName, page, this)
             }
             GeneralEnum.UserRepository -> {
+                reposRepository.getUserRepos(userName, page, this)
             }
             GeneralEnum.UserStar -> {
+                reposRepository.getUserStarRepos(userName, page, this)
             }
             GeneralEnum.RepositoryStarUser -> {
                 userRepository.getRepositoryStarUser(userName, reposName, page, this)
             }
             GeneralEnum.RepositoryForkUser -> {
+                reposRepository.getReposFork(userName, reposName, page, this)
             }
             GeneralEnum.RepositoryWatchUser -> {
                 userRepository.getRepositoryWatchUser(userName, reposName, page, this)

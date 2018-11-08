@@ -78,6 +78,8 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
         getUserModel().login?.apply {
             when (v?.id) {
                 R.id.user_header_repos -> {
+                    GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
+                    +application.getString(R.string.FollowedText), GeneralEnum.UserRepository)
                 }
                 R.id.user_header_fan -> {
                     GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
@@ -88,10 +90,11 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
                     +application.getString(R.string.FollowedText), GeneralEnum.UserFollowed)
                 }
                 R.id.user_header_star -> {
-
+                    GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
+                    +application.getString(R.string.FollowedText), GeneralEnum.UserStar)
                 }
                 R.id.user_header_honor -> {
-
+                    ///todo shwo honor
                 }
             }
         }

@@ -454,4 +454,92 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
         })
     }
+
+
+    fun getReposFork(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = reposDao.getReposFork(userName, reposName)
+
+        val netService = retrofit.create(RepoService::class.java)
+                .getForks(true, userName, reposName, page)
+                .doOnNext {
+                    reposDao.saveReposFork(it, userName, reposName, page == 1)
+                }
+
+        reposListRequest(dbService, netService, resultCallBack, page)
+    }
+
+    fun getUserRepos(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = reposDao.getUserRepos(userName)
+
+        val netService = retrofit.create(RepoService::class.java)
+                .getUserPublicRepos(true, userName, page)
+                .doOnNext {
+                    reposDao.saveUserRepos(it, userName, page == 1)
+                }
+
+        reposListRequest(dbService, netService, resultCallBack, page)
+
+    }
+
+    fun getUserStarRepos(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val dbService = reposDao.getUserStarRepos(userName)
+
+        val netService = retrofit.create(RepoService::class.java)
+                .getStarredRepos(true, userName, page)
+                .doOnNext {
+                    reposDao.saveUserStarRepos(it, userName, page == 1)
+                }
+
+        reposListRequest(dbService, netService, resultCallBack, page)
+    }
+
+    private fun reposListRequest(dbObserver: Observable<ArrayList<Any>>, observer: Observable<Response<ArrayList<Repository>>>, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int) {
+
+
+        val dbService = dbObserver.doOnNext {
+            if (page == 1) {
+                resultCallBack?.onCacheSuccess(it)
+            }
+        }
+
+        val service = observer.flatMap {
+            FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Repository>> {
+                override fun onConversion(t: ArrayList<Repository>?): ArrayList<Any> {
+                    val list = arrayListOf<Any>()
+                    t?.apply {
+                        this.forEach { data ->
+                            val item = ReposConversion.reposToReposUIModel(application, data)
+                            list.add(item)
+                        }
+                    }
+                    return list
+                }
+            })
+        }
+
+        val zipService = Observable.zip(dbService, service,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                super.onPageInfo(first, current, last)
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
+    }
+
+
 }
