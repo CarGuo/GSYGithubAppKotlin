@@ -194,4 +194,7 @@ dependencies {
     ///lottie
     implementation "com.airbnb.android:lottie:${lottie_version}"
 
+
+    ///bugly
+    implementation "com.tencent.bugly:crashreport:${bugly_version}"
 }

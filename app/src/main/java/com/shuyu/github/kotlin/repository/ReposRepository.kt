@@ -6,10 +6,9 @@ import android.content.Context
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.HtmlUtils
-import com.shuyu.github.kotlin.model.bean.Event
-import com.shuyu.github.kotlin.model.bean.Issue
-import com.shuyu.github.kotlin.model.bean.Repository
-import com.shuyu.github.kotlin.model.bean.SearchResult
+import com.shuyu.github.kotlin.common.utils.compareVersion
+import com.shuyu.github.kotlin.common.utils.getVersionName
+import com.shuyu.github.kotlin.model.bean.*
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
@@ -32,6 +31,41 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     companion object {
         const val STAR_KEY = "starred"
         const val WATCH_KEY = "watched"
+    }
+
+    fun checkoutUpDate(context: Context, resultCallBack: ResultCallBack<Release>?) {
+        val service = retrofit.create(RepoService::class.java)
+                .getReleases(true, "CarGuo", "GSYGithubAppKotlin", 1)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }.map {
+                    if (it.size > 0) {
+                        val item = it[0]
+                        val versionName = item.name
+                        versionName?.apply {
+                            val currentName = context.getVersionName()
+                            val hadNew = currentName.compareVersion(versionName) != currentName
+                            if (hadNew) {
+                                return@map item
+                            }
+                        }
+                        Release()
+                    } else {
+                        Release()
+                    }
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+
+        RetrofitFactory.executeResult(service, object : ResultTipObserver<Release>(application) {
+            override fun onSuccess(result: Release?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
     /**

@@ -16,6 +16,7 @@ import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.di.AppInjector
 import com.shuyu.gsygiideloader.GSYGlideImageLoader
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
+import com.tencent.bugly.crashreport.CrashReport
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.realm.Realm
@@ -61,6 +62,11 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         Realm.init(this)
         RealmFactory.instance
 
+
+        if (!BuildConfig.DEBUG) {
+            ///bugly
+            CrashReport.initCrashReport(applicationContext, "209f33d74f", false)
+        }
 
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
             override fun placeholder(ctx: Context?): Drawable {

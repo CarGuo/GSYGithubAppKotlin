@@ -31,6 +31,7 @@ buildscript {
     ext.prism4j_version='1.1.0'
     ext.dialogplus_version='1.11@aar'
     ext.lottie_version='2.7.0'
+    ext.bugly_version='2.1.1'
 
     repositories {
         google()

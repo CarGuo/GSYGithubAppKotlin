@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.util.TypedValue.COMPLEX_UNIT_SP
+import java.util.regex.Pattern
 
 /**
  * Created by guoshuyu
@@ -54,6 +55,11 @@ fun Context.copy(string: String) {
     clipboardManager.primaryClip = clip
 }
 
+fun Context.getVersionName(): String {
+    val manager = packageManager.getPackageInfo(packageName, 0)
+    return manager.versionName
+}
+
 
 fun ArrayList<String>.toSplitString(): String {
     var result = ""
@@ -61,4 +67,34 @@ fun ArrayList<String>.toSplitString(): String {
         result = "$result/$it"
     }
     return result
+}
+
+fun String.compareVersion(v2: String?): String? {
+    if (v2 == null || v2.isEmpty()) return null
+    val regEx = "[^0-9]"
+    val p = Pattern.compile(regEx)
+    var s1: String = p.matcher(this).replaceAll("").trim()
+    var s2: String = p.matcher(v2).replaceAll("").trim()
+
+    val cha: Int = s1.length - s2.length
+    val buffer = StringBuffer()
+    var i = 0
+    while (i < Math.abs(cha)) {
+        buffer.append("0")
+        ++i
+    }
+
+    if (cha > 0) {
+        buffer.insert(0, s2)
+        s2 = buffer.toString()
+    } else if (cha < 0) {
+        buffer.insert(0, s1)
+        s1 = buffer.toString()
+    }
+
+    val s1Int = s1.toInt()
+    val s2Int = s2.toInt()
+
+    return if (s1Int > s2Int) this
+    else v2
 }

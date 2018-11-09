@@ -1,5 +1,7 @@
 package com.shuyu.github.kotlin.module.main
 
+import android.app.Activity
+import android.content.Context
 import android.support.v7.widget.Toolbar
 import androidx.core.net.toUri
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -10,13 +12,17 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.orhanobut.dialogplus.DialogPlus
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.common.utils.IssueDialogClickListener
+import com.shuyu.github.kotlin.common.utils.getVersionName
 import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Issue
+import com.shuyu.github.kotlin.model.bean.Release
 import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
-import org.jetbrains.anko.alert
+import com.shuyu.github.kotlin.repository.ReposRepository
+import org.jetbrains.anko.*
 
 /**
  * Created by guoshuyu
@@ -24,9 +30,10 @@ import org.jetbrains.anko.alert
  */
 
 
-class MainDrawerController(private val activity: MainActivity, toolbar: Toolbar,
+class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                            loginRepository: LoginRepository,
                            private val issueRepository: IssueRepository,
+                           private val reposRepository: ReposRepository,
                            globalModel: AppGlobalModel) {
 
     var drawer: Drawer? = null
@@ -40,6 +47,14 @@ class MainDrawerController(private val activity: MainActivity, toolbar: Toolbar,
                         PrimaryDrawerItem().withName(R.string.feedback)
                                 .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
                                     feedback()
+                                    unSelect(drawerItem)
+                                    true
+                                }
+                )
+                .addDrawerItems(
+                        PrimaryDrawerItem().withName(R.string.update)
+                                .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
+                                    checkUpdate(true)
                                     unSelect(drawerItem)
                                     true
                                 }
@@ -68,6 +83,9 @@ class MainDrawerController(private val activity: MainActivity, toolbar: Toolbar,
                         .withHeaderBackground(R.color.colorPrimary)
                         .withSelectionListEnabled(false)
                         .build()).build()
+
+
+        checkUpdate(false)
     }
 
 
@@ -85,11 +103,9 @@ class MainDrawerController(private val activity: MainActivity, toolbar: Toolbar,
     }
 
     private fun showAboutDialog() {
-        val manager = activity.packageManager.getPackageInfo(activity.packageName, 0)
-
         activity.alert {
             this.title = activity.getString(R.string.app_name)
-            this.message = activity.getString(R.string.version) + " : " + manager.versionName
+            this.message = activity.getVersionName()
             this.show()
         }
     }
@@ -97,5 +113,33 @@ class MainDrawerController(private val activity: MainActivity, toolbar: Toolbar,
     private fun unSelect(drawerItem: IDrawerItem<*, *>) {
         drawerItem.withSetSelected(false)
         drawer?.adapter?.notifyAdapterDataSetChanged()
+    }
+
+    private fun checkUpdate(needTip: Boolean = false) {
+        reposRepository.checkoutUpDate(activity, object : ResultCallBack<Release> {
+            override fun onSuccess(result: Release?) {
+                result?.name?.apply {
+                    showUpdateDialog(activity, this, result.body ?: "", "www.baidu.com")
+                    return
+                }
+                if (needTip) {
+                    activity.toast(R.string.newestVersion)
+                }
+            }
+        })
+    }
+
+    private fun showUpdateDialog(context: Context, version: String, message: String, url: String) {
+        activity.alert {
+            this.title = activity.getString(R.string.app_name)
+            this.message = "$version: \n$message"
+            this.cancelButton {
+                it.dismiss()
+            }
+            this.okButton {
+                context.browse(url)
+            }
+            this.show()
+        }
     }
 }

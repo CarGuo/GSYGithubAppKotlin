@@ -14,6 +14,7 @@ import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.search.SearchActivity
 import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
+import com.shuyu.github.kotlin.repository.ReposRepository
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
 import dagger.android.DispatchingAndroidInjector
@@ -52,6 +53,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
 
 
     @Inject
+    lateinit var repositoryRepository: ReposRepository
+
+
+    @Inject
     lateinit var issueRepository: IssueRepository
 
     private val exitLogic = MainExitLogic(this)
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
 
         initToolbar()
 
-        MainDrawerController(this, home_tool_bar, loginRepository, issueRepository, globalModel)
+        MainDrawerController(this, home_tool_bar, loginRepository, issueRepository, repositoryRepository, globalModel)
 
     }
 
