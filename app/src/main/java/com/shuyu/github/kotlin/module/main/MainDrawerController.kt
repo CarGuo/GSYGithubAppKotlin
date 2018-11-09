@@ -119,7 +119,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
         reposRepository.checkoutUpDate(activity, object : ResultCallBack<Release> {
             override fun onSuccess(result: Release?) {
                 result?.name?.apply {
-                    showUpdateDialog(activity, this, result.body ?: "", "www.baidu.com")
+                    showUpdateDialog(activity, this, result.body ?: "", "https://www.pgyer.com/XGtw")
                     return
                 }
                 if (needTip) {
