@@ -44,8 +44,8 @@
 
 
 <div>
-<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register0.jpg" height="426px"/>
-<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register1.jpg" height="426px"/>
+<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register0.jpg" width="426px"/>
+<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register1.jpg" width="426px"/>
 </div>
 
 
