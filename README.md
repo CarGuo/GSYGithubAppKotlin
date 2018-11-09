@@ -43,6 +43,10 @@
    [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
 
 
+![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register0.jpg)
+![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register1.jpg)
+
+
 
 ### 下载
 
