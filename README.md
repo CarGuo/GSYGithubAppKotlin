@@ -46,7 +46,13 @@
 
 ### 下载
 
->敬请期待
+#### Apk下载链接： [Apk下载链接](https://www.pgyer.com/vj2B)
+
+
+#### Apk二维码
+
+![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/download.png)
+
 
 
 
