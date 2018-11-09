@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.common.utils
 
 import android.graphics.Point
 import android.widget.ImageView
+import com.shuyu.github.kotlin.GSYGithubApplication
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.image.BlurTransformation
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
@@ -61,11 +62,11 @@ object CommonUtils {
         }
         val subTime = Date().time - date.time
         return when {
-            subTime < MILLIS_LIMIT -> "刚刚"
-            subTime < SECONDS_LIMIT -> Math.round(subTime / MILLIS_LIMIT).toString() + " 秒前"
-            subTime < MINUTES_LIMIT -> Math.round(subTime / SECONDS_LIMIT).toString() + " 分钟前"
-            subTime < HOURS_LIMIT -> Math.round(subTime / MINUTES_LIMIT).toString() + " 小时前"
-            subTime < DAYS_LIMIT -> Math.round(subTime / HOURS_LIMIT).toString() + " 天前"
+            subTime < MILLIS_LIMIT -> GSYGithubApplication.instance.getString(R.string.justNow)
+            subTime < SECONDS_LIMIT -> Math.round(subTime / MILLIS_LIMIT).toString() + " " + GSYGithubApplication.instance.getString(R.string.secondAgo)
+            subTime < MINUTES_LIMIT -> Math.round(subTime / SECONDS_LIMIT).toString() + " " + GSYGithubApplication.instance.getString(R.string.minutesAgo)
+            subTime < HOURS_LIMIT -> Math.round(subTime / MINUTES_LIMIT).toString() + " " + GSYGithubApplication.instance.getString(R.string.hoursAgo)
+            subTime < DAYS_LIMIT -> Math.round(subTime / HOURS_LIMIT).toString() + " " + GSYGithubApplication.instance.getString(R.string.daysAgo)
             else -> getDateStr(date)
         }
     }

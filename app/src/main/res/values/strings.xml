@@ -13,6 +13,7 @@
     <string name="tabDynamic">动态</string>
     <string name="tabMy">我的</string>
     <string name="setting">设置</string>
+    <string name="secondAgo">秒前</string>
     <string name="daysAgo">天前</string>
     <string name="hoursAgo">小时前</string>
     <string name="minutesAgo">分钟前</string>

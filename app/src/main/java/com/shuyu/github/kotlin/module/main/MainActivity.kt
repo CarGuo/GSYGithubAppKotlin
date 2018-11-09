@@ -7,16 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.net.toUri
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
-import com.mikepenz.materialdrawer.AccountHeaderBuilder
-import com.mikepenz.materialdrawer.DrawerBuilder
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.search.SearchActivity
+import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
@@ -55,6 +51,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
     lateinit var loginRepository: LoginRepository
 
 
+    @Inject
+    lateinit var issueRepository: IssueRepository
+
+    private val exitLogic = MainExitLogic(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
 
         initToolbar()
 
-        initDrawer()
+        MainDrawerController(this, home_tool_bar, loginRepository, issueRepository, globalModel)
 
     }
 
@@ -83,6 +84,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
             }
         }
         return true
+    }
+
+    override fun onBackPressed() {
+        exitLogic.backPress()
     }
 
     private fun initViewPager() {
@@ -113,27 +118,4 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
         home_tool_bar.setOnMenuItemClickListener(this)
     }
 
-
-    private fun initDrawer() {
-        DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(home_tool_bar)
-                .withSelectedItem(-1)
-                .addDrawerItems(
-                        PrimaryDrawerItem().withName(R.string.LoginOut)
-                                .withTextColorRes(R.color.red).withOnDrawerItemClickListener { view, position, drawerItem ->
-                                    loginRepository.logout(view.context)
-                                    drawerItem.withSetSelected(false)
-                                    true
-                                }
-                )
-                .withAccountHeader(AccountHeaderBuilder().withActivity(this)
-                        .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login)
-                                .withSetSelected(false)
-                                .withIcon(globalModel.userObservable.avatarUrl?.toUri())
-                                .withEmail(globalModel.userObservable.email ?: ""))
-                        .withHeaderBackground(R.color.colorPrimary)
-                        .withSelectionListEnabled(false)
-                        .build()).build()
-    }
 }

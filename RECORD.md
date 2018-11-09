@@ -9,7 +9,7 @@
 
 1.0.0 欠缺
 
-repository issue列表、带搜索
+bugly
 
 repository action的提交列表
 
@@ -40,7 +40,7 @@ release 列表
 
 数据库
 
-组织显示兼容
+显示用户所在组织
 
 检查更新
 
@@ -49,6 +49,9 @@ repository action tag 显示
 issue 数据统计
 
 图片预览和保存
+
+
+未来
 
 
 
