@@ -15,6 +15,7 @@ import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.model.ui.UserUIModel
 import com.shuyu.github.kotlin.module.list.GeneralEnum
 import com.shuyu.github.kotlin.module.list.GeneralListActivity
+import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
@@ -40,7 +41,15 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
-        EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
+        val item  =adapter?.dataList?.get(position)
+        when(item) {
+            is EventUIModel ->{
+                EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
+            }
+            is UserUIModel ->{
+                PersonActivity.gotoPersonInfo(item.login!!)
+            }
+        }
     }
 
     override fun enableRefresh(): Boolean = true
@@ -76,8 +85,8 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
 
     override fun loadDataByLoadMore() {
         if (getUserModel().type == "Organization") {
-
-        }else {
+            userRepository.getOrgMembers(getUserModel().login, this, page)
+        } else {
             userRepository.getUserEvent(getUserModel().login, this, page)
         }
     }
@@ -112,7 +121,7 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
     abstract fun getUserModel(): UserUIModel
 
 
-    open fun onFocusClick(v:View?) {
+    open fun onFocusClick(v: View?) {
 
     }
 }

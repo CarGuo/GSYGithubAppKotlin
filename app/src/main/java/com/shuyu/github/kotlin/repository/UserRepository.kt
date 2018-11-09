@@ -89,7 +89,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 }.flatMap {
                     if (it.login != null) {
                         if (it.type == "Organization") {
-                            userDao.getUserEventDao(it.login!!)//todo menber
+                            userDao.getOrgMembersDao(it.login!!)
                         } else {
                             userDao.getUserEventDao(it.login!!)
                         }
@@ -104,7 +104,8 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 .flatMap {
                     resultCallBack?.onSuccess(it)
                     if (it.type == "Organization") {
-                        getUserEventObservable(it.login)//todo menber
+                        getOrgMembers(it.login!!, resultEventCallBack)
+                        Observable.just(Response.success(ArrayList()))
                     } else {
                         getUserEventObservable(it.login)
                     }
@@ -189,6 +190,52 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         val userEvent = getUserEventObservable(login, page)
         userEventRequest(userEvent, resultCallBack)
     }
+
+    /**
+     * 获取用户产生的事件
+     */
+    fun getOrgMembers(login: String?, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int = 1) {
+        val username = login ?: ""
+        if (username.isEmpty()) {
+            return
+        }
+        val userEvent = retrofit.create(UserService::class.java)
+                .getOrgMembers(true, login ?: "", page)
+                .doOnNext {
+                    userDao.saveOrgMembersDao(it, login!!, page == 1)
+                }.flatMap {
+                    FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<User>> {
+                        override fun onConversion(t: ArrayList<User>?): ArrayList<Any> {
+                            val dataList = ArrayList<Any>()
+                            t?.apply {
+                                for (data in t) {
+                                    dataList.add(UserConversion.userToUserUIModel(data))
+                                }
+                            }
+                            return dataList
+                        }
+                    })
+                }
+        RetrofitFactory.executeResult(userEvent, object : ResultTipObserver<ArrayList<Any>>(application) {
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
+    }
+
 
     /**
      * 获取用户接收到的事件

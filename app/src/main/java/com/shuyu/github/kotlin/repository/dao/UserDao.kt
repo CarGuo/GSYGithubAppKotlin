@@ -104,6 +104,39 @@ class UserDao @Inject constructor(private val application: Application) {
                     item
                 }
     }
+    fun saveOrgMembersDao(response: Response<ArrayList<User>>, userName: String, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, OrgMember::class.java, object : FlatTransactionInterface<OrgMember> {
+            override fun query(q: RealmQuery<OrgMember>): RealmResults<OrgMember> {
+                return q.equalTo("org", userName).findAll()
+            }
+
+            override fun onTransaction(targetObject: OrgMember?) {
+                val data = GsonUtils.toJsonString(response.body())
+                targetObject?.org = userName
+                targetObject?.data = data
+            }
+        }, needSave)
+    }
+
+    fun getOrgMembersDao(userName: String?): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<User, OrgMember> {
+                        override fun query(realm: Realm): RealmResults<OrgMember> {
+                            return realm.where(OrgMember::class.java).equalTo("org", userName).findAll()
+                        }
+
+                        override fun onJSON(t: OrgMember): List<User> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, User::class.java)
+                        }
+
+                        override fun onConversion(t: User): Any {
+                            return UserConversion.userToUserUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
 
 
     fun saveUserInfo(response: Response<User>, userName: String) {

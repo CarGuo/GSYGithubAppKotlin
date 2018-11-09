@@ -90,7 +90,8 @@ interface UserService {
     fun getOrgMembers(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("org") org: String,
-            @Query("page") page: Int
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<User>>>
 
     @GET("users/{user}/orgs")
