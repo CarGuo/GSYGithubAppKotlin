@@ -48,11 +48,12 @@
 <img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register1.jpg" width="426px"/>
 </div>
 
-### 框架
+## 项目结构图
 
 ![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/framework.png)
 
-### 下载
+
+## 下载
 
 #### Apk下载链接： [Apk下载链接](https://www.pgyer.com/XGtw)
 
@@ -62,14 +63,10 @@
 ![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/download.png)
 
 
-
-
-
 ### 常见问题
 
 
 >敬请期待
-
 
 
 ### 示例图片
