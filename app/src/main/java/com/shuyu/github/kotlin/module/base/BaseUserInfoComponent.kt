@@ -75,7 +75,11 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
     }
 
     override fun loadDataByLoadMore() {
-        userRepository.getUserEvent(getUserModel().login, this, page)
+        if (getUserModel().type == "Organization") {
+
+        }else {
+            userRepository.getUserEvent(getUserModel().login, this, page)
+        }
     }
 
 

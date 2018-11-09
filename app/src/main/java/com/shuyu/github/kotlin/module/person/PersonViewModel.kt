@@ -25,6 +25,9 @@ class PersonViewModel @Inject constructor(private val userRepository: UserReposi
             override fun onCacheSuccess(result: User?) {
                 result?.apply {
                     UserConversion.cloneDataFromUser(application, this, userObservable)
+                    if (userObservable.type == "Organization") {
+                        return
+                    }
                     checkFocus(this.login)
                 }
             }

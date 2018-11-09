@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="userUIModel"
             type="com.shuyu.github.kotlin.model.ui.UserUIModel" />
@@ -183,7 +183,8 @@
             style="@style/whiteCard"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_below="@+id/user_header_card">
+            android:layout_below="@+id/user_header_card"
+            android:visibility="@{`Organization`.equals(userUIModel.type) ? View.GONE : View.VISIBLE}">
 
             <com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
                 android:id="@+id/user_header_state"

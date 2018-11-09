@@ -44,7 +44,11 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             val pageString = response.headers().get("page_info")
             if (pageString != null) {
                 val pageInfo = GsonUtils.parserJsonToBean(pageString, PageInfo::class.java)
-                it.starRepos = pageInfo.last
+                it.starRepos = if (pageInfo.last < 0) {
+                    0
+                } else {
+                    pageInfo.last
+                }
             }
             Observable.just(it)
         }.doOnNext {
@@ -84,7 +88,11 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                     }
                 }.flatMap {
                     if (it.login != null) {
-                        userDao.getUserEventDao(it.login!!)
+                        if (it.type == "Organization") {
+                            userDao.getUserEventDao(it.login!!)//todo menber
+                        } else {
+                            userDao.getUserEventDao(it.login!!)
+                        }
                     } else {
                         Observable.just(ArrayList())
                     }
@@ -95,7 +103,11 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         val mergeService = getPersonInfoObservable(userName)
                 .flatMap {
                     resultCallBack?.onSuccess(it)
-                    getUserEventObservable(it.login)
+                    if (it.type == "Organization") {
+                        getUserEventObservable(it.login)//todo menber
+                    } else {
+                        getUserEventObservable(it.login)
+                    }
                 }
 
         val zipService = Observable.zip(userObserver, mergeService,
