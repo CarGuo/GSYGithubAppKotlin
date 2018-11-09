@@ -106,4 +106,9 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
     }
 
     abstract fun getUserModel(): UserUIModel
+
+
+    open fun onFocusClick(v:View?) {
+
+    }
 }

@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:shadowColor="@color/colorPrimary"
+                android:onClick="@{userInfoViewModel::onFocusClick}"
                 android:textSize="@dimen/bigTextSize"
                 app:backgroundTint="@color/colorPrimary"
                 app:elevation="5dp"

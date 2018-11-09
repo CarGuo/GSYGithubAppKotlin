@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.repository
 
 import android.app.Application
+import android.content.Context
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.Debuger
@@ -16,6 +17,7 @@ import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -105,6 +107,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     }
 
 
+    /**
+     * 检查是否关注
+     */
     fun checkFocus(userName: String?, resultCallBack: ResultCallBack<Boolean>?) {
         userName?.apply {
             if (this == appGlobalModel.userObservable.login) {
@@ -132,6 +137,33 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             })
         }
 
+    }
+
+
+    fun doFocus(context: Context, userName: String?, focus: Boolean, resultCallBack: ResultCallBack<Boolean>?) {
+        userName?.apply {
+            if (this == appGlobalModel.userObservable.login) {
+                return@apply
+            }
+
+            val service = if (focus) {
+                retrofit.create(UserService::class.java)
+                        .unfollowUser(userName)
+            } else {
+                retrofit.create(UserService::class.java)
+                        .followUser(userName)
+            }
+
+            RetrofitFactory.executeResult(service, object : ResultProgressObserver<ResponseBody>(context) {
+                override fun onSuccess(result: ResponseBody?) {
+                    resultCallBack?.onSuccess(true)
+
+                }
+
+                override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                }
+            })
+        }
     }
 
     /**
