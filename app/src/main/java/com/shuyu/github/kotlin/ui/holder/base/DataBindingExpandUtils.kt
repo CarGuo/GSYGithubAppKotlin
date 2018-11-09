@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.view.IconicsImageView
 import com.shuyu.github.kotlin.common.style.MarkDownConfig
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
@@ -54,6 +56,16 @@ class DataBindingExpandUtils {
             view?.apply {
               this.setOnKeyListener(listener)
             }
+        }
+
+        @BindingAdapter("iiv_icon")
+        fun editTextKeyListener(view: IconicsImageView?, value: String?) {
+            if (view == null || value == null) {
+                return
+            }
+            view.icon =
+                    IconicsDrawable(view.context)
+                            .icon(value)
         }
     }
 }

@@ -41,7 +41,7 @@
                     android:text="@={issueListViewModel.query}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/smallTextSize"
-                    app:keyListener="@{issueListViewModel.onSearchKeyListener}" />
+                    app:keyListener="@{issueListViewModel::onSearchKeyListener}" />
 
 
                 <com.mikepenz.iconics.view.IconicsImageView

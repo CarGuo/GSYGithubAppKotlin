@@ -43,7 +43,7 @@
                     android:text="@={searchViewModel.query}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/smallTextSize"
-                    app:keyListener="@{searchViewModel.onSearchKeyListener}" />
+                    app:keyListener="@{searchViewModel::onSearchKeyListener}" />
 
 
                 <com.mikepenz.iconics.view.IconicsImageView

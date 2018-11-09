@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.module.base
 import android.app.Application
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.shuyu.commonrecycler.BindSuperAdapterManager
@@ -16,6 +17,7 @@ import com.shuyu.github.kotlin.module.list.GeneralEnum
 import com.shuyu.github.kotlin.module.list.GeneralListActivity
 import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
+import com.shuyu.github.kotlin.ui.holder.UserHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_user_info.*
 
@@ -55,6 +57,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
         manager.addHeaderView(binding.root)
 
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
+        manager.bind(UserUIModel::class.java, UserHolder.ID, UserHolder::class.java)
     }
 
     abstract fun getLoginName(): String?
@@ -62,6 +65,8 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 
 
 abstract class BaseUserInfoViewModel constructor(private val userRepository: UserRepository, private val application: Application) : BaseViewModel(application) {
+
+    val foucsIcon = ObservableField<String>()
 
     var login: String? = null
 
