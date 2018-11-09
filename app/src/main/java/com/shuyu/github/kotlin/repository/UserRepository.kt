@@ -104,6 +104,36 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         userEventRequest(zipService, resultEventCallBack)
     }
 
+
+    fun checkFocus(userName: String?, resultCallBack: ResultCallBack<Boolean>?) {
+        userName?.apply {
+            if (this == appGlobalModel.userObservable.login) {
+                return@apply
+            }
+
+            val service = retrofit.create(UserService::class.java)
+                    .checkFollowing(userName)
+                    .flatMap {
+                        val watched = if (it.code() == 404) {
+                            false
+                        } else it.isSuccessful
+                        Observable.just(watched)
+                    }.flatMap {
+                        FlatMapResult2Response(it)
+                    }
+            RetrofitFactory.executeResult(service, object : ResultObserver<Boolean>() {
+                override fun onSuccess(result: Boolean?) {
+                    resultCallBack?.onSuccess(result)
+                }
+
+                override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                    resultCallBack?.onFailure()
+                }
+            })
+        }
+
+    }
+
     /**
      * 获取用户产生的事件
      */

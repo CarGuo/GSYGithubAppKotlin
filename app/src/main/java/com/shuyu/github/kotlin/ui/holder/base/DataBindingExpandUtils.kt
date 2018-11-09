@@ -54,18 +54,21 @@ class DataBindingExpandUtils {
         @BindingAdapter("keyListener")
         fun editTextKeyListener(view: EditText?, listener: View.OnKeyListener) {
             view?.apply {
-              this.setOnKeyListener(listener)
+                this.setOnKeyListener(listener)
             }
         }
 
-        @BindingAdapter("iiv_icon")
-        fun editTextKeyListener(view: IconicsImageView?, value: String?) {
+        @BindingAdapter("iiv_icon", "iiv_color", requireAll = false)
+        fun editTextKeyListener(view: IconicsImageView?, value: String?, colorId: Int?) {
             if (view == null || value == null) {
                 return
             }
-            view.icon =
-                    IconicsDrawable(view.context)
-                            .icon(value)
+            val drawable = IconicsDrawable(view.context)
+                    .icon(value)
+            colorId?.apply {
+                drawable.color(colorId)
+            }
+            view.icon = drawable
         }
     }
 }

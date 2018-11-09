@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.person
 
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.github.kotlin.di.ARouterInjectable
@@ -17,6 +18,12 @@ class PersonFragment : BaseUserInfoFragment<PersonViewModel>(), ARouterInjectabl
     @Autowired
     @JvmField
     var userName = ""
+
+    override fun onCreateView(mainView: View?) {
+        super.onCreateView(mainView)
+        binding?.userInfoViewModel = getViewModel()
+    }
+
 
     override fun getViewModelClass(): Class<PersonViewModel> = PersonViewModel::class.java
 

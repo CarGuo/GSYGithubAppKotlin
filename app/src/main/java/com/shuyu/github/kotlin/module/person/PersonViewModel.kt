@@ -19,6 +19,7 @@ class PersonViewModel @Inject constructor(private val userRepository: UserReposi
             override fun onCacheSuccess(result: User?) {
                 result?.apply {
                     UserConversion.cloneDataFromUser(application, this, userObservable)
+                    checkFocus(this.login)
                 }
             }
 
@@ -35,4 +36,19 @@ class PersonViewModel @Inject constructor(private val userRepository: UserReposi
     }
 
     override fun getUserModel() = userObservable
+
+    private fun checkFocus(login: String?) {
+        userRepository.checkFocus(login, object : ResultCallBack<Boolean> {
+            override fun onSuccess(result: Boolean?) {
+                result?.apply {
+                    val icon = if (this) {
+                        "GSY-FOCUS"
+                    } else {
+                        "GSY-UN_FOCUS"
+                    }
+                    foucsIcon.set(icon)
+                }
+            }
+        })
+    }
 }

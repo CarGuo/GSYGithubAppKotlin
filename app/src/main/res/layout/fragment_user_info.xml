@@ -55,7 +55,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginEnd="10dp"
                 android:translationZ="12sp"
-                app:iiv_color="@color/white"
+                app:iiv_color="@{@color/white}"
                 app:iiv_icon="@{userInfoViewModel.foucsIcon}" />
 
         </RelativeLayout>
