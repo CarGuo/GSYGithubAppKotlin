@@ -48,7 +48,9 @@
 <img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register1.jpg" width="426px"/>
 </div>
 
+### 框架
 
+![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/framework.png)
 
 ### 下载
 
