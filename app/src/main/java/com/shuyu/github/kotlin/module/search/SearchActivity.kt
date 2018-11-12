@@ -12,6 +12,7 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragmentActivity
 
 /**
+ * 搜索
  * Created by guoshuyu
  * Date: 2018-11-02
  */
@@ -43,7 +44,7 @@ class SearchActivity : BaseFragmentActivity() {
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_filter -> {
-                fragment.searchFilterContorller?.drawer?.openDrawer()
+                fragment.searchFilterController?.drawer?.openDrawer()
             }
         }
         return true
@@ -51,5 +52,6 @@ class SearchActivity : BaseFragmentActivity() {
 
 
     override fun getToolBarTitle(): String = getString(R.string.search)
+
     override fun getInitFragment(): Fragment = fragment
 }

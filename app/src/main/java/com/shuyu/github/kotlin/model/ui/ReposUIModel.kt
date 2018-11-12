@@ -4,7 +4,9 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.shuyu.github.kotlin.BR
 
-
+/**
+ * 仓库相关UI类型
+ */
 class ReposUIModel : BaseObservable() {
 
     var ownerName: String = "--"

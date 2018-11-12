@@ -13,6 +13,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.dp
 
 /**
+ * 纯文本的ListView适配器
  * Created by guoshuyu
  * Date: 2018-11-01
  */

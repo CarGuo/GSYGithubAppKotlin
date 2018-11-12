@@ -3,7 +3,11 @@ package com.shuyu.github.kotlin.model.conversion
 import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
 import java.lang.Exception
 
-
+/**
+ * Html String 到 趋势相关实体转换
+ * Created by guoshuyu
+ * Date: 2018-10-29
+ */
 val TAGS = hashMapOf(
         Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\">"), Pair("end", "</span>"))),
         Pair("starCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/stargazers\">"), Pair("end", "</a>"))),

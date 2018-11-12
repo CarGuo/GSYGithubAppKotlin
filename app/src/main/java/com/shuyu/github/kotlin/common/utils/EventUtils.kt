@@ -7,6 +7,7 @@ import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 
 /**
+ * 事件相关跳转
  * Created by guoshuyu
  * Date: 2018-10-25
  */

@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_repos_detail.*
 import javax.inject.Inject
 
 /**
+ * 仓库详情页面
  * Created by guoshuyu
  * Date: 2018-10-25
  */
@@ -119,6 +120,9 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
+    /**
+     * 初始化title
+     */
     private fun initTitle() {
         setSupportActionBar(repos_detail_toolbar)
         val actionBar = supportActionBar
@@ -137,6 +141,9 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
         return arrayListOf(fragmentReadme, fragmentActionList, fragmentFileList, fragmentIssueList)
     }
 
+    /**
+     * 初始化底部仓库状态控制器
+     */
     private fun initControlBar() {
         val dataList = getControlList()
         repos_detail_control_bar.list.clear()
@@ -158,6 +165,9 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
         }
     }
 
+    /**
+     * 获取底部仓库状态数据
+     */
     private fun getControlList(): ArrayList<String> {
         val controlList = arrayListOf<String>()
         val starStatus = viewModel.starredStatus.value

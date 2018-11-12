@@ -9,6 +9,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
 /**
+ * 通过 navigation 实现的首页
  * Created by guoshuyu
  * Date: 2018-11-02
  */

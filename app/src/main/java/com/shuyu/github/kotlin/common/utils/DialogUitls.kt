@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.layout_issue_edit_dialog.view.*
 import org.jetbrains.anko.toast
 
 /**
+ * 拓展Context显示Dialog
  * Created by guoshuyu
  * Date: 2018-10-31
  */

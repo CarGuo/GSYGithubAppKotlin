@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.ui.adapter
 
 /**
+ * 弹出选择列表Item的适配器
  * Created by guoshuyu
  * Date: 2018-10-22
  */

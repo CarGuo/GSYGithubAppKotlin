@@ -17,6 +17,7 @@ import com.shuyu.github.kotlin.common.utils.dp
 
 
 /**
+ * RecyclerView实现的横向TextView列表
  * Created by guoshuyu
  * Date: 2018-10-26
  */

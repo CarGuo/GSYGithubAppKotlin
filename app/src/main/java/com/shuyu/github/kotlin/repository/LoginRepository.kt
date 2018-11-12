@@ -37,7 +37,9 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
-
+    /**
+     * 获取token
+     */
     fun getTokenObservable(): Observable<String> {
         return retrofit.create(LoginService::class.java)
                 .authorizations(LoginRequestModel.generate())
@@ -55,7 +57,9 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
                 })
     }
 
-
+    /**
+     * 登录
+     */
     fun login(context: Context, username: String, password: String, token: MutableLiveData<Boolean>) {
 
         clearTokenStorage()
@@ -100,14 +104,18 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
-
+    /**
+     * 清除token
+     */
     fun clearTokenStorage() {
         accessTokenStorage = ""
         userBasicCodeStorage = ""
     }
 
 
-
+    /**
+     * 退出登录
+     */
     fun logout(context: Context) {
         accessTokenStorage = ""
         userBasicCodeStorage = ""

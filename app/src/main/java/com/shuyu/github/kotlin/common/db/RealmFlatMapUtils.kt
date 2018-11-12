@@ -11,6 +11,9 @@ import retrofit2.Response
  * Date: 2018-11-06
  */
 
+/**
+ * 保存response中的实体信息
+ */
 class FlatMapRealmSaveResult<T, E : RealmModel>(response: Response<T>, private val clazz: Class<E>, private val listener: FlatTransactionInterface<E>, needSave: Boolean) {
     init {
         if (response.isSuccessful && needSave) {
@@ -33,7 +36,9 @@ interface FlatTransactionInterface<E : RealmModel> {
     fun onTransaction(targetObject: E?)
 }
 
-
+/**
+ * 获取数据库保存的列表信息
+ */
 fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, listener: FlatRealmReadConversionInterface<T, E>): ArrayList<Any> {
     val realmResults = listener.query(realm)
     val list = if (realmResults.isEmpty()) {
@@ -48,6 +53,9 @@ fun <T, E : RealmModel> FlatMapRealmReadList(realm: Realm, listener: FlatRealmRe
     return dataList
 }
 
+/**
+ * 获取数据库保存的实体信息
+ */
 fun <T, E : RealmModel, R> FlatMapRealmReadObject(realm: Realm, listener: FlatRealmReadConversionObjectInterface<T, E, R>): R? {
     val realmResults = listener.query(realm)
     val data = if (realmResults.isEmpty()) {

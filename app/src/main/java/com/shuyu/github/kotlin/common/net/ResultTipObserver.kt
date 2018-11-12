@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException
 
 
 /**
- * 网络请求返回处理
+ * 带错误提示的网络请求返回处理
  */
 abstract class ResultTipObserver<T>(private val context: Context) : ResultObserver<T>() {
 

@@ -17,7 +17,7 @@ import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.code.CodeDetailActivity
-import com.shuyu.github.kotlin.ui.holder.base.FileHolder
+import com.shuyu.github.kotlin.ui.holder.FileHolder
 import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
 /**

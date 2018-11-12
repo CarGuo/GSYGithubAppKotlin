@@ -19,6 +19,7 @@ import com.shuyu.github.kotlin.ui.holder.base.BindingDataRecyclerManager
 import javax.inject.Inject
 
 /**
+ * 基础列表
  * Created by guoshuyu
  * Date: 2018-10-19
  */

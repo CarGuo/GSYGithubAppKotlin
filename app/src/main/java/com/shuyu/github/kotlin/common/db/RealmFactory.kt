@@ -5,6 +5,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 /**
+ * Realm数据初始化
  * Created by guoshuyu
  * Date: 2018-11-06
  */

@@ -4,6 +4,9 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.shuyu.github.kotlin.BR
 
+/**
+ * Issue相关UI类型
+ */
 class IssueUIModel : BaseObservable() {
     var username: String = "---"
         @Bindable

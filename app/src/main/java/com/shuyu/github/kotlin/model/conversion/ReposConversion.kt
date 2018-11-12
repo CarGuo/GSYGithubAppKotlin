@@ -9,7 +9,11 @@ import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
 import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 
-
+/**
+ * 仓库相关实体转换
+ * Created by guoshuyu
+ * Date: 2018-10-29
+ */
 object ReposConversion {
 
     fun trendToReposUIModel(trendModel: TrendingRepoModel): ReposUIModel {

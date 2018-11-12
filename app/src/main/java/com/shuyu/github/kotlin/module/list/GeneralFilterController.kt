@@ -10,6 +10,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 
 /**
+ * 通用列排序控制器
  * Created by guoshuyu
  * Date: 2018-11-05
  */

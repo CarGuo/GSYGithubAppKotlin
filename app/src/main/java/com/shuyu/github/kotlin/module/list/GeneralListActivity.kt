@@ -14,6 +14,7 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragmentActivity
 
 /**
+ * 通用列表
  * Created by guoshuyu
  * Date: 2018-11-08
  */

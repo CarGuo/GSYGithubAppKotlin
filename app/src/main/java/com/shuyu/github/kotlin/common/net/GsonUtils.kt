@@ -6,6 +6,9 @@ import com.google.gson.JsonParser
 import java.util.*
 
 
+/**
+ * GSON序列化工具类
+ */
 object GsonUtils {
 
     fun getNoteJsonString(jsonString: String, note: String): String {

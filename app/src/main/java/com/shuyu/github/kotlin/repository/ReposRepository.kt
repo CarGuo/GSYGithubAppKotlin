@@ -26,6 +26,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
+/**
+ * 仓库相关数据获取
+ */
 class ReposRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application, private val reposDao: ReposDao) {
 
     companion object {
@@ -33,6 +36,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         const val WATCH_KEY = "watched"
     }
 
+    /**
+     * 通过仓库release信息，检查当前App的更新
+     */
     fun checkoutUpDate(context: Context, resultCallBack: ResultCallBack<Release>?) {
         val service = retrofit.create(RepoService::class.java)
                 .getReleases(true, "CarGuo", "GSYGithubAppKotlin", 1)
@@ -70,6 +76,8 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     /**
      * 趋势
+     * @param language 语言
+     * @param since 时间（今天/本周/本月）
      */
     fun getTrend(resultCallBack: ResultCallBack<ArrayList<Any>>, language: String, since: String) {
 
@@ -290,7 +298,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
 
     /**
-     * 仓库文件
+     * 仓库文件数据
      */
     fun getFiles(userName: String, reposName: String, path: String, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val eventService = retrofit.create(RepoService::class.java).getRepoFiles(userName, reposName, path)
@@ -321,7 +329,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     }
 
     /**
-     * 获取仓库状态
+     * 获取当前用户对仓库状态
      */
     fun getReposStatus(userName: String, reposName: String, resultCallBack: ResultCallBack<HashMap<String, Boolean>>?) {
         val starredService = retrofit.create(RepoService::class.java).checkRepoStarred(userName, reposName)
@@ -367,7 +375,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     }
 
     /**
-     * STAR 操作
+     * 改变当前用户对仓库的Star状态
      */
     fun changeStarStatus(context: Context, userName: String, reposName: String, status: MutableLiveData<Boolean>) {
         val reposService = retrofit.create(RepoService::class.java)
@@ -394,6 +402,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    /**
+     * 改变当前用户对仓库的订阅状态
+     */
     fun changeWatchStatus(context: Context, userName: String, reposName: String, status: MutableLiveData<Boolean>) {
         val reposService = retrofit.create(RepoService::class.java)
         val watched = status.value ?: return
@@ -439,7 +450,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
     }
 
     /**
-     * 获取issue列表
+     * 获取仓库的issue列表
      */
     fun getReposIssueList(userName: String, reposName: String, status: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
@@ -491,7 +502,11 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
-
+    /**
+     * 搜索仓库相关的issue
+     * @param status issue 状态
+     * @param query 搜索关键字
+     */
     fun searchReposIssueList(userName: String, reposName: String, status: String, query: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val q = if (status == "all") {
             "$query+repo:$userName/$reposName"
@@ -533,6 +548,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    /**
+     * 获取仓库被Fork的数据
+     */
     fun getReposFork(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = reposDao.getReposFork(userName, reposName)
@@ -546,6 +564,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         reposListRequest(dbService, netService, resultCallBack, page)
     }
 
+    /**
+     * 获取用户的仓库数据
+     */
     fun getUserRepos(userName: String, page: Int, sort: String, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = reposDao.getUserRepos(userName, sort)
@@ -560,6 +581,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
+    /**
+     * 获取用户star的仓库数据
+     */
     fun getUserStarRepos(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = reposDao.getUserStarRepos(userName)
@@ -573,6 +597,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         reposListRequest(dbService, netService, resultCallBack, page)
     }
 
+    /**
+     * 仓库相关的 observer 请求执行
+     */
     private fun reposListRequest(dbObserver: Observable<ArrayList<Any>>, observer: Observable<Response<ArrayList<Repository>>>, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int) {
 
 

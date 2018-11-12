@@ -4,6 +4,8 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 /**
+ * Realm数据库表
+ * 主要保存json的String
  * Created by guoshuyu
  * Date: 2018-11-06
  */

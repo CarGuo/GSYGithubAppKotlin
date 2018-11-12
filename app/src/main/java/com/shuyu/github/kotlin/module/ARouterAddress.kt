@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.module
 
 /**
+ * ARouter 地址
  * Created by guoshuyu
  * Date: 2018-10-24
  */

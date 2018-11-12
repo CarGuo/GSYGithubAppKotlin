@@ -25,11 +25,10 @@ import com.shuyu.github.kotlin.repository.ReposRepository
 import org.jetbrains.anko.*
 
 /**
+ * 主页Drawer控制器
  * Created by guoshuyu
  * Date: 2018-11-09
  */
-
-
 class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                            loginRepository: LoginRepository,
                            private val issueRepository: IssueRepository,

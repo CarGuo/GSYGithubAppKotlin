@@ -6,7 +6,9 @@ import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.ReposRepository
 import javax.inject.Inject
 
-
+/**
+ * 趋势VM
+ */
 class TrendViewModel @Inject constructor(private val repository: ReposRepository, application: Application) : BaseViewModel(application) {
 
 

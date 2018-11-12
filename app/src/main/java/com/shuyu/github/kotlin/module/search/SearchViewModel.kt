@@ -11,24 +11,37 @@ import com.shuyu.github.kotlin.repository.SearchRepository
 import javax.inject.Inject
 
 /**
+ * 搜索VM
  * Created by guoshuyu
  * Date: 2018-11-02
  */
 class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository, private val application: Application) : BaseViewModel(application) {
 
     companion object {
-        const val REPOSITORY = 0
-        const val USER = 1
+        const val REPOSITORY = 0//仓库
+        const val USER = 1//人
     }
 
-    var type = REPOSITORY
-
+    /**
+     * 搜索关键帧，双向绑定到layout
+     */
     val query = ObservableField<String>()
 
+    /**
+     * 搜索类型
+     */
+    var type = REPOSITORY
+    /**
+     * 排列依据
+     */
     var sort = "best%20match"
-
+    /**
+     * 排列顺序
+     */
     var order = "desc"
-
+    /**
+     * 排列语言
+     */
     var language = ""
 
     override fun loadDataByRefresh() {

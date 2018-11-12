@@ -11,7 +11,7 @@ import com.shuyu.github.kotlin.ui.holder.base.DataBindingHolder
 import kotlinx.android.synthetic.main.layout_issue_comment_item.view.*
 
 /**
- * Issue item
+ * Issue 评论 item
  */
 class IssueCommentHolder(context: Context, private val v: View, dataBing: ViewDataBinding) : DataBindingHolder<IssueUIModel, LayoutIssueCommentItemBinding>(context, v, dataBing) {
 

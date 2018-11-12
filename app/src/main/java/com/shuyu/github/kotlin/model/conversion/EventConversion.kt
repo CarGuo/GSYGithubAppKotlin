@@ -6,7 +6,9 @@ import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 
-
+/**
+ * 事件相关实体转换
+ */
 object EventConversion {
 
 

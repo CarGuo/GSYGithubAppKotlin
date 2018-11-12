@@ -13,12 +13,18 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 /**
+ * 搜索相关数据获取
  * Created by guoshuyu
  * Date: 2018-11-02
  */
 class SearchRepository @Inject constructor(private val retrofit: Retrofit, private val application: Application) {
 
-
+    /**
+     * 搜索用户
+     * @param q 关键字
+     * @param sort 搜索排序依据，比如best_match
+     * @param order 排序
+     */
     fun searchUsers(context: Context, q: String, sort: String, order: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val service = retrofit.create(SearchService::class.java)
                 .searchUsers(query = q, page = page, sort = sort, order = order)
@@ -53,6 +59,12 @@ class SearchRepository @Inject constructor(private val retrofit: Retrofit, priva
         })
     }
 
+    /**
+     * 搜索项目
+     * @param q 关键字
+     * @param sort 搜索排序依据，比如best_match
+     * @param order 排序
+     */
     fun searchRepos(context: Context, q: String, sort: String, order: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
         val service = retrofit.create(SearchService::class.java)
                 .searchRepos(query = q, page = page, sort = sort, order = order)

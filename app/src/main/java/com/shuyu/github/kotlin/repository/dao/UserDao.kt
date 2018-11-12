@@ -15,11 +15,15 @@ import retrofit2.Response
 import javax.inject.Inject
 
 /**
+ * 用户相关数据库操作
  * Created by guoshuyu
  * Date: 2018-11-07
  */
 class UserDao @Inject constructor(private val application: Application) {
 
+    /**
+     * 保存当前用户接收到的事件
+     */
     fun saveReceivedEventDao(response: Response<ArrayList<Event>>, needSave: Boolean) {
         FlatMapRealmSaveResult(response, ReceivedEvent::class.java, object : FlatTransactionInterface<ReceivedEvent> {
             override fun query(q: RealmQuery<ReceivedEvent>): RealmResults<ReceivedEvent> {
@@ -34,7 +38,7 @@ class UserDao @Inject constructor(private val application: Application) {
     }
 
     /**
-     * 获取用户接收到的事件
+     * 获取当前用户接收到的事件
      */
     fun getReceivedEventDao(): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
@@ -56,6 +60,9 @@ class UserDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 获取用户的行为信息
+     */
     fun getUserEventDao(userName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -76,7 +83,9 @@ class UserDao @Inject constructor(private val application: Application) {
                 }
     }
 
-
+    /**
+     * 保存用户的行为信息
+     */
     fun saveUserEventDao(response: Response<ArrayList<Event>>, userName: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, UserEvent::class.java, object : FlatTransactionInterface<UserEvent> {
             override fun query(q: RealmQuery<UserEvent>): RealmResults<UserEvent> {
@@ -91,6 +100,9 @@ class UserDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取用户的信息
+     */
     fun getUserInfoDao(userName: String?): Observable<User?> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -104,6 +116,10 @@ class UserDao @Inject constructor(private val application: Application) {
                     item
                 }
     }
+
+    /**
+     * 保存用户的信息
+     */
     fun saveOrgMembersDao(response: Response<ArrayList<User>>, userName: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, OrgMember::class.java, object : FlatTransactionInterface<OrgMember> {
             override fun query(q: RealmQuery<OrgMember>): RealmResults<OrgMember> {
@@ -118,6 +134,9 @@ class UserDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取组织的成员信息
+     */
     fun getOrgMembersDao(userName: String?): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -139,6 +158,9 @@ class UserDao @Inject constructor(private val application: Application) {
     }
 
 
+    /**
+     * 保存组织的成员信息
+     */
     fun saveUserInfo(response: Response<User>, userName: String) {
         FlatMapRealmSaveResult(response, UserInfo::class.java, object : FlatTransactionInterface<UserInfo> {
             override fun query(q: RealmQuery<UserInfo>): RealmResults<UserInfo> {
@@ -153,7 +175,9 @@ class UserDao @Inject constructor(private val application: Application) {
         }, true)
     }
 
-
+    /**
+     * 保存用户的粉丝信息
+     */
     fun saveUserFollowerDao(userName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
         FlatMapRealmSaveResult(response, UserFollower::class.java, object : FlatTransactionInterface<UserFollower> {
             override fun query(q: RealmQuery<UserFollower>): RealmResults<UserFollower> {
@@ -167,6 +191,9 @@ class UserDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取用户的粉丝信息
+     */
     fun getUserFollowerDao(userName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -187,6 +214,9 @@ class UserDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存用户的关注信息
+     */
     fun saveUserFollowedDao(userName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
         FlatMapRealmSaveResult(response, UserFollowed::class.java, object : FlatTransactionInterface<UserFollowed> {
             override fun query(q: RealmQuery<UserFollowed>): RealmResults<UserFollowed> {
@@ -200,6 +230,9 @@ class UserDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取用户的关注信息
+     */
     fun getUserFollowedDao(userName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -220,6 +253,10 @@ class UserDao @Inject constructor(private val application: Application) {
                 }
     }
 
+
+    /**
+     * 保存仓库的star用户信息
+     */
     fun saveRepositoryStarUserDao(userName: String, reposName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
         FlatMapRealmSaveResult(response, RepositoryStar::class.java, object : FlatTransactionInterface<RepositoryStar> {
             override fun query(q: RealmQuery<RepositoryStar>): RealmResults<RepositoryStar> {
@@ -234,6 +271,9 @@ class UserDao @Inject constructor(private val application: Application) {
     }
 
 
+    /**
+     * 获取仓库的star用户信息
+     */
     fun getRepositoryStarUserDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -254,6 +294,9 @@ class UserDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存仓库的订阅用户信息
+     */
     fun saveRepositoryWatchUserDao(userName: String, reposName: String, response: Response<ArrayList<User>>, needSave: Boolean) {
         FlatMapRealmSaveResult(response, RepositoryWatcher::class.java, object : FlatTransactionInterface<RepositoryWatcher> {
             override fun query(q: RealmQuery<RepositoryWatcher>): RealmResults<RepositoryWatcher> {
@@ -267,6 +310,9 @@ class UserDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取仓库的定于用户信息
+     */
     fun getRepositoryWatchUserDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {

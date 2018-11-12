@@ -15,11 +15,15 @@ import retrofit2.Response
 import javax.inject.Inject
 
 /**
+ * Issue相关数据库操作
  * Created by guoshuyu
  * Date: 2018-11-07
  */
 class IssueDao @Inject constructor(private val application: Application) {
 
+    /**
+     * 保存issue详情
+     */
     fun saveIssueInfoDao(response: Response<Issue>, userName: String, reposName: String, number: Int) {
         FlatMapRealmSaveResult(response, IssueDetail::class.java, object : FlatTransactionInterface<IssueDetail> {
             override fun query(q: RealmQuery<IssueDetail>): RealmResults<IssueDetail> {
@@ -35,6 +39,9 @@ class IssueDao @Inject constructor(private val application: Application) {
         }, true)
     }
 
+    /**
+     * 获取issue详情
+     */
     fun getIssueInfoDao(userName: String, reposName: String, number: Int): Observable<IssueUIModel?> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -59,6 +66,9 @@ class IssueDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存issue评论
+     */
     fun saveIssueCommentDao(response: Response<ArrayList<IssueEvent>>, userName: String, reposName: String, number: Int, needSave: Boolean) {
         FlatMapRealmSaveResult(response, IssueComment::class.java, object : FlatTransactionInterface<IssueComment> {
             override fun query(q: RealmQuery<IssueComment>): RealmResults<IssueComment> {
@@ -74,7 +84,9 @@ class IssueDao @Inject constructor(private val application: Application) {
             }
         }, needSave)
     }
-
+    /**
+     * 获取issue评论
+     */
     fun getIssueCommentDao(userName: String, reposName: String, number: Int): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {

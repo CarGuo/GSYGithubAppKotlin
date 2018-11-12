@@ -16,6 +16,10 @@ import ru.noties.prism4j.Prism4j
 import ru.noties.prism4j.annotations.PrismBundle
 
 
+/**
+ * markdown文件显示配置
+ */
+
 @PrismBundle(includeAll = true)
 object MarkDownConfig {
 

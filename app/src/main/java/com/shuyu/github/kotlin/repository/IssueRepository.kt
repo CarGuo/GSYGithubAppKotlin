@@ -18,6 +18,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 /**
+ * Issue相关数据获取
  * Created by guoshuyu
  * Date: 2018-10-29
  */
@@ -116,6 +117,9 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    /**
+     * 编辑 issue
+     */
     fun editIssue(context: Context, userName: String, reposName: String, number: Int, issue: Issue, resultCallBack: ResultCallBack<IssueUIModel>?) {
         val issueService = retrofit.create(IssueService::class.java).editIssue(userName, reposName, number, issue)
                 .flatMap {
@@ -136,7 +140,9 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
             }
         })
     }
-
+    /**
+     * 创建 issue
+     */
     fun createIssue(context: Context, userName: String, reposName: String, issue: Issue, resultCallBack: ResultCallBack<IssueUIModel>?) {
         val issueService = retrofit.create(IssueService::class.java).createIssue(userName, reposName, issue)
                 .flatMap {
@@ -158,6 +164,9 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    /**
+     * 评论 issue
+     */
     fun commentIssue(context: Context, userName: String, reposName: String, number: Int, commentRequestModel: CommentRequestModel, resultCallBack: ResultCallBack<IssueUIModel>?) {
         val issueService = retrofit.create(IssueService::class.java).addComment(userName, reposName, number, commentRequestModel)
                 .flatMap {
@@ -180,6 +189,9 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     }
 
+    /**
+     * 锁定/解锁 issue
+     */
     fun lockIssue(context: Context, userName: String, reposName: String, number: Int, lock: Boolean, resultCallBack: ResultCallBack<Boolean>?) {
         val service = retrofit.create(IssueService::class.java)
         val issueService = if (lock) {
@@ -200,6 +212,9 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
     }
 
 
+    /**
+     * 编辑issue评论
+     */
     fun editComment(context: Context, userName: String, reposName: String, commentId: String, commentRequestModel: CommentRequestModel, resultCallBack: ResultCallBack<IssueUIModel>?) {
         val issueService = retrofit.create(IssueService::class.java).editComment(userName, reposName, commentId, commentRequestModel)
                 .flatMap {
@@ -221,6 +236,9 @@ class IssueRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    /**
+     * 删除issue评论
+     */
     fun deleteComment(context: Context, userName: String, reposName: String, commentId: String, resultCallBack: ResultCallBack<String>?) {
         val issueService = retrofit.create(IssueService::class.java).deleteComment(userName, reposName, commentId)
         RetrofitFactory.executeResult(issueService, object : ResultProgressObserver<ResponseBody>(context) {

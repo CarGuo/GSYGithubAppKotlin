@@ -6,7 +6,9 @@ import android.arch.lifecycle.ViewModel
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import org.jetbrains.anko.runOnUiThread
 
-
+/**
+ * 基类列表VM
+ */
 abstract class BaseViewModel(private val application: Application) : ViewModel(), ResultCallBack<ArrayList<Any>> {
 
     val dataList = MutableLiveData<ArrayList<Any>>()

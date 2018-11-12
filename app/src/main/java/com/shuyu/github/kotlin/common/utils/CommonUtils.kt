@@ -10,7 +10,9 @@ import com.shuyu.gsyimageloader.GSYLoadOption
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * 通用工具类
+ */
 object CommonUtils {
 
     private const val MILLIS_LIMIT = 1000.0
@@ -24,6 +26,9 @@ object CommonUtils {
     private const val DAYS_LIMIT = 30 * HOURS_LIMIT
 
 
+    /**
+     * 加载用户头像
+     */
     fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(50.dp, 50.dp)) {
         val option = GSYLoadOption()
                 .setDefaultImg(R.drawable.logo)
@@ -34,7 +39,9 @@ object CommonUtils {
         GSYImageLoaderManager.sInstance.imageLoader().loadImage(option, imageView, null)
     }
 
-
+    /**
+     * 加载高斯模糊图片
+     */
     fun loadImageBlur(imageView: ImageView, url: String) {
         val process = BlurTransformation()
         val option = GSYLoadOption()
@@ -56,6 +63,9 @@ object CommonUtils {
         return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date).substring(0, 10)
     }
 
+    /**
+     * 获取时间格式化
+     */
     fun getNewsTimeStr(date: Date?): String {
         if (date == null) {
             return ""

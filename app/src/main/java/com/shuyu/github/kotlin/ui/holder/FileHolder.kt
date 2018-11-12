@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.ui.holder.base
+package com.shuyu.github.kotlin.ui.holder
 
 import android.content.Context
 import android.databinding.ViewDataBinding
@@ -6,10 +6,11 @@ import android.view.View
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.LayoutFileItemBinding
 import com.shuyu.github.kotlin.model.ui.FileUIModel
+import com.shuyu.github.kotlin.ui.holder.base.DataBindingHolder
 
 
 /**
- * 事件item
+ * 文件显示item
  */
 class FileHolder(context: Context, private val v: View, dataBing: ViewDataBinding) : DataBindingHolder<FileUIModel, LayoutFileItemBinding>(context, v, dataBing) {
 

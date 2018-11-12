@@ -22,14 +22,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-
+/**
+ * 用户相关数据获取
+ */
 class UserRepository @Inject constructor(private val retrofit: Retrofit, private val appGlobalModel: AppGlobalModel,
                                          private val application: Application, private val userDao: UserDao) {
 
+    /**
+     * 登录用户的 SharedPreferences 委托
+     */
     private var userInfoStorage: String by GSYPreference(AppConfig.USER_INFO, "")
 
+    /**
+     * 获取用户详细信息
+     */
     fun getPersonInfoObservable(userName: String? = null): Observable<User> {
         val isLoginUser = userName == null
+        //根据是否有用户名，获取第三方用户数据或者当前用户数据
         val userService = if (isLoginUser) {
             retrofit.create(UserService::class.java).getPersonInfo(true)
         } else {
@@ -52,6 +61,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
             }
             Observable.just(it)
         }.doOnNext {
+            ///如果是登录用户，保存一份数据到 SharedPreferences
             if (isLoginUser) {
                 ///保存用户信息
                 userInfoStorage = GsonUtils.toJsonString(it)
@@ -67,6 +77,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     }
 
 
+    /**
+     * 获取用户产生的行为事件
+     */
     fun getUserEventObservable(userName: String?, page: Int = 1): Observable<Response<ArrayList<Event>>> {
         return retrofit.create(UserService::class.java)
                 .getUserEvents(true, userName ?: "", page)
@@ -87,6 +100,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                         resultCallBack?.onCacheSuccess(it)
                     }
                 }.flatMap {
+                    ///根据用户类型，判断下一步是获取组织成员还是用户事件
                     if (it.login != null) {
                         if (it.type == "Organization") {
                             userDao.getOrgMembersDao(it.login!!)
@@ -103,6 +117,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         val mergeService = getPersonInfoObservable(userName)
                 .flatMap {
                     resultCallBack?.onSuccess(it)
+                    ///根据用户类型，判断下一步是获取组织成员还是用户事件
                     if (it.type == "Organization") {
                         getOrgMembers(it.login!!, resultEventCallBack)
                         Observable.just(Response.success(ArrayList()))
@@ -152,7 +167,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
 
     }
 
-
+    /**
+     * 执行关注操作
+     */
     fun doFocus(context: Context, userName: String?, focus: Boolean, resultCallBack: ResultCallBack<Boolean>?) {
         userName?.apply {
             if (this == appGlobalModel.userObservable.login) {
@@ -269,6 +286,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
     }
 
 
+    /**
+     * 获取用户粉丝列表
+     */
     fun getUserFollower(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = userDao.getUserFollowerDao(userName)
@@ -281,6 +301,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         userListRequest(dbService, service, resultCallBack, page)
     }
 
+    /**
+     * 获取用户关注列表
+     */
     fun getUserFollowed(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = userDao.getUserFollowedDao(userName)
@@ -293,6 +316,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         userListRequest(dbService, service, resultCallBack, page)
     }
 
+    /**
+     * 获取仓库的star用户列表
+     */
     fun getRepositoryStarUser(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = userDao.getRepositoryStarUserDao(userName, reposName)
@@ -305,7 +331,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         userListRequest(dbService, service, resultCallBack, page)
     }
 
-
+    /**
+     * 获取仓库的watch用户列表
+     */
     fun getRepositoryWatchUser(userName: String, reposName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
         val dbService = userDao.getRepositoryWatchUserDao(userName, reposName)
@@ -318,6 +346,9 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         userListRequest(dbService, service, resultCallBack, page)
     }
 
+    /**
+     * 执行 User 相关的 observer，返回数据信息
+     */
     private fun userListRequest(dbObserver: Observable<ArrayList<Any>>, observer: Observable<Response<ArrayList<User>>>, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int) {
 
 

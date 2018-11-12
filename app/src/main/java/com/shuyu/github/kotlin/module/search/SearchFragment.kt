@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
 /**
+ * 搜索
  * Created by guoshuyu
  * Date: 2018-11-02
  */
@@ -32,7 +33,7 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
     @Inject
     lateinit var searchTabList: MutableList<NavigationTabBar.Model>
 
-    var searchFilterContorller: SearchFilterController? = null
+    var searchFilterController: SearchFilterController? = null
 
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
@@ -55,10 +56,14 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //初始化搜索类型控件
         search_type_bar.models = searchTabList
         search_type_bar.onTabBarSelectedIndexListener = this
         search_type_bar.modelIndex = 0
-        searchFilterContorller = SearchFilterController(activity, getViewModel())
+
+        //初始化搜索过滤器
+        searchFilterController = SearchFilterController(activity, getViewModel())
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_search
@@ -87,6 +92,9 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
         getViewModel().loadMore(activity!!)
     }
 
+    /**
+     * 切换tab改变搜索类型
+     */
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
     }
 

@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.webkit.WebView
 
 /**
+ * 拓展了触摸滑动兼容的WebView
  * Created by guoshuyu
  * Date: 2018-10-23
  */

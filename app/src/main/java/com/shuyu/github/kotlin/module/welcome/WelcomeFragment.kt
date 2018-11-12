@@ -47,7 +47,11 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ///lottie动画速度
         welcome_animation.speed = 5.0f
+
+        //两秒后跳转下一页
         Handler().postDelayed({
             goNext(view)
         }, 2000)

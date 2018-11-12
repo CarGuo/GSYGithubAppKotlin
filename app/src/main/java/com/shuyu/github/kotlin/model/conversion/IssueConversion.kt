@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.model.bean.IssueEvent
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 
 /**
+ * Issue相关实体转换
  * Created by guoshuyu
  * Date: 2018-10-29
  */

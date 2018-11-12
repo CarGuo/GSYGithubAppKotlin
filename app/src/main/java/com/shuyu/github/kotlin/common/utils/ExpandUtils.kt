@@ -11,6 +11,7 @@ import android.util.TypedValue.COMPLEX_UNIT_SP
 import java.util.regex.Pattern
 
 /**
+ * 拓展类
  * Created by guoshuyu
  * Date: 2018-10-24
  */
@@ -38,6 +39,9 @@ val Number.px2dp: Int
 val Number.px2sp: Int
     get() = (this.toFloat() / metrics.scaledDensity).toInt()
 
+/**
+ * 拓展颜色转String
+ */
 fun Context.colorIdToString(colorId: Int): String {
     val stringBuffer = StringBuffer()
     val color = ContextCompat.getColor(this, colorId)
@@ -48,6 +52,9 @@ fun Context.colorIdToString(colorId: Int): String {
     return stringBuffer.toString()
 }
 
+/**
+ * 拓展复制到粘粘版
+ */
 fun Context.copy(string: String) {
     val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
             as android.content.ClipboardManager
@@ -55,12 +62,18 @@ fun Context.copy(string: String) {
     clipboardManager.primaryClip = clip
 }
 
+/**
+ * 拓展获取版本号
+ */
 fun Context.getVersionName(): String {
     val manager = packageManager.getPackageInfo(packageName, 0)
     return manager.versionName
 }
 
 
+/**
+ * 拓展列表到文本转化
+ */
 fun ArrayList<String>.toSplitString(): String {
     var result = ""
     this.forEach {
@@ -69,6 +82,9 @@ fun ArrayList<String>.toSplitString(): String {
     return result
 }
 
+/**
+ * 拓展String版本号对比
+ */
 fun String.compareVersion(v2: String?): String? {
     if (v2 == null || v2.isEmpty()) return null
     val regEx = "[^0-9]"

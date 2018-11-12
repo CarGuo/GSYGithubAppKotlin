@@ -22,6 +22,7 @@ import com.shuyu.github.kotlin.ui.holder.UserHolder
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
+ * 通用列表
  * Created by guoshuyu
  * Date: 2018-11-08
  */

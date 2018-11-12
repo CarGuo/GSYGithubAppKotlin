@@ -18,6 +18,7 @@ import java.security.MessageDigest
 
 
 /**
+ * 高斯模糊
  * https://github.com/wasabeef/glide-transformations
  */
 class BlurTransformation @JvmOverloads constructor(private val radius: Int = MAX_RADIUS, private val sampling: Int = DEFAULT_DOWN_SAMPLING) : BitmapTransformation() {

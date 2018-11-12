@@ -10,6 +10,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.shuyu.github.kotlin.R
 
 /**
+ * 搜索过滤控制器
  * Created by guoshuyu
  * Date: 2018-11-05
  */

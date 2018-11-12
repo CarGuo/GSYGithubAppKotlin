@@ -4,6 +4,9 @@ import io.reactivex.ObservableSource
 import io.reactivex.Observer
 import retrofit2.Response
 
+/**
+ * 将Response转化为实体数据
+ */
 class FlatMapResponse2Result<T>(private val response: Response<T>) : ObservableSource<T> {
     override fun subscribe(observer: Observer<in T?>) {
         if (response.isSuccessful) {
@@ -14,6 +17,9 @@ class FlatMapResponse2Result<T>(private val response: Response<T>) : ObservableS
     }
 }
 
+/**
+ * 将实体数据转化为Response
+ */
 class FlatMapResult2Response<T>(private val t: T) : ObservableSource<Response<T>> {
 
     override fun subscribe(observer: Observer<in Response<T>?>) {
@@ -21,6 +27,9 @@ class FlatMapResult2Response<T>(private val t: T) : ObservableSource<Response<T>
     }
 }
 
+/**
+ * 不损失header的情况下转化Response中的 列表 数据
+ */
 class FlatMapResponse2ResponseResult<T>(private val response: Response<T>, private val conversionCallBack: FlatConversionInterface<T>) : ObservableSource<Response<ArrayList<Any>>> {
     override fun subscribe(observer: Observer<in Response<ArrayList<Any>>>) {
         if (response.isSuccessful) {
@@ -34,7 +43,9 @@ class FlatMapResponse2ResponseResult<T>(private val response: Response<T>, priva
     }
 }
 
-
+/**
+ * 不损失header的情况下转化Response中的 实体 数据
+ */
 class FlatMapResponse2ResponseObject<T, R>(private val response: Response<T>, private val conversionCallBack: FlatConversionObjectInterface<T, R>) : ObservableSource<Response<R>> {
     override fun subscribe(observer: Observer<in Response<R>>) {
         if (response.isSuccessful) {

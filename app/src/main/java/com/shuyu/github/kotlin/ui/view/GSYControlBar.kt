@@ -18,6 +18,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.dp
 
 /**
+ * 底部横向居右排布的显示控件
  * Created by guoshuyu
  * Date: 2018-10-29
  */

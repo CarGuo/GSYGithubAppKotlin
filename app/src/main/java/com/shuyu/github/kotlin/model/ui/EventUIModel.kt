@@ -1,5 +1,8 @@
 package com.shuyu.github.kotlin.model.ui
 
+/**
+ * 事件相关UI实体
+ */
 data class EventUIModel(var username: String = "",
                         var image: String = "",
                         var action: String = "",
@@ -12,7 +15,9 @@ data class EventUIModel(var username: String = "",
                         var releaseUrl: String = "",
                         var pushSha: String = "")
 
-
+/**
+ * 事件相关UI类型
+ */
 enum class EventUIAction {
     Person,
     Repos,

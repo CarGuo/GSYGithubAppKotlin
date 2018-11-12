@@ -10,7 +10,7 @@ import com.shuyu.github.kotlin.ui.holder.base.DataBindingHolder
 
 
 /**
- * 事件item
+ * 用户item
  */
 class UserHolder(context: Context, private val v: View, dataBing: ViewDataBinding) : DataBindingHolder<UserUIModel, LayoutUserItemBinding>(context, v, dataBing) {
 

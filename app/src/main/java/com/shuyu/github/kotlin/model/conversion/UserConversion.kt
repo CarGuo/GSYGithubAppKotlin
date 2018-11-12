@@ -10,10 +10,10 @@ import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.ui.UserUIModel
 
 /**
+ * 用户相关实体转换
  * Created by guoshuyu
  * Date: 2018-10-23
  */
-
 object UserConversion {
 
     fun userToUserUIModel(user: User): UserUIModel {

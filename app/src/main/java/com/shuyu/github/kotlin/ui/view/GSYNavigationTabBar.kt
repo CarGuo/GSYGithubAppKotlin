@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import devlight.io.library.ntb.NavigationTabBar
 
 /**
+ * 拓展了双击的TabBar
  * Created by guoshuyu
  * Date: 2018-10-22
  */

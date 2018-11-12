@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.layout_repos_item.view.*
 
 
 /**
- * 事件item
+ * 仓库item
  */
 class ReposHolder(context: Context, private val v: View, dataBing: ViewDataBinding) : DataBindingHolder<ReposUIModel, LayoutReposItemBinding>(context, v, dataBing) {
 

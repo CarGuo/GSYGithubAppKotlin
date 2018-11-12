@@ -4,10 +4,10 @@ import com.shuyu.github.kotlin.R
 import org.jetbrains.anko.toast
 
 /**
+ * 主页退出逻辑
  * Created by guoshuyu
  * Date: 2018-11-09
  */
-
 class MainExitLogic(private val activity: MainActivity) {
 
     var firstTime = 0L

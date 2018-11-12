@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.colorIdToString
 
 /**
+ * 当前没有使用
  * Created by guoshuyu
  * Date: 2018-10-30
  */

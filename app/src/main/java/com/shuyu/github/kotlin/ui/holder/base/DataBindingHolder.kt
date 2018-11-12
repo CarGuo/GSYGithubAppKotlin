@@ -6,7 +6,7 @@ import android.view.View
 import com.shuyu.commonrecycler.BindRecyclerBaseHolder
 
 /**
- * 基类数据绑定Holder
+ * 基类数据绑定Holder，拓展了对DataBinding支持
  * Created by guoshuyu
  * Date: 2018-10-19
  */

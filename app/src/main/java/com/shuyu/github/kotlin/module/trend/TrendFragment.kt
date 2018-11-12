@@ -64,7 +64,9 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
         manager.bind(ReposUIModel::class.java, ReposHolder.ID, ReposHolder::class.java)
     }
 
-
+    /**
+     * 初始化弹出过滤列表
+     */
     private fun initDropLists(context: Context?) {
 
         val sortData = getViewModel().sortData

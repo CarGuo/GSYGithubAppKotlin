@@ -7,10 +7,10 @@ import java.util.*
 
 
 /**
+ * 用户
  * Created by guoshuyu
  * Date: 2018-10-23
  */
-
 class UserUIModel : BaseObservable() {
     var login: String? = null
         @Bindable

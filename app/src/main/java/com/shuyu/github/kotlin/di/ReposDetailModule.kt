@@ -8,6 +8,7 @@ import dagger.Provides
 import devlight.io.library.ntb.NavigationTabBar
 
 /**
+ * 仓库详情TabBar数据
  * Created by guoshuyu
  * Date: 2018-10-25
  */

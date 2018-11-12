@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter
 
 
 /**
+ * Fragment的ViewPager适配器
  * Created by guoshuyu
  * Date: 2018-09-28
  */

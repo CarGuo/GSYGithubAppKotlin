@@ -19,12 +19,15 @@ import retrofit2.Response
 import javax.inject.Inject
 
 /**
+ * 仓库相关数据库操作
  * Created by guoshuyu
  * Date: 2018-11-07
  */
 class ReposDao @Inject constructor(private val application: Application) {
 
-
+    /**
+     * 获取趋势数据
+     */
     fun getTrendDao(language: String, since: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -45,7 +48,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
-
+    /**
+     * 保存趋势数据
+     */
     fun saveTrendDao(response: Response<String>, language: String, since: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, TrendRepository::class.java, object : FlatTransactionInterface<TrendRepository> {
             override fun query(q: RealmQuery<TrendRepository>): RealmResults<TrendRepository> {
@@ -60,6 +65,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 保存仓库readme
+     */
     fun saveReadme(response: Response<String>, userName: String, reposName: String, branch: String) {
         FlatMapRealmSaveResult(response, RepositoryDetailReadme::class.java, object : FlatTransactionInterface<RepositoryDetailReadme> {
             override fun query(q: RealmQuery<RepositoryDetailReadme>): RealmResults<RepositoryDetailReadme> {
@@ -74,6 +82,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, true)
     }
 
+    /**
+     * 获取仓库readme
+     */
     fun getReadmeDao(userName: String, reposName: String, branch: String): Observable<String> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -94,6 +105,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存仓库信息
+     */
     fun saveReposInfo(response: Response<Repository>, userName: String, reposName: String) {
         FlatMapRealmSaveResult(response, RepositoryDetail::class.java, object : FlatTransactionInterface<RepositoryDetail> {
             override fun query(q: RealmQuery<RepositoryDetail>): RealmResults<RepositoryDetail> {
@@ -107,6 +121,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, true)
     }
 
+    /**
+     * 获取仓库信息
+     */
     fun getRepoInfoDao(userName: String, reposName: String): Observable<ReposUIModel> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -127,6 +144,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存仓库事件
+     */
     fun saveReposEventDao(response: Response<ArrayList<Event>>, userName: String, reposName: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, RepositoryEvent::class.java, object : FlatTransactionInterface<RepositoryEvent> {
             override fun query(q: RealmQuery<RepositoryEvent>): RealmResults<RepositoryEvent> {
@@ -140,6 +160,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取仓库事件
+     */
     fun getReposEventDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -160,6 +183,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存仓库Issue
+     */
     fun saveReposIssue(response: Response<ArrayList<Issue>>, userName: String, reposName: String, status: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, RepositoryIssue::class.java, object : FlatTransactionInterface<RepositoryIssue> {
             override fun query(q: RealmQuery<RepositoryIssue>): RealmResults<RepositoryIssue> {
@@ -174,6 +200,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取仓库Issue
+     */
     fun getReposIssueDao(userName: String, reposName: String, status: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -195,7 +224,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
-
+    /**
+     * 保存仓库的fork列表信息
+     */
     fun saveReposFork(response: Response<ArrayList<Repository>>, userName: String, reposName: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, RepositoryFork::class.java, object : FlatTransactionInterface<RepositoryFork> {
             override fun query(q: RealmQuery<RepositoryFork>): RealmResults<RepositoryFork> {
@@ -209,6 +240,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取仓库的fork列表信息
+     */
     fun getReposFork(userName: String, reposName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -229,6 +263,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
+    /**
+     * 保存用户的仓库列表
+     */
     fun saveUserRepos(response: Response<ArrayList<Repository>>, userName: String, sort: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, UserRepos::class.java, object : FlatTransactionInterface<UserRepos> {
             override fun query(q: RealmQuery<UserRepos>): RealmResults<UserRepos> {
@@ -243,6 +280,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取用户的仓库列表
+     */
     fun getUserRepos(userName: String, sort: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
@@ -263,7 +303,9 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
-
+    /**
+     * 保存用户Star的仓库列表
+     */
     fun saveUserStarRepos(response: Response<ArrayList<Repository>>, userName: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, UserStared::class.java, object : FlatTransactionInterface<UserStared> {
             override fun query(q: RealmQuery<UserStared>): RealmResults<UserStared> {
@@ -277,6 +319,9 @@ class ReposDao @Inject constructor(private val application: Application) {
         }, needSave)
     }
 
+    /**
+     * 获取用户Star的仓库列表
+     */
     fun getUserStarRepos(userName: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {

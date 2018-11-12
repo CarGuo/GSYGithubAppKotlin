@@ -7,6 +7,7 @@ import com.shuyu.github.kotlin.R
 import org.jetbrains.anko.clearTask
 
 /**
+ * 启动页
  * Created by guoshuyu
  * Date: 2018-09-30
  */

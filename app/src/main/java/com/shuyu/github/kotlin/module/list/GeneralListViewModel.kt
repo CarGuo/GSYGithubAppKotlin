@@ -7,6 +7,7 @@ import com.shuyu.github.kotlin.repository.UserRepository
 import javax.inject.Inject
 
 /**
+ * 通用列表VM
  * Created by guoshuyu
  * Date: 2018-11-08
  */

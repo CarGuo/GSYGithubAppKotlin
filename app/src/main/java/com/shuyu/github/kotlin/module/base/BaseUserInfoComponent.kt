@@ -23,6 +23,7 @@ import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_user_info.*
 
 /**
+ * 基础用户显示
  * Created by guoshuyu
  * Date: 2018-10-24
  */

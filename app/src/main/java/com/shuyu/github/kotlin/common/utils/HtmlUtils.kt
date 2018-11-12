@@ -4,6 +4,7 @@ import android.content.Context
 import com.shuyu.github.kotlin.R
 
 /**
+ * 对Html数据拓展显示
  * Created by guoshuyu
  * Date: 2018-10-25
  */

@@ -17,7 +17,11 @@ import com.github.ybq.android.spinkit.style.MultiplePulseRing
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.dp
 
-
+/**
+ * 拓展了触摸滑动兼容的WebView容器
+ * Created by guoshuyu
+ * Date: 2018-10-23
+ */
 class GSYWebViewContainer : RelativeLayout {
 
     constructor(context: Context) : super(context)
