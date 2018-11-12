@@ -42,6 +42,8 @@ class GeneralListFragment : BaseListFragment<FragmentListBinding, GeneralListVie
     var requestType: GeneralEnum? = null
 
 
+    var filterController: GeneralFilterController? = null
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_list
     }
@@ -67,6 +69,7 @@ class GeneralListFragment : BaseListFragment<FragmentListBinding, GeneralListVie
         getViewModel().requestType = requestType
         getViewModel().reposName = reposName
         getViewModel().userName = userName
+        filterController = GeneralFilterController(this, getViewModel())
     }
 
     override fun getViewModelClass(): Class<GeneralListViewModel> = GeneralListViewModel::class.java

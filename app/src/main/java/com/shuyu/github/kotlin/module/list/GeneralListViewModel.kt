@@ -17,6 +17,8 @@ class GeneralListViewModel @Inject constructor(private val userRepository: UserR
 
     var userName = ""
 
+    var sort = ""
+
     var requestType: GeneralEnum? = null
 
 
@@ -37,7 +39,7 @@ class GeneralListViewModel @Inject constructor(private val userRepository: UserR
                 userRepository.getUserFollowed(userName, page, this)
             }
             GeneralEnum.UserRepository -> {
-                reposRepository.getUserRepos(userName, page, this)
+                reposRepository.getUserRepos(userName, page,  sort, this)
             }
             GeneralEnum.UserStar -> {
                 reposRepository.getUserStarRepos(userName, page, this)

@@ -546,14 +546,14 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         reposListRequest(dbService, netService, resultCallBack, page)
     }
 
-    fun getUserRepos(userName: String, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+    fun getUserRepos(userName: String, page: Int, sort: String, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
 
-        val dbService = reposDao.getUserRepos(userName)
+        val dbService = reposDao.getUserRepos(userName, sort)
 
         val netService = retrofit.create(RepoService::class.java)
-                .getUserPublicRepos(true, userName, page)
+                .getUserPublicRepos(true, userName, page, sort)
                 .doOnNext {
-                    reposDao.saveUserRepos(it, userName, page == 1)
+                    reposDao.saveUserRepos(it, userName, sort, page == 1)
                 }
 
         reposListRequest(dbService, netService, resultCallBack, page)

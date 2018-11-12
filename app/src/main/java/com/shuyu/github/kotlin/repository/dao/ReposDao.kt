@@ -229,7 +229,7 @@ class ReposDao @Inject constructor(private val application: Application) {
                 }
     }
 
-    fun saveUserRepos(response: Response<ArrayList<Repository>>, userName: String, needSave: Boolean) {
+    fun saveUserRepos(response: Response<ArrayList<Repository>>, userName: String, sort: String, needSave: Boolean) {
         FlatMapRealmSaveResult(response, UserRepos::class.java, object : FlatTransactionInterface<UserRepos> {
             override fun query(q: RealmQuery<UserRepos>): RealmResults<UserRepos> {
                 return q.equalTo("userName", userName).findAll()
@@ -238,16 +238,17 @@ class ReposDao @Inject constructor(private val application: Application) {
             override fun onTransaction(targetObject: UserRepos?) {
                 targetObject?.data = GsonUtils.toJsonString(response.body())
                 targetObject?.userName = userName
+                targetObject?.sort = sort
             }
         }, needSave)
     }
 
-    fun getUserRepos(userName: String): Observable<ArrayList<Any>> {
+    fun getUserRepos(userName: String, sort: String): Observable<ArrayList<Any>> {
         return RealmFactory.getRealmObservable()
                 .map {
                     val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<Repository, UserRepos> {
                         override fun query(realm: Realm): RealmResults<UserRepos> {
-                            return realm.where(UserRepos::class.java).equalTo("userName", userName).findAll()
+                            return realm.where(UserRepos::class.java).equalTo("userName", userName).equalTo("sort", sort).findAll()
                         }
 
                         override fun onJSON(t: UserRepos): List<Repository> {

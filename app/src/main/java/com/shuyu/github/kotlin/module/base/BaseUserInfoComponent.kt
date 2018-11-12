@@ -97,7 +97,7 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
             when (v?.id) {
                 R.id.user_header_repos -> {
                     GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
-                    +application.getString(R.string.FollowedText), GeneralEnum.UserRepository)
+                    +application.getString(R.string.FollowedText), GeneralEnum.UserRepository, true)
                 }
                 R.id.user_header_fan -> {
                     GeneralListActivity.gotoGeneralList(this, "", login ?: ""+" "
