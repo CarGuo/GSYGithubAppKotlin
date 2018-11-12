@@ -1,8 +1,11 @@
 package com.shuyu.github.kotlin.model.conversion
 
 
+import android.content.Context
+import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.bean.Notification
 import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 
@@ -186,5 +189,21 @@ object EventConversion {
                 eventUIModel.actionType = EventUIAction.Repos
             }
         }
+    }
+
+
+    fun notificationToEventUIModel(context: Context, notification: Notification): EventUIModel {
+        val eventUIModel = EventUIModel()
+        eventUIModel.time = CommonUtils.getNewsTimeStr(notification.updateAt)
+        eventUIModel.username = notification.repository?.fullName ?: ""
+        val type = notification.subject?.type ?: ""
+        val status = if (notification.unread) {
+            context.getString(R.string.unread)
+        } else {
+            context.getString(R.string.readed)
+        }
+        eventUIModel.des = notification.reason + "${context.getString(R.string.notifyType)}：$type，${context.getString(R.string.notifyStatus)}：$status"
+        eventUIModel.action = notification.subject?.title ?: ""
+        return eventUIModel
     }
 }

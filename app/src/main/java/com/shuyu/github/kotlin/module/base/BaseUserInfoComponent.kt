@@ -64,10 +64,15 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
                 null, false, GSYDataBindingComponent())
         binding.userUIModel = getViewModel().getUserModel()
         binding.baseUserViewModel = getViewModel()
+        binding.userHeaderNotify.visibility = View.GONE
         manager.addHeaderView(binding.root)
+        bindHeader(binding)
 
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
         manager.bind(UserUIModel::class.java, UserHolder.ID, UserHolder::class.java)
+    }
+
+    open fun bindHeader(binding:LayoutUserHeaderBinding) {
     }
 
     abstract fun getLoginName(): String?

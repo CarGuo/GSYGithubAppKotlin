@@ -106,7 +106,8 @@
     <string name="notifyUnread">未读</string>
     <string name="notifyParticipating">参与</string>
     <string name="notifyAll">所有</string>
-    <string name="notifyType">类型：%{option1}，状态：%{option2}</string>
+    <string name="notifyType">类型</string>
+    <string name="notifyStatus">状态</string>
     <string name="unread">未读</string>
     <string name="readed">已读</string>
     <string name="notify">通知</string>

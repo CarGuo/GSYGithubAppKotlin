@@ -8,10 +8,12 @@ import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Event
+import com.shuyu.github.kotlin.model.bean.Notification
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.UserConversion
 import com.shuyu.github.kotlin.repository.dao.UserDao
+import com.shuyu.github.kotlin.service.NotificationService
 import com.shuyu.github.kotlin.service.RepoService
 import com.shuyu.github.kotlin.service.UserService
 import io.reactivex.Observable
@@ -344,6 +346,45 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                     userDao.saveRepositoryWatchUserDao(userName, reposName, it, page == 1)
                 }
         userListRequest(dbService, service, resultCallBack, page)
+    }
+
+    fun getNotify(all: Boolean?, participating: Boolean?, page: Int, resultCallBack: ResultCallBack<ArrayList<Any>>?) {
+
+        val service =
+                if (all == null || participating == null) {
+                    retrofit.create(NotificationService::class.java).getNotificationUnRead(true, page)
+                } else {
+                    retrofit.create(NotificationService::class.java).getNotification(true, all, participating, page)
+                }
+
+        val notifyService = service.flatMap {
+            FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<Notification>> {
+                override fun onConversion(t: ArrayList<Notification>?): ArrayList<Any> {
+                    val dataList = ArrayList<Any>()
+                    t?.apply {
+                        for (item in t) {
+                            dataList.add(EventConversion.notificationToEventUIModel(application, item))
+                        }
+                    }
+                    return dataList
+                }
+            })
+        }
+
+        RetrofitFactory.executeResult(notifyService, object : ResultTipObserver<ArrayList<Any>>(application) {
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                super.onPageInfo(first, current, last)
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
     /**
