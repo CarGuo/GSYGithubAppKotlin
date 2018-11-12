@@ -6,6 +6,7 @@ import com.shuyu.github.kotlin.module.issue.IssueDetailFragment
 import com.shuyu.github.kotlin.module.list.GeneralListFragment
 import com.shuyu.github.kotlin.module.login.LoginFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
+import com.shuyu.github.kotlin.module.notify.NotifyFragment
 import com.shuyu.github.kotlin.module.person.PersonFragment
 import com.shuyu.github.kotlin.module.repos.action.ReposActionListFragment
 import com.shuyu.github.kotlin.module.repos.file.ReposFileListFragment
@@ -106,3 +107,9 @@ abstract class GeneralListFragmentBindModule {
 }
 
 
+@Module
+abstract class NotifyFragmentBindModule {
+
+    @ContributesAndroidInjector(modules = [NotifyModule::class])
+    abstract fun contributeNotifyFragment(): NotifyFragment
+}

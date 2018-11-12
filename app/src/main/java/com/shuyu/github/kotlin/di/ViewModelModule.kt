@@ -26,6 +26,7 @@ import com.shuyu.github.kotlin.module.issue.IssueDetailViewModel
 import com.shuyu.github.kotlin.module.list.GeneralListViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
+import com.shuyu.github.kotlin.module.notify.NotifyViewModel
 import com.shuyu.github.kotlin.module.person.PersonViewModel
 import com.shuyu.github.kotlin.module.repos.ReposDetailViewModel
 import com.shuyu.github.kotlin.module.repos.action.ReposActionViewModel
@@ -126,6 +127,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(GeneralListViewModel::class)
     abstract fun bindGeneralListViewModel(generalListViewModel: GeneralListViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NotifyViewModel::class)
+    abstract fun bindNotifyViewModel(notifyViewModel: NotifyViewModel): ViewModel
 
 
     @Binds

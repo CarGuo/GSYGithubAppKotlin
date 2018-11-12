@@ -202,8 +202,25 @@ object EventConversion {
         } else {
             context.getString(R.string.readed)
         }
-        eventUIModel.des = notification.reason + "${context.getString(R.string.notifyType)}：$type，${context.getString(R.string.notifyStatus)}：$status"
+        eventUIModel.des = notification.reason + " " + "${context.getString(R.string.notifyType)}：$type，${context.getString(R.string.notifyStatus)}：$status"
         eventUIModel.action = notification.subject?.title ?: ""
+        eventUIModel.actionType = if (notification.subject?.type == "Issue") {
+            EventUIAction.Issue
+        } else {
+            EventUIAction.Person
+        }
+
+        eventUIModel.owner = notification.repository?.owner?.login ?: ""
+        eventUIModel.repositoryName = notification.repository?.name ?: ""
+
+        val url = notification.subject?.url
+        url?.apply {
+            val tmp = url.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val number = tmp[tmp.size - 1]
+            eventUIModel.IssueNum = number.toInt()
+        }
+        eventUIModel.threadId = notification.id ?: ""
+
         return eventUIModel
     }
 }

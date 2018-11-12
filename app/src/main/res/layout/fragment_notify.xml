@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
+            android:id="@+id/notify_tab_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:ntb_badge_size="0sp"
+            app:ntb_badged="false"
+            app:ntb_bg_color="@color/colorPrimary"
+            app:ntb_icon_size_fraction="0"
+            app:ntb_inactive_color="@color/subTextColor"
+            app:ntb_scaled="true"
+            app:ntb_swiped="true"
+            app:ntb_tinted="true"
+            app:ntb_title_mode="all"
+            app:ntb_title_size="@dimen/smallTextSize"
+            app:ntb_titled="true" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/baseRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+</layout>

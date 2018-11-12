@@ -30,6 +30,8 @@ object ARouterAddress {
     const val GeneralListFragment = "/general/fragment"
 
 
+    const val NotifyActivity = "/notify/activity"
+    const val NotifyFragment = "/notify/fragment"
 
 
 }

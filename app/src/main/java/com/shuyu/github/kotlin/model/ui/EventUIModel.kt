@@ -13,7 +13,8 @@ data class EventUIModel(var username: String = "",
                         var repositoryName: String = "",
                         var IssueNum: Int = 0,
                         var releaseUrl: String = "",
-                        var pushSha: String = "")
+                        var pushSha: String = "",
+                        var threadId: String = "")
 
 /**
  * 事件相关UI类型
