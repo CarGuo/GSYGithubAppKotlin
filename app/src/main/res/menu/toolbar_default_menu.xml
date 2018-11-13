@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ripple_menu_more"
+        android:orderInCategory="60"
+        android:title=""
+        app:showAsAction="ifRoom" />
+
+</menu>

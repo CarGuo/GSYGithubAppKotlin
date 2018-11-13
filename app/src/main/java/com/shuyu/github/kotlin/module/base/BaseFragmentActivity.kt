@@ -7,7 +7,10 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.Toolbar
+import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import com.shuyu.github.kotlin.R
 import dagger.android.DispatchingAndroidInjector
@@ -19,7 +22,7 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-10-24
  */
-abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener {
+abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -51,7 +54,37 @@ abstract class BaseFragmentActivity : AppCompatActivity(), HasSupportFragmentInj
         return true
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean = true
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_default_menu, menu)
+        return true
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_more -> {
+                val pop = PopupMenu(this, activity_fragment_container_toolbar)
+                pop.menuInflater.inflate(R.menu.toolbar_default_pop_menu, pop.menu)
+                pop.gravity = Gravity.END
+                pop.show()
+                pop.setOnMenuItemClickListener(this)
+            }
+            R.id.action_browser -> {
+                actionOpenByBrowser()
+            }
+            R.id.action_copy -> {
+                actionCopy()
+            }
+        }
+        return true
+    }
+
+    open fun actionOpenByBrowser() {
+
+    }
+
+    open fun actionCopy() {
+
+    }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
