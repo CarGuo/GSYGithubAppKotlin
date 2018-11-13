@@ -387,6 +387,28 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         })
     }
 
+    fun setNotificationAsRead(id: String) {
+        val service = retrofit.create(NotificationService::class.java).setNotificationAsRead(id)
+        RetrofitFactory.executeResult(service, object : ResultTipObserver<ResponseBody>(application) {
+            override fun onSuccess(result: ResponseBody?) {
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+            }
+        })
+    }
+
+    fun setAllNotificationAsRead(context: Context) {
+        val service = retrofit.create(NotificationService::class.java).setAllNotificationAsRead()
+        RetrofitFactory.executeResult(service, object : ResultProgressObserver<ResponseBody>(context) {
+            override fun onSuccess(result: ResponseBody?) {
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+            }
+        })
+    }
+
     /**
      * 执行 User 相关的 observer，返回数据信息
      */

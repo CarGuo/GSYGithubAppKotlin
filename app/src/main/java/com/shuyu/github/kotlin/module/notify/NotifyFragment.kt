@@ -42,7 +42,10 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
-        EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
+        val item = adapter?.dataList?.get(position) as EventUIModel
+        getViewModel().setNotificationAsRead(item.threadId)
+        EventUtils.evenAction(item)
+        notifyDelete(position, 1)
     }
 
     override fun getRecyclerView(): RecyclerView? = baseRecycler
@@ -85,5 +88,11 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
             }
         }
         showRefresh()
+    }
+
+    fun setAllNotificationAsRead(context: Context) {
+        getViewModel().setAllNotificationAsRead(context)
+        adapter?.dataList?.clear()
+        adapter?.notifyDataSetChanged()
     }
 }

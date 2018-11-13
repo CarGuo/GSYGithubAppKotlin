@@ -1,6 +1,7 @@
 package com.shuyu.github.kotlin.module.my
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.view.View
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.module.base.BaseUserInfoFragment
@@ -20,12 +21,17 @@ class MyFragment : BaseUserInfoFragment<MyViewModel>() {
     override fun bindHeader(binding: LayoutUserHeaderBinding) {
         binding.userHeaderNotify.visibility = View.VISIBLE
         binding.userHeaderNotify.setOnClickListener {
-            NotifyActivity.gotoNotify()
+            startActivityForResult(Intent(context, NotifyActivity::class.java), 1000)
         }
         getViewModel().notifyColor.observe(this, Observer { result ->
             result?.apply {
                 binding.userHeaderNotify.setTextColor(this)
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        showRefresh()
     }
 }
