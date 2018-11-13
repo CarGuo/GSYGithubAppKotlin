@@ -9,11 +9,9 @@
 
 1.0.0 欠缺
 
-bugly
-
 repository action的提交列表
 
-主页drawer（问题反馈、关于、退出登录）
+主页drawer（个人信息）
 
 图片预览（readme 和文件下的图片预览）
 

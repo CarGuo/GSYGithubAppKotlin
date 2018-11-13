@@ -13,6 +13,8 @@ import com.shuyu.commonrecycler.BindSuperAdapter
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.commonrecycler.listener.OnItemClickListener
 import com.shuyu.commonrecycler.listener.OnLoadingListener
+import com.shuyu.github.kotlin.model.ui.EmptyUIModel
+import com.shuyu.github.kotlin.ui.holder.EmptyHolder
 import com.shuyu.github.kotlin.ui.holder.base.BindCustomLoadMoreFooter
 import com.shuyu.github.kotlin.ui.holder.base.BindCustomRefreshHeader
 import com.shuyu.github.kotlin.ui.holder.base.BindingDataRecyclerManager
@@ -74,7 +76,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     } else {
                         notifyInsert(currentSize, items.size)
                     }
-                } else{
+                } else {
                     if (getViewModel().isFirstData()) {
                         adapter?.dataList?.clear()
                         adapter?.notifyDataSetChanged()
@@ -176,6 +178,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                     ?.setRefreshHeader(BindCustomRefreshHeader(activity!!))
                     ?.setFootView(BindCustomLoadMoreFooter(activity!!))
                     ?.setLoadingMoreEmptyEnabled(false)
+                    ?.bindEmpty(EmptyUIModel(), EmptyHolder.ID, EmptyHolder::class.java)
             normalAdapterManager?.apply {
                 bindHolder(this)
                 adapter = BindSuperAdapter(activity as Context, this, arrayListOf())
