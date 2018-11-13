@@ -6,8 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
-import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
+import android.support.v7.widget.Toolbar
 import android.widget.AdapterView
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -15,8 +14,11 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.CommonUtils
+import com.shuyu.github.kotlin.common.utils.copy
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
+import com.shuyu.github.kotlin.module.base.BaseActivity
 import com.shuyu.github.kotlin.module.repos.action.ReposActionListFragment
 import com.shuyu.github.kotlin.module.repos.file.ReposFileListFragment
 import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListFragment
@@ -26,6 +28,9 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_repos_detail.*
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.share
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -35,7 +40,7 @@ import javax.inject.Inject
  */
 
 @Route(path = ARouterAddress.ReposDetailActivity)
-class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARouterInjectable {
+class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterInjectable {
 
     companion object {
 
@@ -85,9 +90,6 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_repos_detail)
-
-        initTitle()
 
         val fragmentList = getFragmentList()
         repos_detail_view_pager.adapter = FragmentPagerViewAdapter(fragmentList, supportFragmentManager)
@@ -109,29 +111,28 @@ class ReposDetailActivity : AppCompatActivity(), HasSupportFragmentInjector, ARo
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-        }
-        return true
-    }
-
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
-    /**
-     * 初始化title
-     */
-    private fun initTitle() {
-        setSupportActionBar(repos_detail_toolbar)
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setDisplayShowTitleEnabled(false)
-        }
-        repos_detail_toolbar.title = reposName
+
+    override fun getToolBar(): Toolbar = repos_detail_toolbar
+
+    override fun getLayoutId(): Int = R.layout.activity_repos_detail
+
+    override fun getToolBarTitle(): String = reposName
+
+    override fun actionOpenByBrowser() {
+        browse(CommonUtils.getReposHtmlUrl(userName, reposName))
     }
+
+    override fun actionCopy() {
+        copy(CommonUtils.getReposHtmlUrl(userName, reposName))
+        toast(R.string.hadCopy)
+    }
+
+    override fun actionShare() {
+        share(CommonUtils.getReposHtmlUrl(userName, reposName))
+    }
+
 
     private fun getFragmentList(): ArrayList<Fragment> {
         fragmentReadme = getRouterNavigation(ARouterAddress.ReposDetailReadme, userName, reposName).navigation() as ReposReadmeFragment

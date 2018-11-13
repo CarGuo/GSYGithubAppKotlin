@@ -4,6 +4,7 @@ import android.graphics.Point
 import android.widget.ImageView
 import com.shuyu.github.kotlin.GSYGithubApplication
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.style.image.BlurTransformation
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import com.shuyu.gsyimageloader.GSYLoadOption
@@ -80,4 +81,19 @@ object CommonUtils {
             else -> getDateStr(date)
         }
     }
+
+
+    fun getReposHtmlUrl(userName: String, reposName: String): String =
+            AppConfig.GITHUB_BASE_URL + userName + "/" + reposName
+
+    fun getIssueHtmlUrl(userName: String, reposName: String, number: String): String =
+            AppConfig.GITHUB_BASE_URL + userName + "/" + reposName + "/issues/" + number
+
+    fun getUserHtmlUrl(userName: String) =
+            AppConfig.GITHUB_BASE_URL + userName
+
+    fun getFileHtmlUrl(userName: String, reposName: String, path: String, branch: String = "master"): String =
+            AppConfig.GITHUB_BASE_URL + userName + "/" + reposName + "/blob/" + branch + "/" + path
+
+
 }

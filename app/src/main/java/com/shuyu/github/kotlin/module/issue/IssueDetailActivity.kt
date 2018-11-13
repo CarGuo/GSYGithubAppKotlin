@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.module.issue
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.Postcard
@@ -68,7 +67,7 @@ class IssueDetailActivity : BaseFragmentActivity(), ARouterInjectable {
         return super.onMenuItemClick(item)
     }
 
-    override fun getInitFragment(): Fragment {
+    override fun getInitFragment(): IssueDetailFragment {
         return getRouterNavigation(ARouterAddress.IssueDetailFragment, userName, reposName, issueNumber).navigation() as IssueDetailFragment
     }
 

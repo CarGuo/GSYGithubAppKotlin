@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.module.list
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.Postcard
@@ -67,7 +66,7 @@ class GeneralListActivity : BaseFragmentActivity(), ARouterInjectable {
         super.onCreate(savedInstanceState)
     }
 
-    override fun getInitFragment(): Fragment {
+    override fun getInitFragment(): GeneralListFragment {
         fragment = getRouterNavigation(ARouterAddress.GeneralListFragment, userName, reposName, title, requestType, needFilter).navigation() as GeneralListFragment
         return fragment!!
     }

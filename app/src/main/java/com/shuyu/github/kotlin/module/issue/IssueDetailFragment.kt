@@ -10,6 +10,8 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.CommonUtils
+import com.shuyu.github.kotlin.common.utils.copy
 import com.shuyu.github.kotlin.databinding.FragmentIssueDetailBinding
 import com.shuyu.github.kotlin.databinding.LayoutIssueHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
@@ -20,6 +22,9 @@ import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.IssueCommentHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_issue_detail.*
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.share
+import org.jetbrains.anko.toast
 
 /**
  * Created by guoshuyu
@@ -96,4 +101,16 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
     }
 
 
+    override fun actionOpenByBrowser() {
+        context?.browse(CommonUtils.getIssueHtmlUrl(userName, reposName, issueNumber.toString()))
+    }
+
+    override fun actionCopy() {
+        context?.copy(CommonUtils.getIssueHtmlUrl(userName, reposName, issueNumber.toString()))
+        context?.toast(R.string.hadCopy)
+    }
+
+    override fun actionShare() {
+        context?.share(CommonUtils.getIssueHtmlUrl(userName, reposName, issueNumber.toString()))
+    }
 }

@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.module.person
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.view.LayoutInflaterCompat
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -41,8 +40,8 @@ class PersonActivity : BaseFragmentActivity(), ARouterInjectable {
         super.onCreate(savedInstanceState)
     }
 
-    override fun getInitFragment(): Fragment {
-        return getRouterNavigation(ARouterAddress.PersonFragment, userName).navigation() as Fragment
+    override fun getInitFragment(): PersonFragment {
+        return getRouterNavigation(ARouterAddress.PersonFragment, userName).navigation() as PersonFragment
     }
 
     override fun getToolBarTitle(): String = userName

@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.module.search
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.Postcard
@@ -53,5 +52,5 @@ class SearchActivity : BaseFragmentActivity() {
 
     override fun getToolBarTitle(): String = getString(R.string.search)
 
-    override fun getInitFragment(): Fragment = fragment
+    override fun getInitFragment(): SearchFragment = fragment
 }

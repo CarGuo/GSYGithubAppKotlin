@@ -1,6 +1,5 @@
 package com.shuyu.github.kotlin.module.notify
 
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.Postcard
@@ -36,7 +35,7 @@ class NotifyActivity : BaseFragmentActivity(), ARouterInjectable {
 
     override fun getToolBarTitle(): String = getString(R.string.notify)
 
-    override fun getInitFragment(): Fragment {
+    override fun getInitFragment(): NotifyFragment {
         fragment = getRouterNavigation(ARouterAddress.NotifyFragment).navigation() as NotifyFragment
         return fragment!!
     }

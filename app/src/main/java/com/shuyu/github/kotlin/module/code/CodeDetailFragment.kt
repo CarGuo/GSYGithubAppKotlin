@@ -8,11 +8,16 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.CommonUtils
+import com.shuyu.github.kotlin.common.utils.copy
 import com.shuyu.github.kotlin.databinding.FragmentCodeDetailBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_code_detail.*
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.share
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -72,4 +77,18 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_code_detail
+
+
+    override fun actionOpenByBrowser() {
+        context?.browse(CommonUtils.getFileHtmlUrl(userName, reposName, url))
+    }
+
+    override fun actionCopy() {
+        context?.copy(CommonUtils.getFileHtmlUrl(userName, reposName, url))
+        context?.toast(R.string.hadCopy)
+    }
+
+    override fun actionShare() {
+        context?.share(CommonUtils.getFileHtmlUrl(userName, reposName, url))
+    }
 }

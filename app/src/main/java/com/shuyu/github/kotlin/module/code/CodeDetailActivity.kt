@@ -1,6 +1,5 @@
 package com.shuyu.github.kotlin.module.code
 
-import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -42,7 +41,6 @@ class CodeDetailActivity : BaseFragmentActivity(), ARouterInjectable {
     @JvmField
     var url = ""
 
-
     @Autowired
     @JvmField
     var reposName = ""
@@ -54,7 +52,7 @@ class CodeDetailActivity : BaseFragmentActivity(), ARouterInjectable {
 
     override fun getToolBarTitle(): String = path
 
-    override fun getInitFragment(): Fragment = getRouterNavigation(ARouterAddress.CodeDetailFragment, userName, reposName, path, url).navigation() as CodeDetailFragment
+    override fun getInitFragment(): CodeDetailFragment = getRouterNavigation(ARouterAddress.CodeDetailFragment, userName, reposName, path, url).navigation() as CodeDetailFragment
 
 
 }

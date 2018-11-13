@@ -36,6 +36,18 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), Injectable {
         return binding?.root
     }
 
+    open fun actionOpenByBrowser() {
+
+    }
+
+    open fun actionCopy() {
+
+    }
+
+    open fun actionShare() {
+
+    }
+
     abstract fun onCreateView(mainView: View?)
 
     abstract fun getLayoutId(): Int
