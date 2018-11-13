@@ -104,7 +104,7 @@
 
 ### 进行中：
 
->敬请期待
+[版本更新说明](https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/VERSION.md)
 
 
 <img src="https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/thanks.jpg" width="426px"/>
