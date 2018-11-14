@@ -52,7 +52,7 @@
 
 ![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/framework.png)
 
-![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/folder.png)
+![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/folder2.png)
 
 ## 下载
 
