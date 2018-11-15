@@ -103,7 +103,9 @@ class ReposUIModel : BaseObservable() {
 
     fun cloneFrom(reposUIModel: ReposUIModel) {
         ownerName = reposUIModel.ownerName
-        ownerPic = reposUIModel.ownerPic
+        if (ownerPic != reposUIModel.ownerPic) {
+            ownerPic = reposUIModel.ownerPic
+        }
         repositoryName = reposUIModel.repositoryName
         repositoryStar = reposUIModel.repositoryStar
         repositoryFork = reposUIModel.repositoryFork
