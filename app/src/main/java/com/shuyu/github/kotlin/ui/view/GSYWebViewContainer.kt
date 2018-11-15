@@ -6,15 +6,13 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.webkit.JavascriptInterface
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.RelativeLayout
 import androidx.core.view.setPadding
 import com.github.ybq.android.spinkit.SpinKitView
 import com.github.ybq.android.spinkit.style.MultiplePulseRing
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
 
 /**
@@ -73,7 +71,13 @@ class GSYWebViewContainer : RelativeLayout {
                 spinKit.visibility = View.GONE
 
             }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                CommonUtils.launchUrl(view!!.context, request!!.url!!.toString())
+                return true
+            }
         }
+
 
         webView.webViewClient = webViewClient
 
@@ -88,7 +92,6 @@ class GSYWebViewContainer : RelativeLayout {
         }
 
     }
-
 
 
 }
