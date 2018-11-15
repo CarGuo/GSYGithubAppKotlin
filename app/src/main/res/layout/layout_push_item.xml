@@ -24,7 +24,7 @@
             android:layout_marginEnd="5dp"
             android:text="@{fileUIModel.dir}"
             android:textColor="@color/subLightTextColor"
-            android:textSize="@dimen/middleTextSize" />
+            android:textSize="@dimen/smallTextSize" />
 
         <android.support.v7.widget.CardView style="@style/whiteCard">
 

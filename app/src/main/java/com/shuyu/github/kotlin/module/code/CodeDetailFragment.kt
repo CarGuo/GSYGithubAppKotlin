@@ -45,6 +45,10 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
     @JvmField
     var userName = ""
 
+    @Autowired
+    @JvmField
+    var localCode: String? = null
+
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -59,9 +63,6 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        code_detail_web
-
-
 
         code_detail_web.spinKit.visibility = View.VISIBLE
         viewModel.htmlData.observe(this, Observer {
@@ -73,22 +74,35 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
             code_detail_web.webView.loadData(it, "text/html", "utf-8")
 
         })
-        viewModel.getCodeHtml(userName, reposName, url)
+        if (localCode == null) {
+            viewModel.getCodeHtml(userName, reposName, url)
+        } else {
+            viewModel.htmlData.value = localCode
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_code_detail
 
 
     override fun actionOpenByBrowser() {
+        if (url.isBlank()) {
+            return
+        }
         context?.browse(CommonUtils.getFileHtmlUrl(userName, reposName, url))
     }
 
     override fun actionCopy() {
+        if (url.isBlank()) {
+            return
+        }
         context?.copy(CommonUtils.getFileHtmlUrl(userName, reposName, url))
         context?.toast(R.string.hadCopy)
     }
 
     override fun actionShare() {
+        if (url.isBlank()) {
+            return
+        }
         context?.share(CommonUtils.getFileHtmlUrl(userName, reposName, url))
     }
 }

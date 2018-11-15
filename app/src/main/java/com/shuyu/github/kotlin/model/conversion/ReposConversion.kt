@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.model.conversion
 import android.content.Context
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.CommonUtils
+import com.shuyu.github.kotlin.common.utils.HtmlUtils
 import com.shuyu.github.kotlin.model.bean.*
 import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.model.ui.PushUIModel
@@ -103,14 +104,17 @@ object ReposConversion {
         return pushUIModel
     }
 
-    fun repoCommitToFileUIModel(commit: CommitFile): FileUIModel {
+    fun repoCommitToFileUIModel(context: Context, commit: CommitFile): FileUIModel {
         val fileUIModel = FileUIModel()
         val filename = commit.fileName ?: ""
         val nameSplit = filename.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         fileUIModel.title = nameSplit[nameSplit.size - 1]
         fileUIModel.dir = filename
         fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
-        fileUIModel.patch = commit.patch ?: ""
+
+        val html = HtmlUtils.generateCode2HTml(context, HtmlUtils.parseDiffSource(commit.patch
+                ?: "", false), R.color.webDraculaBackgroundColor, "")
+        fileUIModel.patch = html
         return fileUIModel
     }
 }

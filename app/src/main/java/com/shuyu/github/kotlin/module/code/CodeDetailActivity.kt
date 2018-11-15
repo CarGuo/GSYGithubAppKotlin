@@ -19,16 +19,21 @@ class CodeDetailActivity : BaseFragmentActivity(), ARouterInjectable {
     companion object {
 
         fun gotoCodeDetail(userName: String, reposName: String, path: String, url: String) {
-            getRouterNavigation(ARouterAddress.CodeDetailActivity, userName, reposName, path, url).navigation()
+            getRouterNavigation(ARouterAddress.CodeDetailActivity, userName, reposName, path, url, null).navigation()
         }
 
-        fun getRouterNavigation(uri: String, userName: String, reposName: String, path: String, url: String): Postcard {
+        fun gotoCodeDetailLocal(path: String, localCode: String) {
+            getRouterNavigation(ARouterAddress.CodeDetailActivity, "", "", path, "", localCode).navigation()
+        }
+
+        fun getRouterNavigation(uri: String, userName: String, reposName: String, path: String, url: String, localCode: String?): Postcard {
             return ARouter.getInstance()
                     .build(uri)
                     .withString("path", path)
                     .withString("url", url)
                     .withString("userName", userName)
                     .withString("reposName", reposName)
+                    .withString("localCode", localCode)
         }
     }
 
@@ -43,6 +48,10 @@ class CodeDetailActivity : BaseFragmentActivity(), ARouterInjectable {
 
     @Autowired
     @JvmField
+    var localCode: String? = null
+
+    @Autowired
+    @JvmField
     var reposName = ""
 
     @Autowired
@@ -52,7 +61,7 @@ class CodeDetailActivity : BaseFragmentActivity(), ARouterInjectable {
 
     override fun getToolBarTitle(): String = path
 
-    override fun getInitFragment(): CodeDetailFragment = getRouterNavigation(ARouterAddress.CodeDetailFragment, userName, reposName, path, url).navigation() as CodeDetailFragment
+    override fun getInitFragment(): CodeDetailFragment = getRouterNavigation(ARouterAddress.CodeDetailFragment, userName, reposName, path, url, localCode).navigation() as CodeDetailFragment
 
 
 }

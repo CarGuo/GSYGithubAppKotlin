@@ -613,7 +613,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                     val list = arrayListOf<Any>()
                     it.files?.apply {
                         forEach {
-                            list.add(ReposConversion.repoCommitToFileUIModel(it))
+                            list.add(ReposConversion.repoCommitToFileUIModel(application, it))
                         }
                     }
                     list

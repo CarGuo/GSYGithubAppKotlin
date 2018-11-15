@@ -95,5 +95,7 @@ object CommonUtils {
     fun getFileHtmlUrl(userName: String, reposName: String, path: String, branch: String = "master"): String =
             AppConfig.GITHUB_BASE_URL + userName + "/" + reposName + "/blob/" + branch + "/" + path
 
+    fun getCommitHtmlUrl(userName: String, reposName: String,  sha: String ): String =
+            AppConfig.GITHUB_BASE_URL + userName + "/" + reposName + "/commit/" + sha
 
 }
