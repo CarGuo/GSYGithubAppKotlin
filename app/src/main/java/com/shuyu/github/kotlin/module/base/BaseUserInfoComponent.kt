@@ -45,7 +45,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
         val item  =adapter?.dataList?.get(position)
         when(item) {
             is EventUIModel ->{
-                EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
+                EventUtils.evenAction(activity, adapter?.dataList?.get(position) as EventUIModel)
             }
             is UserUIModel ->{
                 PersonActivity.gotoPersonInfo(item.login!!)

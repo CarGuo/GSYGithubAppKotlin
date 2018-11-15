@@ -26,7 +26,7 @@ class DynamicFragment : BaseListFragment<FragmentListBinding, DynamicViewModel>(
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
-        EventUtils.evenAction(adapter?.dataList?.get(position) as EventUIModel)
+        EventUtils.evenAction(activity, adapter?.dataList?.get(position) as EventUIModel)
     }
 
     override fun getViewModelClass(): Class<DynamicViewModel> = DynamicViewModel::class.java

@@ -14,6 +14,7 @@ data class EventUIModel(var username: String = "",
                         var IssueNum: Int = 0,
                         var releaseUrl: String = "",
                         var pushSha: ArrayList<String> = arrayListOf(),
+                        var pushShaDes: ArrayList<String> = arrayListOf(),
                         var threadId: String = "")
 
 /**

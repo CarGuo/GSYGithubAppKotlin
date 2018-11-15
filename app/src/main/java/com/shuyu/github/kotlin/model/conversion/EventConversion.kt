@@ -164,10 +164,10 @@ object EventConversion {
                     else -> {
                         eventUIModel.actionType = EventUIAction.Push
                         eventUIModel.pushSha.clear()
-                        val list = arrayListOf<String>()
                         event.payload?.commits?.apply {
                             forEach {
                                 eventUIModel.pushSha.add(it.sha ?: "")
+                                eventUIModel.pushShaDes.add(it.message ?: "")
                             }
                         }
                     }

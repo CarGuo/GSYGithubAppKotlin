@@ -1,5 +1,7 @@
 package com.shuyu.github.kotlin.common.utils
 
+import android.content.Context
+import com.orhanobut.dialogplus.OnItemClickListener
 import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
@@ -15,7 +17,7 @@ import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 
 object EventUtils {
 
-    fun evenAction(eventUIModel: EventUIModel?) {
+    fun evenAction(context: Context?, eventUIModel: EventUIModel?) {
         when (eventUIModel?.actionType) {
             EventUIAction.Person -> {
                 PersonActivity.gotoPersonInfo(eventUIModel.owner)
@@ -27,7 +29,14 @@ object EventUtils {
                 IssueDetailActivity.gotoIssueDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.IssueNum)
             }
             EventUIAction.Push -> {
-                PushDetailActivity.gotoPushDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.pushSha[0])
+                if (eventUIModel.pushSha.size == 1) {
+                    PushDetailActivity.gotoPushDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.pushSha[0])
+                } else {
+                    context?.showOptionSelectDialog(eventUIModel.pushShaDes, OnItemClickListener { dialog, _, _, position ->
+                        dialog.dismiss()
+                        PushDetailActivity.gotoPushDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.pushSha[position])
+                    })
+                }
             }
             EventUIAction.Release -> {
             }

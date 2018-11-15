@@ -44,7 +44,7 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
         super.onItemClick(context, position)
         val item = adapter?.dataList?.get(position) as EventUIModel
         getViewModel().setNotificationAsRead(item.threadId)
-        EventUtils.evenAction(item)
+        EventUtils.evenAction(activity, item)
         notifyDelete(position, 1)
     }
 
