@@ -10,4 +10,5 @@ class FileUIModel  {
     var next: String = ""
     var type: String = ""
     var dir: String = ""
+    var patch: String = ""
 }

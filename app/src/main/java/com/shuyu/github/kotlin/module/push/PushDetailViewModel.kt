@@ -5,6 +5,7 @@ import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.ui.PushUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.ReposRepository
+import org.jetbrains.anko.runOnUiThread
 import javax.inject.Inject
 
 /**
@@ -22,17 +23,18 @@ class PushDetailViewModel @Inject constructor(private val application: Applicati
     val pushUIModel = PushUIModel()
 
     override fun loadDataByRefresh() {
-
         reposRepository.getPushDetailInfo(userName, reposName, sha, object : ResultCallBack<PushUIModel> {
             override fun onSuccess(result: PushUIModel?) {
-                result?.apply {
-                    pushUIModel.cloneFrom(this)
+                application.runOnUiThread {
+                    result?.apply {
+                        pushUIModel.cloneFrom(this)
+                    }
                 }
             }
 
             override fun onFailure() {
             }
-        })
+        }, this)
     }
 
     override fun loadDataByLoadMore() {

@@ -3,10 +3,7 @@ package com.shuyu.github.kotlin.model.conversion
 import android.content.Context
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.CommonUtils
-import com.shuyu.github.kotlin.model.bean.FileModel
-import com.shuyu.github.kotlin.model.bean.RepoCommitExt
-import com.shuyu.github.kotlin.model.bean.Repository
-import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
+import com.shuyu.github.kotlin.model.bean.*
 import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.model.ui.PushUIModel
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
@@ -84,7 +81,7 @@ object ReposConversion {
         return result
     }
 
-    fun pushInfoToPushYUIModel(commit: RepoCommitExt): PushUIModel {
+    fun pushInfoToPushUIModel(commit: RepoCommitExt): PushUIModel {
         val pushUIModel = PushUIModel()
         var name = "---"
         var pic = "---"
@@ -104,5 +101,16 @@ object ReposConversion {
         pushUIModel.pushAddCount = commit.stats?.additions?.toString() ?: ""
         pushUIModel.pushReduceCount = commit.stats?.deletions?.toString() ?: ""
         return pushUIModel
+    }
+
+    fun repoCommitToFileUIModel(commit: CommitFile): FileUIModel {
+        val fileUIModel = FileUIModel()
+        val filename = commit.fileName ?: ""
+        val nameSplit = filename.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        fileUIModel.title = nameSplit[nameSplit.size - 1]
+        fileUIModel.dir = filename
+        fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
+        fileUIModel.patch = commit.patch ?: ""
+        return fileUIModel
     }
 }

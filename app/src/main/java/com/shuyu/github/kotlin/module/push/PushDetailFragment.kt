@@ -11,7 +11,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.databinding.LayoutPushHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
-import com.shuyu.github.kotlin.model.ui.PushUIModel
+import com.shuyu.github.kotlin.model.ui.FileUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.ui.holder.PushHolder
@@ -74,6 +74,6 @@ class PushDetailFragment : BaseListFragment<FragmentListBinding, PushDetailViewM
                 null, false, GSYDataBindingComponent())
         binding.pushUIModel = getViewModel().pushUIModel
         manager.addHeaderView(binding.root)
-        manager.bind(PushUIModel::class.java, PushHolder.ID, PushHolder::class.java)
+        manager.bind(FileUIModel::class.java, PushHolder.ID, PushHolder::class.java)
     }
 }

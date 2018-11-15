@@ -599,24 +599,36 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         reposListRequest(dbService, netService, resultCallBack, page)
     }
 
-
-    fun getPushDetailInfo(userName: String, reposName: String, sha: String, resultCallBack: ResultCallBack<PushUIModel>?) {
+    /**
+     * 获取提交详情
+     */
+    fun getPushDetailInfo(userName: String, reposName: String, sha: String, resultCallBack: ResultCallBack<PushUIModel>?, listCallBack: ResultCallBack<ArrayList<Any>>?) {
         val service = retrofit.create(CommitService::class.java).getCommitInfo(true, userName, reposName, sha)
                 .flatMap {
                     FlatMapResponse2Result(it)
                 }.map {
-                    ReposConversion.pushInfoToPushYUIModel(it)
+                    resultCallBack?.onSuccess(ReposConversion.pushInfoToPushUIModel(it))
+                    it
+                }.map {
+                    val list = arrayListOf<Any>()
+                    it.files?.apply {
+                        forEach {
+                            list.add(ReposConversion.repoCommitToFileUIModel(it))
+                        }
+                    }
+                    list
                 }.flatMap {
                     FlatMapResult2Response(it)
                 }
 
-        RetrofitFactory.executeResult(service, object : ResultTipObserver<PushUIModel>(application) {
-            override fun onSuccess(result: PushUIModel?) {
-                resultCallBack?.onSuccess(result)
+        RetrofitFactory.executeResult(service, object : ResultTipObserver<ArrayList<Any>>(application) {
+            override fun onSuccess(result: ArrayList<Any>?) {
+                listCallBack?.onSuccess(result)
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
                 resultCallBack?.onFailure()
+                listCallBack?.onFailure()
             }
         })
     }
