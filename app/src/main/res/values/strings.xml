@@ -3,6 +3,7 @@
     <string name="loading_prepare">看到了我吧!</string>
     <string name="loading_drop">放开我刷新!</string>
     <string name="loading_start">刷新中!</string>
+    <string name="open">打开</string>
     <string name="loading_end">刷新好了哟!</string>
     <string name="netError">网络错误</string>
     <string name="netTimeout">网络超时</string>

@@ -19,6 +19,7 @@ import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Release
+import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.repository.ReposRepository
@@ -94,7 +95,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 val issue = Issue()
                 issue.title = activity.getString(R.string.feedback)
                 issue.body = editContent
-                issueRepository.createIssue(activity, "CarGUo", "GSYGithubAppKotlin", issue, null)
+                issueRepository.createIssue(activity, "CarGuo", "GSYGithubAppKotlin", issue, null)
                 dialog.dismiss()
             }
         })
@@ -103,8 +104,15 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
 
     private fun showAboutDialog() {
         activity.alert {
+            this.iconResource = R.drawable.logo
             this.title = activity.getString(R.string.app_name)
-            this.message = activity.getVersionName()
+            this.message = activity.getString(R.string.version) + ": " + activity.getVersionName() + "\nhttps://github.com/CarGuo/GSYGithubAppKotlin"
+            this.negativeButton(R.string.open) {
+                ReposDetailActivity.gotoReposDetail("CarGuo", "GSYGithubAppKotlin")
+            }
+            this.positiveButton(R.string.cancel) {
+                it.dismiss()
+            }
             this.show()
         }
     }
@@ -118,7 +126,8 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
         reposRepository.checkoutUpDate(activity, object : ResultCallBack<Release> {
             override fun onSuccess(result: Release?) {
                 result?.name?.apply {
-                    showUpdateDialog(activity, this, result.body ?: "", "https://www.pgyer.com/XGtw")
+                    showUpdateDialog(activity, this, result.body
+                            ?: "", "https://www.pgyer.com/XGtw")
                     return
                 }
                 if (needTip) {
@@ -130,6 +139,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
 
     private fun showUpdateDialog(context: Context, version: String, message: String, url: String) {
         activity.alert {
+            this.iconResource = R.drawable.logo
             this.title = activity.getString(R.string.app_name)
             this.message = "$version: \n$message"
             this.cancelButton {

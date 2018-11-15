@@ -181,6 +181,17 @@ interface RepoService {
             @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<Release>>>
 
+
+    @GET("repos/{owner}/{repo}/releases")
+    fun getReleasesNotHtml(
+            @Header("forceNetWork") forceNetWork: Boolean,
+            @Path("owner") owner: String,
+            @Path("repo") repo: String,
+            @Query("page") page: Int,
+            @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
+    ): Observable<Response<ArrayList<Release>>>
+
+
     @GET("repos/{owner}/{repo}/releases/tags/{tag}")
     @Headers("Accept: application/vnd.github.html")
     fun getReleaseByTagName(

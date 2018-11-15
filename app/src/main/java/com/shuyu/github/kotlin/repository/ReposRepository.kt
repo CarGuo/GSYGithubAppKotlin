@@ -43,7 +43,7 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
      */
     fun checkoutUpDate(context: Context, resultCallBack: ResultCallBack<Release>?) {
         val service = retrofit.create(RepoService::class.java)
-                .getReleases(true, "CarGuo", "GSYGithubAppKotlin", 1)
+                .getReleasesNotHtml(true, "CarGuo", "GSYGithubAppKotlin", 1)
                 .flatMap {
                     FlatMapResponse2Result(it)
                 }.map {
