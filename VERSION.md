@@ -5,6 +5,8 @@
 提交页面详情、提交对比详情、提交选择列表
 repository action的提交列表
 图片预览（readme（拦截）和文件下的图片预览）
+release列表
+issue dialog 快捷方式
 
 1.0.1
 

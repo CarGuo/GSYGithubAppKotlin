@@ -137,7 +137,11 @@ class GSYIconfont : ITypeface {
         GSY_ISSUE_ITEM_COMMENT('\ue6ba'),
         GSY_ISSUE_ITEM_ADD('\ue662'),
 
-        GSY_NOTIFY_ALL_READ('\ue62f');
+        GSY_NOTIFY_ALL_READ('\ue62f'),
+
+        GSY_PUSH_ADD('\ue605'),
+        GSY_PUSH_REDUCE('\ue63d'),
+        GSY_PUSH_EDIT('\ue611');
 
 
         override fun getFormattedName(): String {

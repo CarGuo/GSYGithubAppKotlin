@@ -13,8 +13,10 @@ import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
 import com.shuyu.github.kotlin.model.conversion.TrendConversion
+import com.shuyu.github.kotlin.model.ui.PushUIModel
 import com.shuyu.github.kotlin.model.ui.ReposUIModel
 import com.shuyu.github.kotlin.repository.dao.ReposDao
+import com.shuyu.github.kotlin.service.CommitService
 import com.shuyu.github.kotlin.service.IssueService
 import com.shuyu.github.kotlin.service.RepoService
 import com.shuyu.github.kotlin.service.SearchService
@@ -595,6 +597,28 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
                 }
 
         reposListRequest(dbService, netService, resultCallBack, page)
+    }
+
+
+    fun getPushDetailInfo(userName: String, reposName: String, sha: String, resultCallBack: ResultCallBack<PushUIModel>?) {
+        val service = retrofit.create(CommitService::class.java).getCommitInfo(true, userName, reposName, sha)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }.map {
+                    ReposConversion.pushInfoToPushYUIModel(it)
+                }.flatMap {
+                    FlatMapResult2Response(it)
+                }
+
+        RetrofitFactory.executeResult(service, object : ResultTipObserver<PushUIModel>(application) {
+            override fun onSuccess(result: PushUIModel?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+        })
     }
 
     /**

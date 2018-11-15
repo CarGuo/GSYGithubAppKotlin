@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="pushUIModel"
+            type="com.shuyu.github.kotlin.model.ui.PushUIModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            style="@style/whiteCard"
+            app:cardBackgroundColor="@color/colorPrimary">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/push_header_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/push_header_image"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/logo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:userHeaderSize="@{100}"
+                    app:userHeaderUrl="@{pushUIModel.pushImage}" />
+
+                <LinearLayout
+                    android:id="@+id/push_status_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@+id/push_header_image">
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/push_edit_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginEnd="10dp"
+                        android:text="@{`{GSY-PUSH_EDIT}`+pushUIModel.pushEditCount}"
+                        android:textColor="@color/subTextColor"
+                        android:textSize="@dimen/smallTextSize" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/push_add_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginEnd="10dp"
+                        android:text="@{`{GSY-PUSH_ADD}`+ pushUIModel.pushAddCount}"
+                        android:textColor="@color/subTextColor"
+                        android:textSize="@dimen/smallTextSize" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/push_add_reduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:gravity="center_vertical|end"
+                        android:singleLine="true"
+                        android:text="@{`{GSY-PUSH_REDUCE}`+pushUIModel.pushReduceCount}"
+                        android:textColor="@color/subTextColor"
+                        android:textSize="@dimen/smallTextSize" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/push_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@{pushUIModel.pushTime}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/smallTextSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/push_header_image"
+                    app:layout_constraintTop_toBottomOf="@+id/push_status_layout" />
+
+                <TextView
+                    android:id="@+id/push_des"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@{pushUIModel.pushDes}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/smallTextSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/push_header_image"
+                    app:layout_constraintTop_toBottomOf="@+id/push_time" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</layout>

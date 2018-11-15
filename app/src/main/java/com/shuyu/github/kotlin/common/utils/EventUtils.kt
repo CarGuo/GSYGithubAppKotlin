@@ -4,6 +4,7 @@ import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
+import com.shuyu.github.kotlin.module.push.PushDetailActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 
 /**
@@ -26,6 +27,7 @@ object EventUtils {
                 IssueDetailActivity.gotoIssueDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.IssueNum)
             }
             EventUIAction.Push -> {
+                PushDetailActivity.gotoPushDetail(eventUIModel.owner, eventUIModel.repositoryName, eventUIModel.pushSha[0])
             }
             EventUIAction.Release -> {
             }

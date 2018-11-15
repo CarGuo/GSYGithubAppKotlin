@@ -51,9 +51,15 @@
         <activity
             android:name=".module.list.GeneralListActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.notify.NotifyActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.push.PushDetailActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.StartActivity"
             android:screenOrientation="portrait"

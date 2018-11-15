@@ -9,4 +9,5 @@ class FileUIModel  {
     var title: String = ""
     var next: String = ""
     var type: String = ""
+    var dir: String = ""
 }

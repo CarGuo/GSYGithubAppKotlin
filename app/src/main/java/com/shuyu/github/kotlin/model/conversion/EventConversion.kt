@@ -158,20 +158,18 @@ object EventConversion {
                     }
                     event.payload?.commits?.size == 1 -> {
                         eventUIModel.actionType = EventUIAction.Push
-                        eventUIModel.pushSha = event.payload?.commits?.get(0)?.sha ?: ""
-                        //NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[0].sha, true);
+                        eventUIModel.pushSha.clear()
+                        eventUIModel.pushSha.add(event.payload?.commits?.get(0)?.sha ?: "")
                     }
                     else -> {
                         eventUIModel.actionType = EventUIAction.Push
-                        //todo 选择提交item
-                        //eventUIModel.pushSha = event.payload?.commits?.get(0)?.sha ?:""
-                        /*List<String> list = new List();
-                            for (int i = 0; i < event.payload.commits.length; i++) {
-                                list.add(event.payload.commits[i].message + " " + event.payload.commits[i].sha.substring(0, 4));
+                        eventUIModel.pushSha.clear()
+                        val list = arrayListOf<String>()
+                        event.payload?.commits?.apply {
+                            forEach {
+                                eventUIModel.pushSha.add(it.sha ?: "")
                             }
-                            CommonUtils.showCommitOptionDialog(context, list, (index) {
-                                NavigatorUtils.goPushDetailPage(context, owner, repositoryName, event.payload.commits[index].sha, true);
-                            });*/
+                        }
                     }
                 }
             }

@@ -8,6 +8,7 @@ import com.shuyu.github.kotlin.module.login.LoginFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.notify.NotifyFragment
 import com.shuyu.github.kotlin.module.person.PersonFragment
+import com.shuyu.github.kotlin.module.push.PushDetailFragment
 import com.shuyu.github.kotlin.module.repos.action.ReposActionListFragment
 import com.shuyu.github.kotlin.module.repos.file.ReposFileListFragment
 import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListFragment
@@ -113,3 +114,11 @@ abstract class NotifyFragmentBindModule {
     @ContributesAndroidInjector(modules = [NotifyModule::class])
     abstract fun contributeNotifyFragment(): NotifyFragment
 }
+
+@Module
+abstract class PushDetailFragmentBindModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributePushDetailFragment(): PushDetailFragment
+}
+

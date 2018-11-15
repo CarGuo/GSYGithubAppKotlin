@@ -28,6 +28,7 @@ import com.shuyu.github.kotlin.module.login.LoginViewModel
 import com.shuyu.github.kotlin.module.my.MyViewModel
 import com.shuyu.github.kotlin.module.notify.NotifyViewModel
 import com.shuyu.github.kotlin.module.person.PersonViewModel
+import com.shuyu.github.kotlin.module.push.PushDetailViewModel
 import com.shuyu.github.kotlin.module.repos.ReposDetailViewModel
 import com.shuyu.github.kotlin.module.repos.action.ReposActionViewModel
 import com.shuyu.github.kotlin.module.repos.file.ReposFileViewModel
@@ -134,6 +135,10 @@ abstract class ViewModelModule {
     @ViewModelKey(NotifyViewModel::class)
     abstract fun bindNotifyViewModel(notifyViewModel: NotifyViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(PushDetailViewModel::class)
+    abstract fun bindPushDetailViewModel(pushDetailViewModel: PushDetailViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: GSYViewModelFactory): ViewModelProvider.Factory

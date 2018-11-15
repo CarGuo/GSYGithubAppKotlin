@@ -13,7 +13,7 @@ data class EventUIModel(var username: String = "",
                         var repositoryName: String = "",
                         var IssueNum: Int = 0,
                         var releaseUrl: String = "",
-                        var pushSha: String = "",
+                        var pushSha: ArrayList<String> = arrayListOf(),
                         var threadId: String = "")
 
 /**
