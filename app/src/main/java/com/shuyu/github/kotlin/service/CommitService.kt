@@ -21,8 +21,8 @@ interface CommitService {
             @Path("owner") owner: String,
             @Path("repo") repo: String,
             //SHA or branch to start listing commits from. Default: the repository’s default branch (usually master).
-            @Query("sha") branch: String,
             @Query("page") page: Int,
+            @Query("sha") branch: String = "master",
             @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<RepoCommit>>>
 
@@ -39,8 +39,8 @@ interface CommitService {
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("owner") owner: String,
             @Path("repo") repo: String,
-            @Path("ref") ref: String,
             @Query("page") page: Int,
+            @Path("ref") ref: String,
             @Query("per_page") per_page: Int = AppConfig.PAGE_SIZE
     ): Observable<Response<ArrayList<RepoCommit>>>
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="commitUIModel"
+            type="com.shuyu.github.kotlin.model.ui.CommitUIModel" />
+
+    </data>
+
+    <android.support.v7.widget.CardView style="@style/whiteCard">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/event_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@{commitUIModel.userName}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallTextSize" />
+
+            <TextView
+                android:id="@+id/event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{commitUIModel.time}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+            <TextView
+                android:id="@+id/commit_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/event_user_name"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@{commitUIModel.des}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallTextSize" />
+
+
+            <TextView
+                android:id="@+id/commit_sha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/commit_file"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@{`sha: ` + commitUIModel.sha}"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/smallTextSize" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

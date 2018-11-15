@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.module.repos.action
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -11,11 +12,15 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.databinding.LayoutReposHeaderBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
+import com.shuyu.github.kotlin.model.ui.CommitUIModel
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
+import com.shuyu.github.kotlin.module.push.PushDetailActivity
+import com.shuyu.github.kotlin.ui.holder.CommitHolder
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
+import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
@@ -24,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
  */
 
 @Route(path = ARouterAddress.ReposDetailActionList)
-class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActionViewModel>(), ARouterInjectable {
+class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActionViewModel>(), ARouterInjectable, NavigationTabBar.OnTabBarSelectedIndexListener {
 
     @Autowired
     @JvmField
@@ -34,6 +39,8 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
     @JvmField
     var userName = ""
 
+    var headerBinding: LayoutReposHeaderBinding? = null
+
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_list
@@ -41,6 +48,10 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
+        val item = adapter?.dataList?.get(position)
+        if (item is CommitUIModel) {
+            PushDetailActivity.gotoPushDetail(userName, reposName, item.sha)
+        }
     }
 
     override fun onCreateView(mainView: View?) {
@@ -58,14 +69,44 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
     override fun getRecyclerView(): RecyclerView? = baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
-        val binding: LayoutReposHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,
+        headerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,
                 null, false, GSYDataBindingComponent())
 
-        binding.reposUIModel = getViewModel().reposUIModel
-        binding.actionViewModel = getViewModel()
+        headerBinding?.reposUIModel = getViewModel().reposUIModel
+        headerBinding?.actionViewModel = getViewModel()
 
-        manager.addHeaderView(binding.root)
+        headerBinding?.reposActionTabBar?.models = listOf(
+                NavigationTabBar.Model.Builder(null,
+                        Color.parseColor("#00000000"))
+                        .title(getString(R.string.reposActivity))
+                        .build(),
+                NavigationTabBar.Model.Builder(null,
+                        Color.parseColor("#00000000"))
+                        .title(getString(R.string.reposPush))
+                        .build()
+        )
+
+        headerBinding?.reposActionTabBar?.onTabBarSelectedIndexListener = this
+        headerBinding?.reposActionTabBar?.modelIndex = 0
+
+        manager.addHeaderView(headerBinding!!.root)
 
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
+        manager.bind(CommitUIModel::class.java, CommitHolder.ID, CommitHolder::class.java)
+    }
+
+    override fun refreshComplete() {
+        super.refreshComplete()
+        headerBinding?.reposActionTabBar?.isTouchEnable = true
+    }
+
+    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
+
+    }
+
+    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+        headerBinding?.reposActionTabBar?.isTouchEnable = false
+        getViewModel().showType = index
+        showRefresh()
     }
 }

@@ -298,6 +298,60 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
         })
     }
 
+    fun getReposCommits(userName: String, reposName: String, resultCallBack: ResultCallBack<ArrayList<Any>>?, page: Int = 1) {
+
+        val dbService = reposDao.getReposCommitDao(userName, reposName)
+                .doOnNext {
+                    if (page == 1) {
+                        resultCallBack?.onCacheSuccess(it)
+                    }
+                }
+
+        val eventService = retrofit.create(CommitService::class.java).getRepoCommits(true, userName, reposName, page)
+                .doOnNext {
+                    reposDao.saveReposCommitDao(it, userName, reposName, page == 1)
+                }
+                .flatMap {
+                    FlatMapResponse2ResponseResult(it, object : FlatConversionInterface<ArrayList<RepoCommit>> {
+                        override fun onConversion(t: ArrayList<RepoCommit>?): ArrayList<Any> {
+                            val list = ArrayList<Any>()
+                            t?.apply {
+                                for (item in t) {
+                                    list.add(EventConversion.commitToCommitUIModel(item))
+                                }
+                            }
+                            return list
+                        }
+                    })
+                }
+
+        val zipService = Observable.zip(dbService, eventService,
+                BiFunction<ArrayList<Any>, Response<ArrayList<Any>>, Response<ArrayList<Any>>> { _, remote ->
+                    remote
+                })
+
+        RetrofitFactory.executeResult(zipService, object : ResultTipObserver<ArrayList<Any>>(application) {
+
+            override fun onPageInfo(first: Int, current: Int, last: Int) {
+                resultCallBack?.onPage(first, current, last)
+            }
+
+            override fun onSuccess(result: ArrayList<Any>?) {
+                resultCallBack?.onSuccess(result)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
+    }
+
+
 
     /**
      * 仓库文件数据

@@ -3,10 +3,7 @@ package com.shuyu.github.kotlin.repository.dao
 import android.app.Application
 import com.shuyu.github.kotlin.common.db.*
 import com.shuyu.github.kotlin.common.net.GsonUtils
-import com.shuyu.github.kotlin.model.bean.Event
-import com.shuyu.github.kotlin.model.bean.Issue
-import com.shuyu.github.kotlin.model.bean.Repository
-import com.shuyu.github.kotlin.model.bean.TrendingRepoModel
+import com.shuyu.github.kotlin.model.bean.*
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.IssueConversion
 import com.shuyu.github.kotlin.model.conversion.ReposConversion
@@ -177,6 +174,46 @@ class ReposDao @Inject constructor(private val application: Application) {
 
                         override fun onConversion(t: Event): Any {
                             return EventConversion.eventToEventUIModel(t)
+                        }
+                    })
+                    list
+                }
+    }
+
+
+    /**
+     * 保存仓库提交
+     */
+    fun saveReposCommitDao(response: Response<ArrayList<RepoCommit>>, userName: String, reposName: String, needSave: Boolean) {
+        FlatMapRealmSaveResult(response, RepositoryCommits::class.java, object : FlatTransactionInterface<RepositoryCommits> {
+            override fun query(q: RealmQuery<RepositoryCommits>): RealmResults<RepositoryCommits> {
+                return q.equalTo("fullName", "$userName/$reposName").findAll()
+            }
+
+            override fun onTransaction(targetObject: RepositoryCommits?) {
+                targetObject?.data = GsonUtils.toJsonString(response.body())
+                targetObject?.fullName = "$userName/$reposName"
+            }
+        }, needSave)
+    }
+
+    /**
+     * 获取仓库提交
+     */
+    fun getReposCommitDao(userName: String, reposName: String): Observable<ArrayList<Any>> {
+        return RealmFactory.getRealmObservable()
+                .map {
+                    val list = FlatMapRealmReadList(it, object : FlatRealmReadConversionInterface<RepoCommit, RepositoryCommits> {
+                        override fun query(realm: Realm): RealmResults<RepositoryCommits> {
+                            return realm.where(RepositoryCommits::class.java).equalTo("fullName", "$userName/$reposName").findAll()
+                        }
+
+                        override fun onJSON(t: RepositoryCommits): List<RepoCommit> {
+                            return GsonUtils.parserJsonToArrayBeans(t.data!!, RepoCommit::class.java)
+                        }
+
+                        override fun onConversion(t: RepoCommit): Any {
+                            return EventConversion.commitToCommitUIModel(t)
                         }
                     })
                     list

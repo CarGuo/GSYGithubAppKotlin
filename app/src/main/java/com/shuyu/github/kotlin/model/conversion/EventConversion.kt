@@ -6,6 +6,8 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.Notification
+import com.shuyu.github.kotlin.model.bean.RepoCommit
+import com.shuyu.github.kotlin.model.ui.CommitUIModel
 import com.shuyu.github.kotlin.model.ui.EventUIAction
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 
@@ -220,5 +222,14 @@ object EventConversion {
         eventUIModel.threadId = notification.id ?: ""
 
         return eventUIModel
+    }
+
+    fun commitToCommitUIModel(repoCommit: RepoCommit): CommitUIModel {
+        val commitUIModel = CommitUIModel()
+        commitUIModel.time = CommonUtils.getNewsTimeStr(repoCommit.commit?.committer?.date)
+        commitUIModel.userName = repoCommit.commit?.committer?.name ?: ""
+        commitUIModel.sha = repoCommit.sha ?: ""
+        commitUIModel.des = repoCommit.commit?.message ?: ""
+        return commitUIModel
     }
 }

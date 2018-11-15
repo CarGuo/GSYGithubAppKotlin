@@ -7,6 +7,7 @@
         <variable
             name="reposUIModel"
             type="com.shuyu.github.kotlin.model.ui.ReposUIModel" />
+
         <variable
             name="actionViewModel"
             type="com.shuyu.github.kotlin.module.repos.action.ReposActionViewModel" />
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/repos_header_card"
             style="@style/whiteCard"
             app:cardCornerRadius="5dp">
 
@@ -208,6 +210,30 @@
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/whiteCard"
+            android:layout_below="@+id/repos_header_card"
+            app:cardCornerRadius="5dp">
+
+            <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
+                android:id="@+id/repos_action_tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:ntb_badge_size="0sp"
+                app:ntb_badged="false"
+                app:ntb_bg_color="@color/colorPrimary"
+                app:ntb_icon_size_fraction="0"
+                app:ntb_inactive_color="@color/subTextColor"
+                app:ntb_scaled="true"
+                app:ntb_swiped="true"
+                app:ntb_tinted="true"
+                app:ntb_title_mode="all"
+                app:ntb_title_size="@dimen/smallTextSize"
+                app:ntb_titled="true" />
+        </android.support.v7.widget.CardView>
+
+
     </RelativeLayout>
 
 </layout>

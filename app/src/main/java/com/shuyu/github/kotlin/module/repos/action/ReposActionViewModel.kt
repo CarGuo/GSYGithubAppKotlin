@@ -25,6 +25,7 @@ class ReposActionViewModel @Inject constructor(private val reposRepository: Repo
 
     var reposName: String = ""
 
+    var showType = 0
 
     override fun loadDataByRefresh() {
         reposRepository.getRepoInfo(userName, reposName, object : ResultCallBack<ReposUIModel> {
@@ -55,7 +56,14 @@ class ReposActionViewModel @Inject constructor(private val reposRepository: Repo
 
     private fun loadData() {
         clearWhenRefresh()
-        reposRepository.getReposEvents(userName, reposName, this, page)
+        when (showType) {
+            0 -> {
+                reposRepository.getReposEvents(userName, reposName, this, page)
+            }
+            1 -> {
+                reposRepository.getReposCommits(userName, reposName, this, page)
+            }
+        }
     }
 
     fun onTabIconClick(v: View?) {
