@@ -197,4 +197,11 @@ dependencies {
 
     ///bugly
     implementation "com.tencent.bugly:crashreport:${bugly_version}"
+
+    ///PHOTO VIEW
+    implementation "com.github.chrisbanes:PhotoView:${photoview_version}"
+
+
+    implementation "com.github.hotchemi:permissionsdispatcher:${permission_version}"
+    kapt "com.github.hotchemi:permissionsdispatcher-processor:${permission_version}"
 }

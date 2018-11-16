@@ -10,6 +10,8 @@
     <string name="unKnowError">未知异常</string>
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
+    <string name="saveToLocal">保存到本地</string>
+    <string name="permission_storage_denied">获取本地读写权限失败</string>
     <string name="tabRecommended">推荐</string>
     <string name="tabDynamic">动态</string>
     <string name="tabMy">我的</string>

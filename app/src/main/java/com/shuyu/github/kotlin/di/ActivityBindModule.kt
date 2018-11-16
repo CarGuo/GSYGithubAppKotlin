@@ -60,9 +60,10 @@ abstract class ActivityBindModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [NotifyFragmentBindModule::class])
-    abstract fun generalNotifyActivityInjector(): NotifyActivity
+    abstract fun notifyActivityInjector(): NotifyActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [PushDetailFragmentBindModule::class])
-    abstract fun generalPushDetailActivityInjector(): PushDetailActivity
+    abstract fun pushDetailActivityInjector(): PushDetailActivity
+
 }

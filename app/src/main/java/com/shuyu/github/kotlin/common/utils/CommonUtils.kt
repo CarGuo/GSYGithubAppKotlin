@@ -1,20 +1,29 @@
 package com.shuyu.github.kotlin.common.utils
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Point
+import android.os.Environment
+import android.text.TextUtils
 import android.widget.ImageView
 import androidx.core.net.toUri
 import com.shuyu.github.kotlin.GSYGithubApplication
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.style.image.BlurTransformation
+import com.shuyu.github.kotlin.module.image.ImagePreViewActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import com.shuyu.gsyimageloader.GSYLoadOption
 import org.jetbrains.anko.browse
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * 通用工具类
@@ -87,6 +96,35 @@ object CommonUtils {
         }
     }
 
+    fun getLocalPath(): String {
+        val dir = Environment.getExternalStorageDirectory().absolutePath + "/gsygithub/"
+        val file = File(dir)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        return dir
+    }
+
+    fun saveBitmapToCache(context: Context, bm: Bitmap?, picName: String) {
+        if (bm != null && !TextUtils.isEmpty(picName)) {
+            val f = File(getLocalPath(), picName)
+            if (f.exists()) {
+                f.delete()
+            }
+            try {
+                val out = FileOutputStream(f)
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.flush()
+                out.close()
+            } catch (var5: FileNotFoundException) {
+                var5.printStackTrace()
+            } catch (var6: IOException) {
+                var6.printStackTrace()
+            }
+
+        }
+
+    }
 
     fun getReposHtmlUrl(userName: String, reposName: String): String =
             AppConfig.GITHUB_BASE_URL + userName + "/" + reposName
@@ -112,7 +150,11 @@ object CommonUtils {
             isImage = isImageEnd(parseUrl.toString().replace("?raw=true", ""))
         }
         if (isImage) {
-            //todo show image Preview
+            var imageUrl = url
+            if (!parseUrl.toString().endsWith("?raw=true")) {
+                imageUrl = "$url?raw=true"
+            }
+            ImagePreViewActivity.gotoImagePreView(imageUrl)
             return
         }
 
@@ -143,7 +185,7 @@ object CommonUtils {
         var image = false
         sImageEndTag.forEach {
             if (path.indexOf(it) + it.length == path.length) {
-                image = true;
+                image = true
             }
         }
         return image

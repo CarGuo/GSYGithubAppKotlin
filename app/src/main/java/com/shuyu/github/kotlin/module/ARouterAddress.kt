@@ -36,4 +36,6 @@ object ARouterAddress {
 
     const val PushDetailActivity = "/push/activity"
     const val PushDetailFragment = "/push/fragment"
+
+    const val ImagePreViewActivity = "/preview/activity"
 }
