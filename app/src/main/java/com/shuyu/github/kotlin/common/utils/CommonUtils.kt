@@ -145,7 +145,7 @@ object CommonUtils {
 
     private val sImageEndTag = arrayListOf(".png", ".jpg", ".jpeg", ".gif", ".svg")
 
-    private fun isImageEnd(path: String): Boolean {
+    fun isImageEnd(path: String): Boolean {
         var image = false
         sImageEndTag.forEach {
             if (path.indexOf(it) + it.length == path.length) {

@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.toSplitString
 import com.shuyu.github.kotlin.databinding.FragmentReposFileListBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
@@ -50,7 +51,14 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
         item?.apply {
             val itemData = this as FileUIModel
             if (itemData.type == "file") {
-                CodeDetailActivity.gotoCodeDetail(userName, reposName, itemData.title, repos_file_select_header.list.toSplitString() + "/" + itemData.title)
+                val isImage = CommonUtils.isImageEnd(itemData.title)
+                if (isImage) {
+                    val path = repos_file_select_header.list.toSplitString() + "/" + itemData.title
+                    val url = CommonUtils.getFileHtmlUrl(userName, reposName, path) + "?raw=true"
+                    CommonUtils.launchUrl(activity!!, url)
+                }else {
+                    CodeDetailActivity.gotoCodeDetail(userName, reposName, itemData.title, repos_file_select_header.list.toSplitString() + "/" + itemData.title)
+                }
             } else {
                 addSelectList(itemData.title)
                 getViewModel().path = repos_file_select_header.list.toSplitString()
