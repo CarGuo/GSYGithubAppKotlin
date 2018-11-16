@@ -141,7 +141,18 @@ class GSYIconfont : ITypeface {
 
         GSY_PUSH_ADD('\ue605'),
         GSY_PUSH_REDUCE('\ue63d'),
-        GSY_PUSH_EDIT('\ue611');
+        GSY_PUSH_EDIT('\ue611'),
+
+
+        GSY_MD_1('\ue60c'),
+        GSY_MD_2('\ue620'),
+        GSY_MD_3('\ue621'),
+        GSY_MD_4('\ue654'),
+        GSY_MD_5('\ue613'),
+        GSY_MD_6('\ue63a'),
+        GSY_MD_7('\uea77'),
+        GSY_MD_8('\ue670'),
+        GSY_MD_9('\ue651');
 
 
         override fun getFormattedName(): String {

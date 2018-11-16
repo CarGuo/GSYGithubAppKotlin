@@ -36,17 +36,29 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/smallTextSize" />
 
-        <EditText
-            android:id="@+id/issue_dialog_edit_content"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_edit_border"
-            android:gravity="top|start"
-            android:hint="@string/issueInputTip"
-            android:padding="10dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/smallTextSize" />
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/issue_dialog_edit_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_edit_border"
+                android:gravity="top|start"
+                android:hint="@string/issueInputTip"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/smallTextSize" />
+
+            <com.shuyu.github.kotlin.ui.view.MarkdownInputIconList
+                android:id="@+id/issue_dialog_markdown_list"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

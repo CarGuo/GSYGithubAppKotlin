@@ -23,6 +23,7 @@ fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, editTitle
     val contentView = LayoutInflater.from(this).inflate(R.layout.layout_issue_edit_dialog, null, false)
     val height = (Resources.getSystem().displayMetrics.heightPixels * 0.6).toInt()
     contentView.issue_dialog_content_layout.layoutParams.height = height
+    contentView.issue_dialog_markdown_list.editText = contentView.issue_dialog_edit_content
     val dialog = DialogPlus.newDialog(this)
             .setContentHolder(ViewHolder(contentView))
             .setCancelable(false)
