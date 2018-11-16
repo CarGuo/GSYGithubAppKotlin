@@ -15,6 +15,7 @@ import com.github.chrisbanes.photoview.OnViewTapListener
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.OnItemClickListener
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.FileUtils
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.ui.adapter.TextListAdapter
@@ -94,7 +95,7 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
 
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun saveImage() {
-
+        FileUtils.download(applicationContext, url, "gsy")
     }
 
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
