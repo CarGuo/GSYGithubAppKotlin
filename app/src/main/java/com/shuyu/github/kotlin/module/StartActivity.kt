@@ -24,4 +24,8 @@ class StartActivity : AppCompatActivity() {
         finish()
 
     }
+
+    override fun onBackPressed() {
+
+    }
 }

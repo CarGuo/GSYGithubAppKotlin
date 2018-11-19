@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.module
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.shuyu.github.kotlin.R
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -24,4 +25,13 @@ class StartNavigationActivity : AppCompatActivity(), HasSupportFragmentInjector 
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.primaryNavigationFragment
+        if (fragment is NavHostFragment) {
+            if(fragment.navController.currentDestination?.id == R.id.loginFragment) {
+                super.onBackPressed()
+            }
+        }
+    }
 }
