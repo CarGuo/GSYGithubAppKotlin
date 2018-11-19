@@ -3,6 +3,9 @@ package com.shuyu.github.kotlin.module.main
 import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.Toolbar
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.URLSpan
 import androidx.core.net.toUri
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -112,10 +115,15 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
     }
 
     private fun showAboutDialog() {
+        val start =  activity.getString(R.string.version) + ": " + activity.getVersionName() + "\n"
+        val url  = "https://github.com/CarGuo/GSYGithubAppKotlin"
+        val span = SpannableStringBuilder(start + url)
+        span.setSpan(URLSpan(url), start.length, start.length + url.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+
         activity.alert {
             this.iconResource = R.drawable.logo
             this.title = activity.getString(R.string.app_name)
-            this.message = activity.getString(R.string.version) + ": " + activity.getVersionName() + "\nhttps://github.com/CarGuo/GSYGithubAppKotlin"
+            this.message = span
             this.negativeButton(R.string.open) {
                 ReposDetailActivity.gotoReposDetail("CarGuo", "GSYGithubAppKotlin")
             }

@@ -139,11 +139,11 @@
     <string name="downloadDescription">正在下载：</string>
     <string name="userCreate">创建于：</string>
     <string name="history">历史</string>
-    <string name="about">关于</string>
+    <string name="about">应用关于</string>
     <string name="version">版本</string>
     <string name="author">作者</string>
     <string name="projectUrl">项目地址</string>
-    <string name="feedback">反馈</string>
+    <string name="feedback">用户反馈</string>
     <string name="person">个人信息</string>
     <string name="infoName">名字</string>
     <string name="infoEmail">邮箱</string>
@@ -160,7 +160,7 @@
     <string name="share">分享</string>
     <string name="newestVersion">当前是最新版本</string>
     <string name="beStared100Title"> 最受欢迎前100仓库</string>
-    <string name="update">更新</string>
+    <string name="update">版本更新</string>
     <string name="weekClosed">本周关闭</string>
     <string name="weekOpened">本周打开</string>
     <string name="thisWeek"> 本周动态 </string>
