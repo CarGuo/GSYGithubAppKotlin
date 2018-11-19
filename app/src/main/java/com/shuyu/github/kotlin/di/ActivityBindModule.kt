@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.di
 import com.shuyu.github.kotlin.di.annotation.ActivityScope
 import com.shuyu.github.kotlin.module.StartNavigationActivity
 import com.shuyu.github.kotlin.module.code.CodeDetailActivity
+import com.shuyu.github.kotlin.module.info.UserInfoActivity
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.module.list.GeneralListActivity
 import com.shuyu.github.kotlin.module.main.MainActivity
@@ -65,5 +66,10 @@ abstract class ActivityBindModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [PushDetailFragmentBindModule::class])
     abstract fun pushDetailActivityInjector(): PushDetailActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun userInfoActivityInjector(): UserInfoActivity
+
 
 }

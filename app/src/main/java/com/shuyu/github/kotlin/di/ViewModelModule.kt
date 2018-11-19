@@ -22,6 +22,7 @@ import com.shuyu.github.kotlin.GSYViewModelFactory
 import com.shuyu.github.kotlin.di.annotation.ViewModelKey
 import com.shuyu.github.kotlin.module.code.CodeDetailViewModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicViewModel
+import com.shuyu.github.kotlin.module.info.UserInfoViewModel
 import com.shuyu.github.kotlin.module.issue.IssueDetailViewModel
 import com.shuyu.github.kotlin.module.list.GeneralListViewModel
 import com.shuyu.github.kotlin.module.login.LoginViewModel
@@ -139,6 +140,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PushDetailViewModel::class)
     abstract fun bindPushDetailViewModel(pushDetailViewModel: PushDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserInfoViewModel::class)
+    abstract fun bindUserInfoViewModel(userInfoViewModel: UserInfoViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: GSYViewModelFactory): ViewModelProvider.Factory

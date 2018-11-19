@@ -19,6 +19,7 @@ import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Release
+import com.shuyu.github.kotlin.module.info.UserInfoActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
@@ -48,6 +49,13 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                                 .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
                                     feedback()
                                     unSelect(drawerItem)
+                                    true
+                                }
+                )
+                .addDrawerItems(
+                        PrimaryDrawerItem().withName(R.string.person)
+                                .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
+                                    UserInfoActivity.gotoUserInfo()
                                     true
                                 }
                 )

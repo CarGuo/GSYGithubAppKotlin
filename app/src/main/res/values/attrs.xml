@@ -39,4 +39,11 @@
         <!--animation duration-->
         <attr name="AnimationDuration" format="integer|reference" />
     </declare-styleable>
+
+
+    <declare-styleable name="GSYInfoItem">
+        <attr name="infoIcons" format="string" />
+        <attr name="infoTitle" format="string" />
+        <attr name="infoValue" format="string" />
+    </declare-styleable>
 </resources>
