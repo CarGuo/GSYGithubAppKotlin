@@ -41,8 +41,8 @@ object UserConversion {
         userUIModel.blog = user.blog ?: ""
         userUIModel.email = user.email
 
-
-        userUIModel.bio = if (user.bio != null) {
+        userUIModel.bio = user.bio
+        userUIModel.bioDes = if (user.bio != null) {
             user.bio + "\n" + context?.getString(R.string.created_at) + CommonUtils.getDateStr(user.createdAt)
         } else {
             context?.getString(R.string.created_at) + CommonUtils.getDateStr(user.createdAt)

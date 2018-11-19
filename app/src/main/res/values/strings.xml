@@ -3,6 +3,7 @@
     <string name="loading_prepare">看到了我吧!</string>
     <string name="loading_drop">放开我刷新!</string>
     <string name="loading_start">刷新中!</string>
+    <string name="edit">编辑</string>
     <string name="open">打开</string>
     <string name="loading_end">刷新好了哟!</string>
     <string name="netError">网络错误</string>
@@ -175,6 +176,7 @@
     <string name="error_401">[401错误可能: 未授权 \\ 授权登录失败 \\ 登录过期]</string>
     <string name="error_403">403没权限哦</string>
     <string name="error_404">404没找到哦</string>
+    <string name="error_422">422异常，提交数据格式不对吧？</string>
     <string name="error_402">402请求参数异常</string>
 
     <array name="trend_since">

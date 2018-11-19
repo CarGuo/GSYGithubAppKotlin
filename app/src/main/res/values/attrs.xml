@@ -45,5 +45,6 @@
         <attr name="infoIcons" format="string" />
         <attr name="infoTitle" format="string" />
         <attr name="infoValue" format="string" />
+        <attr name="infoClick" format="reference" />
     </declare-styleable>
 </resources>

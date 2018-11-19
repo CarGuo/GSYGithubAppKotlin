@@ -101,6 +101,14 @@ class UserUIModel : BaseObservable() {
         }
 
 
+    var bioDes: String? = null
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.bioDes)
+        }
+
     var starRepos: String = ""
         @Bindable
         get() = field

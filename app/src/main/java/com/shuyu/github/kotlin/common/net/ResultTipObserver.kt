@@ -47,6 +47,7 @@ abstract class ResultTipObserver<T>(private val context: Context) : ResultObserv
             402 -> context.toast(R.string.error_402)
             403 -> context.toast(R.string.error_403)
             404 -> context.toast(R.string.error_404)
+            422 -> context.toast(R.string.error_422)
             else -> context.toast(code.toString() + " : " + message)
         }
     }

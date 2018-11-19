@@ -60,6 +60,7 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(UserInfoViewModel::class.java)
         dataBinding.userUIModel = globalAppModel.userObservable
+        dataBinding.userInfoViewModel = viewModel
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

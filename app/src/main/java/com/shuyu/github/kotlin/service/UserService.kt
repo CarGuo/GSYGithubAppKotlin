@@ -3,6 +3,7 @@ package com.shuyu.github.kotlin.service
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.model.bean.UserInfoRequestModel
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -21,6 +22,11 @@ interface UserService {
     fun getUser(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("user") user: String
+    ): Observable<Response<User>>
+
+    @PATCH("user")
+    fun saveUserInfo(
+            @Body body: UserInfoRequestModel
     ): Observable<Response<User>>
 
 

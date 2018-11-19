@@ -10,8 +10,10 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Event
 import com.shuyu.github.kotlin.model.bean.Notification
 import com.shuyu.github.kotlin.model.bean.User
+import com.shuyu.github.kotlin.model.bean.UserInfoRequestModel
 import com.shuyu.github.kotlin.model.conversion.EventConversion
 import com.shuyu.github.kotlin.model.conversion.UserConversion
+import com.shuyu.github.kotlin.model.ui.UserUIModel
 import com.shuyu.github.kotlin.repository.dao.UserDao
 import com.shuyu.github.kotlin.service.NotificationService
 import com.shuyu.github.kotlin.service.RepoService
@@ -134,6 +136,56 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
                 })
 
         userEventRequest(zipService, resultEventCallBack)
+    }
+
+    /**
+     * 修改个人信息
+     */
+    fun changeUserInfo(context: Context, requestModel: UserInfoRequestModel, resultCallBack: ResultCallBack<UserUIModel>?) {
+        val service = retrofit.create(UserService::class.java).saveUserInfo(requestModel).flatMap {
+            FlatMapResponse2Result(it)
+        }.flatMap {
+            ///获取用户star数
+            val starredService = retrofit.create(RepoService::class.java).getStarredRepos(true, it.login!!, 1, "updated", 1)
+            val response = starredService.blockingSingle()
+            val pageString = response.headers().get("page_info")
+            if (pageString != null) {
+                val pageInfo = GsonUtils.parserJsonToBean(pageString, PageInfo::class.java)
+                it.starRepos = if (pageInfo.last < 0) {
+                    0
+                } else {
+                    pageInfo.last
+                }
+            }
+            Observable.just(it)
+        }.doOnNext {
+            ///保存用户信息
+            userInfoStorage = GsonUtils.toJsonString(it)
+            UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
+            userDao.saveUserInfo(Response.success(it), it.login!!)
+        }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
+            ///拦截错误
+            //userInfoStorage = ""
+            Debuger.printfLog("userInfo onErrorResumeNext ")
+            Observable.error(t)
+        }).flatMap {
+            FlatMapResult2Response(it)
+        }
+
+        RetrofitFactory.executeResult(service, object : ResultProgressObserver<User>(context) {
+            override fun onSuccess(result: User?) {
+                resultCallBack?.onSuccess(null)
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                resultCallBack?.onFailure()
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                resultCallBack?.onFailure()
+            }
+
+        })
     }
 
 
