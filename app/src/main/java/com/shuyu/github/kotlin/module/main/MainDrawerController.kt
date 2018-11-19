@@ -56,6 +56,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                         PrimaryDrawerItem().withName(R.string.person)
                                 .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
                                     UserInfoActivity.gotoUserInfo()
+                                    unSelect(drawerItem)
                                     true
                                 }
                 )

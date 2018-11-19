@@ -60,25 +60,25 @@
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_name" />
 
-            <TextView
+            <com.mikepenz.iconics.view.IconicsTextView
                 android:id="@+id/user_header_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="3dp"
-                android:text="@{userUIModel.company}"
+                android:text="@{`{GSY_USER_ITEM_COMPANY} `+userUIModel.company}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_header_other_name" />
 
-            <TextView
+            <com.mikepenz.iconics.view.IconicsTextView
                 android:id="@+id/user_header_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="3dp"
-                android:text="@{userUIModel.location}"
+                android:text="@{`{GSY_USER_ITEM_LOCATION} `+userUIModel.location}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toEndOf="@+id/user_header_image"
@@ -96,13 +96,13 @@
                 app:layout_constraintStart_toEndOf="@+id/user_header_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.mikepenz.iconics.view.IconicsTextView
                 android:id="@+id/user_header_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="@{userUIModel.blog}"
+                android:text="@{`{GSY_USER_ITEM_LINK} `+userUIModel.blog}"
                 android:textColor="@color/subLightTextColor"
                 android:textSize="@dimen/smallTextSize"
                 app:layout_constraintStart_toStartOf="parent"

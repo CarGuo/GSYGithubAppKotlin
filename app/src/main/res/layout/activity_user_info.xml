@@ -36,38 +36,44 @@
                 <com.shuyu.github.kotlin.ui.view.GSYUserInfoItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:infoIcons="@{`{GSY-REPOS_ITEM_USER}`}"
-                    app:infoTitle="@{@string/infoName}" />
+                    app:infoIcons="@{`{GSY-LOGIN_USER}`}"
+                    app:infoTitle="@{@string/infoName}"
+                    app:infoValue="@{userUIModel.name}" />
 
                 <com.shuyu.github.kotlin.ui.view.GSYUserInfoItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:infoIcons="@{`{GSY-EMAIL}`}"
-                    app:infoTitle="@{@string/infoEmail}" />
+                    app:infoTitle="@{@string/infoEmail}"
+                    app:infoValue="@{userUIModel.email}" />
 
                 <com.shuyu.github.kotlin.ui.view.GSYUserInfoItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:infoIcons="@{`{GSY-USER_ITEM_LINK}`}"
-                    app:infoTitle="@{@string/infoBlog}" />
+                    app:infoTitle="@{@string/infoBlog}"
+                    app:infoValue="@{userUIModel.blog}" />
 
                 <com.shuyu.github.kotlin.ui.view.GSYUserInfoItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:infoIcons="@{`{GSY-USER_ITEM_COMPANY}`}"
-                    app:infoTitle="@{@string/infoCompany}" />
+                    app:infoTitle="@{@string/infoCompany}"
+                    app:infoValue="@{userUIModel.company}" />
 
                 <com.shuyu.github.kotlin.ui.view.GSYUserInfoItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:infoIcons="@{`{GSY-USER_ITEM_LOCATION}`}"
-                    app:infoTitle="@{@string/infoLocation}" />
+                    app:infoTitle="@{@string/infoLocation}"
+                    app:infoValue="@{userUIModel.location}" />
 
                 <com.shuyu.github.kotlin.ui.view.GSYUserInfoItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:infoIcons="@{`{GSY-DES}`}"
-                    app:infoTitle="@{@string/infoBio}" />
+                    app:infoTitle="@{@string/infoBio}"
+                    app:infoValue="@{userUIModel.bio}" />
 
 
             </LinearLayout>

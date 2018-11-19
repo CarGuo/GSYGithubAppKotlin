@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.Postcard
@@ -12,7 +13,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.ActivityUserInfoBinding
 import com.shuyu.github.kotlin.di.Injectable
+import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.ARouterAddress
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_user_info.*
 import javax.inject.Inject
 
@@ -22,7 +27,7 @@ import javax.inject.Inject
  * Date: 2018-11-19
  */
 @Route(path = ARouterAddress.UserInfoActivity)
-class UserInfoActivity : AppCompatActivity(), Injectable {
+class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInjector {
 
     companion object {
         fun gotoUserInfo() {
@@ -40,12 +45,21 @@ class UserInfoActivity : AppCompatActivity(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var globalAppModel: AppGlobalModel
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivityUserInfoBinding>(this, R.layout.activity_user_info)
+        val dataBinding = DataBindingUtil.setContentView<ActivityUserInfoBinding>(this, R.layout.activity_user_info)
         initTitle()
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(UserInfoViewModel::class.java)
+        dataBinding.userUIModel = globalAppModel.userObservable
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

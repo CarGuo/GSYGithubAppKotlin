@@ -36,9 +36,9 @@ object UserConversion {
         userUIModel.avatarUrl = user.avatarUrl
         userUIModel.htmlUrl = user.htmlUrl
         userUIModel.type = user.type
-        userUIModel.company = "{GSY_USER_ITEM_COMPANY} ${user.company ?: "---"}"
-        userUIModel.location = "{GSY_USER_ITEM_LOCATION} ${user.location ?: "---"}"
-        userUIModel.blog = "{GSY_USER_ITEM_LINK} ${user.blog ?: "---"}"
+        userUIModel.company = user.company ?: ""
+        userUIModel.location = user.location ?: ""
+        userUIModel.blog = user.blog ?: ""
         userUIModel.email = user.email
 
 
