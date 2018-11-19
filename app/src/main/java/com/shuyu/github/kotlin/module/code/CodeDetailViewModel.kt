@@ -26,7 +26,7 @@ class CodeDetailViewModel @Inject constructor(private val reposRepository: Repos
             }
 
             override fun onFailure() {
-
+                htmlData.value = "<h1>该文件不支持预览</h1>"
             }
         })
     }

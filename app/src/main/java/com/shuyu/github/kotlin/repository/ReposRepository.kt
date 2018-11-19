@@ -187,6 +187,12 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                if(!isNetWorkError) {
+                    resultCallBack.onFailure()
+                }
+            }
+            override fun onCodeError(code: Int, message: String) {
+                super.onCodeError(code, message)
                 resultCallBack.onFailure()
             }
         })
