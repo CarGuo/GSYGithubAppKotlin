@@ -100,6 +100,7 @@
     <string name="copyComment">复制</string>
     <string name="createIssue">创建</string>
     <string name="reposStar">Star</string>
+    <string name="user100Honor">用户最近更新的前 100 个仓库 Star 总和</string>
     <string name="reposUnStar">UnStar</string>
     <string name="reposWatcher">Watcher</string>
     <string name="reposUnWatcher">UnWatcher</string>

@@ -11,6 +11,17 @@ import java.util.*
 
 interface RepoService {
 
+    @GET("users/{user}/repos")
+    fun getUserRepository100StatusDao(
+            @Header("forceNetWork") forceNetWork: Boolean,
+            @Path("user") user: String,
+            @Query("page") page: Int,
+            @Query("sort") sort: String = "pushed",
+            @Query("per_page") per_page: Int = 100
+    ): Observable<Response<ArrayList<Repository>>>
+
+
+
     @GET("users/{user}/starred")
     fun getStarredRepos(
             @Header("forceNetWork") forceNetWork: Boolean,

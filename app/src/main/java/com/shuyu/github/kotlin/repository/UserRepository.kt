@@ -48,36 +48,7 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
         } else {
             retrofit.create(UserService::class.java).getUser(true, userName!!)
         }
-        return userService.flatMap {
-            FlatMapResponse2Result(it)
-        }.flatMap {
-            ///获取用户star数
-            val starredService = retrofit.create(RepoService::class.java).getStarredRepos(true, it.login!!, 1, "updated", 1)
-            val response = starredService.blockingSingle()
-            val pageString = response.headers().get("page_info")
-            if (pageString != null) {
-                val pageInfo = GsonUtils.parserJsonToBean(pageString, PageInfo::class.java)
-                it.starRepos = if (pageInfo.last < 0) {
-                    0
-                } else {
-                    pageInfo.last
-                }
-            }
-            Observable.just(it)
-        }.doOnNext {
-            ///如果是登录用户，保存一份数据到 SharedPreferences
-            if (isLoginUser) {
-                ///保存用户信息
-                userInfoStorage = GsonUtils.toJsonString(it)
-                UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
-            }
-            userDao.saveUserInfo(Response.success(it), it.login!!)
-        }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
-            ///拦截错误
-            //userInfoStorage = ""
-            Debuger.printfLog("userInfo onErrorResumeNext ")
-            Observable.error(t)
-        })
+        return doUserInfoFlat(userService, isLoginUser)
     }
 
 
@@ -142,37 +113,11 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
      * 修改个人信息
      */
     fun changeUserInfo(context: Context, requestModel: UserInfoRequestModel, resultCallBack: ResultCallBack<UserUIModel>?) {
-        val service = retrofit.create(UserService::class.java).saveUserInfo(requestModel).flatMap {
-            FlatMapResponse2Result(it)
-        }.flatMap {
-            ///获取用户star数
-            val starredService = retrofit.create(RepoService::class.java).getStarredRepos(true, it.login!!, 1, "updated", 1)
-            val response = starredService.blockingSingle()
-            val pageString = response.headers().get("page_info")
-            if (pageString != null) {
-                val pageInfo = GsonUtils.parserJsonToBean(pageString, PageInfo::class.java)
-                it.starRepos = if (pageInfo.last < 0) {
-                    0
-                } else {
-                    pageInfo.last
-                }
-            }
-            Observable.just(it)
-        }.doOnNext {
-            ///保存用户信息
-            userInfoStorage = GsonUtils.toJsonString(it)
-            UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
-            userDao.saveUserInfo(Response.success(it), it.login!!)
-        }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
-            ///拦截错误
-            //userInfoStorage = ""
-            Debuger.printfLog("userInfo onErrorResumeNext ")
-            Observable.error(t)
-        }).flatMap {
+        val service = retrofit.create(UserService::class.java).saveUserInfo(requestModel)
+        val resultService = doUserInfoFlat(service, true).flatMap {
             FlatMapResult2Response(it)
         }
-
-        RetrofitFactory.executeResult(service, object : ResultProgressObserver<User>(context) {
+        RetrofitFactory.executeResult(resultService, object : ResultProgressObserver<User>(context) {
             override fun onSuccess(result: User?) {
                 resultCallBack?.onSuccess(null)
             }
@@ -458,6 +403,52 @@ class UserRepository @Inject constructor(private val retrofit: Retrofit, private
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
             }
+        })
+    }
+
+    /**
+     * 用户数据请求、组装、保存
+     */
+    private fun doUserInfoFlat(service: Observable<Response<User>>, isLoginUser: Boolean): Observable<User> {
+        return service.flatMap {
+            FlatMapResponse2Result(it)
+        }.flatMap {
+            ///获取用户star数
+            val starredService = retrofit.create(RepoService::class.java).getStarredRepos(true, it.login!!, 1, "updated", 1)
+            val honorService = retrofit.create(RepoService::class.java).getUserRepository100StatusDao(true, it.login!!, 1)
+            val starResponse = starredService.blockingSingle()
+            val honorResponse = honorService.blockingSingle()
+            val starPageString = starResponse.headers().get("page_info")
+            if (starPageString != null) {
+                val pageInfo = GsonUtils.parserJsonToBean(starPageString, PageInfo::class.java)
+                it.starRepos = if (pageInfo.last < 0) {
+                    0
+                } else {
+                    pageInfo.last
+                }
+            }
+            if (honorResponse.isSuccessful) {
+                val list = honorResponse.body()
+                var count = 0
+                list?.forEach {
+                    count += it.watchersCount
+                }
+                it.honorRepos = count
+            }
+            Observable.just(it)
+        }.doOnNext {
+            ///如果是登录用户，保存一份数据到 SharedPreferences
+            if (isLoginUser) {
+                ///保存用户信息
+                userInfoStorage = GsonUtils.toJsonString(it)
+                UserConversion.cloneDataFromUser(application, it, appGlobalModel.userObservable)
+            }
+            userDao.saveUserInfo(Response.success(it), it.login!!)
+        }.onErrorResumeNext(Function<Throwable, Observable<User>> { t ->
+            ///拦截错误
+            //userInfoStorage = ""
+            Debuger.printfLog("userInfo onErrorResumeNext ")
+            Observable.error(t)
         })
     }
 

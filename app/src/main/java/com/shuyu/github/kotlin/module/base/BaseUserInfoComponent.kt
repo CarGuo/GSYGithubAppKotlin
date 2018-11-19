@@ -21,6 +21,7 @@ import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_user_info.*
+import org.jetbrains.anko.toast
 
 /**
  * 基础用户显示
@@ -42,12 +43,12 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 
     override fun onItemClick(context: Context, position: Int) {
         super.onItemClick(context, position)
-        val item  =adapter?.dataList?.get(position)
-        when(item) {
-            is EventUIModel ->{
+        val item = adapter?.dataList?.get(position)
+        when (item) {
+            is EventUIModel -> {
                 EventUtils.evenAction(activity, adapter?.dataList?.get(position) as EventUIModel)
             }
-            is UserUIModel ->{
+            is UserUIModel -> {
                 PersonActivity.gotoPersonInfo(item.login!!)
             }
         }
@@ -72,7 +73,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
         manager.bind(UserUIModel::class.java, UserHolder.ID, UserHolder::class.java)
     }
 
-    open fun bindHeader(binding:LayoutUserHeaderBinding) {
+    open fun bindHeader(binding: LayoutUserHeaderBinding) {
     }
 
     abstract fun getLoginName(): String?
@@ -118,7 +119,7 @@ abstract class BaseUserInfoViewModel constructor(private val userRepository: Use
                     +application.getString(R.string.FollowedText), GeneralEnum.UserStar)
                 }
                 R.id.user_header_honor -> {
-                    ///todo shwo honor
+                    v.context.toast(R.string.user100Honor)
                 }
             }
         }
