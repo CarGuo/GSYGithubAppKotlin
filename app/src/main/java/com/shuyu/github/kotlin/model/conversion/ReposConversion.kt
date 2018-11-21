@@ -40,7 +40,7 @@ object ReposConversion {
         reposUIModel.repositoryName = repository?.name ?: ""
         reposUIModel.repositoryFork = repository?.forksCount?.toString() ?: ""
         reposUIModel.repositoryStar = repository?.stargazersCount?.toString() ?: ""
-        reposUIModel.repositoryWatch = repository?.watchersCount?.toString() ?: ""
+        reposUIModel.repositoryWatch = repository?.subscribersCount?.toString() ?: ""
         reposUIModel.repositoryType = repository?.language ?: ""
         reposUIModel.repositorySize = (((repository?.size
                 ?: 0) / 1024.0)).toString().substring(0, 3) + "M"
