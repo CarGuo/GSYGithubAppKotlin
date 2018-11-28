@@ -79,6 +79,16 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".module.service.LocalService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":gsy.service"/>
+
+        <service
+            android:name=".module.service.LocalMessageService"
+            android:enabled="true"
+            android:exported="true"/>
 
     </application>
 
