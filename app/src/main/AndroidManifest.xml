@@ -86,9 +86,15 @@
             android:process=":gsy.service"/>
 
         <service
-            android:name=".module.service.LocalMessageService"
+            android:name=".module.service.LocalAIDLTransferService"
             android:enabled="true"
             android:exported="true"/>
+
+        <service
+            android:name=".module.service.LocalMessengerService"
+            android:enabled="true"
+            android:exported="true"/>
+
 
     </application>
 

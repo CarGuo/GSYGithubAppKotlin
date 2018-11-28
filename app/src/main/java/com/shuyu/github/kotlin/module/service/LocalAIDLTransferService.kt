@@ -15,24 +15,24 @@ import java.util.concurrent.TimeUnit
  * Created by guoshuyu
  * Date: 2018-11-28
  */
-class LocalMessageService : Service() {
+class LocalAIDLTransferService : Service() {
 
     private val pool = newScheduledThreadPool(4)
 
     private var resultCallBack: ILocalMessageCallBack? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Debuger.printfLog("LocalMessageService onStartCommand " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
+        Debuger.printfLog("LocalAIDLTransferService onStartCommand " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
         return START_STICKY
     }
 
     override fun onCreate() {
         super.onCreate()
-        Debuger.printfLog("LocalMessageService onCreate " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
+        Debuger.printfLog("LocalAIDLTransferService onCreate " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        Debuger.printfLog("LocalMessageService onBind " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
+        Debuger.printfLog("LocalAIDLTransferService onBind " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
         pool.scheduleAtFixedRate(runnable, 0, 4,TimeUnit.SECONDS)
         return binder
     }
@@ -45,7 +45,7 @@ class LocalMessageService : Service() {
 
     private val binder = object : ILocalMessage.Stub() {
         override fun sendMessage(message: String?) {
-            Debuger.printfLog("LocalMessageService sendMessage $message " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
+            Debuger.printfLog("LocalAIDLTransferService sendMessage $message " + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
         }
 
         override fun getVersion(): Int {
@@ -58,7 +58,7 @@ class LocalMessageService : Service() {
     }
 
     private val runnable = Runnable {
-        Debuger.printfLog("LocalMessageService send Result pid" + android.os.Process.myPid() + " " + Thread.currentThread())
+        Debuger.printfLog("LocalAIDLTransferService send Result pid" + android.os.Process.myPid() + " " + Thread.currentThread())
         val result = AIDLResultModel()
         result.name = "Name " + UUID.randomUUID()
         result.time = Date().time

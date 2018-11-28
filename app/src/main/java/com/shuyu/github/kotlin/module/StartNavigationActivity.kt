@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.module.service.LocalService
 import dagger.android.DispatchingAndroidInjector
@@ -24,7 +25,11 @@ class StartNavigationActivity : AppCompatActivity(), HasSupportFragmentInjector 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_navigation)
-        startService(Intent(this, LocalService::class.java))
+
+        if(BuildConfig.DEBUG) {
+            //如果是调试版本，启动后台服务测试AIDL
+            startService(Intent(this, LocalService::class.java))
+        }
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
