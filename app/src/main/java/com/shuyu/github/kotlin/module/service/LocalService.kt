@@ -112,11 +112,11 @@ class LocalService : Service() {
 }
 
 /**
- * LocalService                onCreate                                   pid4442 Thread[main,5,main]
- * LocalService                onStartCommand                             pid4442 Thread[main,5,main]
- * LocalAIDLTransferService    onCreate                                   pid4347 Thread[main,5,main]
- * LocalAIDLTransferService    onBind                                     pid4347 Thread[main,5,main]
- * LocalService                onServiceConnected                         pid4442 Thread[main,5,main]
+ * LocalService                onCreate                                   pid4442 Thread[main,5,main]（主进程主线程）
+ * LocalService                onStartCommand                             pid4442 Thread[main,5,main]（主进程主线程）
+ * LocalAIDLTransferService    onCreate                                   pid4347 Thread[main,5,main]（新进程主线程）
+ * LocalAIDLTransferService    onBind                                     pid4347 Thread[main,5,main]（新进程主线程）
+ * LocalService                onServiceConnected                         pid4442 Thread[main,5,main]（主进程主线程）
  * LocalService                Binder Version 1
  * LocalAIDLTransferService    sendMessage `LocalService had connection`  pid4347 Thread[Binder:4347_1,5,main]
  */
@@ -129,10 +129,10 @@ class LocalService : Service() {
 
 
 /**
- * LocalService                  send Messenger 1    pid9582 Thread[main,5,main]
- * LocalMessengerService         handleMessage 1     pid9537 Thread[main,5,main]
- * LocalMessengerService         send Messenger 2    pid9537 Thread[main,5,main]
- * LocalService                  handleMessage 2     pid9582 Thread[main,5,main]
+ * LocalService                  send Messenger 1     pid9582 Thread[main,5,main]（主进程主线程）
+ * LocalMessengerService         handleMessage  1     pid9537 Thread[main,5,main]
+ * LocalMessengerService         send Messenger 2     pid9537 Thread[main,5,main]
+ * LocalService                  handleMessage  2     pid9582 Thread[main,5,main]（主进程主线程）
  *
  *
  *
