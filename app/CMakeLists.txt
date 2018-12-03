@@ -10,12 +10,15 @@ set(pathToDlib ${CMAKE_SOURCE_DIR}/src/main/)
 
 #编译成library，参数是库的名字、库的类型、源码s(自己写的JNI文件，可以有多个)
 add_library( # Sets the name of the library.
+        # 生成的so库名称,并不需要和c/cpp文件名相同
+        # 这里生产的so库名称将为libnative-gsy.so
         native-gsy
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
+        # 资源文件的路径，可以是多个资源文件
         src/main/cpp/native-test.cpp )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -25,10 +28,13 @@ add_library( # Sets the name of the library.
 # completing its build.
 
 find_library( # Sets the name of the path variable.
+        # 设置依赖库的名字，下面链接库的时候会用到
         log-lib
 
         # Specifies the name of the NDK library that
         # you want CMake to locate.
+        # 查找log依赖库
+        # {sdk-path}/ndk-bundle/sysroot/usr/include/android/log.h
         log )
 
 
@@ -45,10 +51,12 @@ find_library( # Sets the name of the path variable.
 
 
 target_link_libraries( # Specifies the target library.
+        # 目标库
         native-gsy
 
         # Links the target library to the log library
         # included in the NDK.
+        # 依赖库，可以是多个
         ${log-lib} )
 
 
