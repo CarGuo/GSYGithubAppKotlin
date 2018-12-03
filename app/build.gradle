@@ -27,7 +27,36 @@ android {
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
         buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
+
+        //CMake
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
+
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+        }
+    }
+
+
+    /*sourceSets {
+        main {
+            //CMake 增加jniLibs源文件夹
+            jniLibs.srcDirs = ['../distribution/libs']
+        }
+    }*/
+
     buildTypes {
         release {
             minifyEnabled false

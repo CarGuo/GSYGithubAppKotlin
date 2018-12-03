@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.search.SearchActivity
@@ -28,6 +29,13 @@ import javax.inject.Inject
  * 主页
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener {
+
+    companion object {
+        init {
+            System.loadLibrary("native-gsy")
+        }
+    }
+
 
     @Inject
     lateinit var globalModel: AppGlobalModel
@@ -71,6 +79,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
         initToolbar()
 
         MainDrawerController(this, home_tool_bar, loginRepository, issueRepository, repositoryRepository, globalModel)
+
+
+        Debuger.printfWarning(stringFromJNI())
 
     }
 
@@ -122,5 +133,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
         home_tool_bar.setTitle(R.string.app_name)
         home_tool_bar.setOnMenuItemClickListener(this)
     }
+
+    external fun stringFromJNI(): String
 
 }
