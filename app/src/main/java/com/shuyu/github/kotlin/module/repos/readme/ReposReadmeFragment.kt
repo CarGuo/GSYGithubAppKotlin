@@ -2,7 +2,6 @@ package com.shuyu.github.kotlin.module.repos.readme
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -53,7 +52,8 @@ class ReposReadmeFragment : BaseFragment<FragmentReposReadmeBinding>(), ARouterI
             }
             repos_readme_web.spinKit.visibility = View.GONE
             repos_readme_web.webView.requestIntercept = false
-            repos_readme_web.webView.loadData(it, "text/html", "utf-8")
+            repos_readme_web. webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
+            repos_readme_web.webView.loadData(it, "text/html; charset=UTF-8", null);
 
         })
         viewModel.getReadmeHtml(userName, reposName)

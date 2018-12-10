@@ -2,7 +2,6 @@ package com.shuyu.github.kotlin.module.code
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -15,9 +14,7 @@ import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_code_detail.*
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.share
-import org.jetbrains.anko.toast
+import kotlinx.android.synthetic.main.fragment_repos_readme.*
 import javax.inject.Inject
 
 /**
@@ -71,7 +68,8 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
             }
             code_detail_web.spinKit.visibility = View.GONE
             code_detail_web.webView.requestIntercept = false
-            code_detail_web.webView.loadData(it, "text/html", "utf-8")
+            repos_readme_web. webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
+            repos_readme_web.webView.loadData(it, "text/html; charset=UTF-8", null);
 
         })
         if (localCode == null) {
