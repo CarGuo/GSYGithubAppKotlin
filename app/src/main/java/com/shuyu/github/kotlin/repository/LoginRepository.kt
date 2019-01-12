@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.repository
 
+import android.app.Activity
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,8 @@ import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
 import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.singleTop
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -122,6 +125,8 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
         userInfoStorage = ""
         val intent = Intent(context, StartNavigationActivity::class.java)
         intent.clearTask()
+        intent.clearTop()
         context.startActivity(intent)
+        (context as Activity).finish()
     }
 }

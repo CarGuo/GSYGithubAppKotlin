@@ -34,12 +34,12 @@ android {
                 cppFlags ""
             }
             ndk {
-                abiFilters 'armeabi-v7a'
+                abiFilters 'armeabi-v7a', 'x86'
             }
         }
 
         ndk {
-            abiFilters 'armeabi-v7a'
+            abiFilters 'armeabi-v7a', 'x86'
         }
     }
 
