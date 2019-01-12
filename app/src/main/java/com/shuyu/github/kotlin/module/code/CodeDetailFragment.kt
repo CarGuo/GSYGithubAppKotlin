@@ -2,6 +2,7 @@ package com.shuyu.github.kotlin.module.code
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -15,6 +16,9 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_code_detail.*
 import kotlinx.android.synthetic.main.fragment_repos_readme.*
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.share
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
