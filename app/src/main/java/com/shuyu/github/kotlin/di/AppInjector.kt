@@ -19,8 +19,11 @@ import dagger.android.support.HasSupportFragmentInjector
  */
 object AppInjector {
     fun init(githubApp: GSYGithubApplication) {
+
+        //通过builder注入application，然后注入app
         DaggerAppComponent.builder().application(githubApp)
                 .build().inject(githubApp)
+
         githubApp.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivity(activity)
@@ -53,6 +56,7 @@ object AppInjector {
     }
 
     private fun handleActivity(activity: Activity) {
+        //注入Activity
         if (activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)
         }
@@ -67,6 +71,7 @@ object AppInjector {
                                 fm: FragmentManager,
                                 f: Fragment,
                                 savedInstanceState: Bundle?) {
+                            //注入fragment
                             if (f is Injectable) {
                                 AndroidSupportInjection.inject(f)
                             }

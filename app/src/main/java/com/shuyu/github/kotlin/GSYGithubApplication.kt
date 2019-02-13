@@ -32,6 +32,10 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
     /**
      * 分发Activity的注入
+     *
+     * 在Activity调用AndroidInjection.inject(this)时
+     * 从Application获取一个DispatchingAndroidInjector<Activity>，并将activity传递给inject(activity)
+     * DispatchingAndroidInjector通过AndroidInjector.Factory创建AndroidInjector
      */
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>

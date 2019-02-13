@@ -28,6 +28,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class MainFragmentBindModule {
+
+    //主要作用就是通过 @ContributesAndroidInjector  标记哪个类需要使用依赖注入功能
+    //节省代码
     @ContributesAndroidInjector
     abstract fun contributeDynamicFragment(): DynamicFragment
 
