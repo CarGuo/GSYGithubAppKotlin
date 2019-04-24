@@ -11,7 +11,7 @@ import java.lang.Exception
 val TAGS = hashMapOf(
         Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\">"), Pair("end", "</span>"))),
         Pair("starCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/stargazers\">"), Pair("end", "</a>"))),
-        Pair("forkCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/network\">"), Pair("end", "</a>")))
+        Pair("forkCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/network"), Pair("end", "</a>")))
 )
 
 object TrendConversion {
