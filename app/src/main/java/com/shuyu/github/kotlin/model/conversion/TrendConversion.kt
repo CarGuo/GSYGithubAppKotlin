@@ -9,7 +9,7 @@ import java.lang.Exception
  * Date: 2018-10-29
  */
 val TAGS = hashMapOf(
-        Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\">"), Pair("end", "</span>"))),
+        Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block  float-sm-right\""), Pair("end", "</span>"))),
         Pair("starCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/stargazers\">"), Pair("end", "</a>"))),
         Pair("forkCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/network"), Pair("end", "</a>")))
 )
@@ -24,7 +24,7 @@ object TrendConversion {
             e.printStackTrace()
         }
         val repos = ArrayList<TrendingRepoModel>()
-        var splitWithH3 = responseData.split("<h3")
+        var splitWithH3 = responseData.split("<article")
         splitWithH3 = splitWithH3.subList(1, splitWithH3.size)
 
         for (i in 0 until splitWithH3.size) {
@@ -33,7 +33,7 @@ object TrendConversion {
 
             parseRepoBaseInfo(repo, html)
 
-            val metaNoteContent = parseContentWithNote(html, "class=\"f6 text-gray mt-2\">", "</li>")
+            val metaNoteContent = parseContentWithNote(html, "class=\"f6 text-gray mt-2\">", "</div>")
             repo.meta = parseRepoLabelWithTag(repo, metaNoteContent, TAGS["meta"]!!)
             repo.starCount = parseRepoLabelWithTag(repo, metaNoteContent, TAGS["starCount"]!!)
             repo.forkCount = parseRepoLabelWithTag(repo, metaNoteContent, TAGS["forkCount"]!!)
@@ -68,7 +68,7 @@ object TrendConversion {
             repo.reposName = repo.fullName.split('/')[1]
         }
 
-        var description = parseContentWithNote(htmlBaseInfo, "<p class=\"col-9 d-inline-block text-gray m-0 pr-4\">", "</p>")
+        var description = parseContentWithNote(htmlBaseInfo, "<p class=\"col-9 text-gray my-1 pr-4\">", "</p>")
         if (description.isNotEmpty()) {
             val reg = "<g-emoji.*?>.+?</g-emoji>"
             val tag = Regex(reg)
