@@ -1,9 +1,9 @@
 package com.shuyu.github.kotlin.module.push
 
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager

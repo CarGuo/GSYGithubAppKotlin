@@ -1,15 +1,15 @@
 package com.shuyu.github.kotlin.module.login
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.content.Context
-import android.databinding.ObservableField
 import android.view.View
-import androidx.core.widget.toast
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.repository.LoginRepository
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**

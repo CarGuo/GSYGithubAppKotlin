@@ -2,9 +2,9 @@ package com.shuyu.github.kotlin.module.search
 
 import android.app.Application
 import android.content.Context
-import android.databinding.ObservableField
 import android.view.KeyEvent
 import android.view.View
+import androidx.databinding.ObservableField
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.module.base.LoadState
 import com.shuyu.github.kotlin.repository.SearchRepository

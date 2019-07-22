@@ -1,9 +1,9 @@
 package com.shuyu.github.kotlin.module.repos
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.repository.ReposRepository
 import javax.inject.Inject

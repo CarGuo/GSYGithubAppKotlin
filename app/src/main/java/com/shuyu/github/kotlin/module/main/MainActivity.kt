@@ -1,12 +1,12 @@
 package com.shuyu.github.kotlin.module.main
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.LayoutInflaterCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.core.view.LayoutInflaterCompat
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.Debuger

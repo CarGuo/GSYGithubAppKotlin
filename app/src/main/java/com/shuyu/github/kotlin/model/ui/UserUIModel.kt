@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.model.ui
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
 import com.shuyu.github.kotlin.BR
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import java.util.*
 
 

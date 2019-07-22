@@ -7,14 +7,14 @@
     android:orientation="vertical"
     tools:context=".module.main.MainActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/activity_fragment_container_toolbar"
         style="@style/toolbarStyle"
         android:theme="@style/toolbarTheme"
         app:title="@string/app_name"
         app:titleTextColor="@color/white">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/activity_fragment_container_id"

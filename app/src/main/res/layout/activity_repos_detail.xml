@@ -7,13 +7,13 @@
     android:orientation="vertical"
     tools:context=".module.main.MainActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/repos_detail_toolbar"
         style="@style/toolbarStyle"
         android:theme="@style/toolbarTheme"
         app:titleTextColor="@color/white">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
         android:id="@+id/repos_detail_tab_bar"
@@ -31,7 +31,7 @@
         app:ntb_title_size="@dimen/smallTextSize"
         app:ntb_titled="true" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/repos_detail_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

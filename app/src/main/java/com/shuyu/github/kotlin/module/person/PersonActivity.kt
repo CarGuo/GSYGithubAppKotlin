@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.module.person
 
 import android.os.Bundle
-import android.support.v4.view.LayoutInflaterCompat
+import androidx.core.view.LayoutInflaterCompat
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route

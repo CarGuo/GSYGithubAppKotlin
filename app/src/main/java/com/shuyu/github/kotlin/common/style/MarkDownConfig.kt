@@ -3,44 +3,45 @@ package com.shuyu.github.kotlin.common.style
 import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
-import com.shuyu.github.kotlin.GSYGithubApplication
-import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.common.utils.dp
-import ru.noties.markwon.SpannableConfiguration
-import ru.noties.markwon.SyntaxHighlight
-import ru.noties.markwon.il.AsyncDrawableLoader
-import ru.noties.markwon.syntax.Prism4jTheme
-import ru.noties.markwon.syntax.Prism4jThemeDarkula
-import ru.noties.prism4j.AbsVisitor
-import ru.noties.prism4j.Prism4j
-import ru.noties.prism4j.annotations.PrismBundle
+import io.noties.markwon.AbstractMarkwonPlugin
+import io.noties.markwon.MarkwonPlugin
+import io.noties.markwon.image.AsyncDrawableLoader
+import io.noties.markwon.syntax.Prism4jTheme
+import io.noties.markwon.syntax.Prism4jThemeDarkula
+import io.noties.markwon.syntax.SyntaxHighlight
+import io.noties.prism4j.AbsVisitor
+import io.noties.prism4j.Prism4j
+import io.noties.prism4j.annotations.PrismBundle
+import io.noties.markwon.core.spans.LastLineSpacingSpan
+import io.noties.markwon.RenderProps
+import io.noties.markwon.MarkwonConfiguration
+import io.noties.markwon.SpanFactory
+import io.noties.markwon.MarkwonSpansFactory
+import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.html.HtmlPlugin
+import io.noties.markwon.image.AsyncDrawable
+import io.noties.markwon.image.glide.GlideImagesPlugin
+import io.noties.markwon.linkify.LinkifyPlugin
+import io.noties.markwon.recycler.table.TableEntryPlugin
+import io.noties.markwon.syntax.SyntaxHighlightPlugin
 
 
 /**
  * markdown文件显示配置
  */
 
-@PrismBundle(includeAll = true)
+@PrismBundle(includeAll = true, grammarLocatorClassName = ".MyGrammarLocator")
 object MarkDownConfig {
 
-    fun getConfig(context: Context): SpannableConfiguration {
-        val drawable = GSYGithubApplication.instance.getDrawable(R.drawable.logo)
-        drawable.setBounds(0, 0, 50.dp, 50.dp)
-        val loader = AsyncDrawableLoader.builder()
-                .resources(context.resources)
-                .errorDrawable(drawable)
-                .build()
-
-        val prism4j = Prism4j(GrammarLocatorDef())
-        val highlight =
-                GSYPrism4jSyntaxHighlight.create(prism4j, Prism4jThemeDarkula.create(), "java")
-
-
-        return SpannableConfiguration.builder(context)
-                .asyncDrawableLoader(loader)
-                .softBreakAddsNewLine(true)
-                .syntaxHighlight(highlight)
-                .build()
+    fun getConfig(context: Context): ArrayList<AbstractMarkwonPlugin> {
+        val prism4j = Prism4j(MyGrammarLocator())
+        return arrayListOf(GlideImagesPlugin.create(context.applicationContext),
+                GlideImagesPlugin.create(context),
+                LinkifyPlugin.create(),
+                HtmlPlugin.create(),
+                TablePlugin.create(context),
+                TableEntryPlugin.create(context.applicationContext),
+                SyntaxHighlightPlugin.create(prism4j, Prism4jThemeDarkula.create(), "java"))
     }
 
 }

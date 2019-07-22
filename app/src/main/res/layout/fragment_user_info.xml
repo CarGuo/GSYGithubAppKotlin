@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
     <data>
 
@@ -18,11 +17,13 @@
     </data>
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_my_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -38,7 +39,7 @@
             android:visibility="@{(userInfoViewModel.foucsIcon != null) ? View.VISIBLE : View.GONE}">
 
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/user_info_focus_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

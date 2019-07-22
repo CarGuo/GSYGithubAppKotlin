@@ -1,11 +1,11 @@
 package com.shuyu.github.kotlin.ui.holder.base
 
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import com.shuyu.commonrecycler.BindRecyclerBaseHolder
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import java.lang.reflect.Constructor

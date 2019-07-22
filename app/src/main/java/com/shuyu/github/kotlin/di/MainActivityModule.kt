@@ -2,8 +2,8 @@ package com.shuyu.github.kotlin.di
 
 import android.app.Application
 import android.graphics.Color
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.mikepenz.iconics.IconicsDrawable
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.GSYIconfont

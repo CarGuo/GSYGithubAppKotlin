@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
     <data>
 
@@ -11,7 +11,7 @@
 
     </data>
 
-    <android.support.v7.widget.CardView style="@style/whiteCard">
+    <androidx.cardview.widget.CardView style="@style/whiteCard"  xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -62,5 +62,5 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </layout>

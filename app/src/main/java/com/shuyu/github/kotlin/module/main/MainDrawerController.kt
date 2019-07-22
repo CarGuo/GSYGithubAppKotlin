@@ -2,10 +2,10 @@ package com.shuyu.github.kotlin.module.main
 
 import android.app.Activity
 import android.content.Context
-import android.support.v7.widget.Toolbar
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
+import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer

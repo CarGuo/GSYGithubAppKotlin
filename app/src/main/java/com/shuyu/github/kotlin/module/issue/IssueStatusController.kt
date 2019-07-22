@@ -40,7 +40,7 @@ class IssueStatusController(private val context: Context, private val adapter: B
         val issueInfo = issueDetailFragment.getViewModel().issueUIModel
         controlBar.list.clear()
         controlBar.list.addAll(dataList)
-        controlBar.listView.adapter.notifyDataSetChanged()
+        controlBar.listView.adapter?.notifyDataSetChanged()
         controlBar.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
             val item = controlBar.list[position]
             when {

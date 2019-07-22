@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.ui.holder
 
 import android.content.Context
-import android.databinding.ViewDataBinding
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.LayoutPushItemBinding
 import com.shuyu.github.kotlin.model.ui.FileUIModel

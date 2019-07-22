@@ -1,19 +1,24 @@
 package com.shuyu.github.kotlin.ui.holder.base
 
-import android.databinding.BindingAdapter
-import android.databinding.DataBindingComponent
 import android.graphics.Point
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.view.IconicsImageView
 import com.shuyu.github.kotlin.common.style.MarkDownConfig
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
 import com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
-import ru.noties.markwon.Markwon
+import androidx.databinding.DataBindingComponent
+import io.noties.markwon.Markwon
+import io.noties.markwon.image.glide.GlideImagesPlugin
+import io.noties.markwon.linkify.LinkifyPlugin
+import io.noties.markwon.recycler.table.TableEntry
+import io.noties.markwon.recycler.table.TableEntryPlugin
+import io.noties.markwon.syntax.SyntaxHighlightPlugin
 
 
 /**
@@ -57,7 +62,10 @@ class DataBindingExpandUtils {
         @BindingAdapter("markdownText", "style", requireAll = false)
         fun markdownText(view: TextView?, text: String?, style: String? = "default") {
             view?.apply {
-                Markwon.setMarkdown(view, MarkDownConfig.getConfig(view.context), text ?: "")
+                Markwon.builder(context)
+                        .usePlugins(MarkDownConfig.getConfig(view.context))
+                        .build()
+                        .setMarkdown(view, text ?: "")
             }
         }
 

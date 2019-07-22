@@ -1,14 +1,14 @@
 package com.shuyu.github.kotlin.module.base
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.shuyu.commonrecycler.BindSuperAdapter
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.commonrecycler.listener.OnItemClickListener

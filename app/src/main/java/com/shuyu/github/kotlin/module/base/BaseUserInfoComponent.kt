@@ -2,10 +2,10 @@ package com.shuyu.github.kotlin.module.base
 
 import android.app.Application
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
+import androidx.recyclerview.widget.RecyclerView
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.EventUtils

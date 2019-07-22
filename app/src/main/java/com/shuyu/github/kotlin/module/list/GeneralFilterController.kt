@@ -1,6 +1,6 @@
 package com.shuyu.github.kotlin.module.list
 
-import android.support.v4.view.GravityCompat
+import androidx.core.view.GravityCompat
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem

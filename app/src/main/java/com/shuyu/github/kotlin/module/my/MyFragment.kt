@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.module.my
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.Observer
 import com.shuyu.github.kotlin.databinding.LayoutUserHeaderBinding
 import com.shuyu.github.kotlin.module.base.BaseUserInfoFragment
 import com.shuyu.github.kotlin.module.notify.NotifyActivity

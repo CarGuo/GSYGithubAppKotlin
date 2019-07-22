@@ -16,8 +16,8 @@
 
 package com.shuyu.github.kotlin.di
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.shuyu.github.kotlin.GSYViewModelFactory
 import com.shuyu.github.kotlin.di.annotation.ViewModelKey
 import com.shuyu.github.kotlin.module.code.CodeDetailViewModel

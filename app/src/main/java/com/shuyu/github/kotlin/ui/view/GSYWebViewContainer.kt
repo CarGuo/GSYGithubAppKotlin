@@ -2,7 +2,7 @@ package com.shuyu.github.kotlin.ui.view
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT

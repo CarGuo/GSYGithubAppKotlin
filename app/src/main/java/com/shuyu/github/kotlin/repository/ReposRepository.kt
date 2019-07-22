@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.repository
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.HtmlUtils

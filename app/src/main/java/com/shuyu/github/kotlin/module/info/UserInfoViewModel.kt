@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.module.info
 
-import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.view.View
+import androidx.lifecycle.ViewModel
 import com.orhanobut.dialogplus.DialogPlus
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.ResultCallBack

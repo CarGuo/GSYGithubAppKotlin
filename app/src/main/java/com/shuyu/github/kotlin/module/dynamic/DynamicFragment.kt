@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.module.dynamic
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.EventUtils

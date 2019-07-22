@@ -2,10 +2,10 @@ package com.shuyu.github.kotlin.module.trend
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import androidx.recyclerview.widget.RecyclerView
 import com.shuyu.commonrecycler.BindSuperAdapterManager
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentTrendBinding
@@ -34,7 +34,7 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
 
-        baseRecycler = RecyclerView(activity)
+        baseRecycler = RecyclerView(activity!!)
         baseRecycler.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
     }

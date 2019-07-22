@@ -1,10 +1,10 @@
 package com.shuyu.github.kotlin.repository
 
 import android.app.Activity
-import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.content.Intent
 import android.util.Base64
+import androidx.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.FlatMapResponse2Result
 import com.shuyu.github.kotlin.common.net.FlatMapResult2Response

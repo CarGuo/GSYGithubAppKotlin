@@ -2,9 +2,9 @@ package com.shuyu.github.kotlin.module.repos.issue
 
 import android.app.Application
 import android.content.Context
-import android.databinding.ObservableField
 import android.view.KeyEvent
 import android.view.View
+import androidx.databinding.ObservableField
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.ui.IssueUIModel

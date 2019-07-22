@@ -4,7 +4,7 @@ import android.content.ClipData
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.util.TypedValue.COMPLEX_UNIT_SP

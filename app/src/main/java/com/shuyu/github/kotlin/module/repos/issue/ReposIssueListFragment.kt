@@ -2,8 +2,8 @@ package com.shuyu.github.kotlin.module.repos.issue
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.orhanobut.dialogplus.DialogPlus

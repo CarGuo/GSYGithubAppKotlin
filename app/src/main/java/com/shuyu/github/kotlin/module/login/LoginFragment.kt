@@ -1,14 +1,14 @@
 package com.shuyu.github.kotlin.module.login
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentLoginBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**

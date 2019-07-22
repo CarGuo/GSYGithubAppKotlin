@@ -5,17 +5,16 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
-import android.support.annotation.ColorInt
-import android.support.annotation.FloatRange
-import android.support.annotation.IntRange
-import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.appcompat.widget.AppCompatButton
 import com.shuyu.github.kotlin.R
 
 /**
  * 自带Shape按键
  */
-class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.support.v7.appcompat.R.attr.buttonStyle) : AppCompatButton(context, attrs, defStyleAttr) {
+class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.buttonStyle) : AppCompatButton(context, attrs, defStyleAttr) {
 
     //text color
     private var mNormalTextColor = 0
@@ -252,10 +251,10 @@ class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     /*******************alpha animation duration */
-    fun setAnimationDuration(@IntRange(from = 0) duration: Int) {
+    /*fun setAnimationDuration(@IntRange(start = 0) duration: Int) {
         this.mDuration = duration
         mStateBackground.setEnterFadeDuration(mDuration)
-    }
+    }*/
 
     /***************  text color    */
 

@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.module.my
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.AppGlobalModel

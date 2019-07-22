@@ -1,13 +1,13 @@
 package com.shuyu.github.kotlin.module.repos
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.LayoutInflaterCompat
-import android.support.v7.widget.Toolbar
+import androidx.core.view.LayoutInflaterCompat
 import android.widget.AdapterView
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -149,7 +149,7 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
         val dataList = getControlList()
         repos_detail_control_bar.list.clear()
         repos_detail_control_bar.list.addAll(dataList)
-        repos_detail_control_bar.listView.adapter.notifyDataSetChanged()
+        repos_detail_control_bar.listView.adapter?.notifyDataSetChanged()
         repos_detail_control_bar.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
             val item = repos_detail_control_bar.list[position]
             when {

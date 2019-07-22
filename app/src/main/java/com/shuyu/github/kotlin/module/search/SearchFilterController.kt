@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.module.search
 
 import android.app.Activity
-import android.support.v4.view.GravityCompat
+import androidx.core.view.GravityCompat
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem

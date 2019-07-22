@@ -1,8 +1,8 @@
 package com.shuyu.github.kotlin.ui.holder.base
 
 import android.content.Context
-import android.databinding.ViewDataBinding
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import com.shuyu.commonrecycler.BindRecyclerBaseHolder
 
 /**

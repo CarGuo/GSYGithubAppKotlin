@@ -1,9 +1,7 @@
 package com.shuyu.github.kotlin.ui.view
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -12,6 +10,8 @@ import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.setPadding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.dp
 

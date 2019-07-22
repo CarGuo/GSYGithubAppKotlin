@@ -1,11 +1,11 @@
 package com.shuyu.github.kotlin.module.repos.file
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.AdapterView
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.commonrecycler.BindSuperAdapterManager
@@ -118,12 +118,12 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
     private fun clearSelectList() {
         repos_file_select_header.list.clear()
         repos_file_select_header.list.add(".")
-        repos_file_select_header.listView.adapter.notifyDataSetChanged()
+        repos_file_select_header.listView.adapter?.notifyDataSetChanged()
     }
 
     private fun addSelectList(item: String) {
         repos_file_select_header.list.add(item)
-        repos_file_select_header.listView.adapter.notifyDataSetChanged()
+        repos_file_select_header.listView.adapter?.notifyDataSetChanged()
     }
 
     private fun deleteSelect(position: Int) {
@@ -132,6 +132,6 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
         nextList.addAll(result)
         repos_file_select_header.list.clear()
         repos_file_select_header.list.addAll(nextList)
-        repos_file_select_header.listView.adapter.notifyDataSetChanged()
+        repos_file_select_header.listView.adapter?.notifyDataSetChanged()
     }
 }
