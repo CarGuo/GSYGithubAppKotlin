@@ -206,7 +206,7 @@
         <item>CSS</item>
     </array>
     <array name="trend_language_data">
-        <item>all</item>
+        <item> </item>
         <item>Java</item>
         <item>Kotlin</item>
         <item>Dart</item>
