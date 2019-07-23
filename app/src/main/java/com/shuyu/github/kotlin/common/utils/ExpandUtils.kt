@@ -79,7 +79,7 @@ fun ArrayList<String>.toSplitString(): String {
     this.forEach {
         result = "$result/$it"
     }
-    return result
+    return result.replace("./", "")
 }
 
 /**
