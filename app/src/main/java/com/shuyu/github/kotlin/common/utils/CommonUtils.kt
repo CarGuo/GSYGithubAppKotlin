@@ -7,12 +7,12 @@ import androidx.core.net.toUri
 import com.shuyu.github.kotlin.GSYGithubApplication
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
+import com.shuyu.github.kotlin.common.gsyimageloader.GSYImageLoaderManager
+import com.shuyu.github.kotlin.common.gsyimageloader.GSYLoadOption
 import com.shuyu.github.kotlin.common.style.image.BlurTransformation
 import com.shuyu.github.kotlin.module.image.ImagePreViewActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
-import com.shuyu.gsyimageloader.GSYImageLoaderManager
-import com.shuyu.gsyimageloader.GSYLoadOption
 import org.jetbrains.anko.browse
 import java.text.SimpleDateFormat
 import java.util.*

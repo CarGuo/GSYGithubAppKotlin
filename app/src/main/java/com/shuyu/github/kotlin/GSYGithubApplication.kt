@@ -11,11 +11,11 @@ import com.mikepenz.iconics.Iconics
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.shuyu.github.kotlin.common.db.RealmFactory
+import com.shuyu.github.kotlin.common.gsyimageloader.GSYImageLoaderManager
+import com.shuyu.github.kotlin.common.gsyimageloader.gsygiideloader.GSYGlideImageLoader
 import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.di.AppInjector
-import com.shuyu.gsygiideloader.GSYGlideImageLoader
-import com.shuyu.gsyimageloader.GSYImageLoaderManager
 import com.tencent.bugly.crashreport.CrashReport
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
