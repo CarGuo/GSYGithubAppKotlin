@@ -30,7 +30,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAppKotlin.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/issues)
 [![GitHub license](https://img.shields.io/github/license/CarGuo/GSYGithubAppKotlin.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/LICENSE)
 
-### 编译运行流程
+## 编译运行流程
 
 
 > ### 重点：你需要项目根目录下，配置 `local.properties` 文件，然后输入你申请的Github client_id 和 client_secret。
