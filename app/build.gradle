@@ -79,6 +79,13 @@ android {
         enabled = true
     }
 
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file("../gsygithubapp-debug.jks")
@@ -129,12 +136,12 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${android_support}"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat"
     implementation "androidx.legacy:legacy-support-v4:$android_other_version"
+    implementation "androidx.annotation:annotation:$android_other_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
     implementation 'androidx.room:room-runtime:2.1.0'
     kapt 'androidx.room:room-compiler:2.1.0'
-    implementation "com.google.android.material:material:$android_other_version"
-    implementation "androidx.annotation:annotation:$android_other_version"
+    implementation "com.google.android.material:material:1.1.0-alpha08"
 
 
     //constraint
@@ -230,7 +237,7 @@ dependencies {
     implementation "com.orhanobut:dialogplus:${dialogplus_version}"
 
     ///Drawer
-    implementation "com.mikepenz:materialdrawer:7.0.0-beta01"
+    implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
 
     ///lottie
     implementation "com.airbnb.android:lottie:${lottie_version}"

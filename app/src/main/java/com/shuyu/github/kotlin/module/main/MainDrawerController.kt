@@ -95,6 +95,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 )
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.LoginOut)
+                                .withTextColorRes(R.color.red)
                                 .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
                                         loginRepository.logout(view!!.context)
@@ -103,7 +104,8 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                                     }
                                 })
                 )
-                .withAccountHeader(AccountHeaderBuilder().withActivity(activity)
+                .withAccountHeader(AccountHeaderBuilder()
+                        .withActivity(activity)
                         .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login)
                                 .withSelected(false)
                                 .withTextColorRes(R.color.white)
