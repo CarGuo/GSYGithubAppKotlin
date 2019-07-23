@@ -38,10 +38,10 @@
     ndk.dir="xxxxxxxx"
     CLIENT_ID = "xxxxxx"
     CLIENT_SECRET = "xxxxxx"
-
+> ### 最后记得配置 `CMake` 环境。
 
    [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
-> ### 最后记得配置 `CMake` 环境。
+
 
 <div>
 <img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register0.jpg" width="426px"/>
