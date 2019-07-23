@@ -2,7 +2,9 @@ package com.shuyu.github.kotlin.di
 
 import android.app.Application
 import androidx.core.content.ContextCompat
+import com.mikepenz.iconics.IconicsColor
 import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.utils.sizeDp
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.di.annotation.FragmentQualifier
@@ -27,7 +29,7 @@ class ReposIssueListModule {
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_REPOS_ITEM_ALL)
-                                .color(ContextCompat.getColor(application, R.color.subTextColor))
+                                .color(IconicsColor.colorInt(R.color.subTextColor))
                                 .sizeDp(14),
                         ContextCompat.getColor(application, R.color.colorPrimaryLight))
                         .title(application.getString(R.string.issueAllText))
@@ -35,7 +37,7 @@ class ReposIssueListModule {
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_REPOS_ITEM_OPEN)
-                                .color(ContextCompat.getColor(application, R.color.subTextColor))
+                                .color(IconicsColor.colorInt(R.color.subTextColor))
                                 .sizeDp(14),
                         ContextCompat.getColor(application, R.color.colorPrimaryLight))
                         .title(application.getString(R.string.issueOpenText))
@@ -43,7 +45,7 @@ class ReposIssueListModule {
                 NavigationTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_REPOS_ITEM_CLOSE)
-                                .color(ContextCompat.getColor(application, R.color.subTextColor))
+                                .color(IconicsColor.colorInt(R.color.subTextColor))
                                 .sizeDp(14),
                         ContextCompat.getColor(application, R.color.colorPrimaryLight))
                         .title(application.getString(R.string.issueCloseText))

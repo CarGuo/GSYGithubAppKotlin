@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.Iconics
@@ -57,7 +58,7 @@ class GSYGithubApplication : Application(), HasActivityInjector {
 
         ///初始化图标库
         Iconics.init(applicationContext)
-        Iconics.registerFont(GSYIconfont())
+        Iconics.registerFont(GSYIconfont)
 
         ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))
@@ -73,11 +74,16 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         }
 
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
-            override fun placeholder(ctx: Context?): Drawable {
+
+            override fun placeholder(ctx: Context): Drawable {
                 return getDrawable(R.drawable.logo)
             }
-            override fun set(imageView: ImageView?, uri: Uri?, placeholder: Drawable?, tag: String?) {
-                CommonUtils.loadUserHeaderImage(imageView!!, uri.toString())
+
+            override fun placeholder(ctx: Context, tag: String?): Drawable {
+                return getDrawable(R.drawable.logo)
+            }
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
+                CommonUtils.loadUserHeaderImage(imageView, uri.toString())
             }
         })
     }

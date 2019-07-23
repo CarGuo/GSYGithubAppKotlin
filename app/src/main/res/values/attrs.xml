@@ -24,7 +24,7 @@
 
         <!--background radius-->
         <attr name="radius" format="dimension|reference" />
-        <attr name="round" format="boolean|reference" />
+        <attr name="roundsize" format="boolean|reference" />
 
         <!--animation duration-->
         <attr name="animationDuration" format="integer|reference" />

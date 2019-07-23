@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -23,6 +24,7 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Release
 import com.shuyu.github.kotlin.module.info.UserInfoActivity
+import com.shuyu.github.kotlin.module.list.GeneralFilterController
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
@@ -49,50 +51,66 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 .withSelectedItem(-1)
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.feedback)
-                                .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
-                                    feedback()
-                                    unSelect(drawerItem)
-                                    true
-                                }
+                                .withTextColorRes(R.color.colorPrimary)
+                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
+                                        feedback()
+                                        unSelect(drawerItem)
+                                        return true
+                                    }
+                                })
                 )
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.person)
-                                .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
-                                    UserInfoActivity.gotoUserInfo()
-                                    unSelect(drawerItem)
-                                    true
-                                }
+                                .withTextColorRes(R.color.colorPrimary)
+                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
+                                        UserInfoActivity.gotoUserInfo()
+                                        unSelect(drawerItem)
+                                        return true
+                                    }
+                                })
                 )
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.update)
-                                .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
-                                    checkUpdate(true)
-                                    unSelect(drawerItem)
-                                    true
-                                }
+                                .withTextColorRes(R.color.colorPrimary)
+                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
+                                        checkUpdate(true)
+                                        unSelect(drawerItem)
+                                        return true
+                                    }
+                                })
                 )
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.about)
-                                .withTextColorRes(R.color.colorPrimary).withOnDrawerItemClickListener { view, position, drawerItem ->
-                                    showAboutDialog()
-                                    unSelect(drawerItem)
-                                    true
-                                }
+                                .withTextColorRes(R.color.colorPrimary)
+                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
+                                        showAboutDialog()
+                                        unSelect(drawerItem)
+                                        return true
+                                    }
+                                })
                 )
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.LoginOut)
-                                .withTextColorRes(R.color.red).withOnDrawerItemClickListener { view, position, drawerItem ->
-                                    loginRepository.logout(view.context)
-                                    unSelect(drawerItem)
-                                    true
-                                }
+                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
+                                        loginRepository.logout(view!!.context)
+                                        unSelect(drawerItem)
+                                        return true
+                                    }
+                                })
                 )
                 .withAccountHeader(AccountHeaderBuilder().withActivity(activity)
                         .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login)
-                                .withSetSelected(false)
-                                .withIcon(globalModel.userObservable.avatarUrl?.toUri())
+                                .withSelected(false)
+                                .withTextColorRes(R.color.white)
+                                .withIcon(globalModel.userObservable.avatarUrl?.toUri()!!)
                                 .withEmail(globalModel.userObservable.email ?: ""))
                         .withHeaderBackground(R.color.colorPrimary)
+                        .withTextColorRes(R.color.white)
                         .withSelectionListEnabled(false)
                         .build()).build()
 
@@ -134,8 +152,8 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
         }
     }
 
-    private fun unSelect(drawerItem: IDrawerItem<*, *>) {
-        drawerItem.withSetSelected(false)
+    private fun unSelect(drawerItem: IDrawerItem<*>) {
+        drawerItem.isSelected = false
         drawer?.adapter?.notifyAdapterDataSetChanged()
     }
 

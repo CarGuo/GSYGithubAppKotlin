@@ -1,9 +1,11 @@
 package com.shuyu.github.kotlin.common.style
 
-import android.content.Context
 import android.graphics.Typeface
+import androidx.core.content.res.ResourcesCompat
+import com.mikepenz.iconics.Iconics
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.ITypeface
+import com.shuyu.github.kotlin.R
 import java.util.*
 
 /**
@@ -11,92 +13,54 @@ import java.util.*
  * Created by guoshuyu
  * Date: 2018-09-28
  */
-class GSYIconfont : ITypeface {
+@Suppress("EnumEntryName")
+object GSYIconfont : ITypeface {
 
-    companion object {
-        private const val TTF_FILE = "iconfont.ttf"
+    override val fontRes: Int
+        get() = R.font.iconfont
+
+    override val characters: Map<String, Char> by lazy {
+        Icon.values().associate { it.name to it.character }
     }
 
-    private var typeface: Typeface? = null
+    override val mappingPrefix: String
+        get() = "GSY"
 
-    private var mChars: HashMap<String, Char>? = null
+    override val fontName: String
+        get() = "GSY Iconfont"
 
-    override fun getIcon(key: String): IIcon {
-        return Icon.valueOf(key)
-    }
+    override val version: String
+        get() = "1.0.0"
 
-    override fun getCharacters(): HashMap<String, Char>? {
-        if (mChars == null) {
-            val aChars = HashMap<String, Char>()
-            for (v in Icon.values()) {
-                aChars[v.name] = v.character
-            }
-            mChars = aChars
+    override val iconCount: Int
+        get() = characters.size
+
+    override val icons: List<String>
+        get() = characters.keys.toCollection(LinkedList())
+
+    override val author: String
+        get() = "Iconfont"
+
+    override val url: String
+        get() = "https://github.com/github/octicons"
+
+    override val description: String
+        get() = "GitHub's icon font https://octicons.github.com/"
+
+    override val license: String
+        get() = " SIL OFL 1.1"
+
+    override val licenseUrl: String
+        get() = "http://scripts.sil.org/OFL"
+
+    override fun getIcon(key: String): IIcon = Icon.valueOf(key)
+
+    override val rawTypeface: Typeface
+        get() {
+            return ResourcesCompat.getFont(Iconics.applicationContext, fontRes)!!
         }
 
-        return mChars
-    }
-
-    override fun getMappingPrefix(): String {
-        return "GSY"
-    }
-
-    override fun getFontName(): String {
-        return "GSY Iconfont"
-    }
-
-    override fun getVersion(): String {
-        return "1.0.0"
-    }
-
-    override fun getIconCount(): Int {
-        return mChars!!.size
-    }
-
-    override fun getIcons(): Collection<String> {
-        val icons = LinkedList<String>()
-
-        for (value in Icon.values()) {
-            icons.add(value.name)
-        }
-
-        return icons
-    }
-
-    override fun getAuthor(): String {
-        return "Iconfont"
-    }
-
-    override fun getUrl(): String {
-        return "http://zavoloklom.github.io/material-design-iconic-font/"
-    }
-
-    override fun getDescription(): String {
-        return "Iconfont."
-    }
-
-    override fun getLicense(): String {
-        return "SIL OFL 1.1"
-    }
-
-    override fun getLicenseUrl(): String {
-        return "http://scripts.sil.org/OFL"
-    }
-
-    override fun getTypeface(context: Context): Typeface? {
-        if (typeface == null) {
-            try {
-                typeface = Typeface.createFromAsset(context.assets,
-                        "fonts/$TTF_FILE")
-            } catch (e: Exception) {
-                return null
-            }
-
-        }
-        return typeface
-    }
-
-    enum class Icon constructor(internal var character: Char) : IIcon {
+    enum class Icon constructor(override val character: Char) : IIcon {
 
         GSY_HOME('\ue624'),
         GSY_MORE('\ue674'),
@@ -154,22 +118,6 @@ class GSYIconfont : ITypeface {
         GSY_MD_8('\ue670'),
         GSY_MD_9('\ue651');
 
-
-        override fun getFormattedName(): String {
-            return "{$name}"
-        }
-
-        override fun getCharacter(): Char {
-            return character
-        }
-
-        override fun getName(): String {
-            return name
-        }
-
-        override fun getTypeface(): ITypeface {
-            return GSYIconfont()
-        }
-
+        override val typeface: ITypeface by lazy { GSYIconfont }
     }
 }

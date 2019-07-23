@@ -63,8 +63,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     kapt {
-        //generateStubs = true
         arguments {
             arg("AROUTER_MODULE_NAME", project.getName())
         }
@@ -73,12 +73,12 @@ android {
             option("-Xmaxerrs", 500)
         }
     }
-    lintOptions {
-        abortOnError false
-    }
+
+    //打开 dataBinding
     dataBinding {
         enabled = true
     }
+
     signingConfigs {
         debug {
             storeFile file("../gsygithubapp-debug.jks")
@@ -102,9 +102,18 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    //针对编辑错误
     configurations {
         cleanedAnnotations
-        compile.exclude group: 'org.jetbrains' , module:'annotations'
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
+    }
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
     }
 }
 
@@ -114,23 +123,18 @@ dependencies {
     //kotlin plugin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.anko:anko:$anko_version"
-    //kotlin ktx (used 0.3 now , 1.0.0 need api28)
+
+    //androidx
     implementation "androidx.core:core-ktx:$ktx_version"
-
-    ///databinding
-    //kapt "com.android.databinding:compiler:$gradle_version"
-
-    //support
     implementation "androidx.recyclerview:recyclerview:${android_support}"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat"
     implementation "androidx.legacy:legacy-support-v4:$android_other_version"
-    implementation "com.google.android.material:material:$android_other_version"
-
-
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.room:room-runtime:2.1.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+    implementation 'androidx.room:room-runtime:2.1.0'
     kapt 'androidx.room:room-compiler:2.1.0'
+    implementation "com.google.android.material:material:$android_other_version"
+    implementation "androidx.annotation:annotation:$android_other_version"
 
 
     //constraint
@@ -153,7 +157,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-scalars:${retrofit_version}"
-    implementation("com.squareup.retrofit2:converter-simplexml:${rx_version}") {
+    implementation("com.squareup.retrofit2:converter-simplexml:${retrofit_version}") {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
@@ -165,7 +169,7 @@ dependencies {
 
 
     //RxJava
-    implementation "io.reactivex.rxjava2:rxandroid:${rx_version}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rx_android}"
     implementation "io.reactivex.rxjava2:rxjava:${rx_version}"
 
     //eventbus
@@ -183,15 +187,17 @@ dependencies {
     //TABBAR
     implementation "devlight.io:navigationtabbar:${tabbar_version}"
 
-    //iconics 3.1.0开始使用了androidx
+    //iconics
     implementation "com.mikepenz:iconics-core:${iconics_version}"
     implementation "com.mikepenz:iconics-views:${iconics_version}"
-    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.5@aar'
-    implementation 'com.mikepenz:fontawesome-typeface:5.3.1.1@aar'
-    implementation 'com.mikepenz:octicons-typeface:3.2.0.5@aar'
-    implementation 'com.mikepenz:weather-icons-typeface:2.0.10.5@aar'
-    implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.5@aar'
-    implementation 'com.mikepenz:ionicons-typeface:2.0.1.5@aar'
+    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.6-kotlin@aar'
+    implementation 'com.mikepenz:fontawesome-typeface:5.9.0.0-kotlin@aar'
+    implementation 'com.mikepenz:community-material-typeface:3.5.95.1-kotlin@aar'
+    implementation 'com.mikepenz:octicons-typeface:3.2.0.6-kotlin@aar'
+    implementation 'com.mikepenz:weather-icons-typeface:2.0.10.5-kotlin@aar'
+    implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.5-kotlin@aar'
+    implementation 'com.mikepenz:ionicons-typeface:2.0.1.5-kotlin@aar'
+
 
     //EDIT TEXT
     implementation "com.github.HITGIF:TextFieldBoxes:${textfiled_box_version}"
@@ -224,7 +230,7 @@ dependencies {
     implementation "com.orhanobut:dialogplus:${dialogplus_version}"
 
     ///Drawer
-    implementation "com.mikepenz:materialdrawer:6.0.9"
+    implementation "com.mikepenz:materialdrawer:7.0.0-beta01"
 
     ///lottie
     implementation "com.airbnb.android:lottie:${lottie_version}"
@@ -236,7 +242,6 @@ dependencies {
     ///PHOTO VIEW
     implementation "com.github.chrisbanes:PhotoView:${photoview_version}"
 
-
-    implementation "com.github.hotchemi:permissionsdispatcher:${permission_version}"
-    kapt "com.github.hotchemi:permissionsdispatcher-processor:${permission_version}"
+    implementation "org.permissionsdispatcher:permissionsdispatcher:${permission_version}"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${permission_version}"
 }

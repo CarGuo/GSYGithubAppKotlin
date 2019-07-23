@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.list
 
+import android.view.View
 import androidx.core.view.GravityCompat
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
@@ -22,12 +23,12 @@ class GeneralFilterController(private val fragment: BaseListFragment<*, *>?, pri
     }
 
 
-    val statusList: ArrayList<IDrawerItem<*, *>> = arrayListOf(
+    val statusList: ArrayList<IDrawerItem<*>> = arrayListOf(
             DividerDrawerItem(),
             PrimaryDrawerItem().withIdentifier(STATUS_ID).withName(R.string.filerType)
                     .withSelectable(false).withEnabled(false),
             DividerDrawerItem(),
-            PrimaryDrawerItem().withIdentifier(STATUS_ID + 1).withName(R.string.filterPushed).withTag("pushed").withSetSelected(true),
+            PrimaryDrawerItem().withIdentifier(STATUS_ID + 1).withName(R.string.filterPushed).withTag("pushed").withSelected(true),
             PrimaryDrawerItem().withIdentifier(STATUS_ID + 2).withName(R.string.filterCreated).withTag("created"),
             PrimaryDrawerItem().withIdentifier(STATUS_ID + 4).withName(R.string.filterFullName).withTag("full_name")
     )
@@ -37,12 +38,12 @@ class GeneralFilterController(private val fragment: BaseListFragment<*, *>?, pri
 
     init {
 
-        val filterList = arrayListOf<IDrawerItem<*, *>>()
+        val filterList = arrayListOf<IDrawerItem<*>>()
         filterList.addAll(statusList)
 
-        fun clearSelect(clearList: ArrayList<IDrawerItem<*, *>>) {
+        fun clearSelect(clearList: ArrayList<IDrawerItem<*>>) {
             clearList.forEach {
-                it.withSetSelected(false)
+                it.isSelected = false
             }
         }
         drawer?.currentSelectedPosition
@@ -51,21 +52,23 @@ class GeneralFilterController(private val fragment: BaseListFragment<*, *>?, pri
                 .withDrawerGravity(GravityCompat.END)
                 .withDrawerItems(filterList)
                 .withMultiSelect(true)
-                .withOnDrawerItemClickListener { view, position, drawerItem ->
-                    when (drawerItem.identifier / 1000 * 1000) {
-                        STATUS_ID -> {
-                            clearSelect(statusList)
-                            drawerItem.withSetSelected(true)
-                            generalListViewModel.sort = filterList[position].tag as String
+                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
+                        when (drawerItem.identifier / 1000 * 1000) {
+                            STATUS_ID -> {
+                                clearSelect(statusList)
+                                drawerItem.isSelected = true
+                                generalListViewModel.sort = filterList[position].tag as String
+                            }
                         }
+                        drawer?.adapter?.notifyAdapterDataSetChanged()
+                        drawer?.closeDrawer()
+                        fragment.showRefresh()
+                        return true
                     }
-                    drawer?.adapter?.notifyAdapterDataSetChanged()
-                    drawer?.closeDrawer()
-                    fragment.showRefresh()
-                    true
-                }.build()
+                }).build()
 
-        statusList[3].withSetSelected(true)
+        statusList[3].isSelected = true
         generalListViewModel.sort = filterList[3].tag as String
 
     }

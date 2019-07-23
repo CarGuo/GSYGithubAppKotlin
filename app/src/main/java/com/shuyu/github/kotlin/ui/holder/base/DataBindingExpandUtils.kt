@@ -13,6 +13,9 @@ import com.shuyu.github.kotlin.common.utils.CommonUtils
 import com.shuyu.github.kotlin.common.utils.dp
 import com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
 import androidx.databinding.DataBindingComponent
+import com.mikepenz.iconics.IconicsColor
+import com.mikepenz.iconics.utils.sizeDp
+import com.shuyu.github.kotlin.R
 import io.noties.markwon.Markwon
 import io.noties.markwon.image.glide.GlideImagesPlugin
 import io.noties.markwon.linkify.LinkifyPlugin
@@ -90,7 +93,8 @@ class DataBindingExpandUtils {
             val drawable = IconicsDrawable(view.context)
                     .icon(value)
             colorId?.apply {
-                drawable.color(colorId)
+                drawable.color(IconicsColor.colorInt(colorId))
+
             }
             view.icon = drawable
         }
