@@ -9,9 +9,9 @@ import java.lang.Exception
  * Date: 2018-10-29
  */
 val TAGS = hashMapOf(
-        Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\""), Pair("end", "</span>"))),
-        Pair("starCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/stargazers\">"), Pair("end", "</a>"))),
-        Pair("forkCount", hashMapOf(Pair("start", "<a class=\"muted-link d-inline-block mr-3\""), Pair("flag", "/network"), Pair("end", "</a>")))
+        Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\""), Pair("end", "</span>end"))),
+        Pair("starCount", hashMapOf(Pair("start", "<span aria-label=\"star\">"), Pair("flag", "/span\">"), Pair("end", "</a>"))),
+        Pair("forkCount", hashMapOf(Pair("start", "<span aria-label=\"fork"), Pair("flag", "/span"), Pair("end", "</a>")))
 )
 
 object TrendConversion {
@@ -33,7 +33,7 @@ object TrendConversion {
 
             parseRepoBaseInfo(repo, html)
 
-            val metaNoteContent = parseContentWithNote(html, "class=\"f6 text-gray mt-2\">", "</div>")
+            val metaNoteContent = parseContentWithNote(html, "class=\"f6 text-gray mt-2\">", "</div>") + "end"
             repo.meta = parseRepoLabelWithTag(repo, metaNoteContent, TAGS["meta"]!!)
             repo.starCount = parseRepoLabelWithTag(repo, metaNoteContent, TAGS["starCount"]!!)
             repo.forkCount = parseRepoLabelWithTag(repo, metaNoteContent, TAGS["forkCount"]!!)
@@ -83,13 +83,14 @@ object TrendConversion {
 
     private fun parseRepoLabelWithTag(repo: TrendingRepoModel, noteContent: String, tag: Map<String, String>): String {
         val startFlag = if (TAGS["starCount"] == tag || TAGS["forkCount"] == tag) {
-            tag["start"] + " href=\"/" + repo.fullName + tag["flag"]
+            //tag["start"] + " href=\"/" + repo.fullName + tag["flag"]
+            tag["start"]!!
         } else {
             tag["start"]!!
         }
         val content = parseContentWithNote(noteContent, startFlag, tag["end"]!!)
-        return if (content.indexOf("</svg>") != -1 && (content.indexOf("</svg>") + "</svg>".length <= content.length)) {
-            val metaContent = content.substring(content.indexOf("</svg>") + "</svg>".length, content.length)
+        return if (content.indexOf("</span>") != -1 && (content.indexOf("</span>") + "</span>".length <= content.length)) {
+            val metaContent = content.substring(content.indexOf("</span>") + "</span>".length, content.length)
             metaContent.trim()
         } else {
             content.trim()
