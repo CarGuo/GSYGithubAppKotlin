@@ -9,9 +9,9 @@ import java.lang.Exception
  * Date: 2018-10-29
  */
 val TAGS = hashMapOf(
-        Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\""), Pair("flag", "/svg\">"), Pair("end", "</span>end"))),
-        Pair("starCount", hashMapOf(Pair("start", "<svg aria-label=\"star\">"), Pair("flag", "/svg\">"), Pair("end", "</a>"))),
-        Pair("forkCount", hashMapOf(Pair("start", "<svg aria-label=\"fork"), Pair("flag", "/svg"), Pair("end", "</a>")))
+        Pair("meta", hashMapOf(Pair("start", "<span class=\"d-inline-block float-sm-right\""), Pair("flag", "/svg>"), Pair("end", "</span>end"))),
+        Pair("starCount", hashMapOf(Pair("start", "<svg aria-label=\"star\""), Pair("flag", "/svg>"), Pair("end", "</a>"))),
+        Pair("forkCount", hashMapOf(Pair("start", "<svg aria-label=\"repo-forked\""), Pair("flag", "/svg>"), Pair("end", "</a>")))
 )
 
 object TrendConversion {
