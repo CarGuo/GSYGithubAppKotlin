@@ -21,7 +21,6 @@ interface RepoService {
     ): Observable<Response<ArrayList<Repository>>>
 
 
-
     @GET("users/{user}/starred")
     fun getStarredRepos(
             @Header("forceNetWork") forceNetWork: Boolean,
@@ -219,6 +218,15 @@ interface RepoService {
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("languageType") languageType: String,
             @Query("since") since: String): Observable<Response<String>>
+
+    @GET("https://guoshuyu.cn/github/trend/list")
+    @Headers("Content-Type: text/plain;charset=utf-8")
+    fun getTrendDataAPI(
+            @Header("forceNetWork") forceNetWork: Boolean,
+            @Header("api-token") apiToken: String,
+            @Query("since") since: String,
+            @Query("languageType") languageType: String
+    ): Observable<Response<List<TrendingRepoModel>>>
 
     @GET("repos/{owner}/{repo}/readme")
     @Headers("Content-Type: text/plain;charset=utf-8", "Accept: application/vnd.github.html")

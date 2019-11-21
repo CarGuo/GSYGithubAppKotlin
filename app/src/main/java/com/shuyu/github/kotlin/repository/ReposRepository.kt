@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.*
 import com.shuyu.github.kotlin.common.utils.HtmlUtils
 import com.shuyu.github.kotlin.common.utils.compareVersion
@@ -90,11 +91,9 @@ class ReposRepository @Inject constructor(private val retrofit: Retrofit, privat
 
 
         val trendService = retrofit.create(RepoService::class.java)
-                .getTrendData(true, language, since)
+                .getTrendDataAPI(true, AppConfig.API_TOKEN, since,language)
                 .flatMap {
                     FlatMapResponse2Result(it)
-                }.map {
-                    TrendConversion.htmlToRepo(it)
                 }.doOnNext {
                     reposDao.saveTrendDao(Response.success(GsonUtils.toJsonString(it)), language, since, true)
                 }.map {
