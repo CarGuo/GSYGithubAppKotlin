@@ -6,6 +6,9 @@
 * ### 同款ReactNative版 （ https://github.com/CarGuo/GSYGithubApp ）
 * ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
 
+### 公众号 GSYTech
+![公众号](http://img.cdn.guoshuyu.cn/10F364A6-69F5-40C2-AB2A-124EEC1AD8CC.png)
+
 
 ```
 基于 Kotlin 开发的原生 App 。目前初版，持续完善中。
