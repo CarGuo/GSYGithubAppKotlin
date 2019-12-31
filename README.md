@@ -6,7 +6,8 @@
 * ### 同款ReactNative版 （ https://github.com/CarGuo/GSYGithubApp ）
 * ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
 
-![公众号](http://img.cdn.guoshuyu.cn/WechatIMG3024.jpeg)
+![公众号](http://img.cdn.guoshuyu.cn/WeChat-Code)
+
 ```
 基于 Kotlin 开发的原生 App 。目前初版，持续完善中。
 
