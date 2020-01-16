@@ -29,18 +29,18 @@ android {
         buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
 
         //CMake
-//        externalNativeBuild {
-//            cmake {
-//                cppFlags ""
-//            }
-//            ndk {
-//                abiFilters 'armeabi-v7a'
-//            }
-//        }
-//
-//        ndk {
-//            abiFilters 'armeabi-v7a'
-//        }
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
 
     externalNativeBuild {
