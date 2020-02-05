@@ -56,8 +56,8 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
                     val path = repos_file_select_header.list.toSplitString() + "/" + itemData.title
                     val url = CommonUtils.getFileHtmlUrl(userName, reposName, path) + "?raw=true"
                     CommonUtils.launchUrl(activity!!, url)
-                }else {
-                    CodeDetailActivity.gotoCodeDetail(userName, reposName, itemData.title, repos_file_select_header.list.toSplitString() + "/" + itemData.title)
+                } else {
+                    CodeDetailActivity.gotoCodeDetail(userName, reposName, itemData.title, (repos_file_select_header.list.toSplitString() + "/" + itemData.title).replace("/./", "/"))
                 }
             } else {
                 addSelectList(itemData.title)
