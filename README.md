@@ -1,4 +1,4 @@
-![](https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/logo.png)
+![](./logo.png)
 
 ## 一款Android原生的开源Github客户端App，提供更丰富的功能，更好体验，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。项目使用`Retrofit2 + RxJava2 + Dagger2 + DataBinding + LiveData + Navigation` 等，MVVM 配合 Android JetPack，涉及各种常用控件、 `AIDL` 、 `CMake`,提供丰富的同款对比：
 
@@ -49,15 +49,15 @@
 
 
 <div>
-<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register0.jpg" width="426px"/>
-<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/register1.jpg" width="426px"/>
+<img src="./register0.jpg" width="426px"/>
+<img src="./register1.jpg" width="426px"/>
 </div>
 
 ## 项目结构图
 
-![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/framework.png)
+![](./framework.png)
 
-![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/folder2.png)
+![](./folder2.png)
 
 ## 下载
 
@@ -66,7 +66,7 @@
 
 #### Apk二维码
 
-![](https://raw.githubusercontent.com/CarGuo/GSYGithubAppKotlin/master/download.png)
+![](./download.png)
 
 
 ### 常见问题
@@ -78,11 +78,11 @@
 ### 示例图片
 
 
-<img src="https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/1.jpg" width="426px"/>
+<img src="./1.jpg" width="426px"/>
 
-<img src="https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/2.jpg" width="426px"/>
+<img src="./2.jpg" width="426px"/>
 
-<img src="https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/3.jpg" width="426px"/>
+<img src="./3.jpg" width="426px"/>
 
 
 ### 第三方框架
@@ -113,7 +113,7 @@
 [版本更新说明](https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/VERSION.md)
 
 
-<img src="https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/thanks.jpg" width="426px"/>
+<img src="./thanks.jpg" width="426px"/>
 
 
 ### 其他推荐
