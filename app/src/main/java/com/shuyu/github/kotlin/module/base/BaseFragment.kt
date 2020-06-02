@@ -64,4 +64,8 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), Injectable {
         }
     }
 
+    fun exitFull() {
+        activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+    }
+
 }
