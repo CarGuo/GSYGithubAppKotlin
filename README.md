@@ -45,13 +45,16 @@
     CLIENT_SECRET = "xxxxxx"
 > ### 最后记得配置 [`CMake` 环境](https://blog.csdn.net/laibowon/article/details/79939962)。
 
-   [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
 
+   [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
+ 
+### 3、如果使用安全登录（授权登录），那么在上述注册 Github App 的 Authorization callback URL 一栏必须填入 `gsygithubapp://authed`
 
 <div>
-<img src="./register0.jpg" width="426px"/>
-<img src="./register1.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/register0.png" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/register1.jpg" width="426px"/>
 </div>
+
 
 ## 项目结构图
 
@@ -113,7 +116,7 @@
 [版本更新说明](https://github.com/CarGuo/GSYGithubAppKotlin/blob/master/VERSION.md)
 
 
-<img src="./thanks.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/thanks.jpg" width="426px"/>
 
 
 ### 其他推荐
