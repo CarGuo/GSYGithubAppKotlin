@@ -23,8 +23,21 @@
         android:label="LoginActivity"
         tools:layout="@layout/fragment_login">
         <action
+            android:id="@+id/action_nav_oauth_to_web"
+            app:destination="@id/loginOAuthFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginOAuthFragment"
+        android:name="com.shuyu.github.kotlin.module.login.LoginOAuthFragment"
+        android:label="loginOAuthFragment"
+        tools:layout="@layout/fragment_login_oauth">
+        <action
             android:id="@+id/action_nav_login_to_main"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_nav_wel_to_login"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <activity

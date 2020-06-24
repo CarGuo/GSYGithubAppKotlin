@@ -133,7 +133,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="20dp"
-                    android:onClick="@{loginViewModel::onSubmitClick}"
                     android:text="@string/Login"
                     android:textSize="@dimen/normalTextSize"
                     app:animationDuration="1000"
@@ -146,6 +145,7 @@
                     app:roundsize="false"
                     app:unableBackgroundColor="@color/colorPrimaryDark"
                     app:unableTextColor="@android:color/white" />
+                <!--android:onClick="@{loginViewModel::onSubmitClick}"-->
 
             </LinearLayout>
 

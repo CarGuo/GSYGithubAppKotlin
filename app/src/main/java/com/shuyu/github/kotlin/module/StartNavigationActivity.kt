@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.R
@@ -28,7 +29,7 @@ class StartNavigationActivity : AppCompatActivity(), HasSupportFragmentInjector 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_navigation)
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             //如果是调试版本，启动后台服务测试AIDL
             startService(Intent(this, LocalService::class.java))
         }
@@ -42,6 +43,10 @@ class StartNavigationActivity : AppCompatActivity(), HasSupportFragmentInjector 
         if (fragment is NavHostFragment) {
             if (fragment.navController.currentDestination?.id == R.id.loginFragment) {
                 super.onBackPressed()
+            } else if (fragment.navController.currentDestination?.id == R.id.loginOAuthFragment) {
+                fragment.navController.navigate(R.id.loginFragment,
+                        null, NavOptions.Builder().setPopUpTo(fragment.navController.graph.id,
+                        true).build())
             }
         }
     }

@@ -26,6 +26,7 @@
     <string name="UserName">用户名</string>
     <string name="Password">密码</string>
     <string name="Login">登陆</string>
+    <string name="LoginOAuth">授权登陆</string>
     <string name="LoginOut">退出登陆</string>
     <string name="LoginNameTip">用户名不能为空</string>
     <string name="LoginPWTip">密码不能为空</string>

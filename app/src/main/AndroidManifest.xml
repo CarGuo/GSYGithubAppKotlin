@@ -46,7 +46,7 @@
         <activity
             android:name=".module.StartNavigationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppFullTheme" />
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".module.list.GeneralListActivity"
@@ -68,6 +68,7 @@
         <activity
             android:name=".module.info.UserInfoActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.StartActivity"
             android:screenOrientation="portrait"
@@ -83,17 +84,17 @@
             android:name=".module.service.LocalService"
             android:enabled="true"
             android:exported="true"
-            android:process=":gsy.service"/>
+            android:process=":gsy.service" />
 
         <service
             android:name=".module.service.LocalAIDLTransferService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <service
             android:name=".module.service.LocalMessengerService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
 
     </application>

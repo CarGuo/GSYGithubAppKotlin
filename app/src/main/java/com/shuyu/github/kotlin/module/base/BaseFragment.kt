@@ -55,13 +55,18 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), Injectable {
     /**
      * Navigation 的页面跳转
      */
-    fun navigationPopUpTo(view: View, args: Bundle?, actionId: Int, finishStack: Boolean) {
+    fun navigationPopUpTo(view: View, args: Bundle?, actionId: Int, finishStack: Boolean, inclusive: Boolean) {
         val controller = Navigation.findNavController(view)
         controller.navigate(actionId,
-                args, NavOptions.Builder().setPopUpTo(controller.graph.id, true).build())
+                args, NavOptions.Builder().setPopUpTo(controller.graph.id, inclusive).build())
         if (finishStack) {
             activity?.finish()
         }
+    }
+
+    fun navigationBack(view: View) {
+        val controller = Navigation.findNavController(view)
+        controller.popBackStack()
     }
 
     fun exitFull() {

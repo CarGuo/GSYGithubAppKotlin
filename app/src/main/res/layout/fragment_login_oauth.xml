@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="loginViewModel"
+            type="com.shuyu.github.kotlin.module.login.LoginViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/login_auth_toolbar"
+            style="@style/toolbarStyle"
+            android:theme="@style/toolbarTheme"
+            app:title="@string/LoginOAuth"
+            app:titleTextColor="@color/white" />
+
+        <WebView
+            android:id="@+id/oauth_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/login_auth_toolbar" />
+
+        <ProgressBar
+            android:id="@+id/oauth_webview_loadingBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            app:SpinKit_Color="@color/white" />
+
+    </RelativeLayout>
+
+</layout>

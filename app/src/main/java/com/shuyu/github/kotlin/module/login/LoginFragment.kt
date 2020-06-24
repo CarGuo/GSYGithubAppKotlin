@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentLoginBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -40,14 +41,20 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> () {
 
         binding?.loginViewModel = loginViewModel
 
-        loginViewModel.loginResult.observe(this, Observer { result ->
+        /*loginViewModel.loginResult.observe(this, Observer { result ->
             //根据结果返回，跳转主页
             if (result != null && result == true) {
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true)
             } else {
                 activity?.toast(R.string.LoginFailTip)
             }
-        })
+        })*/
+
+        login_submit_btn.setOnClickListener {
+            navigationPopUpTo(view, null, R.id.action_nav_oauth_to_web, false, false)
+        }
+
+
     }
 
     override fun getLayoutId(): Int {

@@ -41,5 +41,8 @@ object ARouterAddress {
 
     const val UserInfoActivity = "/user/info"
 
+    const val LoginOAuthWebActivity = "/login/oauthA"
+    const val LoginOAuthWebFragment = "/login/oauthF"
+
 
 }

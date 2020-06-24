@@ -7,4 +7,5 @@ class AccessToken {
     var id: Int = 0
     var url: String? = null
     var token: String? = null
+    var access_token: String? = null
 }

@@ -5,6 +5,7 @@ import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.issue.IssueDetailFragment
 import com.shuyu.github.kotlin.module.list.GeneralListFragment
 import com.shuyu.github.kotlin.module.login.LoginFragment
+import com.shuyu.github.kotlin.module.login.LoginOAuthFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.notify.NotifyFragment
 import com.shuyu.github.kotlin.module.person.PersonFragment
@@ -49,6 +50,9 @@ abstract class StartFragmentBindModule {
 
     @ContributesAndroidInjector
     abstract fun contributeLoginFragment(): LoginFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeLoginOAuthFragment(): LoginOAuthFragment
 
 }
 

@@ -62,17 +62,17 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     private fun goNext(view: View) {
         if (accessTokenStorage.isEmpty()) {
             ///去登录页
-            navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+            navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false, true)
         } else {
             if (userInfoStorage.isEmpty()) {
                 ///去登录页
-                navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
+                navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false, true)
             } else {
                 ///读取用户数据
                 val user = GsonUtils.parserJsonToBean(userInfoStorage, User::class.java)
                 UserConversion.cloneDataFromUser(context, user, appGlobalModel.userObservable)
                 //去主页
-                navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true)
+                navigationPopUpTo(view, null, R.id.action_nav_wel_to_main, true, true)
                 //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
             }
 

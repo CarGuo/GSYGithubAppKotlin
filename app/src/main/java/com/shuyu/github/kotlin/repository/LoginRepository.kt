@@ -3,8 +3,10 @@ package com.shuyu.github.kotlin.repository
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
+import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.net.FlatMapResponse2Result
 import com.shuyu.github.kotlin.common.net.FlatMapResult2Response
@@ -59,6 +61,63 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
                     Observable.error(t)
                 })
     }
+
+    /**
+     * 获取token
+     */
+    fun getCodeTokenObservable(code: String): Observable<String> {
+        return retrofit.create(LoginService::class.java)
+                .authorizationsCode(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code)
+                .flatMap {
+                    FlatMapResponse2Result(it)
+                }.map {
+                    val token = it.access_token
+                    token!!
+                }.doOnNext {
+                    Debuger.printfLog("token $it")
+                    accessTokenStorage = it
+                }.onErrorResumeNext(Function<Throwable, Observable<String>> { t ->
+                    Debuger.printfLog("token onErrorResumeNext ")
+                    clearTokenStorage()
+                    Observable.error(t)
+                })
+    }
+
+    /**
+     * 登录
+     */
+    fun oauth(context: Context, code: String, token: MutableLiveData<Boolean>) {
+
+        clearTokenStorage()
+
+        val loginService = getCodeTokenObservable(code)
+
+        val userService = userRepository.getPersonInfoObservable()
+
+        val authorizations = Observable.zip(loginService, userService,
+                BiFunction<String, User, User> { _, user ->
+                    user
+                }).flatMap {
+            FlatMapResult2Response(it)
+        }
+
+        RetrofitFactory.executeResult(authorizations, object : ResultProgressObserver<User>(context) {
+            override fun onSuccess(result: User?) {
+                token.value = true
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                token.value = false
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                token.value = false
+            }
+
+        })
+
+    }
+
 
     /**
      * 登录
