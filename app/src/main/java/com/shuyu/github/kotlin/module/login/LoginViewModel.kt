@@ -68,6 +68,8 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         val username = this.username.get()
         val password = this.password.get()
 
+        view.context.toast(R.string.LoginTip)
+
         //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
         /*username?.apply {
             if (this.isEmpty()) {
