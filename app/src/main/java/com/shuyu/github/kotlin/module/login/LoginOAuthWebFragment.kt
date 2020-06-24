@@ -76,7 +76,7 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                oauth_webview_loadingBar.visibility  = View.GONE
+                oauth_webview_loadingBar.visibility = View.GONE
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -84,8 +84,9 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
                         request.url.toString().startsWith("gsygithubapp://authed")) {
                     val code = request.url.getQueryParameter("code")
                     loginViewModel.oauth(context!!, code);
+                    return true
                 }
-                return true
+                return false
             }
         }
 
@@ -96,6 +97,7 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
         val url = "https://github.com/login/oauth/authorize?" +
                 "client_id=${BuildConfig.CLIENT_ID}&" +
                 "state=app&redirect_uri=gsygithubapp://authed";
+
         oauth_webview.loadUrl(url)
     }
 }

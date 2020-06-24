@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Base64
+import android.webkit.CookieManager
+import android.webkit.WebStorage
+import android.webkit.WebView
 import androidx.lifecycle.MutableLiveData
 import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.common.config.AppConfig
@@ -182,10 +185,19 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
         accessTokenStorage = ""
         userBasicCodeStorage = ""
         userInfoStorage = ""
+        clearCookies()
         val intent = Intent(context, StartNavigationActivity::class.java)
         intent.clearTask()
         intent.clearTop()
         context.startActivity(intent)
         (context as Activity).finish()
+    }
+
+    fun clearCookies() {
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.setAcceptCookie(true)
+        cookieManager.removeAllCookies(null)
+        WebStorage.getInstance().deleteAllData()
+        CookieManager.getInstance().flush()
     }
 }
