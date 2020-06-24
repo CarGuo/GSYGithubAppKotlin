@@ -43,7 +43,7 @@
     ndk.dir="xxxxxxxx"
     CLIENT_ID = "xxxxxx"
     CLIENT_SECRET = "xxxxxx"
-> ### 最后记得配置 [`CMake` 环境](https://blog.csdn.net/laibowon/article/details/79939962)。
+> ### 如果需要测试 `CMake` ，要打开 Gradle 中的 `needCMakeTest` ，记得配置 [`CMake` 环境](https://blog.csdn.net/laibowon/article/details/79939962)。
 
 
    [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。

@@ -8,14 +8,18 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'realm-android'
 
+
+///是否需要测试 CMake
+def needCMakeTest = false
+
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.1.0"
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
@@ -28,13 +32,15 @@ android {
         buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
         buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
 
-        //CMake
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-            ndk {
-                abiFilters 'armeabi-v7a'
+        if (needCMakeTest) {
+            //CMake
+            externalNativeBuild {
+                cmake {
+                    cppFlags ""
+                }
+                ndk {
+                    abiFilters 'armeabi-v7a'
+                }
             }
         }
 
@@ -43,9 +49,11 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path 'CMakeLists.txt'
+    if (needCMakeTest) {
+        externalNativeBuild {
+            cmake {
+                path 'CMakeLists.txt'
+            }
         }
     }
 
