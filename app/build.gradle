@@ -31,6 +31,7 @@ android {
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
         buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
+        buildConfigField "boolean", "NEED_CMAKE_TEST", "$needCMakeTest"
 
         if (needCMakeTest) {
             //CMake

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
+import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.Debuger
 import com.shuyu.github.kotlin.model.AppGlobalModel
@@ -32,7 +33,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
 
     companion object {
         init {
-            System.loadLibrary("native-gsy")
+            if(BuildConfig.NEED_CMAKE_TEST) {
+                System.loadLibrary("native-gsy")
+            }
         }
     }
 
@@ -80,8 +83,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
 
         MainDrawerController(this, home_tool_bar, loginRepository, issueRepository, repositoryRepository, globalModel)
 
-
-        Debuger.printfWarning(stringFromJNI())
+        if(BuildConfig.NEED_CMAKE_TEST) {
+            Debuger.printfWarning(stringFromJNI())
+        }
 
     }
 
