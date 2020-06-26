@@ -81,11 +81,11 @@
 ### 示例图片
 
 
-<img src="./1.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/showapp1.jpg" width="426px"/>
 
-<img src="./2.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/showapp2.jpg" width="426px"/>
 
-<img src="./3.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/showapp3.jpg" width="426px"/>
 
 
 ### 第三方框架
