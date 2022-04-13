@@ -72,6 +72,7 @@
         <activity
             android:name=".module.StartActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/StartTheme">
 
             <intent-filter>

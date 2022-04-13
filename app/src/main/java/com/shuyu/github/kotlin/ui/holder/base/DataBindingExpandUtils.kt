@@ -14,14 +14,7 @@ import com.shuyu.github.kotlin.common.utils.dp
 import com.shuyu.github.kotlin.ui.view.GSYWebViewContainer
 import androidx.databinding.DataBindingComponent
 import com.mikepenz.iconics.IconicsColor
-import com.mikepenz.iconics.utils.sizeDp
-import com.shuyu.github.kotlin.R
 import io.noties.markwon.Markwon
-import io.noties.markwon.image.glide.GlideImagesPlugin
-import io.noties.markwon.linkify.LinkifyPlugin
-import io.noties.markwon.recycler.table.TableEntry
-import io.noties.markwon.recycler.table.TableEntryPlugin
-import io.noties.markwon.syntax.SyntaxHighlightPlugin
 
 
 /**
@@ -54,7 +47,7 @@ class DataBindingExpandUtils {
         fun webViewUrl(view: GSYWebViewContainer?, url: String?) {
             view?.apply {
                 webView.isVerticalScrollBarEnabled = false
-                webView.loadUrl(url)
+                url?.let { webView.loadUrl(it) }
             }
 
         }

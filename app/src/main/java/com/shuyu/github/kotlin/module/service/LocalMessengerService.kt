@@ -3,10 +3,7 @@ package com.shuyu.github.kotlin.module.service
 import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
-import android.os.Handler
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
+import android.os.*
 import com.shuyu.github.kotlin.common.utils.Debuger
 
 /**
@@ -31,10 +28,10 @@ class LocalMessengerService : Service() {
     }
 
     @SuppressLint("HandlerLeak")
-    private val messenger =  Messenger( object :Handler() {
-        override fun handleMessage(msg: Message?) {
+    private val messenger =  Messenger( object :Handler(Looper.myLooper()!!) {
+        override fun handleMessage(msg: Message) {
             val msgToClient = Message.obtain(msg)//to LocalService
-            Debuger.printfLog("LocalMessengerService handleMessage " + msg!!.arg1 + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
+            Debuger.printfLog("LocalMessengerService handleMessage " + msg.arg1 + " pid" + android.os.Process.myPid() + " " + Thread.currentThread())
             when(msg.what) {
                 0 -> {
                     Thread.sleep(2000)

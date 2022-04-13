@@ -5,10 +5,7 @@ import android.app.Service
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Handler
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
+import android.os.*
 import com.shuyu.github.kotlin.ILocalMessage
 import com.shuyu.github.kotlin.ILocalMessageCallBack
 import com.shuyu.github.kotlin.common.utils.Debuger
@@ -98,9 +95,9 @@ class LocalService : Service() {
     }
 
     @SuppressLint("HandlerLeak")
-    private val messageHandler = object : Handler() {
-        override fun handleMessage(msg: Message?) {
-            when (msg?.what) {
+    private val messageHandler = object : Handler(Looper.myLooper()!!) {
+        override fun handleMessage(msg: Message) {
+            when (msg.what) {
                 0 -> {
                     //这里因为是在Service中创建的，所以打印出来的是主进程的主线程
                     //所以这里如果要在回复Messenger到MessengerService的话，最好是在新线程中发送

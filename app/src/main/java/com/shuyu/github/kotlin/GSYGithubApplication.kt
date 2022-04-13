@@ -76,11 +76,11 @@ class GSYGithubApplication : Application(), HasActivityInjector {
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
 
             override fun placeholder(ctx: Context): Drawable {
-                return getDrawable(R.drawable.logo)
+                return getDrawable(R.drawable.logo)!!
             }
 
             override fun placeholder(ctx: Context, tag: String?): Drawable {
-                return getDrawable(R.drawable.logo)
+                return getDrawable(R.drawable.logo)!!
             }
             override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
                 CommonUtils.loadUserHeaderImage(imageView, uri.toString())

@@ -13,11 +13,11 @@ apply plugin: 'realm-android'
 def needCMakeTest = false
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 10
         versionName "1.1.0"
         javaCompileOptions {
@@ -116,6 +116,8 @@ android {
         }
         release {
             signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
         }
     }
 

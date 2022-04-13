@@ -122,8 +122,8 @@ object CommonUtils {
             return
         }
 
-        if (parseUrl.host == "github.com" && parseUrl.path.isNotEmpty()) {
-            val pathNames = parseUrl.path.split("/")
+        if (parseUrl.host == "github.com" && parseUrl.path!!.isNotEmpty()) {
+            val pathNames = parseUrl.path!!.split("/")
             if (pathNames.size == 2) {
                 //解析人
                 val userName = pathNames[1]

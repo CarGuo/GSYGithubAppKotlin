@@ -59,7 +59,7 @@ fun Context.copy(string: String) {
     val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
             as android.content.ClipboardManager
     val clip = ClipData.newPlainText("", string)
-    clipboardManager.primaryClip = clip
+    clipboardManager.setPrimaryClip(ClipData(clip))
 }
 
 /**

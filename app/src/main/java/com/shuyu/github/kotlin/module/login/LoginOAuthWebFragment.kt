@@ -7,7 +7,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -62,13 +61,13 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
 
     private fun initWeb() {
         val settings = oauth_webview.settings
-        settings?.javaScriptEnabled = true
-        settings?.loadWithOverviewMode = true
-        settings?.builtInZoomControls = false
-        settings?.displayZoomControls = false
-        settings?.domStorageEnabled = true
-        settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        settings?.setAppCacheEnabled(true)
+        settings.javaScriptEnabled = true
+        settings.loadWithOverviewMode = true
+        settings.builtInZoomControls = false
+        settings.displayZoomControls = false
+        settings.domStorageEnabled = true
+        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+        settings.setAppCacheEnabled(true)
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 
@@ -83,7 +82,9 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
                 if (request != null && request.url != null &&
                         request.url.toString().startsWith("gsygithubapp://authed")) {
                     val code = request.url.getQueryParameter("code")
-                    loginViewModel.oauth(context!!, code);
+                    if (code != null) {
+                        loginViewModel.oauth(context!!, code)
+                    };
                     return true
                 }
                 return false

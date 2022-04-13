@@ -55,7 +55,7 @@ class PageInfoInterceptor : Interceptor {
         val startStart = startIndex + startFlag.length
         val url = item.substring(startStart, endStart)
         val value = Uri.parse(url).getQueryParameter("page")
-        return value.toInt()
+        return value!!.toInt()
     }
 }
 
