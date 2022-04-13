@@ -5,6 +5,7 @@
 * ### 同款Weex版 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款ReactNative版 （ https://github.com/CarGuo/GSYGithubApp ）
 * ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
+* ### [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYGithubAppKotlin)
 
 | 公众号   | 掘金     |  知乎    |  CSDN   |   简书   
 |---------|---------|--------- |---------|---------|
@@ -81,11 +82,11 @@
 ### 示例图片
 
 
-<img src="./1.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/showapp1.jpg" width="426px"/>
 
-<img src="./2.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/showapp2.jpg" width="426px"/>
 
-<img src="./3.jpg" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/showapp3.jpg" width="426px"/>
 
 
 ### 第三方框架
