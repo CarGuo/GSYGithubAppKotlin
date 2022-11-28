@@ -64,10 +64,10 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        issueCommentViewModel = IssueOptionCommentController(context!!, adapter, this)
-        issueControlViewModel = IssueStatusController(context!!, adapter, this, issue_detail_control_bar)
+        issueCommentViewModel = IssueOptionCommentController(requireContext(), adapter, this)
+        issueControlViewModel = IssueStatusController(requireContext(), adapter, this, issue_detail_control_bar)
 
-        getViewModel().liveIssueModel.observe(this, Observer { result ->
+        getViewModel().liveIssueModel.observe(viewLifecycleOwner, Observer { result ->
             issueControlViewModel.initControlBar(result)
         })
 

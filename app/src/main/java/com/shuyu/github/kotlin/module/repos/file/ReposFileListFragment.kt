@@ -77,7 +77,7 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getViewModel().dataList.removeObservers(this)
-        getViewModel().dataList.observe(this, Observer { items ->
+        getViewModel().dataList.observe(viewLifecycleOwner, Observer { items ->
             items?.apply {
                 if (items.size > 0) {
                     adapter?.dataList = items

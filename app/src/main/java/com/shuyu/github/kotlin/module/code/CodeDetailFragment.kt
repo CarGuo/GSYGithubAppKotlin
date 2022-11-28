@@ -1,5 +1,6 @@
 package com.shuyu.github.kotlin.module.code
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -62,18 +63,19 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         code_detail_web.spinKit.visibility = View.VISIBLE
-        viewModel.htmlData.observe(this, Observer {
+        viewModel.htmlData.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrBlank()) {
                 return@Observer
             }
             code_detail_web.spinKit.visibility = View.GONE
             code_detail_web.webView.requestIntercept = false
             code_detail_web.webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
-            code_detail_web.webView.loadData(it, "text/html; charset=UTF-8", null);
+            code_detail_web.webView.loadDataWithBaseURL(null, it, "text/html",  "utf-8", null)
 
         })
         if (localCode == null) {

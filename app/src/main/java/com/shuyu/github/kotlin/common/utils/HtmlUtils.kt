@@ -95,7 +95,7 @@ object HtmlUtils {
                 "<head>\n" +
                 "<meta charset=\"utf-8\" />\n" +
                 "<title></title>\n" +
-                "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
+                "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0\"/>" +
                 "<link href=\"https://cdn.bootcss.com/highlight.js/9.12.0/styles/dracula.min.css\" rel=\"stylesheet\">\n" +
                 "<script src=\"https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js\"></script>  " +
                 "<script>hljs.configure({'useBR': " +
