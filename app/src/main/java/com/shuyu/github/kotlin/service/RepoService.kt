@@ -232,8 +232,7 @@ interface RepoService {
     fun getReadmeHtml(
             @Header("forceNetWork") forceNetWork: Boolean,
             @Path("owner") owner: String,
-            @Path("repo") repo: String,
-            @Query("ref") branch: String = "master"): Observable<Response<String>>
+            @Path("repo") repo: String,): Observable<Response<String>>
 
 
     @GET("repos/{owner}/{repo}/contents/{path}")
@@ -242,7 +241,6 @@ interface RepoService {
             @Path("owner") owner: String,
             @Path("repo") repo: String,
             @Path(value = "path", encoded = true) path: String,
-            @Query("ref") branch: String = "master"
     ): Observable<Response<String>>
 
 }
