@@ -13,7 +13,7 @@ apply plugin: 'realm-android'
 def needCMakeTest = false
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
@@ -22,7 +22,7 @@ android {
         versionName "1.1.0"
         javaCompileOptions {
             annotationProcessorOptions {
-                includeCompileClasspath = true
+                //includeCompileClasspath = true
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
@@ -83,17 +83,22 @@ android {
         }
     }
 
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
+    }
     //打开 dataBinding
     dataBinding {
         enabled = true
     }
 
-    android {
-        compileOptions {
-            sourceCompatibility 1.8
-            targetCompatibility 1.8
-        }
-    }
+//    android {
+//        compileOptions {
+//            sourceCompatibility 1.8
+//            targetCompatibility 1.8
+//        }
+//    }
 
     signingConfigs {
         debug {
@@ -221,7 +226,7 @@ dependencies {
     implementation "com.github.HITGIF:TextFieldBoxes:${textfiled_box_version}"
 
 
-    ///loading spinkit
+    ///loading spinkits
     implementation "com.github.ybq:Android-SpinKit:${spinkit_version}"
 
     ///recycler adapter
@@ -239,7 +244,10 @@ dependencies {
     implementation "io.noties.markwon:linkify:$markwon_version"
     implementation "io.noties.markwon:image:$markwon_version"
     implementation "io.noties.markwon:image-glide:$markwon_version"
-    implementation "io.noties.markwon:syntax-highlight:$markwon_version"
+    implementation ("io.noties.markwon:syntax-highlight:$markwon_version") {
+        exclude group: 'org.jetbrains', module: 'annotations-java5'
+    }
+
 
     ///Prism4j
     kapt "io.noties:prism4j-bundler:${prism4j_version}"
@@ -249,6 +257,7 @@ dependencies {
 
     ///Drawer
     implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
+    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
 
     ///lottie
     implementation "com.airbnb.android:lottie:${lottie_version}"
@@ -262,4 +271,6 @@ dependencies {
 
     implementation "org.permissionsdispatcher:permissionsdispatcher:${permission_version}"
     kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${permission_version}"
+
+    implementation "androidx.startup:startup-runtime:1.1.1"
 }

@@ -49,7 +49,7 @@
                 android:textSize="@dimen/bigTextSize"
                 app:backgroundTint="@color/colorPrimary"
                 app:elevation="5dp"
-                app:rippleColor="@color/primary_light" />
+                app:rippleColor="@color/colorPrimaryLight" />
 
             <com.mikepenz.iconics.view.IconicsImageView
                 android:layout_width="25dp"
