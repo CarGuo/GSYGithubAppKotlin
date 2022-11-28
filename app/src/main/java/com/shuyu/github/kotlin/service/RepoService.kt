@@ -116,7 +116,6 @@ interface RepoService {
             @Path("owner") owner: String,
             @Path("repo") repo: String,
             @Path("path", encoded = true) path: String,
-            @Query("ref") branch: String = "master"
     ): Observable<Response<ArrayList<FileModel>>>
 
     @GET("repos/{owner}/{repo}/branches")
