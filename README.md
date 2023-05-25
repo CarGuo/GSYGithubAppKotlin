@@ -2,9 +2,9 @@
 
 ## 一款Android原生的开源Github客户端App，提供更丰富的功能，更好体验，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。项目使用`Retrofit2 + RxJava2 + Dagger2 + DataBinding + LiveData + Navigation` 等，MVVM 配合 Android JetPack，涉及各种常用控件、 `AIDL` 、 `CMake`,提供丰富的同款对比：
 
+* ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
 * ### 同款Weex版 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款ReactNative版 （ https://github.com/CarGuo/GSYGithubApp ）
-* ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
 * ### [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYGithubAppKotlin)
 
 | 公众号   | 掘金     |  知乎    |  CSDN   |   简书   
@@ -30,7 +30,7 @@
 >敬请期待
 
 
-
+[![Github Actions](https://github.com/CarGuo/GSYGithubAppKotlin/workflows/CI/badge.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/actions)
 [![GitHub stars](https://img.shields.io/github/stars/CarGuo/GSYGithubAppKotlin.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/CarGuo/GSYGithubAppKotlin.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/network)
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAppKotlin.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/issues)
@@ -67,10 +67,6 @@
 
 #### Apk下载链接： [Apk下载链接](https://github.com/CarGuo/GSYGithubAppKotlin/releases)
 
-
-#### Apk二维码
-
-![](./download.png)
 
 
 ### 常见问题
