@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
+import android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.Observer
@@ -67,7 +68,7 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
         settings.displayZoomControls = false
         settings.domStorageEnabled = true
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        settings.setAppCacheEnabled(true)
+        settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 

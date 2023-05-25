@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.*
+import android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK
 import android.widget.RelativeLayout
 import androidx.core.view.setPadding
 import com.github.ybq.android.spinkit.SpinKitView
@@ -38,13 +39,13 @@ class GSYWebViewContainer : RelativeLayout {
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
 
         val settings = webView.settings
-        settings?.javaScriptEnabled = true
-        settings?.loadWithOverviewMode = true
-        settings?.builtInZoomControls = false
-        settings?.displayZoomControls = false
-        settings?.domStorageEnabled = true
-        settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        settings?.setAppCacheEnabled(true)
+        settings.javaScriptEnabled = true
+        settings.loadWithOverviewMode = true
+        settings.builtInZoomControls = false
+        settings.displayZoomControls = false
+        settings.domStorageEnabled = true
+        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+        settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
 
         addView(webView, layoutParams)
 

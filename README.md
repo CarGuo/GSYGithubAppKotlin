@@ -65,7 +65,7 @@
 
 ## 下载
 
-#### Apk下载链接： [Apk下载链接](https://www.pgyer.com/XGtw)
+#### Apk下载链接： [Apk下载链接](https://github.com/CarGuo/GSYGithubAppKotlin/releases)
 
 
 #### Apk二维码

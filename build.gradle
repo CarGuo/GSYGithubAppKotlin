@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.6.21'
     ext.ktx_version = '1.8.0'
     ext.android_support = '1.1.0-beta01'
     ext.androidx_appcompat = '1.4.0'
@@ -13,7 +13,7 @@ buildscript {
     ext.rx_android = '2.1.1'
     ext.event_bus = '3.1.1'
     ext.glide_version = '4.8.0'
-    ext.realm_version = '7.0.0'
+    ext.realm_version = '10.15.0'
     ext.agentweb_version = '4.0.2'
     ext.tabbar_version = '1.2.5'
     ext.dagger_version = '2.23.2'
@@ -22,12 +22,12 @@ buildscript {
     ext.textfiled_box_version = '1.4.5'
     ext.lifecycle_version = '1.1.1'
     ext.spinkit_version = '1.2.0'
-    ext.gradle_version = '7.0.3'
+    ext.gradle_version = '8.0.1'
     ext.recycler_common_version = 'v4.0.6'
     ext.image_load = '4.9.0'
     ext.drop_menu_version = '1.0.4'
-    ext.arouter_api_versoion = '1.4.0'
-    ext.arouter_compiler_versoion = '1.2.1'
+    ext.arouter_api_versoion = '1.5.2'
+    ext.arouter_compiler_versoion = '1.5.2'
     ext.anko_version='0.10.8'
     ext.richtext_version='0.19.0'
     ext.markwon_version='4.6.2'

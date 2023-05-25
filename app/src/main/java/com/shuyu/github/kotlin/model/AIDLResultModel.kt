@@ -18,9 +18,9 @@ class AIDLResultModel() : Parcelable {
         time = parcel.readLong()
     }
 
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeString(name)
-        dest?.writeLong(time)
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(name)
+        dest.writeLong(time)
     }
 
     override fun describeContents(): Int = 0

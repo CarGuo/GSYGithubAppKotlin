@@ -164,7 +164,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
             override fun onSuccess(result: Release?) {
                 result?.name?.apply {
                     showUpdateDialog(activity, this, result.body
-                            ?: "", "https://www.pgyer.com/XGtw")
+                            ?: "", "https://github.com/CarGuo/GSYGithubAppKotlin/releases")
                     return
                 }
                 if (needTip) {
