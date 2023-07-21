@@ -260,7 +260,7 @@ dependencies {
     implementation "com.orhanobut:dialogplus:${dialogplus_version}"
 
     ///Drawer
-    implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
+    implementation "com.mikepenz:materialdrawer:7.0.0-rc08"
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
 
     ///lottie
