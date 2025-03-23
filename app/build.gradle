@@ -13,7 +13,7 @@ apply plugin: 'realm-android'
 def needCMakeTest = false
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
@@ -40,13 +40,13 @@ android {
                     cppFlags ""
                 }
                 ndk {
-                    abiFilters 'armeabi-v7a'
+                    abiFilters 'arm64-v8a'
                 }
             }
         }
 
         ndk {
-            abiFilters 'armeabi-v7a'
+            abiFilters 'arm64-v8a'
         }
     }
 
