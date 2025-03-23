@@ -13,11 +13,11 @@ apply plugin: 'realm-android'
 def needCMakeTest = false
 
 android {
-    compileSdkVersion 34
+    compileSdk 34
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 34
         versionCode 10
         versionName "1.1.0"
         javaCompileOptions {
@@ -93,12 +93,6 @@ android {
         enabled = true
     }
 
-//    android {
-//        compileOptions {
-//            sourceCompatibility 1.8
-//            targetCompatibility 1.8
-//        }
-//    }
 
     signingConfigs {
         debug {
@@ -158,6 +152,8 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$android_other_version"
     implementation "androidx.annotation:annotation:$android_other_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    kapt("org.xerial:sqlite-jdbc:3.34.0") //追加这条
     kapt 'androidx.lifecycle:lifecycle-compiler:2.4.1'
     implementation 'androidx.room:room-runtime:2.4.2'
     kapt 'androidx.room:room-compiler:2.4.2'
