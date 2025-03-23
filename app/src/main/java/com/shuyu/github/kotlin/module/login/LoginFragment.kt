@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentLoginBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_login.*
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -17,7 +15,7 @@ import javax.inject.Inject
  * Created by guoshuyu
  * Date: 2018-09-28
  */
-class LoginFragment: BaseFragment<FragmentLoginBinding> () {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -36,8 +34,8 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> () {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
 
         binding?.loginViewModel = loginViewModel
 
@@ -50,7 +48,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding> () {
             }
         })*/
 
-        login_submit_btn.setOnClickListener {
+        binding!!.loginSubmitBtn.setOnClickListener {
             navigationPopUpTo(view, null, R.id.action_nav_oauth_to_web, false, false)
         }
 

@@ -18,10 +18,10 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.gsyimageloader.GSYImageLoaderManager
 import com.shuyu.github.kotlin.common.gsyimageloader.GSYLoadOption
 import com.shuyu.github.kotlin.common.utils.FileUtils
+import com.shuyu.github.kotlin.databinding.ActivityImagePreviewBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.ui.adapter.TextListAdapter
-import kotlinx.android.synthetic.main.activity_image_preview.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
@@ -33,7 +33,8 @@ import permissions.dispatcher.RuntimePermissions
  */
 @RuntimePermissions
 @Route(path = ARouterAddress.ImagePreViewActivity)
-class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLongClickListener, OnItemClickListener, ARouterInjectable {
+class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLongClickListener,
+    OnItemClickListener, ARouterInjectable {
 
     @Autowired
     @JvmField
@@ -45,9 +46,7 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
         }
 
         fun getRouterNavigation(uri: String, url: String): Postcard {
-            return ARouter.getInstance()
-                    .build(uri)
-                    .withString("url", url)
+            return ARouter.getInstance().build(uri).withString("url", url)
         }
     }
 
@@ -56,16 +55,15 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_preview)
 
-        preview_photo_view.setOnViewTapListener(this)
-        preview_photo_view.setOnLongClickListener(this)
+        val vb = ActivityImagePreviewBinding.inflate(layoutInflater);
+        vb.previewPhotoView.setOnViewTapListener(this)
+        vb.previewPhotoView.setOnLongClickListener(this)
 
 
-        val option = GSYLoadOption()
-                .setDefaultImg(R.drawable.epmty_img)
-                .setErrorImg(R.drawable.epmty_img)
-                .setCircle(false)
-                .setUri(url)
-        GSYImageLoaderManager.sInstance.imageLoader().loadImage(option, preview_photo_view, null)
+        val option =
+            GSYLoadOption().setDefaultImg(R.drawable.epmty_img).setErrorImg(R.drawable.epmty_img)
+                .setCircle(false).setUri(url)
+        GSYImageLoaderManager.sInstance.imageLoader().loadImage(option, vb.previewPhotoView, null)
     }
 
     override fun onViewTap(view: View?, x: Float, y: Float) {
@@ -73,11 +71,11 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
     }
 
     override fun onLongClick(v: View?): Boolean {
-        val dialog = DialogPlus.newDialog(this)
-                .setAdapter(TextListAdapter(this, arrayListOf(getString(R.string.saveToLocal), getString(R.string.cancel))))
-                .setOnItemClickListener(this)
-                .setExpanded(false)
-                .create()
+        val dialog = DialogPlus.newDialog(this).setAdapter(
+                TextListAdapter(
+                    this, arrayListOf(getString(R.string.saveToLocal), getString(R.string.cancel))
+                )
+            ).setOnItemClickListener(this).setExpanded(false).create()
         dialog.show()
         return true
     }
@@ -87,6 +85,7 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
             0 -> {
                 saveImageWithPermissionCheck()
             }
+
             1 -> {
             }
         }
@@ -104,7 +103,9 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
     }
 
     @SuppressLint("NeedOnRequestPermissionsResult")
-    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         onRequestPermissionsResult(requestCode, grantResults)
     }

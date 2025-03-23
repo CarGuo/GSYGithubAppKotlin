@@ -9,8 +9,8 @@ import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.OnItemClickListener
 import com.orhanobut.dialogplus.ViewHolder
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.databinding.LayoutIssueEditDialogBinding
 import com.shuyu.github.kotlin.ui.adapter.TextListAdapter
-import kotlinx.android.synthetic.main.layout_issue_edit_dialog.view.*
 import org.jetbrains.anko.toast
 
 /**
@@ -20,32 +20,32 @@ import org.jetbrains.anko.toast
  */
 
 fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, editTitle: String?, editContent: String?, listener: IssueDialogClickListener?) {
-    val contentView = LayoutInflater.from(this).inflate(R.layout.layout_issue_edit_dialog, null, false)
+    val contentView = LayoutIssueEditDialogBinding.inflate(LayoutInflater.from(this));
     val height = (Resources.getSystem().displayMetrics.heightPixels * 0.6).toInt()
-    contentView.issue_dialog_content_layout.layoutParams.height = height
-    contentView.issue_dialog_markdown_list.editText = contentView.issue_dialog_edit_content
+    contentView.issueDialogContentLayout.layoutParams.height = height
+    contentView.issueDialogMarkdownList.editText = contentView.issueDialogEditContent
     val dialog = DialogPlus.newDialog(this)
-            .setContentHolder(ViewHolder(contentView))
+            .setContentHolder(ViewHolder(contentView.root))
             .setCancelable(false)
             .setContentBackgroundResource(R.color.transparent)
             .setGravity(Gravity.CENTER)
             .setMargin(30.dp, 0, 30.dp, 0)
             .create()
 
-    contentView.issue_dialog_edit_title.visibility = if (needEditTitle) {
+    contentView.issueDialogTitle.visibility = if (needEditTitle) {
         View.VISIBLE
     } else {
         View.GONE
     }
 
-    contentView.issue_dialog_title.text = title
+    contentView.issueDialogEditTitle.setText(title)
 
-    editTitle?.apply { contentView.issue_dialog_edit_title.setText(this) }
-    editContent?.apply { contentView.issue_dialog_edit_content.setText(this) }
+    editTitle?.apply { contentView.issueDialogEditTitle.setText(this) }
+    editContent?.apply { contentView.issueDialogEditContent.setText(this) }
 
-    contentView.issue_dialog_edit_ok.setOnClickListener {
-        val titleText = contentView.issue_dialog_edit_title.text?.toString()
-        val contentText = contentView.issue_dialog_edit_content.text?.toString()
+    contentView.issueDialogEditOk.setOnClickListener {
+        val titleText = contentView.issueDialogEditTitle.text?.toString()
+        val contentText = contentView.issueDialogEditContent.text?.toString()
         if (needEditTitle && titleText.isNullOrBlank()) {
             toast(R.string.issueTitleEmpty)
             return@setOnClickListener
@@ -57,7 +57,7 @@ fun Context.showIssueEditDialog(title: String, needEditTitle: Boolean, editTitle
         listener?.onConfirm(dialog, title, titleText, contentText)
 
     }
-    contentView.issue_dialog_edit_cancel.setOnClickListener {
+    contentView.issueDialogEditCancel.setOnClickListener {
         dialog.dismiss()
     }
     dialog.show()

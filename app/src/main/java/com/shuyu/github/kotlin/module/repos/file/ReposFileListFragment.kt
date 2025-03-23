@@ -19,7 +19,6 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.ui.holder.FileHolder
-import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
 /**
  * Created by guoshuyu
@@ -27,7 +26,8 @@ import kotlinx.android.synthetic.main.fragment_repos_file_list.*
  */
 
 @Route(path = ARouterAddress.ReposDetailFileList)
-class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, ReposFileViewModel>(), ARouterInjectable {
+class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, ReposFileViewModel>(),
+    ARouterInjectable {
 
 
     @Autowired
@@ -53,15 +53,23 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
             if (itemData.type == "file") {
                 val isImage = CommonUtils.isImageEnd(itemData.title)
                 if (isImage) {
-                    val path = repos_file_select_header.list.toSplitString() + "/" + itemData.title
+                    val path =
+                        binding?.reposFileSelectHeader?.list?.toSplitString() + "/" + itemData.title
                     val url = CommonUtils.getFileHtmlUrl(userName, reposName, path) + "?raw=true"
-                    CommonUtils.launchUrl(activity!!, url)
+                    CommonUtils.launchUrl(requireActivity(), url)
                 } else {
-                    CodeDetailActivity.gotoCodeDetail(userName, reposName, itemData.title, (repos_file_select_header.list.toSplitString() + "/" + itemData.title).replace("/./", "/"))
+                    CodeDetailActivity.gotoCodeDetail(
+                        userName,
+                        reposName,
+                        itemData.title,
+                        (binding!!.reposFileSelectHeader.list.toSplitString() + "/" + itemData.title).replace(
+                            "/./", "/"
+                        )
+                    )
                 }
             } else {
                 addSelectList(itemData.title)
-                getViewModel().path = repos_file_select_header.list.toSplitString()
+                getViewModel().path = binding!!.reposFileSelectHeader.list.toSplitString()
                 showRefresh()
             }
         }
@@ -93,45 +101,46 @@ class ReposFileListFragment : BaseListFragment<FragmentReposFileListBinding, Rep
 
     override fun enableLoadMore(): Boolean = false
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
 
-        repos_file_select_header.itemClick = AdapterView.OnItemClickListener { _, _, position, _ ->
-            if (isLoading()) {
-                return@OnItemClickListener
+        binding!!.reposFileSelectHeader.itemClick =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                if (isLoading()) {
+                    return@OnItemClickListener
+                }
+                if (position == 0) {
+                    clearSelectList()
+                    getViewModel().path = ""
+                } else {
+                    deleteSelect(position)
+                    getViewModel().path = binding!!.reposFileSelectHeader.list.toSplitString()
+                }
+                showRefresh()
             }
-            if (position == 0) {
-                clearSelectList()
-                getViewModel().path = ""
-            } else {
-                deleteSelect(position)
-                getViewModel().path = repos_file_select_header.list.toSplitString()
-            }
-            showRefresh()
-        }
         clearSelectList()
 
         manager.bind(FileUIModel::class.java, FileHolder.ID, FileHolder::class.java)
     }
 
     private fun clearSelectList() {
-        repos_file_select_header.list.clear()
-        repos_file_select_header.list.add(".")
-        repos_file_select_header.listView.adapter?.notifyDataSetChanged()
+        binding!!.reposFileSelectHeader.list.clear()
+        binding!!.reposFileSelectHeader.list.add(".")
+        binding!!.reposFileSelectHeader.listView.adapter?.notifyDataSetChanged()
     }
 
     private fun addSelectList(item: String) {
-        repos_file_select_header.list.add(item)
-        repos_file_select_header.listView.adapter?.notifyDataSetChanged()
+        binding!!.reposFileSelectHeader.list.add(item)
+        binding!!.reposFileSelectHeader.listView.adapter?.notifyDataSetChanged()
     }
 
     private fun deleteSelect(position: Int) {
         val nextList = arrayListOf<String>()
-        val result = repos_file_select_header.list.subList(0, position + 1)
+        val result = binding!!.reposFileSelectHeader.list.subList(0, position + 1)
         nextList.addAll(result)
-        repos_file_select_header.list.clear()
-        repos_file_select_header.list.addAll(nextList)
-        repos_file_select_header.listView.adapter?.notifyDataSetChanged()
+        binding!!.reposFileSelectHeader.list.clear()
+        binding!!.reposFileSelectHeader.list.addAll(nextList)
+        binding!!.reposFileSelectHeader.listView.adapter?.notifyDataSetChanged()
     }
 }

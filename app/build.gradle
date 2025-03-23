@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'realm-android'
@@ -88,9 +86,10 @@ android {
                 "-Xjvm-default=all",
         ]
     }
-    //打开 dataBinding
-    dataBinding {
-        enabled = true
+    //打开 dataBinding 和 viewBinding
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 
 

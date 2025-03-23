@@ -15,7 +15,6 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import devlight.io.library.ntb.NavigationTabBar
-import kotlinx.android.synthetic.main.fragment_notify.*
 import javax.inject.Inject
 
 /**
@@ -25,7 +24,8 @@ import javax.inject.Inject
  */
 
 @Route(path = ARouterAddress.NotifyFragment)
-class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(), ARouterInjectable, NavigationTabBar.OnTabBarSelectedIndexListener {
+class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(),
+    ARouterInjectable, NavigationTabBar.OnTabBarSelectedIndexListener {
 
 
     @Inject
@@ -35,9 +35,9 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        notify_tab_bar.models = TabList
-        notify_tab_bar.onTabBarSelectedIndexListener = this
-        notify_tab_bar.modelIndex = 0
+        binding!!.notifyTabBar.models = TabList
+        binding!!.notifyTabBar.onTabBarSelectedIndexListener = this
+        binding!!.notifyTabBar.modelIndex = 0
     }
 
     override fun onItemClick(context: Context, position: Int) {
@@ -48,7 +48,7 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
         notifyDelete(position, 1)
     }
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)
@@ -64,7 +64,7 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
 
     override fun refreshComplete() {
         super.refreshComplete()
-        notify_tab_bar.isTouchEnable = true
+        binding!!.notifyTabBar.isTouchEnable = true
     }
 
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
@@ -72,16 +72,18 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
     }
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
-        notify_tab_bar.isTouchEnable = false
+        binding!!.notifyTabBar.isTouchEnable = false
         when (index) {
             0 -> {
                 getViewModel().all = null
                 getViewModel().participating = null
             }
+
             1 -> {
                 getViewModel().all = false
                 getViewModel().participating = true
             }
+
             2 -> {
                 getViewModel().all = true
                 getViewModel().participating = false

@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.databinding.ActivityFragmentContainerBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.activity_fragment_container.*
 import javax.inject.Inject
 
 /**
@@ -26,9 +26,11 @@ abstract class BaseFragmentActivity : BaseActivity(), HasSupportFragmentInjector
 
     private var fragment: BaseFragment<*>? = null
 
+    private var vb: ActivityFragmentContainerBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        vb = ActivityFragmentContainerBinding.inflate(layoutInflater)
         fragment = getInitFragment()
         addFragment(fragment!!, R.id.activity_fragment_container_id)
     }
@@ -47,7 +49,7 @@ abstract class BaseFragmentActivity : BaseActivity(), HasSupportFragmentInjector
         fragment?.actionShare()
     }
 
-    override fun getToolBar(): Toolbar = activity_fragment_container_toolbar
+    override fun getToolBar(): Toolbar = vb!!.activityFragmentContainerToolbar
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 

@@ -14,7 +14,6 @@ import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.ui.adapter.ListDropDownAdapter
 import com.shuyu.github.kotlin.ui.holder.ReposHolder
-import kotlinx.android.synthetic.main.fragment_trend.*
 
 
 /**
@@ -34,8 +33,10 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
     override fun onCreateView(mainView: View?) {
         super.onCreateView(mainView)
 
-        baseRecycler = RecyclerView(activity!!)
-        baseRecycler.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        baseRecycler = RecyclerView(requireActivity())
+        baseRecycler.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        )
 
     }
 
@@ -77,19 +78,21 @@ class TrendFragment : BaseListFragment<FragmentTrendBinding, TrendViewModel>() {
         for (i in 0 until sortData.size) {
             val dropList = ListView(context)
             dropList.dividerHeight = 0
-            val sinceListAdapter = ListDropDownAdapter(context!!, sortData[i])
+            val sinceListAdapter = ListDropDownAdapter(requireContext(), sortData[i])
             dropList.adapter = sinceListAdapter
             dropMap[sortData[i][0]] = dropList
             dropList.setOnItemClickListener { view, _, p, _ ->
                 (view.adapter as ListDropDownAdapter).setCheckItem(p)
-                trend_drop_menu.setTabText(sortData[i][p])
-                trend_drop_menu.closeMenu()
+                binding?.trendDropMenu?.setTabText(sortData[i][p])
+                binding?.trendDropMenu?.closeMenu()
                 getViewModel().sortType[i] = sortValue[i][p]
                 showRefresh()
             }
         }
 
 
-        trend_drop_menu.setDropDownMenu(dropMap.keys.toList(), dropMap.values.toList(), baseRecycler)
+        binding?.trendDropMenu?.setDropDownMenu(
+            dropMap.keys.toList(), dropMap.values.toList(), baseRecycler
+        )
     }
 }

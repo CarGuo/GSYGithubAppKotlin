@@ -18,7 +18,6 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.activity_user_info.*
 import javax.inject.Inject
 
 /**
@@ -35,8 +34,7 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
         }
 
         fun getRouterNavigation(uri: String): Postcard {
-            return ARouter.getInstance()
-                    .build(uri)
+            return ARouter.getInstance().build(uri)
         }
     }
 
@@ -55,10 +53,11 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val dataBinding = DataBindingUtil.setContentView<ActivityUserInfoBinding>(this, R.layout.activity_user_info)
-        initTitle()
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(UserInfoViewModel::class.java)
+        val dataBinding = DataBindingUtil.setContentView<ActivityUserInfoBinding>(
+            this, R.layout.activity_user_info
+        )
+        initTitle(ActivityUserInfoBinding.inflate(layoutInflater))
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserInfoViewModel::class.java)
         dataBinding.userUIModel = globalAppModel.userObservable
         dataBinding.userInfoViewModel = viewModel
     }
@@ -76,14 +75,14 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
     /**
      * 初始化title
      */
-    private fun initTitle() {
-        setSupportActionBar(activity_userInfo_toolbar)
+    private fun initTitle(vb: ActivityUserInfoBinding) {
+        setSupportActionBar(vb.activityUserInfoToolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setDisplayShowTitleEnabled(false)
         }
-        activity_userInfo_toolbar.title = getString(R.string.person)
+        vb.activityUserInfoToolbar.title = getString(R.string.person)
     }
 
 }

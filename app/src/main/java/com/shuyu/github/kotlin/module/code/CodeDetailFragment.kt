@@ -15,8 +15,6 @@ import com.shuyu.github.kotlin.databinding.FragmentCodeDetailBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_code_detail.*
-import kotlinx.android.synthetic.main.fragment_repos_readme.*
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.share
 import org.jetbrains.anko.toast
@@ -58,8 +56,8 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
     private lateinit var viewModel: CodeDetailViewModel
 
     override fun onCreateView(mainView: View?) {
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(CodeDetailViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(CodeDetailViewModel::class.java)
     }
 
 
@@ -67,15 +65,17 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        code_detail_web.spinKit.visibility = View.VISIBLE
+        binding!!.codeDetailWeb.spinKit.visibility = View.VISIBLE
         viewModel.htmlData.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrBlank()) {
                 return@Observer
             }
-            code_detail_web.spinKit.visibility = View.GONE
-            code_detail_web.webView.requestIntercept = false
-            code_detail_web.webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
-            code_detail_web.webView.loadDataWithBaseURL(null, it, "text/html",  "utf-8", null)
+            binding!!.codeDetailWeb.spinKit.visibility = View.GONE
+            binding!!.codeDetailWeb.webView.requestIntercept = false
+            binding!!.codeDetailWeb.webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
+            binding!!.codeDetailWeb.webView.loadDataWithBaseURL(
+                null, it, "text/html", "utf-8", null
+            )
 
         })
         if (localCode == null) {

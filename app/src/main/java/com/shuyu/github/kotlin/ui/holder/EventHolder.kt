@@ -8,7 +8,6 @@ import com.shuyu.github.kotlin.databinding.LayoutEventItemBinding
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.base.DataBindingHolder
-import kotlinx.android.synthetic.main.layout_event_item.view.*
 
 /**
  * 事件item
@@ -22,7 +21,7 @@ class EventHolder(context: Context,private val v: View, dataBing: ViewDataBindin
 
     override fun onBind(model: EventUIModel, position: Int, dataBing: LayoutEventItemBinding) {
         dataBing.eventUIModel = model
-        v.event_user_img.setOnClickListener {
+        dataBing.eventUserImg.setOnClickListener {
             PersonActivity.gotoPersonInfo(model.username)
         }
     }

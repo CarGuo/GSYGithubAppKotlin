@@ -21,7 +21,6 @@ import com.shuyu.github.kotlin.ui.holder.CommitHolder
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import devlight.io.library.ntb.NavigationTabBar
-import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
  * Created by guoshuyu
@@ -66,7 +65,7 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
 
     override fun enableLoadMore(): Boolean = true
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         headerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,

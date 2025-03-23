@@ -12,7 +12,6 @@ import com.shuyu.github.kotlin.databinding.FragmentReposReadmeBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_repos_readme.*
 import javax.inject.Inject
 
 /**
@@ -39,22 +38,25 @@ class ReposReadmeFragment : BaseFragment<FragmentReposReadmeBinding>(), ARouterI
     private lateinit var viewModel: ReposReadmeViewModel
 
     override fun onCreateView(mainView: View?) {
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(ReposReadmeViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(ReposReadmeViewModel::class.java)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repos_readme_web.spinKit.visibility = View.VISIBLE
+        binding?.reposReadmeWeb?.spinKit?.visibility = View.VISIBLE
         viewModel.htmlData.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrBlank()) {
                 return@Observer
             }
-            repos_readme_web.spinKit.visibility = View.GONE
-            repos_readme_web.webView.requestIntercept = false
-            repos_readme_web. webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
-            repos_readme_web.webView.loadDataWithBaseURL(null, it, "text/html",  "utf-8", null)
+            binding?.reposReadmeWeb?.spinKit?.visibility = View.GONE
+            binding?.reposReadmeWeb?.webView?.requestIntercept = false
+            binding?.reposReadmeWeb?.webView?.settings?.defaultTextEncodingName =
+                "UTF-8"//设置默认为utf-8
+            binding?.reposReadmeWeb?.webView?.loadDataWithBaseURL(
+                null, it, "text/html", "utf-8", null
+            )
 
         })
         viewModel.getReadmeHtml(userName, reposName)

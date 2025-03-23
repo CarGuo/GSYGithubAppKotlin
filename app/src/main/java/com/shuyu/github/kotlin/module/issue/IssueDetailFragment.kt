@@ -21,7 +21,6 @@ import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.IssueCommentHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import kotlinx.android.synthetic.main.fragment_issue_detail.*
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.share
 import org.jetbrains.anko.toast
@@ -65,7 +64,7 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         issueCommentViewModel = IssueOptionCommentController(requireContext(), adapter, this)
-        issueControlViewModel = IssueStatusController(requireContext(), adapter, this, issue_detail_control_bar)
+        issueControlViewModel = IssueStatusController(requireContext(), adapter, this, binding!!.issueDetailControlBar)
 
         getViewModel().liveIssueModel.observe(viewLifecycleOwner, Observer { result ->
             issueControlViewModel.initControlBar(result)
@@ -82,7 +81,7 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
 
     override fun enableLoadMore(): Boolean = true
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun getViewModelClass(): Class<IssueDetailViewModel> = IssueDetailViewModel::class.java
 

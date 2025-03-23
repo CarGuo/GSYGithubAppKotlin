@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.shuyu.github.kotlin.R
-import kotlinx.android.synthetic.main.layout_item_default_drop_down.view.*
+import com.shuyu.github.kotlin.databinding.LayoutItemDefaultDropDownBinding
 
 
 class ListDropDownAdapter(private val context: Context, private val list: List<String>) : BaseAdapter() {
@@ -43,9 +43,10 @@ class ListDropDownAdapter(private val context: Context, private val list: List<S
         if (convertView != null) {
             viewHolder = convertView.tag as ViewHolder
         } else {
-            convertView = LayoutInflater.from(context).inflate(R.layout.layout_item_default_drop_down, null)
+            val vb = LayoutItemDefaultDropDownBinding.inflate(LayoutInflater.from(context))
+            convertView = vb.root;
             viewHolder = ViewHolder()
-            viewHolder.text = convertView.item_default_drop_text
+            viewHolder.text = vb.itemDefaultDropText
             convertView.tag = viewHolder
         }
         fillValue(position, viewHolder)

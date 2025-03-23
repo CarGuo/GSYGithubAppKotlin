@@ -20,7 +20,6 @@ import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.PushHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.share
 import org.jetbrains.anko.toast
@@ -57,7 +56,7 @@ class PushDetailFragment : BaseListFragment<FragmentListBinding, PushDetailViewM
         CodeDetailActivity.gotoCodeDetailLocal(item.title, item.patch)
     }
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
 
     override fun getViewModelClass(): Class<PushDetailViewModel> = PushDetailViewModel::class.java

@@ -8,7 +8,6 @@ import com.shuyu.github.kotlin.databinding.LayoutIssueCommentItemBinding
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.base.DataBindingHolder
-import kotlinx.android.synthetic.main.layout_issue_comment_item.view.*
 
 /**
  * Issue 评论 item
@@ -22,7 +21,7 @@ class IssueCommentHolder(context: Context, private val v: View, dataBing: ViewDa
 
     override fun onBind(model: IssueUIModel, position: Int, dataBing: LayoutIssueCommentItemBinding) {
         dataBing.issueUIModel = model
-        v.issue_user_img.setOnClickListener {
+        dataBing.issueUserImg.setOnClickListener {
             PersonActivity.gotoPersonInfo(model.username)
         }
     }

@@ -20,7 +20,6 @@ import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import kotlinx.android.synthetic.main.fragment_user_info.*
 import org.jetbrains.anko.toast
 
 /**
@@ -58,7 +57,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 
     override fun enableLoadMore(): Boolean = true
 
-    override fun getRecyclerView(): RecyclerView? = fragment_my_recycler
+    override fun getRecyclerView(): RecyclerView? = binding?.fragmentMyRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_user_header,

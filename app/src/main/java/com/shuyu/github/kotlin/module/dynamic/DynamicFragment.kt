@@ -9,7 +9,6 @@ import com.shuyu.github.kotlin.databinding.FragmentListBinding
 import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.ui.holder.EventHolder
-import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
  * 动态
@@ -35,7 +34,7 @@ class DynamicFragment : BaseListFragment<FragmentListBinding, DynamicViewModel>(
 
     override fun enableLoadMore(): Boolean = true
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)

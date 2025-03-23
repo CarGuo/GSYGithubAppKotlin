@@ -19,7 +19,6 @@ import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.ReposHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
-import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
  * 通用列表
@@ -79,7 +78,7 @@ class GeneralListFragment : BaseListFragment<FragmentListBinding, GeneralListVie
 
     override fun enableLoadMore(): Boolean = true
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(EventUIModel::class.java, EventHolder.ID, EventHolder::class.java)

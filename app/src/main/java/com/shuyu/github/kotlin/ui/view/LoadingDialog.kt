@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.View
 import com.github.ybq.android.spinkit.style.Wave
 import com.shuyu.github.kotlin.R
-import kotlinx.android.synthetic.main.layout_loading_dialog.*
+import com.shuyu.github.kotlin.databinding.LayoutLoadingDialogBinding
 
 /**
  * Loading状态弹框
@@ -20,24 +20,33 @@ class LoadingDialog : Dialog {
 
     constructor(context: Context, theme: Int) : super(context, theme)
 
+    var vb: LayoutLoadingDialogBinding = LayoutLoadingDialogBinding.inflate(layoutInflater)
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-        loadingBar.setIndeterminateDrawable(Wave())
+        vb.loadingBar.setIndeterminateDrawable(Wave())
         super.onWindowFocusChanged(hasFocus)
     }
 
     companion object {
 
-        fun showDialog(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?): LoadingDialog? {
+        fun showDialog(
+            context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?
+        ): LoadingDialog? {
             return showDialog(context, null, cancelable, cancelListener)
         }
 
-        fun showDialog(context: Context, message: CharSequence?, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?): LoadingDialog? {
+        fun showDialog(
+            context: Context,
+            message: CharSequence?,
+            cancelable: Boolean,
+            cancelListener: DialogInterface.OnCancelListener?
+        ): LoadingDialog? {
             val dialog = LoadingDialog(context, R.style.LoadingDialog)
             dialog.setContentView(R.layout.layout_loading_dialog)
             if (message.isNullOrBlank()) {
-                dialog.loadingMessage?.visibility = View.GONE
+                dialog.vb.loadingMessage?.visibility = View.GONE
             } else {
-                dialog.loadingMessage?.text = message
+                dialog.vb.loadingMessage?.text = message
             }
             dialog.setCanceledOnTouchOutside(false)
             dialog.setCancelable(cancelable)

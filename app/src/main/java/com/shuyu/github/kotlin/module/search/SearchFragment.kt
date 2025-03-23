@@ -18,7 +18,6 @@ import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.ui.holder.ReposHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
 import devlight.io.library.ntb.NavigationTabBar
-import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
 /**
@@ -58,9 +57,9 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
         super.onViewCreated(view, savedInstanceState)
 
         //初始化搜索类型控件
-        search_type_bar.models = searchTabList
-        search_type_bar.onTabBarSelectedIndexListener = this
-        search_type_bar.modelIndex = 0
+        binding?.searchTypeBar?.models = searchTabList
+        binding?.searchTypeBar?.onTabBarSelectedIndexListener = this
+        binding?.searchTypeBar?.modelIndex = 0
 
         //初始化搜索过滤器
         searchFilterController = SearchFilterController(activity, getViewModel())
@@ -69,7 +68,7 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
     override fun getLayoutId(): Int = R.layout.fragment_search
 
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun enableRefresh(): Boolean = false
 
@@ -84,12 +83,12 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
 
     override fun onRefresh() {
         super.onRefresh()
-        getViewModel().refresh(activity!!)
+        getViewModel().refresh(requireActivity())
     }
 
     override fun onLoadMore() {
         super.onLoadMore()
-        getViewModel().loadMore(activity!!)
+        getViewModel().loadMore(requireActivity())
     }
 
     /**

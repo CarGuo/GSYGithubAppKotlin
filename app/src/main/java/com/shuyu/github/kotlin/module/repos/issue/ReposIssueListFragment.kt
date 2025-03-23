@@ -21,7 +21,6 @@ import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.ui.holder.IssueHolder
 import devlight.io.library.ntb.NavigationTabBar
-import kotlinx.android.synthetic.main.fragment_repos_issue_list.*
 import javax.inject.Inject
 
 /**
@@ -30,7 +29,9 @@ import javax.inject.Inject
  */
 
 @Route(path = ARouterAddress.ReposDetailIssueList)
-class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, ReposIssueListViewModel>(), ARouterInjectable, IssueDialogClickListener, NavigationTabBar.OnTabBarSelectedIndexListener {
+class ReposIssueListFragment :
+    BaseListFragment<FragmentReposIssueListBinding, ReposIssueListViewModel>(), ARouterInjectable,
+    IssueDialogClickListener, NavigationTabBar.OnTabBarSelectedIndexListener {
 
 
     @Autowired
@@ -72,42 +73,49 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        issue_list_navigation_tab_bar.models = reposIssueListTab
-        issue_list_navigation_tab_bar.onTabBarSelectedIndexListener = this
-        issue_list_navigation_tab_bar.modelIndex = 0
-        issue_list_create_button.setOnClickListener {
+        binding?.issueListNavigationTabBar?.models = reposIssueListTab
+        binding?.issueListNavigationTabBar?.onTabBarSelectedIndexListener = this
+        binding?.issueListNavigationTabBar?.modelIndex = 0
+        binding?.issueListCreateButton?.setOnClickListener {
             activity?.showIssueEditDialog(getString(R.string.issue), true, "", "", this)
         }
     }
 
-    override fun getViewModelClass(): Class<ReposIssueListViewModel> = ReposIssueListViewModel::class.java
+    override fun getViewModelClass(): Class<ReposIssueListViewModel> =
+        ReposIssueListViewModel::class.java
 
     override fun enableRefresh(): Boolean = true
 
     override fun enableLoadMore(): Boolean = true
 
-    override fun getRecyclerView(): RecyclerView? = baseRecycler
+    override fun getRecyclerView(): RecyclerView? = binding?.baseRecycler
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         manager.bind(IssueUIModel::class.java, IssueHolder.ID, IssueHolder::class.java)
     }
 
-    override fun onConfirm(dialog: DialogPlus, title: String, editTitle: String?, editContent: String?) {
-        getViewModel().createIssue(activity!!, editTitle!!, editContent!!, object : ResultCallBack<IssueUIModel> {
-            override fun onSuccess(result: IssueUIModel?) {
-                result?.apply {
-                    adapter?.dataList?.add(0, result)
-                    adapter?.notifyDataSetChanged()
-                    getRecyclerView()?.layoutManager?.scrollToPosition(0)
-                    dialog.dismiss()
+    override fun onConfirm(
+        dialog: DialogPlus, title: String, editTitle: String?, editContent: String?
+    ) {
+        getViewModel().createIssue(
+            requireActivity(),
+            editTitle!!,
+            editContent!!,
+            object : ResultCallBack<IssueUIModel> {
+                override fun onSuccess(result: IssueUIModel?) {
+                    result?.apply {
+                        adapter?.dataList?.add(0, result)
+                        adapter?.notifyDataSetChanged()
+                        getRecyclerView()?.layoutManager?.scrollToPosition(0)
+                        dialog.dismiss()
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun refreshComplete() {
         super.refreshComplete()
-        issue_list_navigation_tab_bar.isTouchEnable = true
+        binding?.issueListNavigationTabBar?.isTouchEnable = true
     }
 
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
@@ -115,7 +123,7 @@ class ReposIssueListFragment : BaseListFragment<FragmentReposIssueListBinding, R
     }
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
-        issue_list_navigation_tab_bar.isTouchEnable = false
+        binding?.issueListNavigationTabBar?.isTouchEnable = false
         getViewModel().status = statusList[index]
         showRefresh()
     }

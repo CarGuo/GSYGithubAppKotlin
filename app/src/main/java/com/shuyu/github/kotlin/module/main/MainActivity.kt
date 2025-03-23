@@ -11,6 +11,7 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.utils.Debuger
+import com.shuyu.github.kotlin.databinding.ActivityMainBinding
 import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.search.SearchActivity
@@ -22,18 +23,18 @@ import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import devlight.io.library.ntb.NavigationTabBar
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
 /**
  * 主页
  */
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
+    Toolbar.OnMenuItemClickListener {
 
     companion object {
         init {
-            if(BuildConfig.NEED_CMAKE_TEST) {
+            if (BuildConfig.NEED_CMAKE_TEST) {
                 System.loadLibrary("native-gsy")
             }
         }
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
     @Inject
     lateinit var repositoryRepository: ReposRepository
 
+    private lateinit var vb: ActivityMainBinding;
 
     @Inject
     lateinit var issueRepository: IssueRepository
@@ -77,13 +79,22 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        vb = ActivityMainBinding.inflate(layoutInflater);
+
         initViewPager()
 
         initToolbar()
 
-        MainDrawerController(this, home_tool_bar, loginRepository, issueRepository, repositoryRepository, globalModel)
+        MainDrawerController(
+            this,
+            vb.homeToolBar,
+            loginRepository,
+            issueRepository,
+            repositoryRepository,
+            globalModel
+        )
 
-        if(BuildConfig.NEED_CMAKE_TEST) {
+        if (BuildConfig.NEED_CMAKE_TEST) {
             Debuger.printfWarning(stringFromJNI())
         }
 
@@ -111,31 +122,32 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, Toolbar.On
     }
 
     private fun initViewPager() {
-        home_view_pager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
-        home_navigation_tab_bar.models = mainTabModel
-        home_navigation_tab_bar.setViewPager(home_view_pager, 0)
-        home_view_pager.offscreenPageLimit = mainFragmentList.size
+        vb.homeViewPager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
+        vb.homeNavigationTabBar.models = mainTabModel
+        vb.homeNavigationTabBar.setViewPager(vb.homeViewPager, 0)
+        vb.homeViewPager.offscreenPageLimit = mainFragmentList.size
 
-        home_navigation_tab_bar.doubleTouchListener = object : GSYNavigationTabBar.TabDoubleClickListener {
-            override fun onDoubleClick(position: Int) {
-                if (position == 0) {
-                    val fragment = mainFragmentList[position] as DynamicFragment
-                    fragment.showRefresh()
+        vb.homeNavigationTabBar.doubleTouchListener =
+            object : GSYNavigationTabBar.TabDoubleClickListener {
+                override fun onDoubleClick(position: Int) {
+                    if (position == 0) {
+                        val fragment = mainFragmentList[position] as DynamicFragment
+                        fragment.showRefresh()
+                    }
+
                 }
-
             }
-        }
     }
 
     private fun initToolbar() {
-        setSupportActionBar(home_tool_bar)
+        setSupportActionBar(vb.homeToolBar)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setDisplayShowTitleEnabled(false)
         }
-        home_tool_bar.setTitle(R.string.app_name)
-        home_tool_bar.setOnMenuItemClickListener(this)
+        vb.homeToolBar.setTitle(R.string.app_name)
+        vb.homeToolBar.setOnMenuItemClickListener(this)
     }
 
     external fun stringFromJNI(): String

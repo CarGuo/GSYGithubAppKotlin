@@ -12,7 +12,6 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.User
 import com.shuyu.github.kotlin.model.conversion.UserConversion
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_welcome.*
 import javax.inject.Inject
 
 /**
@@ -49,7 +48,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         ///lottie动画速度
-        welcome_animation.speed = 5.0f
+        binding!!.welcomeAnimation.speed = 5.0f
 
         //两秒后跳转下一页
         Handler().postDelayed({
