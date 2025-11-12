@@ -65,6 +65,16 @@
 
 ![](./folder2.png)
 
+![](./doc/Architecture.png)
+
+![](./doc/UIFramework.png)
+
+![](./doc/CoreAndroidComponents.png)
+
+![](./doc/DataLayerArchitecture.png)
+
+![](./doc/DependencyInjectionStructure.png)
+
 ## 下载
 
 #### Apk下载链接： [Apk下载链接](https://github.com/CarGuo/GSYGithubAppKotlin/releases)
