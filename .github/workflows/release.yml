@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    name: Github Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create local.properties
+        run: |
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> local.properties
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> local.properties
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 21
+      - name: Build APK
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: app:assembleRelease
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "app/build/outputs/apk/release/app-release.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
+          makeLatest: true
