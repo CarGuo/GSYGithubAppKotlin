@@ -16,8 +16,8 @@ android {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 10
-        versionName "1.1.0"
+        versionCode 11
+        versionName "1.2.0"
         javaCompileOptions {
             annotationProcessorOptions {
                 //includeCompileClasspath = true
