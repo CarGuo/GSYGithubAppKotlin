@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep the Strikethrough class from being removed by R8
+-keep class org.commonmark.ext.gfm.strikethrough.Strikethrough { *; }
