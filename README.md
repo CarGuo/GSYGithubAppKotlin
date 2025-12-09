@@ -31,7 +31,7 @@
 
 ## 相关文章
 
->敬请期待
+> 敬请期待
 
 
 [![Github Actions](https://github.com/CarGuo/GSYGithubAppKotlin/workflows/CI/badge.svg)](https://github.com/CarGuo/GSYGithubAppKotlin/actions)
