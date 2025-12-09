@@ -39,8 +39,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create local.properties
         run: |
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> local.properties
-          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> local.properties
+          echo "CLIENT_ID=\"${{ secrets.CLIENT_ID }}\"" >> local.properties
+          echo "CLIENT_SECRET=\"${{ secrets.CLIENT_SECRET }}\"" >> local.properties
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
