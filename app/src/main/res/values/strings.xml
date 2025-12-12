@@ -177,8 +177,8 @@
     <string name="clearCache">清除缓存</string>
 
     <string name="error_401">[401错误可能: 未授权 \\ 授权登录失败 \\ 登录过期]</string>
-    <string name="error_403">403没权限哦</string>
-    <string name="error_404">404没找到哦</string>
+    <string name="error_403">403没权限哦！</string>
+    <string name="error_404">404没找到哦！</string>
     <string name="error_422">422异常，提交数据格式不对吧？</string>
     <string name="error_402">402请求参数异常</string>
 
