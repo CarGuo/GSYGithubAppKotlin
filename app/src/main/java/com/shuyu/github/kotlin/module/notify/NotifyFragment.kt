@@ -14,7 +14,8 @@ import com.shuyu.github.kotlin.model.ui.EventUIModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.ui.holder.EventHolder
-import devlight.io.library.ntb.NavigationTabBar
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
+import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
 
 /**
@@ -25,19 +26,19 @@ import javax.inject.Inject
 
 @Route(path = ARouterAddress.NotifyFragment)
 class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(),
-    ARouterInjectable, NavigationTabBar.OnTabBarSelectedIndexListener {
+    ARouterInjectable, TabLayout.OnTabSelectedListener {
 
 
     @Inject
-    lateinit var TabList: MutableList<NavigationTabBar.Model>
+    lateinit var TabList: MutableList<GSYTabBar.Model>
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding!!.notifyTabBar.models = TabList
-        binding!!.notifyTabBar.onTabBarSelectedIndexListener = this
-        binding!!.notifyTabBar.modelIndex = 0
+        binding!!.notifyTabBar.addOnTabSelectedListener(this)
+        binding!!.notifyTabBar.getTabAt(0)?.select()
     }
 
     override fun onItemClick(context: Context, position: Int) {
@@ -67,11 +68,8 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
         binding!!.notifyTabBar.isTouchEnable = true
     }
 
-    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
-
-    }
-
-    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val index = tab?.position ?: 0
         binding!!.notifyTabBar.isTouchEnable = false
         when (index) {
             0 -> {
@@ -90,6 +88,12 @@ class NotifyFragment : BaseListFragment<FragmentNotifyBinding, NotifyViewModel>(
             }
         }
         showRefresh()
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
     }
 
     fun setAllNotificationAsRead(context: Context) {

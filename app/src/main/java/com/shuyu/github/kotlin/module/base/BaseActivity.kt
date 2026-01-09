@@ -18,7 +18,10 @@ abstract class BaseActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
+        val layoutId = getLayoutId()
+        if (layoutId != 0) {
+            setContentView(layoutId)
+        }
         initTitle()
     }
 

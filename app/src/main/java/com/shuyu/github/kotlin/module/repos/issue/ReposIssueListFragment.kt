@@ -20,7 +20,8 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.issue.IssueDetailActivity
 import com.shuyu.github.kotlin.ui.holder.IssueHolder
-import devlight.io.library.ntb.NavigationTabBar
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
+import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
 
 /**
@@ -31,7 +32,7 @@ import javax.inject.Inject
 @Route(path = ARouterAddress.ReposDetailIssueList)
 class ReposIssueListFragment :
     BaseListFragment<FragmentReposIssueListBinding, ReposIssueListViewModel>(), ARouterInjectable,
-    IssueDialogClickListener, NavigationTabBar.OnTabBarSelectedIndexListener {
+    IssueDialogClickListener, TabLayout.OnTabSelectedListener {
 
 
     @Autowired
@@ -44,7 +45,7 @@ class ReposIssueListFragment :
 
     @field:FragmentQualifier("IssueList")
     @Inject
-    lateinit var reposIssueListTab: MutableList<NavigationTabBar.Model>
+    lateinit var reposIssueListTab: MutableList<GSYTabBar.Model>
 
 
     @field:FragmentQualifier("IssueList")
@@ -74,8 +75,8 @@ class ReposIssueListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.issueListNavigationTabBar?.models = reposIssueListTab
-        binding?.issueListNavigationTabBar?.onTabBarSelectedIndexListener = this
-        binding?.issueListNavigationTabBar?.modelIndex = 0
+        binding?.issueListNavigationTabBar?.addOnTabSelectedListener(this)
+        binding?.issueListNavigationTabBar?.getTabAt(0)?.select()
         binding?.issueListCreateButton?.setOnClickListener {
             activity?.showIssueEditDialog(getString(R.string.issue), true, "", "", this)
         }
@@ -118,13 +119,16 @@ class ReposIssueListFragment :
         binding?.issueListNavigationTabBar?.isTouchEnable = true
     }
 
-    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
-
-    }
-
-    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val index = tab?.position ?: 0
         binding?.issueListNavigationTabBar?.isTouchEnable = false
         getViewModel().status = statusList[index]
         showRefresh()
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
     }
 }

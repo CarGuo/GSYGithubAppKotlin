@@ -17,7 +17,8 @@ import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.ui.holder.ReposHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
-import devlight.io.library.ntb.NavigationTabBar
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
+import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
 
 /**
@@ -26,11 +27,11 @@ import javax.inject.Inject
  * Date: 2018-11-02
  */
 @Route(path = ARouterAddress.SearchFragment)
-class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(), NavigationTabBar.OnTabBarSelectedIndexListener {
+class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(), TabLayout.OnTabSelectedListener {
 
     @field:FragmentQualifier("Search")
     @Inject
-    lateinit var searchTabList: MutableList<NavigationTabBar.Model>
+    lateinit var searchTabList: MutableList<GSYTabBar.Model>
 
     var searchFilterController: SearchFilterController? = null
 
@@ -58,8 +59,8 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
 
         //初始化搜索类型控件
         binding?.searchTypeBar?.models = searchTabList
-        binding?.searchTypeBar?.onTabBarSelectedIndexListener = this
-        binding?.searchTypeBar?.modelIndex = 0
+        binding?.searchTypeBar?.addOnTabSelectedListener(this)
+        binding?.searchTypeBar?.getTabAt(0)?.select()
 
         //初始化搜索过滤器
         searchFilterController = SearchFilterController(activity, getViewModel())
@@ -94,15 +95,19 @@ class SearchFragment : BaseListFragment<FragmentSearchBinding, SearchViewModel>(
     /**
      * 切换tab改变搜索类型
      */
-    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
-    }
-
-    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val index = tab?.position ?: 0
         getViewModel().type = if (index == 1) {
             SearchViewModel.USER
         } else {
             SearchViewModel.REPOSITORY
         }
         onRefresh()
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
     }
 }

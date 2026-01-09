@@ -1,11 +1,10 @@
 package com.shuyu.github.kotlin.di
 
 import android.app.Application
-import android.graphics.Color
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
 import dagger.Module
 import dagger.Provides
-import devlight.io.library.ntb.NavigationTabBar
 
 /**
  * 仓库详情TabBar数据
@@ -17,18 +16,15 @@ import devlight.io.library.ntb.NavigationTabBar
 class NotifyModule {
 
     @Provides
-    fun providerNotifyTabModel(application: Application): List<NavigationTabBar.Model> {
+    fun providerNotifyTabModel(application: Application): List<GSYTabBar.Model> {
         return listOf(
-                NavigationTabBar.Model.Builder(null,
-                        Color.parseColor("#00000000"))
+                GSYTabBar.Model.Builder(null)
                         .title(application.getString(R.string.notifyUnread))
                         .build(),
-                NavigationTabBar.Model.Builder(null,
-                        Color.parseColor("#00000000"))
+                GSYTabBar.Model.Builder(null)
                         .title(application.getString(R.string.notifyParticipating))
                         .build(),
-                NavigationTabBar.Model.Builder(null,
-                        Color.parseColor("#00000000"))
+                GSYTabBar.Model.Builder(null)
                         .title(application.getString(R.string.notifyAll))
                         .build()
         )

@@ -3,9 +3,11 @@ package com.shuyu.github.kotlin.module.login
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK
+import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.Observer
@@ -37,6 +39,8 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        WebView.setWebContentsDebuggingEnabled(true)
+
         loginViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
 
@@ -66,8 +70,19 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
         settings.builtInZoomControls = false
         settings.displayZoomControls = false
         settings.domStorageEnabled = true
+        settings.domStorageEnabled = true
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
+        settings.cacheMode = LOAD_NO_CACHE
+
+        CookieManager.getInstance().removeAllCookie()
+        binding!!.oauthWebview.clearCache(true)
+        binding!!.oauthWebview.clearHistory()
+
+        CookieManager.getInstance()
+        CookieManager.getInstance().setAcceptCookie(true)
+
+        CookieManager.getInstance().setAcceptThirdPartyCookies(binding!!.oauthWebview, true)
+
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 
@@ -99,7 +114,7 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
 
 
         val url =
-            "https://github.com/login/oauth/authorize?" + "client_id=${BuildConfig.CLIENT_ID}&" + "state=app&redirect_uri=gsygithubapp://authed";
+            "https://github.com/login/oauth/authorize?client_id=${BuildConfig.CLIENT_ID}&state=app&scope=user,repo,gist,notifications,read:org,workflow&redirect_uri=gsygithubapp://authed"
 
         binding!!.oauthWebview.loadUrl(url)
     }

@@ -221,21 +221,17 @@
             android:layout_below="@+id/repos_header_card"
             app:cardCornerRadius="5dp">
 
-            <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
+            <com.shuyu.github.kotlin.ui.view.GSYTabBar
                 android:id="@+id/repos_action_tab_bar"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:ntb_badge_size="0sp"
-                app:ntb_badged="false"
-                app:ntb_bg_color="@color/colorPrimary"
-                app:ntb_icon_size_fraction="0"
-                app:ntb_inactive_color="@color/subTextColor"
-                app:ntb_scaled="true"
-                app:ntb_swiped="true"
-                app:ntb_tinted="true"
-                app:ntb_title_mode="all"
-                app:ntb_title_size="@dimen/smallTextSize"
-                app:ntb_titled="true" />
+                android:layout_height="48dp"
+                android:background="@color/colorPrimary"
+                app:tabIconTint="@color/tab_icon_selector"
+                app:tabTextColor="@color/subTextColor"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorColor="@color/white"
+                app:tabMode="fixed"
+                app:tabGravity="fill" />
         </androidx.cardview.widget.CardView>
 
 

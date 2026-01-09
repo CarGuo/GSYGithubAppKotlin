@@ -1,7 +1,6 @@
 package com.shuyu.github.kotlin.module.repos.action
 
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,8 @@ import com.shuyu.github.kotlin.module.push.PushDetailActivity
 import com.shuyu.github.kotlin.ui.holder.CommitHolder
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import devlight.io.library.ntb.NavigationTabBar
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
+import com.google.android.material.tabs.TabLayout
 
 /**
  * Created by guoshuyu
@@ -28,7 +28,7 @@ import devlight.io.library.ntb.NavigationTabBar
  */
 
 @Route(path = ARouterAddress.ReposDetailActionList)
-class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActionViewModel>(), ARouterInjectable, NavigationTabBar.OnTabBarSelectedIndexListener {
+class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActionViewModel>(), ARouterInjectable, TabLayout.OnTabSelectedListener {
 
     @Autowired
     @JvmField
@@ -75,18 +75,16 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
         headerBinding?.actionViewModel = getViewModel()
 
         headerBinding?.reposActionTabBar?.models = listOf(
-                NavigationTabBar.Model.Builder(null,
-                        Color.parseColor("#00000000"))
+                GSYTabBar.Model.Builder(null)
                         .title(getString(R.string.reposActivity))
                         .build(),
-                NavigationTabBar.Model.Builder(null,
-                        Color.parseColor("#00000000"))
+                GSYTabBar.Model.Builder(null)
                         .title(getString(R.string.reposPush))
                         .build()
         )
 
-        headerBinding?.reposActionTabBar?.onTabBarSelectedIndexListener = this
-        headerBinding?.reposActionTabBar?.modelIndex = 0
+        headerBinding?.reposActionTabBar?.addOnTabSelectedListener(this)
+        headerBinding?.reposActionTabBar?.getTabAt(0)?.select()
 
         manager.addHeaderView(headerBinding!!.root)
 
@@ -99,13 +97,16 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
         headerBinding?.reposActionTabBar?.isTouchEnable = true
     }
 
-    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
-
-    }
-
-    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val index = tab?.position ?: 0
         headerBinding?.reposActionTabBar?.isTouchEnable = false
         getViewModel().showType = index
         showRefresh()
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
     }
 }

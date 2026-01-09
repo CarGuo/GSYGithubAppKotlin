@@ -56,7 +56,8 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
         val dataBinding = DataBindingUtil.setContentView<ActivityUserInfoBinding>(
             this, R.layout.activity_user_info
         )
-        initTitle(ActivityUserInfoBinding.inflate(layoutInflater))
+        dataBinding.lifecycleOwner = this
+        initTitle(dataBinding)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserInfoViewModel::class.java)
         dataBinding.userUIModel = globalAppModel.userObservable
         dataBinding.userInfoViewModel = viewModel

@@ -67,22 +67,17 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp">
 
-                <com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
+                <com.shuyu.github.kotlin.ui.view.GSYTabBar
                     android:id="@+id/issue_list_navigation_tab_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    app:ntb_badge_gravity="top"
-                    app:ntb_badge_position="right"
-                    app:ntb_badged="false"
-                    app:ntb_bg_color="@color/colorPrimary"
-                    app:ntb_icon_size_fraction="0.3"
-                    app:ntb_inactive_color="@color/subTextColor"
-                    app:ntb_scaled="true"
-                    app:ntb_swiped="true"
-                    app:ntb_tinted="true"
-                    app:ntb_title_mode="all"
-                    app:ntb_title_size="13sp"
-                    app:ntb_titled="true" />
+                    android:layout_height="56dp"
+                    android:background="@color/colorPrimary"
+                    app:tabIconTint="@color/tab_icon_selector"
+                    app:tabTextColor="@color/subTextColor"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill" />
             </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView

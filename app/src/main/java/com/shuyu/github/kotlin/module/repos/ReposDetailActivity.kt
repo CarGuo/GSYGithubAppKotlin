@@ -25,9 +25,9 @@ import com.shuyu.github.kotlin.module.repos.file.ReposFileListFragment
 import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListFragment
 import com.shuyu.github.kotlin.module.repos.readme.ReposReadmeFragment
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import devlight.io.library.ntb.NavigationTabBar
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.share
 import org.jetbrains.anko.toast
@@ -77,7 +77,7 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
      * tab列表
      */
     @Inject
-    lateinit var tabModel: MutableList<NavigationTabBar.Model>
+    lateinit var tabModel: MutableList<GSYTabBar.Model>
 
 
     private lateinit var viewModel: ReposDetailViewModel
@@ -91,8 +91,9 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
-        super.onCreate(savedInstanceState)
         binding = ActivityReposDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        super.onCreate(savedInstanceState)
         val fragmentList = getFragmentList()
         binding.reposDetailViewPager.adapter =
             FragmentPagerViewAdapter(fragmentList, supportFragmentManager)
@@ -119,7 +120,7 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
 
     override fun getToolBar(): Toolbar = binding.reposDetailToolbar
 
-    override fun getLayoutId(): Int = R.layout.activity_repos_detail
+    override fun getLayoutId(): Int = 0  // Not used since we set content view via binding
 
     override fun getToolBarTitle(): String = reposName
 

@@ -19,10 +19,9 @@ import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.repository.ReposRepository
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
-import com.shuyu.github.kotlin.ui.view.GSYNavigationTabBar
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import devlight.io.library.ntb.NavigationTabBar
 import javax.inject.Inject
 
 
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
      * tab列表
      */
     @Inject
-    lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
+    lateinit var mainTabModel: MutableList<GSYTabBar.Model>
 
 
     @Inject
@@ -77,9 +76,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        vb = ActivityMainBinding.inflate(layoutInflater);
+        vb = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(vb.root)
 
         initViewPager()
 
@@ -128,7 +127,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
         vb.homeViewPager.offscreenPageLimit = mainFragmentList.size
 
         vb.homeNavigationTabBar.doubleTouchListener =
-            object : GSYNavigationTabBar.TabDoubleClickListener {
+            object : GSYTabBar.TabDoubleClickListener {
                 override fun onDoubleClick(position: Int) {
                     if (position == 0) {
                         val fragment = mainFragmentList[position] as DynamicFragment

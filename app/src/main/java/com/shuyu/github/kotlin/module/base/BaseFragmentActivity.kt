@@ -29,13 +29,14 @@ abstract class BaseFragmentActivity : BaseActivity(), HasSupportFragmentInjector
     private var vb: ActivityFragmentContainerBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         vb = ActivityFragmentContainerBinding.inflate(layoutInflater)
+        setContentView(vb!!.root)
+        super.onCreate(savedInstanceState)
         fragment = getInitFragment()
         addFragment(fragment!!, R.id.activity_fragment_container_id)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_fragment_container
+    override fun getLayoutId(): Int = 0  // Not used since we set content view via binding
 
     override fun actionOpenByBrowser() {
         fragment?.actionOpenByBrowser()

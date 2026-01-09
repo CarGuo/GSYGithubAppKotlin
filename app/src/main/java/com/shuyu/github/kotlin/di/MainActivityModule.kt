@@ -1,8 +1,6 @@
 package com.shuyu.github.kotlin.di
 
 import android.app.Application
-import android.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mikepenz.iconics.IconicsColor
 import com.mikepenz.iconics.IconicsDrawable
@@ -12,9 +10,9 @@ import com.shuyu.github.kotlin.common.style.GSYIconfont
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.trend.TrendFragment
+import com.shuyu.github.kotlin.ui.view.GSYTabBar
 import dagger.Module
 import dagger.Provides
-import devlight.io.library.ntb.NavigationTabBar
 
 /**
  * MainActivity注入需要的Module
@@ -32,30 +30,27 @@ class MainActivityModule {
     }
 
     @Provides
-    fun providerMainTabModel(application: Application): List<NavigationTabBar.Model> {
+    fun providerMainTabModel(application: Application): List<GSYTabBar.Model> {
         return listOf(
-                NavigationTabBar.Model.Builder(
+                GSYTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_MAIN_DT)
                                 .color(IconicsColor.colorInt(R.color.subTextColor))
-                                .sizeDp(20),
-                        Color.parseColor("#00000000"))
+                                .sizeDp(20))
                         .title(application.getString(R.string.tabDynamic))
                         .build(),
-                NavigationTabBar.Model.Builder(
+                GSYTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_MAIN_QS)
                                 .color(IconicsColor.colorInt(R.color.subTextColor))
-                                .sizeDp(20),
-                        Color.parseColor("#00000000"))
+                                .sizeDp(20))
                         .title(application.getString(R.string.tabRecommended))
                         .build(),
-                NavigationTabBar.Model.Builder(
+                GSYTabBar.Model.Builder(
                         IconicsDrawable(application)
                                 .icon(GSYIconfont.Icon.GSY_MAIN_MY)
                                 .color(IconicsColor.colorInt(R.color.subTextColor))
-                                .sizeDp(20),
-                        Color.parseColor("#00000000"))
+                                .sizeDp(20))
                         .title(application.getString(R.string.tabMy))
                         .build()
         )

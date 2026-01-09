@@ -29,22 +29,27 @@ class GSYUserInfoItem : LinearLayout {
 
     var infoClick: View.OnClickListener? = null
 
-    private var vb: LayoutInfoItemBinding =
-        LayoutInfoItemBinding.inflate(LayoutInflater.from(context));
+    private lateinit var vb: LayoutInfoItemBinding
 
-    constructor(context: Context) : super(context)
+    constructor(context: Context) : super(context) {
+        initView()
+    }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initView()
+    }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context, attrs, defStyleAttr
-    )
+    ) {
+        initView()
+    }
 
-    init {;
+    private fun initView() {
+        vb = LayoutInfoItemBinding.inflate(LayoutInflater.from(context), this, true)
         vb.infoItemCard.setOnClickListener {
             infoClick?.onClick(this)
         }
     }
-
 
 }

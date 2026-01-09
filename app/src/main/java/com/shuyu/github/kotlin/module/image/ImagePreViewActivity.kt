@@ -53,9 +53,8 @@ class ImagePreViewActivity : AppCompatActivity(), OnViewTapListener, View.OnLong
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_image_preview)
-
-        val vb = ActivityImagePreviewBinding.inflate(layoutInflater);
+        val vb = ActivityImagePreviewBinding.inflate(layoutInflater)
+        setContentView(vb.root)
         vb.previewPhotoView.setOnViewTapListener(this)
         vb.previewPhotoView.setOnLongClickListener(this)
 
