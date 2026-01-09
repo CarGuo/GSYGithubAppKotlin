@@ -33,6 +33,29 @@ class StartNavigationActivity : AppCompatActivity(), HasSupportFragmentInjector 
             //如果是调试版本，启动后台服务测试AIDL
             startService(Intent(this, LocalService::class.java))
         }
+        
+        handleOAuthCallback(intent)
+    }
+    
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleOAuthCallback(intent)
+    }
+    
+    private fun handleOAuthCallback(intent: Intent?) {
+        val uri = intent?.data
+        if (uri != null && uri.scheme == "gsygithubapp" && uri.host == "authed") {
+            // OAuth callback received, navigate to OAuth fragment if not already there
+            val fragment = supportFragmentManager.primaryNavigationFragment
+            if (fragment is NavHostFragment) {
+                val navController = fragment.navController
+                // Always navigate to OAuth fragment to handle the callback
+                if (navController.currentDestination?.id != R.id.loginOAuthFragment) {
+                    navController.navigate(R.id.loginOAuthFragment)
+                }
+            }
+        }
     }
 
     //实现 HasSupportFragmentInjector 的接口，表示有Fragment需要注入

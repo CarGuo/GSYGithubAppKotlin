@@ -1,13 +1,9 @@
 package com.shuyu.github.kotlin.module.login
 
-import android.graphics.Bitmap
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
-import android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -50,72 +46,42 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
                 activity?.toast(R.string.LoginFailTip)
             }
         })
-        initWeb()
-
+        
+        // Check if we're being called back from OAuth
+        activity?.intent?.data?.let { uri ->
+            if (uri.scheme == "gsygithubapp" && uri.host == "authed") {
+                val code = uri.getQueryParameter("code")
+                if (code != null) {
+                    binding!!.oauthWebviewLoadingBar.visibility = View.VISIBLE
+                    loginViewModel.oauth(context!!, code)
+                    // Clear the intent data to avoid re-processing
+                    activity?.intent?.data = null
+                    return
+                }
+            }
+        }
+        
+        // Launch OAuth in external browser instead of WebView
+        launchOAuthInBrowser()
     }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_login_oauth
     }
 
-
-    private fun initWeb() {
-        val settings = binding!!.oauthWebview.settings
-        settings.javaScriptEnabled = true
-        settings.loadWithOverviewMode = true
-        settings.builtInZoomControls = false
-        settings.displayZoomControls = false
-        settings.domStorageEnabled = true
-        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
+    private fun launchOAuthInBrowser() {
+        val url = "https://github.com/login/oauth/authorize?" +
+                "client_id=${BuildConfig.CLIENT_ID}&" +
+                "state=app&" +
+                "redirect_uri=gsygithubapp://authed"
         
-        // Set a standard Chrome User-Agent to avoid GitHub detecting WebView
-        var userAgent = settings.userAgentString
-        
-        // Remove WebView identifier if present
-        if (userAgent.contains(" wv)")) {
-            userAgent = userAgent.replace(" wv)", ")")
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            // Add FLAG_ACTIVITY_NEW_TASK to open in external browser
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        } catch (e: Exception) {
+            activity?.toast(R.string.LoginFailTip)
         }
-        
-        // Ensure Chrome is present in User-Agent
-        if (!userAgent.contains("Chrome")) {
-            userAgent = "$userAgent Chrome/122.0.0.0 Mobile Safari/537.36"
-        }
-        
-        settings.userAgentString = userAgent
-
-        val webViewClient: WebViewClient = object : WebViewClient() {
-
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                binding!!.oauthWebviewLoadingBar.visibility = View.GONE
-            }
-
-            override fun shouldOverrideUrlLoading(
-                view: WebView?, request: WebResourceRequest?
-            ): Boolean {
-                if (request != null && request.url != null && request.url.toString()
-                        .startsWith("gsygithubapp://authed")
-                ) {
-                    val code = request.url.getQueryParameter("code")
-                    if (code != null) {
-                        loginViewModel.oauth(context!!, code)
-                    };
-                    return true
-                }
-                return false
-            }
-        }
-
-
-        binding!!.oauthWebview.webViewClient = webViewClient
-
-
-        val url =
-            "https://github.com/login/oauth/authorize?" + "client_id=${BuildConfig.CLIENT_ID}&" + "state=app&redirect_uri=gsygithubapp://authed";
-
-        binding!!.oauthWebview.loadUrl(url)
     }
 }
