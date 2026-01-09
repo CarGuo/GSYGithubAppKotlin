@@ -39,7 +39,7 @@ class StartNavigationActivity : AppCompatActivity(), HasSupportFragmentInjector 
     
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        setIntent(intent)
+        intent?.let { setIntent(it) }
         handleOAuthCallback(intent)
     }
     
