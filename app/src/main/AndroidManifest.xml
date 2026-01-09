@@ -45,7 +45,18 @@
         <activity
             android:name=".module.StartNavigationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTask">
+            
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="gsygithubapp"
+                    android:host="authed" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".module.list.GeneralListActivity"
