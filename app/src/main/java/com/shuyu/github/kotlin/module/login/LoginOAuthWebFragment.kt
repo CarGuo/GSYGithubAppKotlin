@@ -53,7 +53,9 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
                 val code = uri.getQueryParameter("code")
                 if (code != null) {
                     binding!!.oauthWebviewLoadingBar.visibility = View.VISIBLE
-                    loginViewModel.oauth(context!!, code)
+                    context?.let { ctx ->
+                        loginViewModel.oauth(ctx, code)
+                    }
                     // Clear the intent data to avoid re-processing
                     activity?.intent?.data = null
                     return
