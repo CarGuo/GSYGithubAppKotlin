@@ -70,14 +70,19 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
         settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
         
         // Set a standard Chrome User-Agent to avoid GitHub detecting WebView
-        val userAgent = settings.userAgentString
-        if (!userAgent.contains("Chrome")) {
-            // Build a proper Chrome User-Agent string
-            settings.userAgentString = "$userAgent Chrome/122.0.0.0 Mobile Safari/537.36"
-        } else if (userAgent.contains(" wv)")) {
-            // Remove WebView identifier if present
-            settings.userAgentString = userAgent.replace(" wv)", ")")
+        var userAgent = settings.userAgentString
+        
+        // Remove WebView identifier if present
+        if (userAgent.contains(" wv)")) {
+            userAgent = userAgent.replace(" wv)", ")")
         }
+        
+        // Ensure Chrome is present in User-Agent
+        if (!userAgent.contains("Chrome")) {
+            userAgent = "$userAgent Chrome/122.0.0.0 Mobile Safari/537.36"
+        }
+        
+        settings.userAgentString = userAgent
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 
