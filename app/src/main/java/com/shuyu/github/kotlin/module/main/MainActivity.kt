@@ -1,11 +1,11 @@
 package com.shuyu.github.kotlin.module.main
 
 import android.os.Bundle
-import androidx.core.view.LayoutInflaterCompat
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.LayoutInflaterCompat
 import androidx.fragment.app.Fragment
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.shuyu.github.kotlin.BuildConfig
@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
 
         if (BuildConfig.NEED_CMAKE_TEST) {
             Debuger.printfWarning(stringFromJNI())
+            Debuger.printfWarning(addNumbers(10, 11).toString())
         }
 
     }
@@ -121,21 +122,21 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     }
 
     private fun initViewPager() {
-        vb.homeViewPager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
+        vb.homeViewPager.adapter =
+            FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
         vb.homeNavigationTabBar.models = mainTabModel
         vb.homeNavigationTabBar.setViewPager(vb.homeViewPager, 0)
         vb.homeViewPager.offscreenPageLimit = mainFragmentList.size
 
-        vb.homeNavigationTabBar.doubleTouchListener =
-            object : GSYTabBar.TabDoubleClickListener {
-                override fun onDoubleClick(position: Int) {
-                    if (position == 0) {
-                        val fragment = mainFragmentList[position] as DynamicFragment
-                        fragment.showRefresh()
-                    }
-
+        vb.homeNavigationTabBar.doubleTouchListener = object : GSYTabBar.TabDoubleClickListener {
+            override fun onDoubleClick(position: Int) {
+                if (position == 0) {
+                    val fragment = mainFragmentList[position] as DynamicFragment
+                    fragment.showRefresh()
                 }
+
             }
+        }
     }
 
     private fun initToolbar() {
@@ -150,5 +151,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     }
 
     external fun stringFromJNI(): String
+
+    // 2. 这里的名字必须出现在 C++ 的 gMethods 映射表里
+    external fun addNumbers(a: Int, b: Int): Int
+
 
 }

@@ -7,11 +7,16 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 
-///是否需要测试 CMake
-def needCMakeTest = false
 
 android {
     compileSdk 34
+
+    ///是否需要测试 CMake
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def needCMakeTest = properties.getProperty("NEED_CMAKE_TEST", "false").toBoolean()
+
+
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
@@ -25,8 +30,7 @@ android {
             }
         }
 
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
         buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
         buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
         buildConfigField "boolean", "NEED_CMAKE_TEST", "$needCMakeTest"
@@ -106,8 +110,8 @@ android {
         debug {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
-            minifyEnabled true
-            shrinkResources true
+            //minifyEnabled true
+            //shrinkResources true
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
