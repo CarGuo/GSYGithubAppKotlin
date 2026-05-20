@@ -1,35 +1,29 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-kapt'
-
-apply plugin: 'realm-android'
-
-
+plugins {
+    id 'com.android.application'
+    id 'com.google.devtools.ksp'
+    id 'org.jetbrains.kotlin.plugin.parcelize'
+}
 
 android {
-    compileSdk 34
+    namespace 'com.shuyu.github.kotlin'
+    compileSdk 36
 
     ///是否需要测试 CMake
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def needCMakeTest = properties.getProperty("NEED_CMAKE_TEST", "false").toBoolean()
 
-
     defaultConfig {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 12
         versionName "1.3.0"
         javaCompileOptions {
             annotationProcessorOptions {
-                //includeCompileClasspath = true
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-
 
         buildConfigField "String", "CLIENT_ID", properties.getProperty("CLIENT_ID")
         buildConfigField "String", "CLIENT_SECRET", properties.getProperty("CLIENT_SECRET")
@@ -60,36 +54,26 @@ android {
         }
     }
 
-
-    /*sourceSets {
-        main {
-            //CMake 增加jniLibs源文件夹
-            jniLibs.srcDirs = ['../distribution/libs']
-        }
-    }*/
-
-
-    kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
-        }
-        javacOptions {
-            // 增加错误提示
-            option("-Xmaxerrs", 500)
-        }
+    ksp {
+        arg("AROUTER_MODULE_NAME", project.getName())
     }
 
-    kotlinOptions {
-        freeCompilerArgs += [
-                "-Xjvm-default=all",
-        ]
+    sourceSets.configureEach { srcSet ->
+        srcSet.java.srcDir("build/generated/data_binding_base_class_source_out/${srcSet.name}/out")
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
     //打开 dataBinding 和 viewBinding
     buildFeatures {
         dataBinding true
         viewBinding true
+        buildConfig true
+        aidl true
     }
-
 
     signingConfigs {
         debug {
@@ -108,20 +92,18 @@ android {
 
     buildTypes {
         debug {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
-            //minifyEnabled true
-            //shrinkResources true
         }
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
         }
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 
@@ -130,50 +112,80 @@ android {
         cleanedAnnotations
         compile.exclude group: 'org.jetbrains', module: 'annotations'
     }
-    packagingOptions {
-        exclude 'META-INF/library-core_release.kotlin_module'
+
+    packaging {
+        resources {
+            excludes += [
+                    'META-INF/library-core_release.kotlin_module',
+                    'META-INF/DEPENDENCIES',
+                    'META-INF/LICENSE',
+                    'META-INF/LICENSE.txt',
+                    'META-INF/NOTICE',
+                    'META-INF/NOTICE.txt'
+            ]
+        }
     }
-    buildFeatures {
-        aidl true
+}
+
+kotlin {
+    jvmToolchain(21)
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        freeCompilerArgs.addAll(
+                "-Xjvm-default=all"
+        )
     }
-    namespace 'com.shuyu.github.kotlin'
+}
+
+// AGP 9 dataBinding-compiler 已编译为 JDK 21+ 字节码，需要 javac 使用 21+ 的 JDK 来跑注解处理器
+def javaToolchains = extensions.getByType(JavaToolchainService.class)
+def javacLauncher21 = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(21)
+}
+def javacCompiler21 = javaToolchains.compilerFor {
+    languageVersion = JavaLanguageVersion.of(21)
+}
+tasks.withType(JavaCompile).configureEach {
+    javaCompiler = javacCompiler21
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //kotlin plugin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.anko:anko:$anko_version"
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     //androidx
     implementation "androidx.core:core-ktx:$ktx_version"
-    implementation "androidx.recyclerview:recyclerview:${android_support}"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat"
-    implementation "androidx.legacy:legacy-support-v4:$android_other_version"
-    implementation "androidx.annotation:annotation:$android_other_version"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
+    implementation "androidx.annotation:annotation:$annotation_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    kapt("org.xerial:sqlite-jdbc:3.34.0") //追加这条
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.4.1'
-    implementation 'androidx.room:room-runtime:2.4.2'
-    kapt 'androidx.room:room-compiler:2.4.2'
-    implementation "com.google.android.material:material:1.6.1"
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 
+    //material
+    implementation "com.google.android.material:material:$material_version"
 
     //constraint
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
 
     //navigation
-    implementation 'androidx.navigation:navigation-fragment:2.5.2'
-    implementation 'androidx.navigation:navigation-ui:2.5.2'
-
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     //dagger
     implementation "com.google.dagger:dagger:${dagger_version}"
-    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
+    ksp "com.google.dagger:dagger-compiler:${dagger_version}"
     implementation "com.google.dagger:dagger-android-support:${dagger_version}"
-    kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
+    ksp "com.google.dagger:dagger-android-processor:${dagger_version}"
 
     //HTTP retrofit2
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp3_version}"
@@ -188,9 +200,8 @@ dependencies {
     }
 
     ///ARouter
-    implementation "com.alibaba:arouter-api:${arouter_api_versoion}"
-    kapt "com.alibaba:arouter-compiler:${arouter_compiler_versoion}"
-
+    implementation "com.alibaba:arouter-api:${arouter_api_version}"
+    ksp "com.github.JailedBird:ArouterKspCompiler:2.2.10-2.0.2"
 
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${rx_android}"
@@ -200,30 +211,25 @@ dependencies {
     implementation "org.greenrobot:eventbus:${event_bus}"
 
     //glide
-    implementation "com.github.bumptech.glide:glide:${image_load}"
-    kapt "com.github.bumptech.glide:compiler:${image_load}"
-
+    implementation "com.github.bumptech.glide:glide:${glide_version}"
+    ksp "com.github.bumptech.glide:ksp:${glide_version}"
 
     ///webview
-    implementation "com.just.agentweb:agentweb:${agentweb_version}"
-    implementation "com.just.agentweb:download:${agentweb_version}"
-
+    // agentweb removed: not used by app source code
 
     //iconics
     implementation "com.mikepenz:iconics-core:${iconics_version}"
     implementation "com.mikepenz:iconics-views:${iconics_version}"
-    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.6-kotlin@aar'
-    implementation 'com.mikepenz:fontawesome-typeface:5.9.0.0-kotlin@aar'
-    implementation 'com.mikepenz:community-material-typeface:3.5.95.1-kotlin@aar'
-    implementation 'com.mikepenz:octicons-typeface:3.2.0.6-kotlin@aar'
-    implementation 'com.mikepenz:weather-icons-typeface:2.0.10.5-kotlin@aar'
-    implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.5-kotlin@aar'
-    implementation 'com.mikepenz:ionicons-typeface:2.0.1.5-kotlin@aar'
-
+    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.9-kotlin@aar'
+    implementation 'com.mikepenz:fontawesome-typeface:5.13.3.1-kotlin@aar'
+    implementation 'com.mikepenz:community-material-typeface:7.0.96.1-kotlin@aar'
+    implementation 'com.mikepenz:octicons-typeface:11.1.0.10-kotlin@aar'
+    implementation 'com.mikepenz:weather-icons-typeface:2.0.10.7-kotlin@aar'
+    implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.7-kotlin@aar'
+    implementation 'com.mikepenz:ionicons-typeface:2.0.1.7-kotlin@aar'
 
     //EDIT TEXT
     implementation "com.github.HITGIF:TextFieldBoxes:${textfiled_box_version}"
-
 
     ///loading spinkits
     implementation "com.github.ybq:Android-SpinKit:${spinkit_version}"
@@ -244,147 +250,154 @@ dependencies {
     implementation "io.noties.markwon:image:$markwon_version"
     implementation "io.noties.markwon:image-glide:$markwon_version"
     implementation "io.noties.markwon:ext-strikethrough:$markwon_version"
-    implementation ("io.noties.markwon:syntax-highlight:$markwon_version") {
+    implementation("io.noties.markwon:syntax-highlight:$markwon_version") {
         exclude group: 'org.jetbrains', module: 'annotations-java5'
     }
-
-
-    ///Prism4j
-    kapt "io.noties:prism4j-bundler:${prism4j_version}"
 
     ///dialogplus
     implementation "com.orhanobut:dialogplus:${dialogplus_version}"
 
     ///Drawer
-    implementation "com.mikepenz:materialdrawer:7.0.0-rc08"
-    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
+    implementation "com.mikepenz:materialdrawer:8.4.5"
+    implementation "androidx.drawerlayout:drawerlayout:$drawerlayout_version"
 
     ///lottie
     implementation "com.airbnb.android:lottie:${lottie_version}"
 
-
-    ///bugly
-    implementation "com.tencent.bugly:crashreport:${bugly_version}"
-
     ///PHOTO VIEW
     implementation "com.github.chrisbanes:PhotoView:${photoview_version}"
 
-    implementation "org.permissionsdispatcher:permissionsdispatcher:${permission_version}"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${permission_version}"
-
-    implementation "androidx.startup:startup-runtime:1.1.1"
+    implementation "androidx.startup:startup-runtime:$startup_version"
+    implementation "androidx.activity:activity-ktx:1.9.0"
+    implementation "androidx.fragment:fragment-ktx:1.8.2"
 }
 
-
-
-// 在你的模块级别 build.gradle 文件中添加此任务
-// 例如: app/build.gradle
-
-task findSoFileOrigins {
-    description = "扫描项目依赖的 AAR 文件，找出 .so 文件的来源。"
-    group = "reporting" // 将任务归类到 "reporting" 组下
-
-    doLast {
-        // 用于存储 AAR 标识符及其包含的 .so 文件路径
-        // 键 (Key): AAR 的字符串标识符 (例如："project :gsyVideoPlayer", "com.example.library:core:1.0.0")
-        // 值 (Value): 一个 Set 集合，包含该 AAR 内所有 .so 文件的路径 (字符串)
-        def aarSoFilesMap = [:]
-
-        def variants = null
-        if (project.plugins.hasPlugin('com.android.application')) {
-            variants = project.android.applicationVariants
-        } else if (project.plugins.hasPlugin('com.android.library')) {
-            variants = project.android.libraryVariants
-        } else {
-            project.logger.warn("警告: findSoFileOrigins 任务需要 Android 应用插件 (com.android.application) 或库插件 (com.android.library)。")
+afterEvaluate {
+    ['Debug', 'Release'].each { variantName ->
+        def variantLower = variantName.uncapitalize()
+        def dbTask = tasks.findByName("dataBindingGenBaseClasses${variantName}")
+        def kspTask = tasks.findByName("ksp${variantName}Kotlin")
+        if (dbTask == null || kspTask == null) {
             return
         }
 
-        if (variants == null || variants.isEmpty()) {
-            project.logger.warn("警告: 未找到任何变体 (variants) 来处理。")
-            return
-        }
+        def srcOut = file("build/generated/data_binding_base_class_source_out/${variantLower}/out")
+        def brOutDir = file("build/generated/source/br_stub/${variantLower}")
 
-        variants.all { variant ->
-            project.logger.lifecycle("正在扫描变体 '${variant.name}' 中的 AAR 依赖以查找 .so 文件...")
-
-            // 获取该变体的运行时配置 (runtime configuration)
-            def configuration = variant.getRuntimeConfiguration()
-
-            try {
-                // 配置一个构件视图 (artifact view) 来精确请求 AAR 类型的构件
-                def resolvedArtifactsView = configuration.incoming.artifactView { view ->
-                    view.attributes { attributes ->
-                        // 明确指定我们只对 artifactType 为 'aar' 的构件感兴趣
-                        // AGP 也常用 "android-aar"，如果 "aar" 效果不佳，可以尝试替换
-                        attributes.attribute(Attribute.of("artifactType", String.class), "aar")
+        def genBrTask = tasks.register("generateBrStub${variantName}") {
+            outputs.dir(brOutDir)
+            doLast {
+                if (brOutDir.exists()) {
+                    brOutDir.deleteDir()
+                }
+                def brFields = new TreeSet<String>()
+                fileTree(dir: 'src/main/java', include: '**/*.kt').each { f ->
+                    f.text.findAll(/BR\.(\w+)/) { match, name -> brFields.add(name) }
+                }
+                fileTree(dir: srcOut, include: '**/*.java').each { f ->
+                    f.text.findAll(/BR\.(\w+)/) { match, name -> brFields.add(name) }
+                }
+                def pkgDir = new File(brOutDir, 'com/shuyu/github/kotlin')
+                pkgDir.mkdirs()
+                def br = new File(pkgDir, 'BR.kt')
+                def sb = new StringBuilder()
+                sb.append('package com.shuyu.github.kotlin\n\n')
+                sb.append('object BR {\n')
+                sb.append('    const val _all: Int = 0\n')
+                int i = 1
+                brFields.each { name ->
+                    if (name != '_all') {
+                        sb.append("    const val ${name}: Int = ${i}\n")
+                        i++
                     }
-                    // lenient(false) 是默认行为。如果设为 true，它会尝试跳过无法解析的构件而不是让整个视图失败。
-                    // 但如果像之前那样，是组件级别的变体选择失败 (如 gsyVideoPlayer)，lenient 可能也无法解决。
-                    // view.lenient(false)
-                }.artifacts // 获取 ResolvedArtifactSet
+                }
+                sb.append('}\n')
+                br.text = sb.toString()
+            }
+        }
 
-                project.logger.info("对于变体 '${variant.name}'，从配置 '${configuration.name}' 解析到 ${resolvedArtifactsView.artifacts.size()} 个 AAR 类型的构件。")
+        genBrTask.configure { dependsOn(dbTask) }
+        kspTask.dependsOn(dbTask, genBrTask)
+        kspTask.kspConfig.javaSourceRoots.from(srcOut, brOutDir)
 
-                resolvedArtifactsView.each { resolvedArtifactResult ->
-                    // resolvedArtifactResult 是 ResolvedArtifactResult 类型的对象
-                    File aarFile = resolvedArtifactResult.file
-                    // 获取组件的标识符，这能告诉我们依赖的来源
-                    // 例如："project :gsyVideoPlayer" 或 "com.google.android.material:material:1.7.0"
-                    String aarIdentifier = resolvedArtifactResult.id.componentIdentifier.displayName
+        def compileKotlinTask = tasks.findByName("compile${variantName}Kotlin")
+        if (compileKotlinTask != null) {
+            compileKotlinTask.dependsOn(genBrTask)
+            compileKotlinTask.source(brOutDir)
+            // 编译完成后删除 Kotlin 端 BR.class，避免与 javac/dataBinding 产生的 BR.class 在 dex 阶段重复
+            compileKotlinTask.doLast {
+                def kotlinBr = file("${compileKotlinTask.destinationDirectory.get().asFile}/com/shuyu/github/kotlin/BR.class")
+                if (kotlinBr.exists()) {
+                    kotlinBr.delete()
+                    logger.lifecycle("[databinding-fix] removed kotlin BR.class to avoid dex duplication: ${kotlinBr}")
+                }
+            }
+        }
+        def compileJavaTask = tasks.findByName("compile${variantName}JavaWithJavac")
+        if (compileJavaTask != null) {
+            compileJavaTask.dependsOn(genBrTask)
+            // AGP 9 不再自动把 Kotlin 输出加入 javac classpath，导致 dataBinding 注解处理器看不到 Kotlin 写的 BindingAdapter
+            if (compileKotlinTask != null) {
+                compileJavaTask.dependsOn(compileKotlinTask)
+                def kotlinClassesDir = compileKotlinTask.destinationDirectory
+                compileJavaTask.doFirst {
+                    def existing = compileJavaTask.classpath
+                    compileJavaTask.classpath = files(kotlinClassesDir) + existing
+                    logger.lifecycle("[databinding-fix] javac classpath prepended with kotlin classes: ${kotlinClassesDir.get().asFile}")
 
-                    aarSoFilesMap.putIfAbsent(aarIdentifier, new HashSet<String>())
-
-                    if (aarFile.exists() && aarFile.name.endsWith('.aar')) {
-                        // project.logger.info("正在检查 AAR: ${aarIdentifier} (文件: ${aarFile.name})")
-                        try {
-                            project.zipTree(aarFile).matching {
-                                include '**/*.so' // 匹配 AAR 中的所有 .so 文件
-                            }.each { File soFileInZip ->
-                                aarSoFilesMap[aarIdentifier].add(soFileInZip.path)
+                    // KSP 不会把 Kotlin @Bindable 暴露给 dataBinding，导致 dataBinding 生成的 BR.java
+                    // 缺少 @Bindable 字段。扫描 Kotlin 源码中所有 @Bindable + var 名 + BR.xxx 引用，
+                    // 把缺失字段追加到 dataBinding 已生成的 BR.java，让 javac 在编译阶段能解析 BR.image 等。
+                    def brJava = file("build/generated/ap_generated_sources/${variantLower}/out/com/shuyu/github/kotlin/BR.java")
+                    if (brJava.exists()) {
+                        def text = brJava.text
+                        def existingFields = new HashSet<String>()
+                        (text =~ /public static final int (\w+) =/).each { m -> existingFields.add(m[1]) }
+                        def referenced = new TreeSet<String>()
+                        // 扫描 Kotlin 源中 @Bindable 修饰的属性名
+                        def bindablePattern = ~/(?s)@Bindable\s*\n\s*(?:get\(\)\s*=\s*field\s*\n\s*set\(value\)\s*\{[^}]*\}\s*\n\s*)?\s*/
+                        fileTree(dir: 'src/main/java', include: '**/*.kt').each { f ->
+                            def src = f.text
+                            // 匹配 var name: ... 后接 @Bindable 形式（属性的 backing-field 注解）
+                            def varBindable = src =~ /(?ms)var\s+(\w+)\s*:[^\n]*\n\s*@Bindable/
+                            varBindable.each { match -> referenced.add(match[1]) }
+                            // 也扫 BR.xxx 引用
+                            src.findAll(/BR\.(\w+)/) { match, name -> referenced.add(name) }
+                        }
+                        def missing = referenced.findAll { !existingFields.contains(it) && it != '_all' }
+                        if (!missing.isEmpty()) {
+                            def insertion = new StringBuilder()
+                            int next = (text =~ /public static final int \w+ = (\d+);/).collect { it[1] as int }.max() ?: 0
+                            missing.each { name ->
+                                next++
+                                insertion.append("\n  public static final int ${name} = ${next};\n")
                             }
-                        } catch (Exception e) {
-                            project.logger.error("错误: 无法检查 AAR 文件 '${aarIdentifier}' (路径: ${aarFile.absolutePath})。原因: ${e.message}")
-                        }
-                    } else {
-                        if (!aarFile.name.endsWith('.aar')) {
-                            project.logger.debug("跳过非 AAR 文件 '${aarFile.name}' (来自: ${aarIdentifier})，其构件类型被解析为 AAR。")
-                        } else {
-                            project.logger.warn("警告: 来自 '${aarIdentifier}' 的 AAR 文件不存在: ${aarFile.absolutePath}")
+                            def patched = text.replaceFirst(/(?s)\}\s*\z/, insertion.toString() + '}\n')
+                            brJava.text = patched
+                            logger.lifecycle("[databinding-fix] patched BR.java with ${missing.size()} missing fields: ${missing}")
                         }
                     }
                 }
-
-            } catch (Exception e) {
-                // 这个 catch 块会捕获解析构件视图时发生的错误
-                // 这可能仍然包括之前遇到的 "Could not resolve all artifacts for configuration" 错误，
-                // 如果问题非常根本，即使是特定的构件视图也无法克服。
-                project.logger.error("错误: 无法为配置 '${configuration.name}' 解析 AAR 类型的构件。" +
-                        "可能项目设置中存在依赖变体匹配问题，" +
-                        "详细信息: ${e.message}", e) // 打印异常堆栈以获取更多信息
-                project.logger.error("建议: 请检查项目依赖（尤其是本地子项目如 ':xxxxx'）的构建配置，" +
-                        "确保它们能正确地发布带有标准 Android 库属性（如组件类别、构建类型，以及适用的 Kotlin 平台类型等）的变体。")
-                // 如果希望任务在此处停止而不是尝试其他变体，可以取消下一行的注释
-                // throw e
             }
         }
+    }
+}
 
-        // 打印结果
-        if (aarSoFilesMap.isEmpty()) {
-            project.logger.lifecycle("\n在所有已处理变体的可解析 AAR 依赖中均未找到 .so 文件，或者依赖解析失败。")
-        } else {
-            println "\n--- AAR 依赖中的 .so 文件来源 ---"
-            // 按 AAR 标识符排序以获得一致的输出
-            aarSoFilesMap.sort { it.key }.each { aarId, soFileList ->
-                if (!soFileList.isEmpty()) {
-                    println "${aarId}:" // 例如：project :gsyVideoPlayer: 或 com.some.library:core:1.0:
-                    soFileList.sort().each { soPath -> // 对 .so 文件路径排序
-                        println "  - ${soPath}"     // 例如：  - jni/armeabi-v7a/libexample.so
-                    }
-                }
+android.sourceSets.configureEach { ss ->
+    // 不再把 BR 桩注入到 main sourceSet，避免被 javac/dataBinding 重复识别
+}
+
+// BR.kt 桩仅给 Kotlin 编译使用（KSP 与 compileKotlin 都会读取 kotlin sourceSet），
+// 不会被 javac 的 dataBinding 注解处理器拾取，因此与 dataBinding 自身写 BR.java 不冲突
+afterEvaluate {
+    def kotlinExt = extensions.findByName('kotlin')
+    if (kotlinExt != null) {
+        try {
+            def mainSrc = kotlinExt.sourceSets.findByName('main')
+            if (mainSrc != null) {
+                mainSrc.kotlin.srcDir("build/generated/source/br_stub/debug")
+                mainSrc.kotlin.srcDir("build/generated/source/br_stub/release")
             }
-            println "----------------------------------"
-        }
-        project.logger.lifecycle("任务执行完毕。要再次运行此任务，请执行: ./gradlew ${project.name}:${name}")
+        } catch (Throwable ignored) { }
     }
 }

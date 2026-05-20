@@ -1,7 +1,7 @@
 package com.shuyu.github.kotlin.module.main
 
 import com.shuyu.github.kotlin.R
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 
 /**
  * 主页退出逻辑

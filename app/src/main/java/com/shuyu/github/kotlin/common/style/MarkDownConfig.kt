@@ -10,8 +10,8 @@ import io.noties.markwon.syntax.Prism4jTheme
 import io.noties.markwon.syntax.Prism4jThemeDarkula
 import io.noties.markwon.syntax.SyntaxHighlight
 import io.noties.prism4j.AbsVisitor
+import io.noties.prism4j.GrammarLocator
 import io.noties.prism4j.Prism4j
-import io.noties.prism4j.annotations.PrismBundle
 import io.noties.markwon.core.spans.LastLineSpacingSpan
 import io.noties.markwon.RenderProps
 import io.noties.markwon.MarkwonConfiguration
@@ -30,11 +30,10 @@ import io.noties.markwon.syntax.SyntaxHighlightPlugin
  * markdown文件显示配置
  */
 
-@PrismBundle(includeAll = true, grammarLocatorClassName = ".MyGrammarLocator")
 object MarkDownConfig {
 
     fun getConfig(context: Context): ArrayList<AbstractMarkwonPlugin> {
-        val prism4j = Prism4j(MyGrammarLocator())
+        val prism4j = Prism4j(GSYGrammarLocator())
         return arrayListOf(GlideImagesPlugin.create(context.applicationContext),
                 GlideImagesPlugin.create(context),
                 LinkifyPlugin.create(),
@@ -44,6 +43,21 @@ object MarkDownConfig {
                 SyntaxHighlightPlugin.create(prism4j, Prism4jThemeDarkula.create(), "java"))
     }
 
+}
+
+/**
+ * 简化的 GrammarLocator 实现，由于 prism4j-bundler 注解处理器
+ * 不兼容 KSP / AGP 9 的 built-in Kotlin，这里手动实现一个空实现，
+ * 使语法高亮 fallback 到无语法状态（仍可正常显示代码块）
+ */
+class GSYGrammarLocator : GrammarLocator {
+    override fun grammar(prism4j: Prism4j, language: String): Prism4j.Grammar? {
+        return null
+    }
+
+    override fun languages(): MutableSet<String> {
+        return mutableSetOf()
+    }
 }
 
 

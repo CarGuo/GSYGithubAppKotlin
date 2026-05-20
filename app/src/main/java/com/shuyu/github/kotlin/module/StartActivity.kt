@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.shuyu.github.kotlin.R
-import org.jetbrains.anko.clearTask
+import com.shuyu.github.kotlin.common.compat.clearTask
 
 /**
  * 启动页
@@ -18,7 +18,7 @@ class StartActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start)
 
         val intent = Intent(this, StartNavigationActivity::class.java)
-        intent.clearTask()
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
 
         finish()

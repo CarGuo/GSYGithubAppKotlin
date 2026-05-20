@@ -9,9 +9,9 @@ import com.shuyu.github.kotlin.common.utils.copy
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseUserInfoFragment
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.share
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.browse
+import com.shuyu.github.kotlin.common.compat.share
+import com.shuyu.github.kotlin.common.compat.toast
 
 /**
  * Created by guoshuyu

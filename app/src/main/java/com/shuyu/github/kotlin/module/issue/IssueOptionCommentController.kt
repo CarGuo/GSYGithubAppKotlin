@@ -14,7 +14,7 @@ import com.shuyu.github.kotlin.common.utils.copy
 import com.shuyu.github.kotlin.common.utils.showIssueEditDialog
 import com.shuyu.github.kotlin.common.utils.showOptionSelectDialog
 import com.shuyu.github.kotlin.model.ui.IssueUIModel
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 
 class IssueOptionCommentController(private val context: Context, private val adapter: BindSuperAdapter?, private val issueDetailFragment: IssueDetailFragment) : OnItemClickListener {
 

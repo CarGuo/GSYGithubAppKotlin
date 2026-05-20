@@ -40,6 +40,8 @@ object EventUtils {
             }
             EventUIAction.Release -> {
             }
+            null -> {
+            }
         }
     }
 }

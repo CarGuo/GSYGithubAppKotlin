@@ -39,7 +39,7 @@ class GSYGlideImageLoader(private val context: Context) : GSYImageLoader {
         loadImage(loadOption, extendOption)
                 .load(loadOption.mUri)
                 .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         callback?.let {
                             it.onFail(e)
                         }

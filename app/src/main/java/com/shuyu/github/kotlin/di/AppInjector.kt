@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.shuyu.github.kotlin.GSYGithubApplication
 import dagger.android.AndroidInjection
+import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 
 /**
  * Application注入，并且对Activity和Fragment提供动态注入
@@ -57,7 +57,7 @@ object AppInjector {
 
     private fun handleActivity(activity: Activity) {
         //注入Activity
-        if (activity is HasSupportFragmentInjector) {
+        if (activity is HasAndroidInjector) {
             AndroidInjection.inject(activity)
         }
         if (activity is ARouterInjectable) {

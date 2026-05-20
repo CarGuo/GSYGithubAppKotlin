@@ -27,6 +27,6 @@ class IssueHolder(context: Context, private val v: View, dataBing: ViewDataBindi
     }
 
     companion object {
-        const val ID = R.layout.layout_issue_item
+        @JvmField val ID = R.layout.layout_issue_item
     }
 }

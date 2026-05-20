@@ -20,6 +20,6 @@ class FileHolder(context: Context, private val v: View, dataBing: ViewDataBindin
     }
 
     companion object {
-        const val ID = R.layout.layout_file_item
+        @JvmField val ID = R.layout.layout_file_item
     }
 }

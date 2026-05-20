@@ -10,7 +10,12 @@ import retrofit2.Response
 class FlatMapResponse2Result<T>(private val response: Response<T>) : ObservableSource<T> {
     override fun subscribe(observer: Observer<in T?>) {
         if (response.isSuccessful) {
-            observer.onNext(response.body())
+            val body = response.body()
+            if (body != null) {
+                observer.onNext(body)
+            } else {
+                observer.onError(Throwable("response body is null"))
+            }
         } else {
             observer.onError(Throwable(response.code().toString(), Throwable(response.errorBody().toString())))
         }

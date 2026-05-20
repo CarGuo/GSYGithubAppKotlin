@@ -67,7 +67,7 @@ fun Context.copy(string: String) {
  */
 fun Context.getVersionName(): String {
     val manager = packageManager.getPackageInfo(packageName, 0)
-    return manager.versionName
+    return manager.versionName ?: ""
 }
 
 

@@ -6,7 +6,6 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shuyu.commonrecycler.BindSuperAdapter
@@ -38,7 +37,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
 
     override fun onCreateView(mainView: View?) {
         normalAdapterManager = BindingDataRecyclerManager()
-        baseViewModel = ViewModelProviders.of(this, viewModelFactory)
+        baseViewModel = ViewModelProvider(this, viewModelFactory)
                 .get(getViewModelClass())
     }
 
@@ -58,6 +57,7 @@ abstract class BaseListFragment<T : ViewDataBinding, R : BaseViewModel> : BaseFr
                 LoadState.Refresh -> {
                     ///刷新时清空旧数据
                 }
+                else -> {}
             }
         })
 

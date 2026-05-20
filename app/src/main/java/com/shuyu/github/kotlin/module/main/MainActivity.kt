@@ -20,15 +20,16 @@ import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.repository.ReposRepository
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYTabBar
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 
 /**
  * 主页
  */
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
+class MainActivity : AppCompatActivity(), HasAndroidInjector,
     Toolbar.OnMenuItemClickListener {
 
     companion object {
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     lateinit var globalModel: AppGlobalModel
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     /**
      * fragment列表
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
 
     }
 
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

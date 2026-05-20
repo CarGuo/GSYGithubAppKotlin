@@ -219,15 +219,14 @@
 # If using byType argument injection, keep the classes injected
 -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
 
-# ============ Realm ProGuard Rules ============
+# ============ Room ProGuard Rules ============
 
--keep class io.realm.annotations.RealmModule
--keep @io.realm.annotations.RealmModule class *
--keep class io.realm.internal.Keep
--keep @io.realm.internal.Keep class *
--dontwarn io.realm.**
+-keep class androidx.room.** { *; }
+-keep @androidx.room.Entity class *
+-keep @androidx.room.Dao class *
+-keep @androidx.room.Database class *
 
-# Keep Realm model classes
+# Keep DB model classes (Room entities use reflection at code-gen stage)
 -keep class com.shuyu.github.kotlin.common.db.** { *; }
 
 # ============ Glide ProGuard Rules ============

@@ -2,7 +2,6 @@ package com.shuyu.github.kotlin.di
 
 import android.app.Application
 import com.shuyu.github.kotlin.GSYGithubApplication
-import com.shuyu.github.kotlin.common.db.RealmFactory
 import com.shuyu.github.kotlin.common.net.RetrofitFactory
 import dagger.BindsInstance
 import dagger.Component
@@ -51,12 +50,6 @@ class AppModule {
     @Provides
     fun providerRetrofit(): Retrofit {
         return RetrofitFactory.instance.retrofit
-    }
-
-    @Singleton
-    @Provides
-    fun providerRealmFactory(): RealmFactory {
-        return RealmFactory.instance
     }
 }
 

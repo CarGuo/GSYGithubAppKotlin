@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.github.kotlin.R
@@ -39,7 +38,7 @@ class ReposReadmeFragment : BaseFragment<FragmentReposReadmeBinding>(), ARouterI
 
     override fun onCreateView(mainView: View?) {
         viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(ReposReadmeViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(ReposReadmeViewModel::class.java)
 
     }
 

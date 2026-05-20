@@ -27,6 +27,6 @@ class IssueCommentHolder(context: Context, private val v: View, dataBing: ViewDa
     }
 
     companion object {
-        const val ID = R.layout.layout_issue_comment_item
+        @JvmField val ID = R.layout.layout_issue_comment_item
     }
 }

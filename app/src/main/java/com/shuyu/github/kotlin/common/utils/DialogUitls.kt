@@ -11,7 +11,7 @@ import com.orhanobut.dialogplus.ViewHolder
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.LayoutIssueEditDialogBinding
 import com.shuyu.github.kotlin.ui.adapter.TextListAdapter
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 
 /**
  * 拓展Context显示Dialog

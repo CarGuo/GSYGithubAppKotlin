@@ -2,11 +2,10 @@ package com.shuyu.github.kotlin.di
 
 import android.app.Application
 import androidx.fragment.app.Fragment
-import com.mikepenz.iconics.IconicsColor
 import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.utils.sizeDp
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.style.GSYIconfont
+import com.shuyu.github.kotlin.common.style.applyIconAndColor
 import com.shuyu.github.kotlin.module.dynamic.DynamicFragment
 import com.shuyu.github.kotlin.module.my.MyFragment
 import com.shuyu.github.kotlin.module.trend.TrendFragment
@@ -34,23 +33,17 @@ class MainActivityModule {
         return listOf(
                 GSYTabBar.Model.Builder(
                         IconicsDrawable(application)
-                                .icon(GSYIconfont.Icon.GSY_MAIN_DT)
-                                .color(IconicsColor.colorInt(R.color.subTextColor))
-                                .sizeDp(20))
+                                .applyIconAndColor(GSYIconfont.Icon.GSY_MAIN_DT, R.color.subTextColor, 20))
                         .title(application.getString(R.string.tabDynamic))
                         .build(),
                 GSYTabBar.Model.Builder(
                         IconicsDrawable(application)
-                                .icon(GSYIconfont.Icon.GSY_MAIN_QS)
-                                .color(IconicsColor.colorInt(R.color.subTextColor))
-                                .sizeDp(20))
+                                .applyIconAndColor(GSYIconfont.Icon.GSY_MAIN_QS, R.color.subTextColor, 20))
                         .title(application.getString(R.string.tabRecommended))
                         .build(),
                 GSYTabBar.Model.Builder(
                         IconicsDrawable(application)
-                                .icon(GSYIconfont.Icon.GSY_MAIN_MY)
-                                .color(IconicsColor.colorInt(R.color.subTextColor))
-                                .sizeDp(20))
+                                .applyIconAndColor(GSYIconfont.Icon.GSY_MAIN_MY, R.color.subTextColor, 20))
                         .title(application.getString(R.string.tabMy))
                         .build()
         )

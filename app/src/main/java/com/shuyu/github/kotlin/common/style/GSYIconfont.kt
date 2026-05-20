@@ -1,10 +1,15 @@
 package com.shuyu.github.kotlin.common.style
 
 import android.graphics.Typeface
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.mikepenz.iconics.Iconics
+import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.ITypeface
+import com.mikepenz.iconics.utils.colorInt
+import com.mikepenz.iconics.utils.icon
+import com.mikepenz.iconics.utils.sizeDp
 import com.shuyu.github.kotlin.R
 import java.util.*
 
@@ -120,4 +125,21 @@ object GSYIconfont : ITypeface {
 
         override val typeface: ITypeface by lazy { GSYIconfont }
     }
+}
+
+/**
+ * Iconics 5.x: icon 是扩展函数，color/size 改为属性赋值，包装兼容旧链式 API
+ */
+fun IconicsDrawable.applyIconAndColor(
+        iconValue: IIcon,
+        colorRes: Int,
+        sizeDp: Int = -1
+): IconicsDrawable {
+    icon(iconValue)
+    val ctx = Iconics.applicationContext
+    colorInt = ContextCompat.getColor(ctx, colorRes)
+    if (sizeDp > 0) {
+        this.sizeDp = sizeDp
+    }
+    return this
 }

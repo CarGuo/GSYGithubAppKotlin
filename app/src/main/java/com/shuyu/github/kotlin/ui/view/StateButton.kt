@@ -14,7 +14,7 @@ import com.shuyu.github.kotlin.R
 /**
  * 自带Shape按键
  */
-class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.buttonStyle) : AppCompatButton(context, attrs, defStyleAttr) {
+class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.buttonStyle) : AppCompatButton(context, attrs, defStyleAttr) {
 
     //text color
     private var mNormalTextColor = 0

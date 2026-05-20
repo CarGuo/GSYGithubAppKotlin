@@ -3,13 +3,19 @@ package com.shuyu.github.kotlin.module.search
 import android.app.Activity
 import android.view.View
 import androidx.core.view.GravityCompat
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.shuyu.github.kotlin.R
-import com.shuyu.github.kotlin.module.list.GeneralFilterController
+import com.shuyu.github.kotlin.common.compat.DrawerBuilderShim
+import com.shuyu.github.kotlin.common.compat.DrawerShim
+import com.shuyu.github.kotlin.common.compat.withEnabled
+import com.shuyu.github.kotlin.common.compat.withIdentifier
+import com.shuyu.github.kotlin.common.compat.withName
+import com.shuyu.github.kotlin.common.compat.withSelectable
+import com.shuyu.github.kotlin.common.compat.withSelected
+import com.shuyu.github.kotlin.common.compat.withTag
+import com.shuyu.github.kotlin.common.compat.withTextColorRes
 
 /**
  * 搜索过滤控制器
@@ -63,7 +69,7 @@ class SearchFilterController(private val activity: Activity?, private val search
     )
 
 
-    var drawer: Drawer? = null
+    internal var drawer: DrawerShim? = null
 
     init {
 
@@ -78,13 +84,13 @@ class SearchFilterController(private val activity: Activity?, private val search
             }
         }
         drawer?.currentSelectedPosition
-        drawer = DrawerBuilder()
+        drawer = DrawerBuilderShim()
                 .withActivity(activity!!)
                 .withDrawerGravity(GravityCompat.END)
                 .withDrawerItems(filterList)
                 .withMultiSelect(true)
 
-                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
 
                         when (drawerItem.identifier / 1000 * 1000) {

@@ -18,7 +18,6 @@ import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.push.PushDetailActivity
 import com.shuyu.github.kotlin.ui.holder.CommitHolder
 import com.shuyu.github.kotlin.ui.holder.EventHolder
-import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 import com.shuyu.github.kotlin.ui.view.GSYTabBar
 import com.google.android.material.tabs.TabLayout
 
@@ -69,7 +68,7 @@ class ReposActionListFragment : BaseListFragment<FragmentListBinding, ReposActio
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         headerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_repos_header,
-                null, false, GSYDataBindingComponent())
+                null, false)
 
         headerBinding?.reposUIModel = getViewModel().reposUIModel
         headerBinding?.actionViewModel = getViewModel()

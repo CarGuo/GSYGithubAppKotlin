@@ -27,6 +27,6 @@ class EventHolder(context: Context,private val v: View, dataBing: ViewDataBindin
     }
 
     companion object {
-        const val ID = R.layout.layout_event_item
+        @JvmField val ID = R.layout.layout_event_item
     }
 }

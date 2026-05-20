@@ -23,6 +23,6 @@ class CommitHolder(context: Context, private val v: View, dataBing: ViewDataBind
     }
 
     companion object {
-        const val ID = R.layout.layout_commit_item
+        @JvmField val ID = R.layout.layout_commit_item
     }
 }

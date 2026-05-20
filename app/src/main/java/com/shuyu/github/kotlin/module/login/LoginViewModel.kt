@@ -12,7 +12,7 @@ import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.repository.LoginRepository
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 import javax.inject.Inject
 
 /**

@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create local.properties
         run: |
           echo "CLIENT_ID=\"${{ secrets.CLIENT_ID }}\"" >> local.properties
@@ -20,14 +20,13 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: 17
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v3
       - name: Build APK
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: app:assembleRelease
+        run: ./gradlew :app:assembleRelease --stacktrace
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:

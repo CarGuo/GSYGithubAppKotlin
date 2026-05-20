@@ -8,14 +8,23 @@ import android.text.style.URLSpan
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
-import com.mikepenz.materialdrawer.AccountHeaderBuilder
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.orhanobut.dialogplus.DialogPlus
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.compat.AccountHeaderBuilderShim
+import com.shuyu.github.kotlin.common.compat.DrawerBuilderShim
+import com.shuyu.github.kotlin.common.compat.DrawerShim
+import com.shuyu.github.kotlin.common.compat.alert
+import com.shuyu.github.kotlin.common.compat.browse
+import com.shuyu.github.kotlin.common.compat.toast
+import com.shuyu.github.kotlin.common.compat.withEmail
+import com.shuyu.github.kotlin.common.compat.withIcon
+import com.shuyu.github.kotlin.common.compat.withName
+import com.shuyu.github.kotlin.common.compat.withOnDrawerItemClickListener
+import com.shuyu.github.kotlin.common.compat.withSelected
+import com.shuyu.github.kotlin.common.compat.withTextColorRes
 import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.common.utils.IssueDialogClickListener
 import com.shuyu.github.kotlin.common.utils.getVersionName
@@ -24,12 +33,10 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.model.bean.Issue
 import com.shuyu.github.kotlin.model.bean.Release
 import com.shuyu.github.kotlin.module.info.UserInfoActivity
-import com.shuyu.github.kotlin.module.list.GeneralFilterController
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
 import com.shuyu.github.kotlin.repository.IssueRepository
 import com.shuyu.github.kotlin.repository.LoginRepository
 import com.shuyu.github.kotlin.repository.ReposRepository
-import org.jetbrains.anko.*
 
 /**
  * 主页Drawer控制器
@@ -42,17 +49,17 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                            private val reposRepository: ReposRepository,
                            globalModel: AppGlobalModel) {
 
-    var drawer: Drawer? = null
+    internal var drawer: DrawerShim? = null
 
     init {
-        drawer = DrawerBuilder()
+        drawer = DrawerBuilderShim()
                 .withActivity(activity)
                 .withToolbar(toolbar)
                 .withSelectedItem(-1)
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.feedback)
                                 .withTextColorRes(R.color.colorPrimary)
-                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
                                         feedback()
                                         unSelect(drawerItem)
@@ -63,7 +70,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.person)
                                 .withTextColorRes(R.color.colorPrimary)
-                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
                                         UserInfoActivity.gotoUserInfo()
                                         unSelect(drawerItem)
@@ -74,7 +81,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.update)
                                 .withTextColorRes(R.color.colorPrimary)
-                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
                                         checkUpdate(true)
                                         unSelect(drawerItem)
@@ -85,7 +92,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.about)
                                 .withTextColorRes(R.color.colorPrimary)
-                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
                                         showAboutDialog()
                                         unSelect(drawerItem)
@@ -96,17 +103,17 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                 .addDrawerItems(
                         PrimaryDrawerItem().withName(R.string.LoginOut)
                                 .withTextColorRes(R.color.red)
-                                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
-                                        loginRepository.logout(view!!.context)
+                                        loginRepository.logout(activity)
                                         unSelect(drawerItem)
                                         return true
                                     }
                                 })
                 )
-                .withAccountHeader(AccountHeaderBuilder()
+                .withAccountHeader(AccountHeaderBuilderShim()
                         .withActivity(activity)
-                        .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login)
+                        .addProfiles(ProfileDrawerItem().withName(globalModel.userObservable.login ?: "")
                                 .withSelected(false)
                                 .withTextColorRes(R.color.white)
                                 .withIcon(globalModel.userObservable.avatarUrl?.toUri()!!)

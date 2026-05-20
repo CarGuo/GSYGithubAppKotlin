@@ -2,12 +2,18 @@ package com.shuyu.github.kotlin.module.list
 
 import android.view.View
 import androidx.core.view.GravityCompat
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.shuyu.github.kotlin.R
+import com.shuyu.github.kotlin.common.compat.DrawerBuilderShim
+import com.shuyu.github.kotlin.common.compat.DrawerShim
+import com.shuyu.github.kotlin.common.compat.withEnabled
+import com.shuyu.github.kotlin.common.compat.withIdentifier
+import com.shuyu.github.kotlin.common.compat.withName
+import com.shuyu.github.kotlin.common.compat.withSelectable
+import com.shuyu.github.kotlin.common.compat.withSelected
+import com.shuyu.github.kotlin.common.compat.withTag
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 
 /**
@@ -34,7 +40,7 @@ class GeneralFilterController(private val fragment: BaseListFragment<*, *>?, pri
     )
 
 
-    var drawer: Drawer? = null
+    internal var drawer: DrawerShim? = null
 
     init {
 
@@ -47,12 +53,12 @@ class GeneralFilterController(private val fragment: BaseListFragment<*, *>?, pri
             }
         }
         drawer?.currentSelectedPosition
-        drawer = DrawerBuilder()
+        drawer = DrawerBuilderShim()
                 .withActivity(fragment!!.activity!!)
                 .withDrawerGravity(GravityCompat.END)
                 .withDrawerItems(filterList)
                 .withMultiSelect(true)
-                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                .withOnDrawerItemClickListener(object : DrawerBuilderShim.DrawerItemClickListener {
                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
                         when (drawerItem.identifier / 1000 * 1000) {
                             STATUS_ID -> {

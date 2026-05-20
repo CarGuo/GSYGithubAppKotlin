@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -26,11 +25,12 @@ import com.shuyu.github.kotlin.module.repos.issue.ReposIssueListFragment
 import com.shuyu.github.kotlin.module.repos.readme.ReposReadmeFragment
 import com.shuyu.github.kotlin.ui.adapter.FragmentPagerViewAdapter
 import com.shuyu.github.kotlin.ui.view.GSYTabBar
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.share
-import org.jetbrains.anko.toast
+import dagger.android.HasAndroidInjector
+import com.shuyu.github.kotlin.common.compat.browse
+import com.shuyu.github.kotlin.common.compat.share
+import com.shuyu.github.kotlin.common.compat.toast
 import javax.inject.Inject
 
 /**
@@ -40,7 +40,7 @@ import javax.inject.Inject
  */
 
 @Route(path = ARouterAddress.ReposDetailActivity)
-class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterInjectable {
+class ReposDetailActivity : BaseActivity(), HasAndroidInjector, ARouterInjectable {
 
     companion object {
 
@@ -66,7 +66,7 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
 
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
 
     @Inject
@@ -103,7 +103,7 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
 
 
         viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(ReposDetailViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(ReposDetailViewModel::class.java)
         viewModel.getReposStatus(userName, reposName)
 
         viewModel.starredStatus.observe(this, Observer { result ->
@@ -115,7 +115,7 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
 
     }
 
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
 
     override fun getToolBar(): Toolbar = binding.reposDetailToolbar
@@ -166,11 +166,11 @@ class ReposDetailActivity : BaseActivity(), HasSupportFragmentInjector, ARouterI
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 val item = binding.reposDetailControlBar.list[position]
                 when {
-                    item.toLowerCase().contains("star") -> {
+                    item.lowercase().contains("star") -> {
                         viewModel.changeStarStatus(this, userName, reposName)
                     }
 
-                    item.toLowerCase().contains("watch") -> {
+                    item.lowercase().contains("watch") -> {
                         viewModel.changeWatchStatus(this, userName, reposName)
                     }
 

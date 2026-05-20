@@ -24,9 +24,9 @@ import com.shuyu.github.kotlin.service.LoginService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.clearTop
-import org.jetbrains.anko.singleTop
+import com.shuyu.github.kotlin.common.compat.clearTask
+import com.shuyu.github.kotlin.common.compat.clearTop
+import com.shuyu.github.kotlin.common.compat.singleTop
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -187,10 +187,9 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
         userInfoStorage = ""
         clearCookies()
         val intent = Intent(context, StartNavigationActivity::class.java)
-        intent.clearTask()
-        intent.clearTop()
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         context.startActivity(intent)
-        (context as Activity).finish()
+        (context as? Activity)?.finish()
     }
 
     fun clearCookies() {

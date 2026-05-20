@@ -19,8 +19,7 @@ import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.repository.UserRepository
 import com.shuyu.github.kotlin.ui.holder.EventHolder
 import com.shuyu.github.kotlin.ui.holder.UserHolder
-import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 
 /**
  * 基础用户显示
@@ -61,7 +60,7 @@ abstract class BaseUserInfoFragment<T : BaseUserInfoViewModel> : BaseListFragmen
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_user_header,
-                null, false, GSYDataBindingComponent())
+                null, false)
         binding.userUIModel = getViewModel().getUserModel()
         binding.baseUserViewModel = getViewModel()
         binding.userHeaderNotify.visibility = View.GONE

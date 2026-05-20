@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.shuyu.github.kotlin.di.Injectable
-import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
 
 /**
  * 基类Fragment
@@ -30,8 +29,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), Injectable {
                 inflater,
                 getLayoutId(),
                 container,
-                false,
-                GSYDataBindingComponent())
+                false)
         onCreateView(binding?.root)
         return binding?.root
     }

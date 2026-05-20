@@ -9,7 +9,7 @@ import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.module.list.GeneralEnum
 import com.shuyu.github.kotlin.module.list.GeneralListActivity
 import com.shuyu.github.kotlin.repository.ReposRepository
-import org.jetbrains.anko.runOnUiThread
+import com.shuyu.github.kotlin.common.compat.runOnUiThread
 import javax.inject.Inject
 
 /**

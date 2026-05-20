@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shuyu.github.kotlin.common.net.ResultCallBack
-import org.jetbrains.anko.runOnUiThread
+import com.shuyu.github.kotlin.common.compat.runOnUiThread
 
 /**
  * 基类列表VM
@@ -57,6 +57,7 @@ abstract class BaseViewModel(private val application: Application) : ViewModel()
             LoadState.NONE -> {
                 loading.value = LoadState.NONE
             }
+            else -> {}
         }
     }
 

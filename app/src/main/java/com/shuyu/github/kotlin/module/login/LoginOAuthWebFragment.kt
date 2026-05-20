@@ -12,12 +12,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.shuyu.github.kotlin.BuildConfig
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.FragmentLoginOauthBinding
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 import javax.inject.Inject
 
 class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
@@ -42,7 +41,7 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
         WebView.setWebContentsDebuggingEnabled(true)
 
         loginViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
         binding?.loginViewModel = loginViewModel
 

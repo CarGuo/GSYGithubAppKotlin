@@ -19,6 +19,6 @@ class UserHolder(context: Context, private val v: View, dataBing: ViewDataBindin
     }
 
     companion object {
-        const val ID = R.layout.layout_user_item
+        @JvmField val ID = R.layout.layout_user_item
     }
 }

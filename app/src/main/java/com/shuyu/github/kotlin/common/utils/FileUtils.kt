@@ -7,9 +7,9 @@ import android.os.Environment
 import android.util.Base64
 import com.bumptech.glide.Glide
 import com.shuyu.github.kotlin.R
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.doAsync
+import com.shuyu.github.kotlin.common.compat.runOnUiThread
+import com.shuyu.github.kotlin.common.compat.toast
 import java.io.*
 import kotlin.experimental.and
 
@@ -124,7 +124,7 @@ object FileUtils {
         } catch (var3: IOException) {
             var3.printStackTrace()
         }
-        val type = bytesToHexString(b)?.toUpperCase() ?: return "jpg"
+        val type = bytesToHexString(b)?.uppercase() ?: return "jpg"
         return if (type.contains("FFD8FF")) {
             "jpg"
         } else if (type.contains("89504E47")) {

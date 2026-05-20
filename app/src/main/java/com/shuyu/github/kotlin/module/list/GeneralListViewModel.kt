@@ -54,6 +54,8 @@ class GeneralListViewModel @Inject constructor(private val userRepository: UserR
             GeneralEnum.RepositoryWatchUser -> {
                 userRepository.getRepositoryWatchUser(userName, reposName, page, this)
             }
+            null -> {}
+            else -> {}
         }
     }
 }

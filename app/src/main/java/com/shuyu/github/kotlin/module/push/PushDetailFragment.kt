@@ -19,10 +19,9 @@ import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.code.CodeDetailActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.PushHolder
-import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.share
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.browse
+import com.shuyu.github.kotlin.common.compat.share
+import com.shuyu.github.kotlin.common.compat.toast
 
 /**
  * Created by guoshuyu
@@ -80,7 +79,7 @@ class PushDetailFragment : BaseListFragment<FragmentListBinding, PushDetailViewM
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutPushHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_push_header,
-                null, false, GSYDataBindingComponent())
+                null, false)
         binding.pushUIModel = getViewModel().pushUIModel
         binding.pushHeaderImage.setOnClickListener {
             PersonActivity.gotoPersonInfo(getViewModel().pushUIModel.pushUserName)

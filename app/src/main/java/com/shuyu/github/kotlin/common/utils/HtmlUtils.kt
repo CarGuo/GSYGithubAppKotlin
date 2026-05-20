@@ -37,7 +37,7 @@ object HtmlUtils {
                 val match = matchValue?.replace("\n", "\n\r<br>")
                 matchValue?.apply {
                     match?.apply {
-                        mdDataCode = mdDataCode?.replace(matchValue, match)
+                        mdDataCode = mdDataCode?.replace(matchValue, match) ?: mdDataCode
                     }
                 }
             }
@@ -260,7 +260,7 @@ object HtmlUtils {
         var lang = ""
         if (startLang >= 0 && endLang >= 0) {
             var tmpLang = res.substring(startLang + startTag.length, endLang)
-            lang = fromName(tmpLang.toLowerCase());
+            lang = fromName(tmpLang.lowercase());
         }
         if (lang.isBlank()) {
             lang = defaultLang

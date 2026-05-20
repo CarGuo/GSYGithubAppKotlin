@@ -13,7 +13,7 @@ import com.shuyu.github.kotlin.common.style.image.BlurTransformation
 import com.shuyu.github.kotlin.module.image.ImagePreViewActivity
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.module.repos.ReposDetailActivity
-import org.jetbrains.anko.browse
+import com.shuyu.github.kotlin.common.compat.browse
 import java.text.SimpleDateFormat
 import java.util.*
 

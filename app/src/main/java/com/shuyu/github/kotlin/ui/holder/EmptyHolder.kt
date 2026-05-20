@@ -21,6 +21,6 @@ class EmptyHolder(context: Context, private val v: View, dataBing: ViewDataBindi
     }
 
     companion object {
-        const val ID = R.layout.layout_empty
+        @JvmField val ID = R.layout.layout_empty
     }
 }

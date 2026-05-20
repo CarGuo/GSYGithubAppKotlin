@@ -11,18 +11,19 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.databinding.ActivityFragmentContainerBinding
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 /**
  * Created by guoshuyu
  * Date: 2018-10-24
  */
-abstract class BaseFragmentActivity : BaseActivity(), HasSupportFragmentInjector, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
+abstract class BaseFragmentActivity : BaseActivity(), HasAndroidInjector, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     private var fragment: BaseFragment<*>? = null
 
@@ -52,7 +53,7 @@ abstract class BaseFragmentActivity : BaseActivity(), HasSupportFragmentInjector
 
     override fun getToolBar(): Toolbar = vb!!.activityFragmentContainerToolbar
 
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
     abstract fun getInitFragment(): BaseFragment<*>
 }

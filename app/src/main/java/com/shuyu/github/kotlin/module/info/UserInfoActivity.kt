@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -17,7 +16,7 @@ import com.shuyu.github.kotlin.model.AppGlobalModel
 import com.shuyu.github.kotlin.module.ARouterAddress
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 /**
@@ -26,7 +25,7 @@ import javax.inject.Inject
  * Date: 2018-11-19
  */
 @Route(path = ARouterAddress.UserInfoActivity)
-class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInjector {
+class UserInfoActivity : AppCompatActivity(), Injectable, HasAndroidInjector {
 
     companion object {
         fun gotoUserInfo() {
@@ -44,12 +43,12 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var globalAppModel: AppGlobalModel
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +57,7 @@ class UserInfoActivity : AppCompatActivity(), Injectable, HasSupportFragmentInje
         )
         dataBinding.lifecycleOwner = this
         initTitle(dataBinding)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserInfoViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UserInfoViewModel::class.java)
         dataBinding.userUIModel = globalAppModel.userObservable
         dataBinding.userInfoViewModel = viewModel
     }

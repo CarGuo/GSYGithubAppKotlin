@@ -20,10 +20,9 @@ import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseListFragment
 import com.shuyu.github.kotlin.module.person.PersonActivity
 import com.shuyu.github.kotlin.ui.holder.IssueCommentHolder
-import com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.share
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.browse
+import com.shuyu.github.kotlin.common.compat.share
+import com.shuyu.github.kotlin.common.compat.toast
 
 /**
  * Created by guoshuyu
@@ -87,7 +86,7 @@ class IssueDetailFragment : BaseListFragment<FragmentIssueDetailBinding, IssueDe
 
     override fun bindHolder(manager: BindSuperAdapterManager) {
         val binding: LayoutIssueHeaderBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_issue_header,
-                null, false, GSYDataBindingComponent())
+                null, false)
         binding.issueUIModel = getViewModel().issueUIModel
 
         binding.issueHeaderImage.setOnClickListener {

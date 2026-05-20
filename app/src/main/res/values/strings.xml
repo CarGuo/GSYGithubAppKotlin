@@ -175,6 +175,8 @@
     <string name="enLanguage">英文</string>
     <string name="gone410">410 Gone，不存在吧？</string>
     <string name="clearCache">清除缓存</string>
+    <string name="listview_loading">加载中…</string>
+    <string name="nomore_loading">没有更多了</string>
 
     <string name="error_401">[401错误可能: 未授权 \\ 授权登录失败 \\ 登录过期]</string>
     <string name="error_403">403没权限哦！</string>

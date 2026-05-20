@@ -3,7 +3,7 @@ package com.shuyu.github.kotlin.common.net
 import android.accounts.NetworkErrorException
 import android.content.Context
 import com.shuyu.github.kotlin.R
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException

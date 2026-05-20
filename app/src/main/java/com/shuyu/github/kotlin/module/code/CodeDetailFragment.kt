@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.shuyu.github.kotlin.R
@@ -15,9 +14,9 @@ import com.shuyu.github.kotlin.databinding.FragmentCodeDetailBinding
 import com.shuyu.github.kotlin.di.ARouterInjectable
 import com.shuyu.github.kotlin.module.ARouterAddress
 import com.shuyu.github.kotlin.module.base.BaseFragment
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.share
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.browse
+import com.shuyu.github.kotlin.common.compat.share
+import com.shuyu.github.kotlin.common.compat.toast
 import javax.inject.Inject
 
 /**
@@ -57,7 +56,7 @@ class CodeDetailFragment : BaseFragment<FragmentCodeDetailBinding>(), ARouterInj
 
     override fun onCreateView(mainView: View?) {
         viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(CodeDetailViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(CodeDetailViewModel::class.java)
     }
 
 

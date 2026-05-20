@@ -24,7 +24,7 @@ import com.shuyu.github.kotlin.service.SearchService
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import okhttp3.ResponseBody
-import org.jetbrains.anko.toast
+import com.shuyu.github.kotlin.common.compat.toast
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject

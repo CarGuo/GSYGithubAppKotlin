@@ -5,7 +5,7 @@ import com.shuyu.github.kotlin.common.net.ResultCallBack
 import com.shuyu.github.kotlin.model.ui.PushUIModel
 import com.shuyu.github.kotlin.module.base.BaseViewModel
 import com.shuyu.github.kotlin.repository.ReposRepository
-import org.jetbrains.anko.runOnUiThread
+import com.shuyu.github.kotlin.common.compat.runOnUiThread
 import javax.inject.Inject
 
 /**

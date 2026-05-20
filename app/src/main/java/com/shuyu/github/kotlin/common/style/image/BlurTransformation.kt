@@ -67,7 +67,7 @@ object FastBlur {
         if (canReuseInBitmap) {
             bitmap = sentBitmap
         } else {
-            bitmap = sentBitmap.copy(sentBitmap.config, true)
+            bitmap = sentBitmap.copy(sentBitmap.config ?: Bitmap.Config.ARGB_8888, true)
         }
 
         if (radius < 1) {

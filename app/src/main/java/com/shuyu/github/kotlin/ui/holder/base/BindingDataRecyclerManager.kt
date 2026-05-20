@@ -23,7 +23,7 @@ class BindingDataRecyclerManager : BindSuperAdapterManager() {
         var `object`: Constructor<*>? = null
         var constructorFirst = true
 
-        val itemTextBinding: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, parent, false, GSYDataBindingComponent())
+        val itemTextBinding: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, parent, false)
 
         try {
             `object` = classType?.getDeclaredConstructor(Context::class.java, View::class.java, ViewDataBinding::class.java)
