@@ -448,8 +448,14 @@
 
 # ============ Keep all Activities and Fragments ============
 
--keep class com.shuyu.github.kotlin.module.** extends android.app.Activity { *; }
--keep class com.shuyu.github.kotlin.module.** extends androidx.fragment.app.Fragment { *; }
+# ARouter 通过路由表里的全限定类名字符串反射加载 Activity / Fragment，
+# 必须保留 module 包下所有类的「类名」（成员仍允许混淆/优化），否则启动时
+# Postcard.navigation 会因 Class.forName 失败抛 "Init provider failed"。
+-keep class com.shuyu.github.kotlin.module.** { *; }
+-keepnames class com.shuyu.github.kotlin.module.**
+
+# 所有 ARouter 注解的目标类（额外保险，保证 @Route 标注的 class 不被裁剪）
+-keep @com.alibaba.android.arouter.facade.annotation.Route class * { *; }
 
 # ============ Kotlin Serialization (if used) ============
 
