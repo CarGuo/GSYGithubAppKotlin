@@ -287,6 +287,10 @@
 -keepclassmembers class * {
     @org.simpleframework.xml.* *;
 }
+# SimpleXML's StreamReader references javax.xml.stream.* (StAX), which is JDK-only and absent on Android.
+# These code paths are guarded internally by SimpleXML; safe to ignore for R8.
+-dontwarn javax.xml.stream.**
+-dontwarn org.simpleframework.xml.stream.**
 
 # ============ Iconics ProGuard Rules ============
 
