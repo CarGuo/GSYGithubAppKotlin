@@ -134,7 +134,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/Login"
                     android:textSize="@dimen/normalTextSize"
                     app:animationDuration="1000"
@@ -148,6 +148,26 @@
                     app:unableBackgroundColor="@color/colorPrimaryDark"
                     app:unableTextColor="@android:color/white" />
                 <!--android:onClick="@{loginViewModel::onSubmitClick}"-->
+
+                <com.shuyu.github.kotlin.ui.view.StateButton
+                    android:id="@+id/login_token_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/LoginWithToken"
+                    android:textSize="@dimen/normalTextSize"
+                    app:animationDuration="1000"
+                    app:normalBackgroundColor="@color/colorPrimary"
+                    app:normalTextColor="@android:color/white"
+                    app:pressedBackgroundColor="@color/colorPrimary"
+                    app:pressedTextColor="@android:color/white"
+                    app:radius="5dp"
+                    app:roundsize="false"
+                    app:unableBackgroundColor="@color/colorPrimary"
+                    app:unableTextColor="@android:color/white" />
 
             </LinearLayout>
 

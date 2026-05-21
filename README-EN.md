@@ -60,6 +60,8 @@ With the use and feedback of the project, the user experience and function optim
 <img src="http://img.cdn.guoshuyu.cn/register1.jpg" width="426px"/>
 </div>
 
+> ### 4. Besides OAuth authorization, the login page also provides a "Login with Token" entry: generate a token with `repo / user / notifications` scopes at [Github Personal Access Tokens](https://github.com/settings/tokens), then tap the "LOGIN WITH TOKEN" button on the login page and paste it to sign in. No client_id/client_secret needed.
+
 
 ## Project Structure
 
@@ -112,7 +114,7 @@ With the use and feedback of the project, the user experience and function optim
 | **navigation** | **Android JetPack Navigation** |
 | **aRouter** | **Component-based routing** |
 | **glide** | **Image Loading** |
-| **realm** | **Database** |
+| **room** | **Database** |
 | **iconics** | **Vector Icons** |
 | **navigationtabbar** | **TabBar** |
 | **lazyRecyclerAdapter** | **Generic binding RecyclerView adapter** |

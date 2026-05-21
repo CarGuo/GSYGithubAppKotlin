@@ -60,6 +60,8 @@
 <img src="http://img.cdn.guoshuyu.cn/register1.jpg" width="426px"/>
 </div>
 
+> ### 4、登录页除了 OAuth 授权登录外，还提供「使用 Token 登陆」入口：在 [Github Personal Access Tokens](https://github.com/settings/tokens) 生成具备 `repo / user / notifications` 权限的 token，点击登录页「使用 TOKEN 登陆」按钮粘贴即可登录，无需配置 client_id/client_secret。
+
 
 ## 项目结构图
 
@@ -112,7 +114,7 @@
 | **navigation**          | **Android JetPack 导航**  |
 | **aRouter**             | **组件化路由**               |
 | **glide**               | **图片加载**                |
-| **realm**               | **数据库**                 |
+| **room**                | **数据库**                 |
 | **iconics**             | **矢量图标**                |
 | **navigationtabbar**    | **TabBar**              |
 | **lazyRecyclerAdapter** | **通用绑定RecyclerView适配器** |

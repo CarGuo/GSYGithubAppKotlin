@@ -28,6 +28,10 @@
     <string name="Login">登陆</string>
     <string name="LoginTip">请直接点击登陆授权</string>
     <string name="LoginOAuth">授权登陆</string>
+    <string name="LoginWithToken">使用 Token 登陆</string>
+    <string name="LoginTokenDialogTitle">输入 GitHub Personal Access Token</string>
+    <string name="LoginTokenHint">ghp_xxxxxxxxxxxxxxxxxxxx</string>
+    <string name="LoginTokenEmptyTip">Token 不能为空</string>
     <string name="LoginOut">退出登陆</string>
     <string name="LoginNameTip">用户名不能为空</string>
     <string name="LoginPWTip">密码不能为空</string>

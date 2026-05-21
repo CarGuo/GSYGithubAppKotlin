@@ -62,6 +62,13 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     }
 
     /**
+     * 通过 Personal Access Token 登录
+     */
+    fun loginWithToken(context: Context, personalToken: String) {
+        loginRepository.loginWithToken(context, personalToken, loginResult)
+    }
+
+    /**
      * 通过DataBinding在XML绑定的点击方法
      */
     fun onSubmitClick(view: View) {

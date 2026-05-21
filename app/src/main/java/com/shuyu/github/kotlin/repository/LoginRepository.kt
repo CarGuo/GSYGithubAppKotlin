@@ -123,6 +123,36 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
 
 
     /**
+     * 通过个人 Personal Access Token 登录
+     */
+    fun loginWithToken(context: Context, personalToken: String, token: MutableLiveData<Boolean>) {
+
+        clearTokenStorage()
+
+        accessTokenStorage = personalToken
+
+        val userService = userRepository.getPersonInfoObservable().flatMap {
+            FlatMapResult2Response(it)
+        }
+
+        RetrofitFactory.executeResult(userService, object : ResultProgressObserver<User>(context) {
+            override fun onSuccess(result: User?) {
+                token.value = true
+            }
+
+            override fun onCodeError(code: Int, message: String) {
+                clearTokenStorage()
+                token.value = false
+            }
+
+            override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                clearTokenStorage()
+                token.value = false
+            }
+        })
+    }
+
+    /**
      * 登录
      */
     fun login(context: Context, username: String, password: String, token: MutableLiveData<Boolean>) {

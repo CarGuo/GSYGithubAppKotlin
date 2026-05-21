@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_nav_oauth_to_web"
             app:destination="@id/loginOAuthFragment" />
+        <action
+            android:id="@+id/action_nav_login_to_main"
+            app:destination="@id/mainActivity" />
     </fragment>
 
     <fragment
