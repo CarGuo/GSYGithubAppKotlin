@@ -34,7 +34,10 @@ class RoomFactory private constructor() {
                             GSYRoomDatabase::class.java,
                             DB_NAME
                         )
-                            // KV 缓存表，丢失旧数据可接受
+                            // KV 缓存表，丢失旧数据可接受。
+                            // Room 2.7+ 起 fallbackToDestructiveMigration() 已 deprecated，
+                            // 当前固定 room_version = 2.6.1，仍使用无参版本；升级到 2.7 时
+                            // 改为 fallbackToDestructiveMigration(dropAllTables = true)。
                             .fallbackToDestructiveMigration()
                             .build()
                     }

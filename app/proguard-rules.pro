@@ -169,6 +169,10 @@
 -keep class com.shuyu.github.kotlin.ui.holder.base.GSYDataBindingComponent { *; }
 -keep class com.shuyu.github.kotlin.ui.holder.base.DataBindingExpandUtils { *; }
 -keep class com.shuyu.github.kotlin.ui.holder.base.DataBindingExpandUtils$Companion { *; }
+# 真正的 BindingAdapter 入口在 Java 桥接类，必须 keep 防止 R8 移除其 public static 方法
+-keep class com.shuyu.github.kotlin.ui.holder.base.DataBindingExpandUtilsJava { *; }
+# DataBinding 注解处理器在编译期通过 BindableShim 注入 BR 字段，运行期不依赖该类，但保险起见保留
+-keep class com.shuyu.github.kotlin.databinding_shim.** { *; }
 
 # Keep Repository classes (they use Retrofit services)
 -keep class com.shuyu.github.kotlin.repository.** { *; }
@@ -289,11 +293,6 @@
 -keep class com.mikepenz.iconics.typeface.IIcon { *; }
 -keep class * implements com.mikepenz.iconics.typeface.ITypeface { *; }
 
-# ============ AgentWeb ProGuard Rules ============
-
--keep class com.just.agentweb.** { *; }
--dontwarn com.just.agentweb.**
-
 # ============ MaterialDrawer ProGuard Rules ============
 
 -keep class com.mikepenz.materialdrawer.** { *; }
@@ -303,23 +302,9 @@
 -dontwarn com.airbnb.lottie.**
 -keep class com.airbnb.lottie.** { *; }
 
-# ============ Bugly ProGuard Rules ============
-
--dontwarn com.tencent.bugly.**
--keep public class com.tencent.bugly.**{*;}
-
 # ============ PhotoView ProGuard Rules ============
 
 -keep class com.github.chrisbanes.photoview.** { *; }
-
-# ============ PermissionsDispatcher ProGuard Rules ============
-
--keep class permissions.dispatcher.** { *; }
--keep interface permissions.dispatcher.** { *; }
--keep class **PermissionsDispatcher { *; }
--keepclasseswithmembernames class * {
-    @permissions.dispatcher.* <methods>;
-}
 
 # ============ WebView JavaScript Interface ============
 
@@ -340,10 +325,6 @@
 # ============ Navigation ProGuard Rules ============
 
 -keep class androidx.navigation.** { *; }
-
-# ============ Anko ProGuard Rules ============
-
--dontwarn org.jetbrains.anko.**
 
 # ============ DialogPlus ProGuard Rules ============
 

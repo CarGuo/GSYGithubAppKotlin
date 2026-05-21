@@ -1,0 +1,16 @@
+flowchart LR
+    A[Realm + kapt + AGP 8] -->|d32a935| B[Room + KSP2 + AGP 9.0.0-alpha14]
+    B -->|da13df9| C[新增 PAT Token 登录]
+    C --> D[Login UI]
+    C --> E[LoginRepository.loginWithToken]
+    E --> F[accessTokenStorage]
+    F --> G[RetrofitFactory Authorization]
+    G --> H[GitHub GET /user 校验]
+    H -->|成功| I[MainActivity]
+    H -->|失败| J[clearTokenStorage]
+    style A fill:#fff3e0,color:#e65100
+    style B fill:#bbdefb,color:#0d47a1
+    style C fill:#c8e6c9,color:#1a5e20
+    style F fill:#fff3e0,color:#e65100
+    style J fill:#fff3e0,color:#e65100
+    style I fill:#c8e6c9,color:#1a5e20

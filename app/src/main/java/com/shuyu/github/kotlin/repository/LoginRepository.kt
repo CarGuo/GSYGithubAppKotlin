@@ -110,10 +110,12 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
             }
 
             override fun onCodeError(code: Int, message: String) {
+                clearTokenStorage()
                 token.value = false
             }
 
             override fun onFailure(e: Throwable, isNetWorkError: Boolean) {
+                clearTokenStorage()
                 token.value = false
             }
 
@@ -124,10 +126,15 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
 
     /**
      * 通过个人 Personal Access Token 登录
+     *
+     * 链路：把 token 临时写入 accessTokenStorage 让网络拦截器带上 Authorization，
+     * 校验成功后再补写 usernameStorage 等会话信息；失败/异常路径会立即 clearTokenStorage，
+     * 避免无效 token 残留落盘。
      */
     fun loginWithToken(context: Context, personalToken: String, token: MutableLiveData<Boolean>) {
 
         clearTokenStorage()
+        clearCookies()
 
         accessTokenStorage = personalToken
 
@@ -137,6 +144,8 @@ class LoginRepository @Inject constructor(private val retrofit: Retrofit, privat
 
         RetrofitFactory.executeResult(userService, object : ResultProgressObserver<User>(context) {
             override fun onSuccess(result: User?) {
+                result?.login?.takeIf { it.isNotEmpty() }?.also { usernameStorage = it }
+                passwordStorage = ""
                 token.value = true
             }
 

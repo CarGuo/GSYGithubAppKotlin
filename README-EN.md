@@ -79,6 +79,36 @@ With the use and feedback of the project, the user experience and function optim
 
 ![](./doc/DependencyInjectionStructure.png)
 
+## Architecture Evolution
+
+> The mainline has migrated from Realm to Room, from kapt to KSP2, and from AGP 8 to AGP 9, plus a new Personal Access Token login entry. The diagram below summarizes the migration and the login flow:
+
+![Migration Overview](./doc/migration_overview.png)
+
+<details>
+<summary>View Mermaid source (GitHub renders this natively)</summary>
+
+```mermaid
+flowchart LR
+    A[Realm + kapt + AGP 8] -->|d32a935| B[Room + KSP2 + AGP 9.0.0-alpha14]
+    B -->|da13df9| C[New PAT Token Login]
+    C --> D[Login UI]
+    C --> E[LoginRepository.loginWithToken]
+    E --> F[accessTokenStorage]
+    F --> G[RetrofitFactory Authorization]
+    G --> H[GitHub GET /user check]
+    H -->|success| I[MainActivity]
+    H -->|fail| J[clearTokenStorage]
+    style A fill:#fff3e0,color:#e65100
+    style B fill:#bbdefb,color:#0d47a1
+    style C fill:#c8e6c9,color:#1a5e20
+    style F fill:#fff3e0,color:#e65100
+    style J fill:#fff3e0,color:#e65100
+    style I fill:#c8e6c9,color:#1a5e20
+```
+
+</details>
+
 ## Download
 
 #### Apk Download Link: [Apk Download Link](https://github.com/CarGuo/GSYGithubAppKotlin/releases)

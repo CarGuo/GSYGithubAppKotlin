@@ -47,9 +47,11 @@ class LoginOAuthFragment : BaseFragment<FragmentLoginOauthBinding>() {
 
         loginViewModel.loginResult.observe(viewLifecycleOwner, Observer { result ->
             //根据结果返回，跳转主页
-            if (result != null && result == true) {
+            if (result == true) {
+                loginViewModel.loginResult.value = null
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true, true)
-            } else {
+            } else if (result == false) {
+                loginViewModel.loginResult.value = null
                 activity?.toast(R.string.LoginFailTip)
             }
         })

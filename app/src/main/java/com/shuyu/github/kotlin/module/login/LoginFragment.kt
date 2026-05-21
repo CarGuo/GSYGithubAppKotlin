@@ -44,8 +44,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
         loginViewModel.loginResult.observe(viewLifecycleOwner, Observer { result ->
             if (result == true) {
+                loginViewModel.loginResult.value = null
                 navigationPopUpTo(view, null, R.id.action_nav_login_to_main, true, true)
             } else if (result == false) {
+                loginViewModel.loginResult.value = null
                 activity?.toast(R.string.LoginFailTip)
             }
         })

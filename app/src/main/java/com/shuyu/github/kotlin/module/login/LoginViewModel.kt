@@ -1,18 +1,12 @@
 package com.shuyu.github.kotlin.module.login
 
 import android.content.Context
-import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
-import com.alibaba.android.arouter.launcher.ARouter
-import com.shuyu.github.kotlin.R
 import com.shuyu.github.kotlin.common.config.AppConfig
 import com.shuyu.github.kotlin.common.utils.GSYPreference
 import com.shuyu.github.kotlin.repository.LoginRepository
-import com.shuyu.github.kotlin.common.compat.toast
 import javax.inject.Inject
 
 /**
@@ -66,32 +60,5 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
      */
     fun loginWithToken(context: Context, personalToken: String) {
         loginRepository.loginWithToken(context, personalToken, loginResult)
-    }
-
-    /**
-     * 通过DataBinding在XML绑定的点击方法
-     */
-    fun onSubmitClick(view: View) {
-        val username = this.username.get()
-        val password = this.password.get()
-
-        view.context.toast(R.string.LoginTip)
-
-        //navigationPopUpTo(view, null, R.id.action_nav_wel_to_login, false)
-        /*username?.apply {
-            if (this.isEmpty()) {
-                view.context.toast(R.string.LoginNameTip)
-                return
-            }
-        }
-
-        password?.apply {
-            if (this.isEmpty()) {
-                view.context.toast(R.string.LoginPWTip)
-                return
-            }
-        }
-
-        login(view.context)*/
     }
 }
