@@ -1,17 +1,11 @@
-// CI 环境（如 GitHub Actions 设置 CI=true）跳过国内 aliyun 镜像，
-// 直接使用 mavenCentral / google / gradlePluginPortal，避免镜像 5xx 把整个仓库 disable。
-// 注意：Gradle 9 要求 pluginManagement {} 必须是 settings.gradle 的第一个语句，
-// 不能在它之前声明任何变量/语句，因此这里在每个 repositories 块内联读取 env。
+// 仓库使用 Gradle 标准仓库（mavenCentral / google / gradlePluginPortal）。
+// 国内开发者如需加速，请在 ~/.gradle/init.d/repo-mirror.gradle 中按需添加 aliyun 等镜像，
+// 不要再写到仓库内 settings.gradle —— Gradle 9 在镜像 5xx 时会直接 disable 该仓库导致 CI 整体失败。
 pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
         mavenCentral()
-        if (System.getenv("CI") == null) {
-            maven { url "https://maven.aliyun.com/repository/public" }
-            maven { url "https://maven.aliyun.com/repository/google" }
-            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-        }
         maven { url "https://jitpack.io" }
     }
 }
@@ -25,11 +19,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        if (System.getenv("CI") == null) {
-            maven { url "https://maven.aliyun.com/repository/public" }
-            maven { url "https://maven.aliyun.com/repository/google" }
-            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-        }
         maven { url "https://jitpack.io" }
     }
 }

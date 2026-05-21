@@ -113,6 +113,30 @@ flowchart LR
 
 The "Login with Token" button on the login screen opens an input dialog: paste a GitHub Personal Access Token (recommended scopes: `repo / user / notifications / gist`) and tap OK. The token is masked by default and can be toggled with the eye icon; the in-dialog "How to create a token?" link opens the GitHub settings page with the scopes pre-selected. Tokens are only written to the local SharedPreferences and are cleared automatically if validation fails.
 
+### Build Acceleration in China (Optional)
+
+The repository's `settings.gradle` declares only standard Gradle repositories so that GitHub Actions / overseas networks can resolve dependencies. Gradle 9 disables a whole repository on a transient 5xx, so **do not** put aliyun mirrors back into the project script. Developers in China can add mirrors via a user-level init script:
+
+```groovy
+// ~/.gradle/init.d/repo-mirror.gradle
+allprojects {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+    }
+}
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            maven { url "https://maven.aliyun.com/repository/public" }
+            maven { url "https://maven.aliyun.com/repository/google" }
+            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        }
+    }
+}
+```
+
 ## Download
 
 #### Apk Download Link: [Apk Download Link](https://github.com/CarGuo/GSYGithubAppKotlin/releases)

@@ -113,6 +113,30 @@ flowchart LR
 
 登录页底部「使用 Token 登陆」按钮会弹出输入对话框：粘贴 GitHub Personal Access Token（建议勾选 `repo / user / notifications / gist` 权限）即可登录。Token 默认遮蔽显示，可点击右侧眼睛图标切换可见；对话框内的「如何创建 Token？」会跳转到 GitHub 设置页带预选 scopes。Token 仅写入本机 SharedPreferences，校验失败会自动清空。
 
+### 国内构建加速（可选）
+
+仓库内 `settings.gradle` 仅声明 Gradle 标准仓库，便于 GitHub Actions / 海外网络构建。Gradle 9 在镜像偶发 5xx 时会直接禁用该仓库，因此**不要**把 aliyun 镜像写进项目脚本。国内开发者请在用户级 init script 中加镜像：
+
+```groovy
+// ~/.gradle/init.d/repo-mirror.gradle
+allprojects {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+    }
+}
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            maven { url "https://maven.aliyun.com/repository/public" }
+            maven { url "https://maven.aliyun.com/repository/google" }
+            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        }
+    }
+}
+```
+
 ## 下载
 
 #### Apk下载链接： [Apk下载链接](https://github.com/CarGuo/GSYGithubAppKotlin/releases)
