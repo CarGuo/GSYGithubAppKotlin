@@ -222,6 +222,11 @@
 -keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
 # If using byType argument injection, keep the classes injected
 -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
+# ARouter RouteMeta.rawType references javax.lang.model.element.Element which is JDK-only
+# (compile-time javax) and not available on Android runtime. R8 will fail with "Missing class"
+# unless we ignore the warning.
+-dontwarn javax.lang.model.**
+-dontwarn com.alibaba.android.arouter.**
 
 # ============ Room ProGuard Rules ============
 
