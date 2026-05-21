@@ -1,13 +1,13 @@
 // CI 环境（如 GitHub Actions 设置 CI=true）跳过国内 aliyun 镜像，
 // 直接使用 mavenCentral / google / gradlePluginPortal，避免镜像 5xx 把整个仓库 disable。
-def useAliyunMirror = System.getenv("CI") == null
-
+// 注意：Gradle 9 要求 pluginManagement {} 必须是 settings.gradle 的第一个语句，
+// 不能在它之前声明任何变量/语句，因此这里在每个 repositories 块内联读取 env。
 pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
         mavenCentral()
-        if (useAliyunMirror) {
+        if (System.getenv("CI") == null) {
             maven { url "https://maven.aliyun.com/repository/public" }
             maven { url "https://maven.aliyun.com/repository/google" }
             maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
@@ -25,7 +25,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        if (useAliyunMirror) {
+        if (System.getenv("CI") == null) {
             maven { url "https://maven.aliyun.com/repository/public" }
             maven { url "https://maven.aliyun.com/repository/google" }
             maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
