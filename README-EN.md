@@ -109,6 +109,10 @@ flowchart LR
 
 </details>
 
+### Token Login
+
+The "Login with Token" button on the login screen opens an input dialog: paste a GitHub Personal Access Token (recommended scopes: `repo / user / notifications / gist`) and tap OK. The token is masked by default and can be toggled with the eye icon; the in-dialog "How to create a token?" link opens the GitHub settings page with the scopes pre-selected. Tokens are only written to the local SharedPreferences and are cleared automatically if validation fails.
+
 ## Download
 
 #### Apk Download Link: [Apk Download Link](https://github.com/CarGuo/GSYGithubAppKotlin/releases)

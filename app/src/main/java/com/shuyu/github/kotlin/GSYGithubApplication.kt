@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.ImageView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.mikepenz.iconics.Iconics
+import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.shuyu.github.kotlin.common.db.RoomFactory
@@ -58,6 +59,7 @@ class GSYGithubApplication : Application(), HasAndroidInjector {
         ///初始化图标库
         Iconics.init(applicationContext)
         Iconics.registerFont(GSYIconfont)
+        Iconics.registerFont(CommunityMaterial)
 
         ///初始化图片加载
         GSYImageLoaderManager.initialize(GSYGlideImageLoader(this))

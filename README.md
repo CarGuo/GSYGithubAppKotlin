@@ -109,6 +109,10 @@ flowchart LR
 
 </details>
 
+### Token 登录
+
+登录页底部「使用 Token 登陆」按钮会弹出输入对话框：粘贴 GitHub Personal Access Token（建议勾选 `repo / user / notifications / gist` 权限）即可登录。Token 默认遮蔽显示，可点击右侧眼睛图标切换可见；对话框内的「如何创建 Token？」会跳转到 GitHub 设置页带预选 scopes。Token 仅写入本机 SharedPreferences，校验失败会自动清空。
+
 ## 下载
 
 #### Apk下载链接： [Apk下载链接](https://github.com/CarGuo/GSYGithubAppKotlin/releases)

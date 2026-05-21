@@ -29,9 +29,13 @@
     <string name="LoginTip">请直接点击登陆授权</string>
     <string name="LoginOAuth">授权登陆</string>
     <string name="LoginWithToken">使用 Token 登陆</string>
-    <string name="LoginTokenDialogTitle">输入 GitHub Personal Access Token</string>
+    <string name="LoginTokenDialogTitle">使用 Token 登陆</string>
+    <string name="LoginTokenDialogDesc">粘贴 GitHub Personal Access Token，需勾选 repo / user / notifications 等权限。Token 仅保存在本机。</string>
     <string name="LoginTokenHint">ghp_xxxxxxxxxxxxxxxxxxxx</string>
     <string name="LoginTokenEmptyTip">Token 不能为空</string>
+    <string name="LoginTokenHelpLink">如何创建 Token？</string>
+    <string name="LoginTokenHelpUrl">https://github.com/settings/tokens/new?scopes=repo,user,notifications,gist&amp;description=GSYGithubAppKotlin</string>
+    <string name="LoginTokenVisibilityToggle">显示或隐藏 Token</string>
     <string name="LoginOut">退出登陆</string>
     <string name="LoginNameTip">用户名不能为空</string>
     <string name="LoginPWTip">密码不能为空</string>
