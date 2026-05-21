@@ -49,6 +49,10 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
                            private val reposRepository: ReposRepository,
                            globalModel: AppGlobalModel) {
 
+    companion object {
+        const val RELEASE_PAGE_URL = "https://github.com/CarGuo/GSYGithubAppKotlin/releases/latest"
+    }
+
     internal var drawer: DrawerShim? = null
 
     init {
@@ -171,7 +175,7 @@ class MainDrawerController(private val activity: Activity, toolbar: Toolbar,
             override fun onSuccess(result: Release?) {
                 result?.name?.apply {
                     showUpdateDialog(activity, this, result.body
-                            ?: "", "https://github.com/CarGuo/GSYGithubAppKotlin/releases")
+                            ?: "", RELEASE_PAGE_URL)
                     return
                 }
                 if (needTip) {

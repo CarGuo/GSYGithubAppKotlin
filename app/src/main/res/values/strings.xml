@@ -144,6 +144,7 @@
     <string name="forkFail">Fxxx 没能成功呢</string>
     <string name="listEmpty">暂时还没找到什么(oﾟ▽ﾟ)o </string>
     <string name="browserOpen">浏览器打开</string>
+    <string name="noBrowserFound">未找到可用的浏览器，无法打开链接</string>
     <string name="copy">复制链接</string>
     <string name="download">下载</string>
     <string name="iosNotSupportDown">IOS不支持下载</string>

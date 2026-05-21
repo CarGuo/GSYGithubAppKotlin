@@ -10,6 +10,19 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
+        </intent>
+    </queries>
+
     <application
         android:name="GSYGithubApplication"
         android:allowBackup="true"

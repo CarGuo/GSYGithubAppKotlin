@@ -24,14 +24,22 @@ internal fun Fragment.toast(@StringRes resId: Int): Toast =
 
 internal fun Context.browse(url: String, newTask: Boolean = false): Boolean {
     return try {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            addCategory(Intent.CATEGORY_BROWSABLE)
+        }
         if (newTask) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        startActivity(intent)
-        true
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+            true
+        } else {
+            toast(com.shuyu.github.kotlin.R.string.noBrowserFound)
+            false
+        }
     } catch (e: Exception) {
         e.printStackTrace()
+        toast(com.shuyu.github.kotlin.R.string.noBrowserFound)
         false
     }
 }
