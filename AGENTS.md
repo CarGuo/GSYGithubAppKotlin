@@ -116,7 +116,95 @@ Android 11 起 package visibility 收紧，必须在 [AndroidManifest.xml](file:
 
 ---
 
-## 4. 工作环境注意
+## 4. 16 KB 页大小适配规约（Google Play 强制）
+
+> **背景**：自 **2025-11-01** 起，Google Play 要求所有 `targetSdk ≥ 35` 的新应用 / 应用更新，在 64 位设备上**必须支持 16 KB 内存页**（参考 [Android 官方文档](https://developer.android.com/guide/practices/page-sizes)）。本项目 `targetSdk 36`，强制范围内。
+
+### 4.1 当前项目状态（截至 v1.4.1）
+
+- **Release APK 不含任何 .so 原生库**（已验证：v1.4.1 [build/release-test/app-release.apk](file:///d:/workspace/project/GSYGithubAppKotlin/build/release-test/app-release.apk) 解压后 `lib/` 目录为空）。
+- 因此 16 KB 检查**当前不影响** Google Play 上架，但**禁止认为永远不影响**：
+  - [app/CMakeLists.txt](file:///d:/workspace/project/GSYGithubAppKotlin/app/CMakeLists.txt) 已存在，`local.properties` 设 `NEED_CMAKE_TEST=true` 即会编出 `libnative-gsy.so`。
+  - 后续任何引入带原生代码的依赖（图像/视频/加解密/数据库 Native 后端等）都会带回 `.so`。
+
+### 4.2 触发条件 → 必检项
+
+只要 release APK 的 `lib/arm64-v8a/` 或 `lib/x86_64/` 下出现 **任意 `.so`**，就**必须**满足以下三项：
+
+1. **ELF 段 16 KB 对齐**：所有 LOAD 段的 `p_align ≥ 0x4000`（16384 字节）。
+2. **APK ZIP 内 .so 16 KB 对齐**：`zipalign` 走 4096→16384 对齐；AGP 8.5+ 默认满足。
+3. **`useLegacyPackaging = false`**：保持 .so 在 APK 内不压缩、可 mmap。AGP 8.0+ 默认满足。
+
+### 4.3 工具链最低版本
+
+本项目当前已满足，**禁止降级**：
+
+| 组件 | 最低要求 | 当前 |
+|---|---|---|
+| AGP（Android Gradle Plugin）| 8.5+（推荐 8.7+ / 9.x）| `9.0.0-alpha14`（[build.gradle#L40](file:///d:/workspace/project/GSYGithubAppKotlin/build.gradle#L40-L40)）|
+| NDK（如启用 CMake）| r27+（r28+ 默认 16 KB 对齐）| 跟随 AGP 默认 |
+| `compileSdk` / `targetSdk` | ≥ 35（仅命中规则）| 36（[app/build.gradle#L9-L19](file:///d:/workspace/project/GSYGithubAppKotlin/app/build.gradle#L9-L19)）|
+
+### 4.4 引入 .so 时的 build.gradle 必加项
+
+启用 NDK / CMake / 引入 prebuilt `.so` 之前，[app/build.gradle](file:///d:/workspace/project/GSYGithubAppKotlin/app/build.gradle) 必须显式声明：
+
+```groovy
+android {
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false   // .so 不压缩、page-aligned
+        }
+    }
+
+    // 自定义 CMake 时，链接器加 16 KB 最大页对齐
+    defaultConfig {
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+            }
+        }
+    }
+}
+```
+
+> NDK r27+ 默认链接器参数已含 `-Wl,-z,max-page-size=16384`；老 NDK 需要在 `CMakeLists.txt` 显式加 `target_link_options(<lib> PRIVATE "-Wl,-z,max-page-size=16384")`。
+
+### 4.5 装机回归 Checklist 增项（仅当 APK 含 .so）
+
+[§1.2 装机回归 Checklist](file:///d:/workspace/project/GSYGithubAppKotlin/AGENTS.md#L20-L32) 在原有 5 项之外，**额外**必须验证：
+
+| # | 场景 | 验证点 |
+|---|---|---|
+| 6 | ELF 对齐扫描 | 解压 release APK，对 `lib/arm64-v8a/*.so`、`lib/x86_64/*.so` 跑 `check_elf_alignment.sh`，结果**不能出现 `UNALIGNED`** |
+| 7 | 16 KB 模拟器/设备启动 | 在 Android Studio 16 KB 系统镜像（API 35+）或开发者选项打开"Boot the device with 16 KB page size"的真机上启动 App，覆盖 §1.2 第 1~5 项 |
+
+### 4.6 检测脚本
+
+```powershell
+# 1. 解压 APK
+Expand-Archive build/release-test/app-release.apk -DestinationPath build/release-test/apk-extract -Force
+
+# 2. 列出原生库
+Get-ChildItem build/release-test/apk-extract/lib -Recurse -Filter *.so |
+  Select-Object Directory, Name, Length
+
+# 3. 如有 .so，把 .so 拷到 Linux/macOS（或 WSL）跑：
+#    bash check_elf_alignment.sh app-release.apk
+#    脚本来源：https://cs.android.com/android/platform/superproject/main/+/main:system/extras/tools/check_elf_alignment.sh
+```
+
+如果发现 `UNALIGNED (2**12)` 这种 4 KB 对齐的 .so，必须升级提供方依赖到 16 KB 兼容版；否则**不允许打 release tag**。
+
+### 4.7 历史 Pitfall 提示
+
+- "AGP 升上去就万事大吉" 是错的——某些**第三方 prebuilt aar** 里塞了老 NDK 编译的 .so，AGP 不会重新对齐，必须人工扫描。
+- `local.properties` 里把 `NEED_CMAKE_TEST` 设为 `true` 后，记得 release 构建之前关掉，或确认 [app/CMakeLists.txt](file:///d:/workspace/project/GSYGithubAppKotlin/app/CMakeLists.txt) 走的是 NDK r27+。
+
+---
+
+## 5. 工作环境注意
 
 - 本机（Windows）当前 JDK 17，**不能本地跑** `:app:assembleRelease`：
   - dataBinding parser 要 JDK 24（class file 65.0），JDK 17 只到 61.0。
@@ -135,7 +223,7 @@ Android 11 起 package visibility 收紧，必须在 [AndroidManifest.xml](file:
 
 ---
 
-## 6. 历史 Pitfall 索引
+## 7. 历史 Pitfall 索引
 
 | 版本 | 问题 | 修复 |
 |---|---|---|
@@ -144,3 +232,4 @@ Android 11 起 package visibility 收紧，必须在 [AndroidManifest.xml](file:
 | v1.4.0 | R8 编译报 Missing class `javax.xml.stream.**`（SimpleXML）| `-dontwarn javax.xml.stream.**` |
 | v1.4.0 | 「检查更新」跳 `releases` 列表而非 `releases/latest` | [MainDrawerController.RELEASE_PAGE_URL](file:///d:/workspace/project/GSYGithubAppKotlin/app/src/main/java/com/shuyu/github/kotlin/module/main/MainDrawerController.kt#L52-L54) 改为 `releases/latest` |
 | v1.4.0 | targetSdk 36 下 `Intent.ACTION_VIEW` 无浏览器可解析 | Manifest 加 `<queries>` + `browse()` 加 `resolveActivity` 预检 |
+| 通用 | Google Play 16 KB 页大小要求（2025-11-01 起 targetSdk≥35 强制）| §4 沉淀；当前无 .so 不受影响，CMake 开关 / 引入新 native 依赖时**必须**走 §4.5 检查 |
