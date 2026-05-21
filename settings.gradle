@@ -1,11 +1,17 @@
+// CI 环境（如 GitHub Actions 设置 CI=true）跳过国内 aliyun 镜像，
+// 直接使用 mavenCentral / google / gradlePluginPortal，避免镜像 5xx 把整个仓库 disable。
+def useAliyunMirror = System.getenv("CI") == null
+
 pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
         mavenCentral()
-        maven { url "https://maven.aliyun.com/repository/public" }
-        maven { url "https://maven.aliyun.com/repository/google" }
-        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        if (useAliyunMirror) {
+            maven { url "https://maven.aliyun.com/repository/public" }
+            maven { url "https://maven.aliyun.com/repository/google" }
+            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        }
         maven { url "https://jitpack.io" }
     }
 }
@@ -19,9 +25,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://maven.aliyun.com/repository/public" }
-        maven { url "https://maven.aliyun.com/repository/google" }
-        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        if (useAliyunMirror) {
+            maven { url "https://maven.aliyun.com/repository/public" }
+            maven { url "https://maven.aliyun.com/repository/google" }
+            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        }
         maven { url "https://jitpack.io" }
     }
 }
