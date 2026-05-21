@@ -120,12 +120,14 @@ Android 11 起 package visibility 收紧，必须在 [AndroidManifest.xml](file:
 
 > **背景**：自 **2025-11-01** 起，Google Play 要求所有 `targetSdk ≥ 35` 的新应用 / 应用更新，在 64 位设备上**必须支持 16 KB 内存页**（参考 [Android 官方文档](https://developer.android.com/guide/practices/page-sizes)）。本项目 `targetSdk 36`，强制范围内。
 
-### 4.1 当前项目状态（截至 v1.4.1）
+### 4.1 当前项目状态（截至 v1.4.2）
 
-- **Release APK 不含任何 .so 原生库**（已验证：v1.4.1 [build/release-test/app-release.apk](file:///d:/workspace/project/GSYGithubAppKotlin/build/release-test/app-release.apk) 解压后 `lib/` 目录为空）。
+- **Release APK 不含任何 .so 原生库**（已验证：v1.4.1 [build/release-test/app-release.apk](file:///d:/workspace/project/GSYGithubAppKotlin/build/release-test/app-release.apk) 解压后 `lib/` 目录为空；v1.4.2 待 CI 出包后复检）。
 - 因此 16 KB 检查**当前不影响** Google Play 上架，但**禁止认为永远不影响**：
   - [app/CMakeLists.txt](file:///d:/workspace/project/GSYGithubAppKotlin/app/CMakeLists.txt) 已存在，`local.properties` 设 `NEED_CMAKE_TEST=true` 即会编出 `libnative-gsy.so`。
   - 后续任何引入带原生代码的依赖（图像/视频/加解密/数据库 Native 后端等）都会带回 `.so`。
+- v1.4.2 起，[app/build.gradle](file:///d:/workspace/project/GSYGithubAppKotlin/app/build.gradle#L116-L130) 已**显式**声明 `packaging.jniLibs.useLegacyPackaging = false` —— 即便后续 AGP 默认行为变化或加入 .so，APK 内的 native lib 也保证不压缩、page-aligned。
+- `ndk.abiFilters` 限定 `arm64-v8a`（[app/build.gradle#L44-L46](file:///d:/workspace/project/GSYGithubAppKotlin/app/build.gradle#L44-L46)），32 位 ABI 不进入产物，符合 Google Play 64-bit + 16 KB 双重要求。
 
 ### 4.2 触发条件 → 必检项
 
@@ -233,3 +235,4 @@ Get-ChildItem build/release-test/apk-extract/lib -Recurse -Filter *.so |
 | v1.4.0 | 「检查更新」跳 `releases` 列表而非 `releases/latest` | [MainDrawerController.RELEASE_PAGE_URL](file:///d:/workspace/project/GSYGithubAppKotlin/app/src/main/java/com/shuyu/github/kotlin/module/main/MainDrawerController.kt#L52-L54) 改为 `releases/latest` |
 | v1.4.0 | targetSdk 36 下 `Intent.ACTION_VIEW` 无浏览器可解析 | Manifest 加 `<queries>` + `browse()` 加 `resolveActivity` 预检 |
 | 通用 | Google Play 16 KB 页大小要求（2025-11-01 起 targetSdk≥35 强制）| §4 沉淀；当前无 .so 不受影响，CMake 开关 / 引入新 native 依赖时**必须**走 §4.5 检查 |
+| v1.4.2 | 显式声明 16 KB 防御配置 | [app/build.gradle](file:///d:/workspace/project/GSYGithubAppKotlin/app/build.gradle#L116-L130) 加 `packaging.jniLibs.useLegacyPackaging = false`；CI 产物经 lib/ 扫描确认无 .so，符合 Google Play 16 KB 要求 |

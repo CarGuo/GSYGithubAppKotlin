@@ -17,8 +17,8 @@ android {
         applicationId "com.shuyu.github.kotlin"
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 14
-        versionName "1.4.1"
+        versionCode 15
+        versionName "1.4.2"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -114,6 +114,9 @@ android {
     }
 
     packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
         resources {
             excludes += [
                     'META-INF/library-core_release.kotlin_module',
