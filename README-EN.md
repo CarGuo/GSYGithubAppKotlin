@@ -7,7 +7,8 @@
 * ### Flutter version ( https://github.com/CarGuo/GSYGithubAppFlutter )
 * ### Weex version ( https://github.com/CarGuo/GSYGithubAppWeex )
 * ### ReactNative version ( https://github.com/CarGuo/GSYGithubApp )
-* ### Android Compose version ( https://github.com/CarGuo/GSYGithubAppKotlinCompose )
+* ### Android Compose version ( https://github.com/CarGuo/GSYGithubAppCompose )
+* ### Compose Multiplatform version ( https://github.com/CarGuo/GSYGithubAppCMP )
 
 * ### [If cloning is too slow or images are not loading, you can try downloading from Gitee](https://gitee.com/CarGuo/GSYGithubAppKotlin)
 

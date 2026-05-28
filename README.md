@@ -7,7 +7,8 @@
 * ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
 * ### 同款Weex版 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款ReactNative版 （ https://github.com/CarGuo/GSYGithubApp ）
-* ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppKotlinCompose ）
+* ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppCompose ）
+* ### 同款Compose Multiplatform版本（ https://github.com/CarGuo/GSYGithubAppCMP ）
 
 * ### [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYGithubAppKotlin)
 
