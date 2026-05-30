@@ -4,11 +4,12 @@
 
 ## 一款Android原生的开源Github客户端App，提供更丰富的功能，更好体验，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。项目使用`Retrofit2 + RxJava2 + Dagger2 + DataBinding + LiveData + Navigation` 等，MVVM 配合 Android JetPack，涉及各种常用控件、 `AIDL` 、 `CMake`,提供丰富的同款对比：
 
-* ### 同款Flutter版 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
+* ### 同款Flutter版 （ https://github.com/CarGuo/gsy_github_app_flutter ）
+* ### 同款HarmonyOS ArkUI版 （ https://github.com/CarGuo/GSYGithubAppOH ）
+* ### 同款Android Compose版 （ https://github.com/CarGuo/GSYGithubAppCompose ）
+* ### 同款Compose Multiplatform版 （ https://github.com/CarGuo/GSYGithubAppCMP ）
 * ### 同款Weex版 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款ReactNative版 （ https://github.com/CarGuo/GSYGithubApp ）
-* ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppCompose ）
-* ### 同款Compose Multiplatform版本（ https://github.com/CarGuo/GSYGithubAppCMP ）
 
 * ### [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYGithubAppKotlin)
 
@@ -198,7 +199,7 @@ settingsEvaluated { settings ->
 
 ### LICENSE
 ```
-CarGuo/GSYGithubAppFlutter is licensed under the
+CarGuo/GSYGithubAppKotlin is licensed under the
 Apache License 2.0
 
 A permissive license whose main conditions require preservation of copyright and license notices.
